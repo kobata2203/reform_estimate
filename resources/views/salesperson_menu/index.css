@@ -1,0 +1,43 @@
+/* index.css */
+
+html, body {
+    height: 100%; /* Ensure the body takes full height */
+    margin: 0; /* Remove default margins */
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: #f0f0f0; /* Optional: Set a background color for better visibility */
+}
+
+p {
+    background-color:palegreen;
+    text-align: center;
+    margin: 0; /* Remove default margins */
+    padding: 10px; /* Add padding for better appearance */
+}
+
+.btn {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 20px;
+}
+
+button {
+    border-radius: 2px;
+    margin: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background-color: black; 
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+
+button:hover {
+    background-color: brown; 
+    transform: scale(1.05); 
+}

@@ -1,0 +1,32 @@
+.hero {
+    background-color: orange;
+    text-align: center;
+    padding: 1px;
+}
+
+input {
+    padding: 5px;
+    border: solid black 3px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Centers buttons horizontally */
+    align-items: center; /* Centers buttons vertically if container has height */
+    flex-direction: column; /* Align buttons in a column */
+    margin: 20px; /* Optional: Adds margin around the container */
+}
+
+button {
+    border: solid black 2px;
+    padding: 3px; /* Adjust padding as needed */
+    background-color: transparent;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    margin: 10px; /* Adds margin between buttons */
+    /* Remove duplicate padding property */
+}
+
+button:hover {
+    color: red; 
+}

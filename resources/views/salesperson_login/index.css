@@ -1,0 +1,48 @@
+p {
+    background-color: palegreen;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px; /* Adjust as needed */
+    padding: 15px;
+}
+
+button {
+    border-radius: 2px;
+    margin: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background-color: black; /* Initial background color */
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background and scaling */
+}
+
+
+button:hover {
+    background-color: brown; /* Background color on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.label {
+    margin-right: 15px;
+    width: 100px; 
+}
+
+/* Hide input characters while typing */
+input[type="password"] {
+    font-family: 'password'; /* Use an arbitrary or custom font */
+    color: transparent;      /* Make the text color transparent */
+    text-shadow: 0 0 0 red; /* Optionally add a shadow to hide even more */
+}
+
+
+

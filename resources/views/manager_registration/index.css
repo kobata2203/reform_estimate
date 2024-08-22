@@ -1,0 +1,60 @@
+/* Style for the hero section */
+.hero {
+    background-color: orange;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Flexbox layout for containers */
+.container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Label styling */
+.label {
+    margin-right: 20px;
+    margin-block-end: 10px;
+}
+
+/* Text box styling */
+.text {
+    flex: 1; /* Makes the text box take up the remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    flex: 1; /* Makes the dropdown take up the remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Container for buttons */
+.container1 {
+    margin: 15px 0;
+    display: flex;
+    justify-content: right;
+    margin: 10px 10px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+
+}
+
+button:hover {
+
+    background-color: #0056b3;
+}
