@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/register', 'SalespersonController@add')->name('register.add');
+Route::post('/register', 'SalespersonController@create')->name('register.create');

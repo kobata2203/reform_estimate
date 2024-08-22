@@ -1,60 +1,75 @@
-/* Style for the hero section */
+
 .hero {
     background-color: orange;
     text-align: center;
-    padding: 10px;
 }
 
-/* Flexbox layout for containers */
+.form-content {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    text-align: center;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+
 .container {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 10px 0;
+    width: 100%;
+    text-align:center; 
 }
 
-/* Label styling */
+
 .label {
+    width: 150px; 
     margin-right: 20px;
-    margin-block-end: 10px;
+    white-space: nowrap;
 }
 
-/* Text box styling */
+
 .text {
-    flex: 1; /* Makes the text box take up the remaining space */
+    flex: 1; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-/* Dropdown menu styling */
+
 .dropdown-menu {
-    flex: 1; /* Makes the dropdown take up the remaining space */
+    flex: 1; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-/* Container for buttons */
-.container1 {
-    margin: 15px 0;
+
+.button-container {
     display: flex;
-    justify-content: right;
-    margin: 10px 10px;
+    flex-direction: column; 
+    align-items: flex-end; 
+    width: 65%; 
 }
 
-/* Button styling */
+
 button {
-    padding: 10px 20px;
+    width: 114px; 
+    padding: 10px;
     border: none;
     border-radius: 4px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
 
+button:last-of-type {
+    margin-bottom: 0; 
 }
 
 button:hover {
-
     background-color: #0056b3;
 }
