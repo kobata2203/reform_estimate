@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Salesperson extends Model
 {
-    use HasFactory;
+    protected $fillable = ['id', 'name', 'department_name','password'];
 }

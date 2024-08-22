@@ -8,17 +8,18 @@ class SalespersonController extends Controller
 {
     public function add()
     {
-        return view('register');
+        return view('/manager_registration');
     }
     
     public function create(Request $request)
     {
-        $article = new Article;
-        $article->user_id = $request->user_id;
-        $article->title = $request->title;
-        $article->content = $request->content;
-        $article->save();
-        return redirect('/');
+        $salesperson = new Salesperson;
+        $salesperson->id = $request->id;
+        $salesperson->name = $request->name;
+        $salesperson->department_name = $request->department_name;
+        $salesperson->password = $request->password;
+        $salesperson->save();
+        return redirect('/manager_registration');
     }
 }
 
