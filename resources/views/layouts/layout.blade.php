@@ -1,1 +1,1 @@
-@yield('article_add')
+@yield('salesperson_add')

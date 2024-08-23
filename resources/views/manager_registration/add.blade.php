@@ -14,7 +14,7 @@
     <div class="hero">
         <p>営業者登録画面</p>
     </div>
-    <form action='{{ route('salesperson_create') }}' method='post'>
+    <form action="{{ route('salesperson_create') }}" method='post'>
     {{ csrf_field() }}
 
     <div class="form-content">
@@ -38,9 +38,10 @@
     </div>
 
     <div class="button-container">
-        <button>登録</button>
+        <button type="submit">登録</button>
         <button>管理者メニュー</button>
     </div>
     </form>
 </body>
 </html>
+@endsection
