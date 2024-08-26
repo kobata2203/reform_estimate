@@ -10,7 +10,7 @@ class SalespersonController extends Controller
 {
     public function add()
     {
-        return view('/manager_registration');
+        return view('salesperson_add');
     }
     
     public function create(Request $request)

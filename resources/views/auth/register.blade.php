@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('営業者新規登録') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -22,6 +22,22 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="department_name" class="col-md-4 col-form-label text-md-end">{{ __('部署名') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="department_name" name="department_name" class="text">
+                                    <option value="option1">営業１課</option>
+                                    <option value="option2">営業１課３係</option>
+                                    <option value="option3">営業２課１係</option>
+                                    <option value="option4">営業２課２係</option>
+                                    <option value="option5">営業３課</option>
+                                    <option value="option6">契約管理課</option>
+                                    <option value="option7">本部</option>
+                                </select>
                             </div>
                         </div>
 
@@ -64,7 +80,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('登録') }}
                                 </button>
                             </div>
                         </div>
