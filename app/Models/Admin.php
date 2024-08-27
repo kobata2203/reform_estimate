@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
+use database\seeders\Adminseeder;
 
 class Admin extends User
 {
@@ -12,6 +13,7 @@ class Admin extends User
 
     protected $fillable = [
         'name',
+        'department_name',
         'email',
         'password',
     ];

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use app\Models\Admin;
 
 return new class extends Migration
 {
@@ -16,7 +17,8 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name');                                 //追記
-            $table->string('email')->unique();                      //追記
+            $table->string('department_name');
+            $table->string('email');                      //追記
             $table->timestamp('email_verified_at')->nullable();     //追記
             $table->string('password');                             //追記
             $table->rememberToken();                                //追記
