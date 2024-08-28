@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
             $table->string('customer_name');
-            $table->date('creation_date');
+            $table->string('creation_date');
             $table->string('subject_name');
             $table->string('delivery_place');
             $table->string('construction_period');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('expiration_date');
             $table->text('remarks');
             $table->string('charger_name');
+            $table->string('department_name');
             $table->string('construction_name');
             $table->string('construction_item');
             $table->string('specification');

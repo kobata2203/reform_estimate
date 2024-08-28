@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\SalespersonController;
+use App\Http\Controllers\EstimateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,18 @@ Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class,'
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
 Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
+
+Route::get('/', function () {
+    // ウェブサイトのホームページ（'/'のURL）にアクセスした場合のルートです
+    if (Auth::check()) {
+        // ログイン状態ならば
+        return redirect()->route('estimate_info.index');
+        // 見積書一覧ページ（EstimateControllerのindexメソッドが処理）へリダイレクトします
+    } else {
+        // ログイン状態でなければ
+        return redirect()->route('login');
+        //　ログイン画面へリダイレクトします
+    }
+});
+
+Route::resource('estimate_info', 'App\Http\Controllers\EstimateController');
