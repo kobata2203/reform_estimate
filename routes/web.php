@@ -44,4 +44,4 @@ Route::get('/', function () {
     }
 });
 
-Route::resource('estimate_info', 'App\Http\Controllers\EstimateController');
+Route::get('/estimate_info', 'App\Http\Controllers\EstimateController@index');

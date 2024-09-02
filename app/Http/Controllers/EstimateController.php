@@ -9,9 +9,9 @@ class EstimateController extends Controller
 {
     public function index()
     {
-        $estimate_info = EstimateInfo::all();
+        $estimate_info = EstimateInfo::get();
 
-        return view('estimate_info.index', compact('estimate_info'));
+        return view('estimate_info', compact('estimate_info'));
     }
 
     public function create()
@@ -21,6 +21,6 @@ class EstimateController extends Controller
 
     public function store(Request $request)
     {
-        
+
     }
 }
