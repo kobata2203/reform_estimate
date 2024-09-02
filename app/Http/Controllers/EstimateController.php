@@ -11,16 +11,16 @@ class EstimateController extends Controller
     {
         $estimate_info = EstimateInfo::get();
 
-        return view('estimate_info', compact('estimate_info'));
+        return view('salesperson_estimate_index.index', compact('estimate_info'));
     }
 
     public function create()
     {
-
+        // ここに必要な処理を追加
     }
 
     public function store(Request $request)
     {
-
+        // ここに必要な処理を追加
     }
 }

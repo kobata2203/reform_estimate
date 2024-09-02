@@ -12,7 +12,7 @@
     </div>
     <div class="btn">
         <button>見積書作成へ</button><br>
-        <button>見積書一覧へ</button>
+        <button href="{{ root('estimate_info') }}">見積書一覧へ</button>
     </div>
 </body>
 </html>
