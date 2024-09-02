@@ -45,5 +45,5 @@ Route::get('/', function () {
 });
 
 //Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
-Route::get('salesperson_estimate_index', 'App\Http\Controllers\EstimateController@index')->name('salesperson_estimate_index.index');
-
+Route::get('estimate_index.blade.php', 'App\Http\Controllers\EstimateController@index')->name('estimate_index');
+Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');

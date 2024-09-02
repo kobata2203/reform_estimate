@@ -10,8 +10,8 @@ class EstimateController extends Controller
     public function index()
     {
         $estimate_info = EstimateInfo::all();
-
-        return view('salesperson_estimate_index.index', compact('estimate_info'));
+        dd($estimate_info);
+        return view('estimate_index.blade.php', compact('estimate_info'));
     }
 
     public function create()

@@ -11,8 +11,10 @@
         <p>営業者メニュー画面</p>
     </div>
     <div class="btn">
-        <button>見積書作成へ</button><br>
-        <button>見積書一覧へ</button>
+        <form method="GET" action="estimate_index.blade.php">
+            <button>見積書作成へ</button><br>
+            <a href='estimate_index.blade.php'><button>見積書一覧へ</button></a>
+        </form>
     </div>
 </body>
 </html>
