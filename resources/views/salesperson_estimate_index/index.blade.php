@@ -46,7 +46,7 @@
      </div>
 
      <div>
-     <button id="menue">営業者メニュー</button>
+     <button id="menu">営業者メニュー</button>
     </div>
 </body>
 </html>

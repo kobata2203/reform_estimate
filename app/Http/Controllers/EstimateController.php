@@ -9,7 +9,7 @@ class EstimateController extends Controller
 {
     public function index()
     {
-        $estimate_info = EstimateInfo::get();
+        $estimate_info = EstimateInfo::all();
 
         return view('salesperson_estimate_index.index', compact('estimate_info'));
     }
