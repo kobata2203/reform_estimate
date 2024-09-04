@@ -27,6 +27,8 @@
             </thead>
             <tbody>
                 @foreach ($estimate_info as $estimate)
+                <div>
+
                     <tr>
                         <td>{{ $estimate->creation_date }}</td>
                         <td>{{ $estimate->customer_name }}</td>
@@ -35,6 +37,8 @@
                         <td>{{ $estimate->department_name }}</td>
                         <td><button type="button">閲覧</button></td>
                     </tr>
+
+                </div>
                 @endforeach
             </tbody>
         </table>
