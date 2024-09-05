@@ -14,11 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/salesperson/add', 'App\Http\Controllers\SalespersonController@add')->name('salesperson_add');
 Route::post('/salesperson/add', 'App\Http\Controllers\SalespersonController@create')->name('salesperson_create');
+Route::post('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit')->name('manager_index.edit');
+
+//remove if necessery
+// Route to show the form to create a new salesperson
+Route::get('/salespersons/create', [SalespersonController::class, 'createForm'])->name('salespersons.create');
+
+// Route to handle the form submission for creating a new salesperson
+Route::post('/salespersons', [SalespersonController::class, 'create'])->name('salespersons.store');
+
+// Route to show the form to edit an existing salesperson
+Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'editForm'])->name('salespersons.edit');
+
+// Route to handle the form submission for updating an existing salesperson
+Route::put('/salespersons/{id}', [SalespersonController::class, 'edit'])->name('salespersons.update');
 
 Auth::routes();
 
