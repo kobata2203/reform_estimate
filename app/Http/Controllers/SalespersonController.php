@@ -12,7 +12,7 @@ class SalespersonController extends Controller
     {
         return view('salesperson_add');
     }
-    
+
     public function create(Request $request)
     {
         //$salesperson = DB::table('salesperson');
@@ -23,6 +23,13 @@ class SalespersonController extends Controller
         $salesperson->password = $request->password;
         $salesperson->save();
         return redirect('/');
+    }
+
+    public function edit(Request $request)
+    {
+        $search = $request['search'] ?? '';
+        $salesperson = Salesperson::where('name', 'LIKE', '%' . $search . '%')->first();
+        $salesperson = Salesperson::where('department_name', 'LIKE', '%' . $search . '%')->first();
     }
 }
 
