@@ -12,9 +12,11 @@
     </div>
     <div class="btn">
         <form method="GET" action="estimate_index.blade.php">
-        @csrf
-            <button>見積書作成へ</button><br>
-            <a href='estimate_index.blade.php'><button>見積書一覧へ</button></a>
+            @csrf
+            <div>
+                <button>見積書作成へ</button><br>
+                <a href='estimate_index.blade.php'><button>見積書一覧へ</button></a>
+            </div>
         </form>
     </div>
 </body>
