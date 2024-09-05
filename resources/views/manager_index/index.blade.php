@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>営業者一覧画面</title>
-    <!-- Link to CSS file using Laravel's asset helper -->
-    <link rel="stylesheet" href="{{ asset('index.css') }}">
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
     <div>
         <p>営業者一覧画面</p>
     </div>
+    <form action=""　class='col-9'>
+        <div class="form-group">
 
-    <div>部署名検索</div>
-    <input type="text">
-    <button>検索</button>
+            <input type="search" name="search" id="" class="form-control" placeholder="検索して下さい">
+        </div>
+    </form>
+    <div class="col-3">
+        <a href="{{ route('admin/register') }}">
+            <button class="btn btn-primary d-line-block ml-2 float-right ">検索</button>
+        </a>
+    </div>
+
 
     <div>
+
         <table>
+
             <tr>
                 <th>氏名</th>
                 <th>メールアドレス</th>
@@ -26,34 +37,24 @@
                 <th></th>
             </tr>
 
-            @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->password }}</td>
-                    <td>{{ $user->department }}</td>
-                    <td>
-                        <!-- Use Laravel's route helper for generating URLs -->
-                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary" role="button">編集</a>
-                    </td>
-                </tr>
-            @endforeach
+            @foreach ($estimate_info as $estimate)
+                <div>
+                    <tr>
+                        <td>{{ $estimate->salesperson_name }}</td>
+                        <td>{{ $estimate->salesperson_email }}</td>
+                        <td>{{ $estimate->salesperson_password }}</td>
+                        <td>{{ $estimate->department_name }}</td>
+                        <td><button>編集</button></td>
+                    </tr>
 
-            <!-- Example of a fixed link, use route helper if applicable -->
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="https://www.google.com" class="btn btn-primary" role="button">編集</a>
-                </td>
-            </tr>
+                </div>
+            @endfor
         </table>
-    </div>
 
+    </div>
     <div>
-        <button id="menu">管理者メニュー</button>
+        <a id="menu" class="btn btn-primary" href="{{ url('salesperson_menu.index') }}">管理者メニュー</a>
     </div>
 </body>
+
 </html>
