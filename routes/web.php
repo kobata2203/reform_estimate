@@ -2,6 +2,7 @@
 use App\Http\Controllers\SalespersonController;
 use App\Http\Controllers\EstimateController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
 Route::get('/salesperson/add', 'App\Http\Controllers\SalespersonController@add')->name('salesperson_add');
 Route::post('/salesperson/add', 'App\Http\Controllers\SalespersonController@create')->name('salesperson_create');
 Route::post('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit')->name('manager_index.edit');
-
+Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
 //remove if necessery
 // Route to show the form to create a new salesperson
 Route::get('/salespersons/create', [SalespersonController::class, 'createForm'])->name('salespersons.create');

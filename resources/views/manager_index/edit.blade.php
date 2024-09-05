@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row justify-content-center mt-4">
             <div class="col-md-10 d-flex justify-content-end">
-                <a href="{{ route('products.index') }}" class="btn btn-dark">戻る</a>
+                <a href="{{ route('manager_index.index') }}" class="btn btn-dark">戻る</a>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
