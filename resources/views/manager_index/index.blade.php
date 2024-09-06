@@ -12,7 +12,7 @@
     <div>
         <p>営業者一覧画面</p>
     </div>
-    <form action=""　class='col-9'>
+    <form action="" class='col-9'>
         <div class="form-group">
 
             <input type="search" name="search" id="" class="form-control" placeholder="検索して下さい">
@@ -53,7 +53,7 @@
 
     </div>
     <div>
-        <a id="menu" class="btn btn-primary" href="{{ url('salesperson_menu.index') }}">管理者メニュー</a>
+        <a id="menu" class="btn btn-primary" href="{{ url('') }}">管理者メニュー</a>
     </div>
 </body>
 
