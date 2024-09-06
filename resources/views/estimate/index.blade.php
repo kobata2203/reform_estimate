@@ -32,7 +32,7 @@
                     <div>
 
                         <tr>
-                            <td>{{ $estimate->creation_date }}</td>
+                            <td>{{ $estimate->creation_name }}</td>
                             <td>{{ $estimate->customer_name }}</td>
                             <td>{{ $estimate->construction_name }}</td>
                             <td>{{ $estimate->charger_name }}</td>
@@ -47,7 +47,7 @@
     </div>
 
     <div>
-        <button id="menu" href="{{ url('salesperson_menu.index') }}">営業者メニュー</button>
+        <button id="menu">営業者メニュー</button>
     </div>
 </body>
 
