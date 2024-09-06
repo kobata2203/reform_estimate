@@ -15,8 +15,12 @@
 <<<<<<< HEAD
     <form action="" class='col-9'>
 =======
+<<<<<<< HEAD
+    <form action="" class='col-9'>
+=======
     <form action=""　class='col-9'>
 >>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
+>>>>>>> 0030301a0acae46fcd5fe936d284cc65dd438bca
         <div class="form-group">
 
             <input type="search" name="search" id="" class="form-control" placeholder="検索して下さい">
@@ -74,10 +78,14 @@
     </div>
     <div>
 <<<<<<< HEAD
+        <a id="menu" class="btn btn-primary" href="{{ url('') }}">管理者メニュー</a>
+=======
+<<<<<<< HEAD
         <a id="menu" class="btn btn-primary" href="{{ url('manager_menu.index') }}">管理者メニュー</a>
 =======
         <a id="menu" class="btn btn-primary" href="{{ url('salesperson_menu.index') }}">管理者メニュー</a>
 >>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
+>>>>>>> 0030301a0acae46fcd5fe936d284cc65dd438bca
     </div>
 </body>
 
