@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/reform_estimate/public/manager_menu/index.blade.php">
+                    <form method="POST" action="/reform_estimate/resources/views/manager_menu/index.blade.php">
                         @csrf
 
                         <div class="row mb-3">
@@ -57,9 +57,9 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                
-                                    
-                                
+
+
+
                             </div>
                         </div>
                     </form>
