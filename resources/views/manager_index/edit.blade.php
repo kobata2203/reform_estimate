@@ -1,71 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>営業者一覧編集画面</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.app1')
 
-</head>
-<body>
-    <div class="bg-dark py-3">
-        <h3 class="text-white text-center">営業者一覧編集画面</h3>
-    </div>
-    <div class="container">
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-10 d-flex justify-content-end">
-                <a href="{{ route('products.index') }}" class="btn btn-dark">戻る</a>
-            </div>
+@section('content')
+<div class="container">
+    <h1>営業者情報編集画面</h1>
+
+    <!-- Form to edit salesperson details -->
+    <form action="{{ route('salespersons.update', $salesperson->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="form-group">
+            <label for="name">氏名</label>
+            <input type="text" id="name" name="name" value="{{ old('name', $salesperson->name) }}" class="form-control">
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-10">
-                <div class="card borde-0 shadow-lg my-4">
-                    <div class="card-header bg-dark">
-                        <h3 class="text-white">氏名</h3>
-                    </div>
-                    <form enctype="multipart/form-data" action="{{ route('manager_index.index',$product->id) }}" method="post">
-                        @method('put')
-                        @csrf
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="" class="form-label h5">メールアドレス</label>
-                                <input value="{{ old('name',$product-email) }}" type="text" class="@error('email') is-invalid @enderror form-control-lg form-control" placeholder="Email" name="email">
-                                @error('email')
-                                    <p class="invalid-feedback">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="" class="form-label h5">パスワード</label>
-                                <input value="{{ old('sku',$product->password) }}" type="text" class="@error('password') is-invalid @enderror form-control form-control-lg" placeholder="password" name="password">
-                                @error('password')
-                                    <p class="invalid-feedback">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="department_name" class="form-label h5">部署名</label>
-                                <select name="department_name" id="department_name" class="form-select form-select-lg @error('department_name') is-invalid @enderror">
-                                    <option value="" disabled selected>Select a department</option>
-                                    @foreach($departments as $department)
-                                        <option value="{{ $department->value }}" {{ old('department_name', $product->department_name) == $department->value ? 'selected' : '' }}>
-                                            {{ $department->label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('department_name')
-                                    <p class="invalid-feedback">{{ $message }}</p>
-                                @enderror
-                            </div>
 
-
-                            <div class="d-grid">
-                                <button class="btn btn-lg btn-primary">保存</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" name="email" value="{{ old('email', $salesperson->email) }}" class="form-control">
+            @error('email')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-    </div>
-</body>
-</html>
+
+        <div class="form-group">
+            <label for="password">パスワード</label>
+            <input type="password" id="password" name="password" class="form-control">
+            @error('password')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="department_name">部署名</label>
+            <select id="department_name" name="department_name" class="form-control">
+                <!-- Populate departments dynamically -->
+                <option value="">Select a department</option>
+                @foreach($departments as $department)
+                    <option value="{{ $department->id }}" {{ old('department_name', $salesperson->department_id) == $department->id ? 'selected' : '' }}>
+                        {{ $department->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('department_name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">更新</button>
+        <a href="{{ route('manager_index.index') }}" class="btn btn-secondary"></a>
+    </form>
+</div>
+@endsection
