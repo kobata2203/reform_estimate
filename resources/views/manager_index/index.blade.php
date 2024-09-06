@@ -12,7 +12,7 @@
     <div>
         <p>営業者一覧画面</p>
     </div>
-    <form action=""　class='col-9'>
+    <form action="" class='col-9'>
         <div class="form-group">
 
             <input type="search" name="search" id="" class="form-control" placeholder="検索して下さい">
@@ -36,24 +36,24 @@
                 <th>部署名</th>
                 <th></th>
             </tr>
+            <tbody>
+                @foreach ($manager_info as $manager)
+                    <div>
+                        <tr>
+                            <td>{{ $manager->manager_name }}</td>
+                            <td>{{ $manager->manager_email }}</td>
+                            <td>{{ $manager->manager_password }}</td>
+                            <td>{{ $manager->department_name }}</td>
+                            <td><button type="button">検索</button></td>
+                        </tr>
 
-            @foreach ($estimate_info as $estimate)
-                <div>
-                    <tr>
-                        <td>{{ $estimate->salesperson_name }}</td>
-                        <td>{{ $estimate->salesperson_email }}</td>
-                        <td>{{ $estimate->salesperson_password }}</td>
-                        <td>{{ $estimate->department_name }}</td>
-                        <td><button>編集</button></td>
-                    </tr>
-
-                </div>
-            @endfor
+                    </div>
+                @endforeach
         </table>
 
     </div>
     <div>
-        <a id="menu" class="btn btn-primary" href="{{ url('salesperson_menu.index') }}">管理者メニュー</a>
+        <a id="menu" class="btn btn-primary" href="{{ url('manager_menu.index') }}">管理者メニュー</a>
     </div>
 </body>
 

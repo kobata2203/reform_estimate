@@ -47,7 +47,7 @@
     </div>
 
     <div>
-        <button id="menu">営業者メニュー</button>
+        <button id="menu" href="{{ url('salesperson_menu.index') }}">営業者メニュー</button>
     </div>
 </body>
 

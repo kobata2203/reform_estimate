@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\SalespersonController;
 use App\Http\Controllers\EstimateController;
+use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,7 @@ Route::get('/', function () {
     }
 });
 
-//Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
+Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
+
 Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate');
 Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');
