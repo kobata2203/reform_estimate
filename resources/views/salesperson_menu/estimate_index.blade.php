@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書一覧画面(営業者用)</title>
-    <link rel="stylesheet" href="estimate_index.css">
+    <link rel="stylesheet" href="css/estimate_index.css">
 </head>
 
 <body>
@@ -14,8 +14,15 @@
     </div>
 
     <div>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</div>
-    <input type="text" size="60">
-    <button id="btn" style="width: 100px; height: 30px; margin-bottom: 20px;">検索</button>
+    <div>
+        <form action="{{ route('estimate') }}" method="GET">
+
+        @csrf
+
+          <input type="text" name="keyword" value="{{ $keyword }}">
+          <input type="submit" value="検索">
+        </form>
+      </div>
 
     <div class="table-container">
         <table>

@@ -45,11 +45,8 @@ Route::get('/', function () {
     }
 });
 
-<<<<<<< HEAD
-Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
-
-=======
 //Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
->>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
 Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate');
+Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
+Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
 Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');

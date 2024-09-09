@@ -1,0 +1,41 @@
+p {
+    background-color: rgb(135, 197, 48);
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+
+    
+}
+
+th {
+    background-color: rgb(121, 168, 51);
+}
+
+#menue{
+    margin: 27px;
+    margin-left: 83%;
+    cursor: pointer;
+    border: 2px solid black;
+    
+}
+
+.row-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px; /* Space between rows of buttons */
+}
+
+
+#btn {
+    margin-left: 50px;
+}
+

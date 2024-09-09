@@ -1,4 +1,5 @@
-<form method="post" action="cover-pdf.php" target="_blank">
+<form method="post" action="{{ route('estimate.store') }}" target="_blank">
+    @csrf
     <table>
       <tr>
         <th>お客様名</th>
@@ -46,7 +47,7 @@
         </td>
       </tr>
     </table>
-    
+
     <button type="submit">PDF</button>
 </form>
 <form method="post" action="breakdown-pdf.php" target="_blank">
@@ -76,6 +77,6 @@
         </td>
       </tr>
     </table>
-    
+
     <button type="submit">PDF</button>
 </form>

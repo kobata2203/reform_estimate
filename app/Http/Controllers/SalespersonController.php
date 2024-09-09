@@ -34,13 +34,13 @@ class SalespersonController extends Controller
         return redirect('/');
     }
 
-<<<<<<< HEAD
     public function edit(Request $request)
     {
         $search = $request['search'] ?? '';
         $salesperson = Salesperson::where('name', 'LIKE', '%' . $search . '%')->first();
         $salesperson = Salesperson::where('department_name', 'LIKE', '%' . $search . '%')->first();
-=======
+    }
+
     public function showForm()
     {
         $departments = [
@@ -74,9 +74,9 @@ class SalespersonController extends Controller
 
     }
 
-    public function edit($id) {
-        $data = SalespersonController::find($id);
-        return view('edit', compact('data',"id"));
->>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
-    }
+    //public function edit($data $id)
+    //{
+        //$data = SalespersonController::find($id);
+        //return view('edit', compact('data',"id"));
+    //}
 }
