@@ -1,92 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>営業者一覧画面</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
 </head>
-
 <body>
     <div>
         <p>営業者一覧画面</p>
     </div>
-<<<<<<< HEAD
-    <form action="" class='col-9'>
-=======
-<<<<<<< HEAD
-    <form action="" class='col-9'>
-=======
-    <form action=""　class='col-9'>
->>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
->>>>>>> 0030301a0acae46fcd5fe936d284cc65dd438bca
-        <div class="form-group">
-
-            <input type="search" name="search" id="" class="form-control" placeholder="検索して下さい">
+    <form action="{{ route('managers.index') }}" method="GET" class="form-inline">
+        <div class="form-group d-flex align-items-center"> <!-- Use d-flex to make the elements align in a row -->
+            <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい" value="{{ request()->input('search') }}">
+            <!-- Added me-2 for margin to the right side of the search box -->
+            <button type="submit" class="btn btn-primary custom-margin">検索</button>
         </div>
+
     </form>
-    <div class="col-3">
-        <a href="{{ route('admin/register') }}">
-            <button class="btn btn-primary d-line-block ml-2 float-right ">検索</button>
-        </a>
+    <div class="col-3 custom-margin-bottom">
+        <a href="{{ route('managers.create') }}" class="btn btn-primary custom-margin custom-border mb-3">新規作成へ</a>
     </div>
 
 
+
     <div>
-
         <table>
-
-            <tr>
-                <th>氏名</th>
-                <th>メールアドレス</th>
-                <th>パスワード</th>
-                <th>部署名</th>
-                <th></th>
-            </tr>
-<<<<<<< HEAD
+            <thead>
+                <tr>
+                    <th>氏名</th>
+                    <th>メールアドレス</th>
+                    <th>パスワード</th>
+                    <th>部署名</th>
+                    <th>アクション</th>
+                </tr>
+            </thead>
             <tbody>
                 @foreach ($manager_info as $manager)
-                    <div>
-                        <tr>
-                            <td>{{ $manager->manager_name }}</td>
-                            <td>{{ $manager->manager_email }}</td>
-                            <td>{{ $manager->manager_password }}</td>
-                            <td>{{ $manager->department_name }}</td>
-                            <td><button type="button">検索</button></td>
-                        </tr>
+                <tr>
+                    <td>{{ $manager->name }}</td>
+                    <td>{{ $manager->email }}</td>
+                    <td>{{ $manager->password }}</td>
+                    <td>{{ $manager->department_name }}</td>
+                    <td>
+                        <a href="{{ route('managers.edit', $manager->id) }}" class="btn btn-dark">編集</a>
+                        <form action="{{ route('managers.destroy', $manager->id) }}" method="POST" style="display:inline;">
+                            @csrf
 
-                    </div>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
-=======
-
-            @foreach ($estimate_info as $estimate)
-                <div>
-                    <tr>
-                        <td>{{ $estimate->salesperson_name }}</td>
-                        <td>{{ $estimate->salesperson_email }}</td>
-                        <td>{{ $estimate->salesperson_password }}</td>
-                        <td>{{ $estimate->department_name }}</td>
-                        <td><button>編集</button></td>
-                    </tr>
-
-                </div>
-            @endfor
->>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
+            </tbody>
         </table>
-
-    </div>
-    <div>
-<<<<<<< HEAD
-        <a id="menu" class="btn btn-primary" href="{{ url('') }}">管理者メニュー</a>
-=======
-<<<<<<< HEAD
-        <a id="menu" class="btn btn-primary" href="{{ url('manager_menu.index') }}">管理者メニュー</a>
-=======
-        <a id="menu" class="btn btn-primary" href="{{ url('salesperson_menu.index') }}">管理者メニュー</a>
->>>>>>> 48147603d70d61985c04a545335cf4d8038f9305
->>>>>>> 0030301a0acae46fcd5fe936d284cc65dd438bca
     </div>
 </body>
-
 </html>

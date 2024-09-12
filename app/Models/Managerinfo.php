@@ -10,15 +10,13 @@ class Managerinfo extends Model
     use HasFactory;
 
     // モデルに関連付けるテーブル
-    protected $table = 'manage_info';
+    protected $table = 'managers';
 
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'customer_name',
-        'password',
-        'department_name',
+        'name', 'email', 'password', 'department_name',
     ];
 
 }

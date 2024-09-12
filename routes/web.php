@@ -50,3 +50,19 @@ Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
 Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');
+
+
+//THis route is fot the manager_index/view page
+
+Route::resource('managers', ManagerController::class);
+
+Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
+
+
+//remove if necessery
+Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
+Route::get('/salespersons/create', [SalespersonController::class, 'create'])->name('salespersons.create');
+Route::post('/salespersons', [SalespersonController::class, 'store'])->name('salespersons.store');
+Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'edit'])->name('salespersons.edit');
+
+//additional
