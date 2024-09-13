@@ -42,6 +42,8 @@ class EstimateController extends Controller
 
     public function store(Request $request)
     {
+        DB::beginTransaction();
+
         $request->validate([
             'creation_date' => 'required',
             'customer_name' => 'required', //requiredは必須という意味です
@@ -54,17 +56,20 @@ class EstimateController extends Controller
         ]);
 
         $estimate_info = new EstimateInfo([
-            'creation_date' => date("Y年m月d日"),
-            'customer_name' => $request->get('customer_name'),
-            'price' => $request->get('price'),
-            'charger_name' => $request->get('charger_name'),
-            'subject_name' => $request->get('subject_name'),
-            'delivery_place' => $request->get('delivery_place'),
-            'construction_period' => $request->get('construction_period'),
-            'payment_type' => $request->get('payment_type')
+            'id',
+            'creation_date' => today("Y年m月d日"),
+            'customer_name' => $request->input('customer_name'),
+            'price' => $request->input('price'),
+            'charger_name' => $request->input('charger_name'),
+            'subject_name' => $request->input('subject_name'),
+            'delivery_place' => $request->input('delivery_place'),
+            'construction_period' => $request->input('construction_period'),
+            'payment_type' => $request->input('payment_type')
         ]);
         //dd($estimate_info);
         $estimate_info->save();
+
+        DB::commit();
 
         return redirect();
 

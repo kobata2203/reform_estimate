@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('estimate.store') }}" target="_blank">
+<form method="post" action="{{ route('estimate.store') }}">
     @csrf
     <table>
       <tr>

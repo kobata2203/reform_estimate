@@ -15,24 +15,24 @@ return new class extends Migration
     {
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('creation_date');
-            $table->string('subject_name');
-            $table->string('delivery_place');
-            $table->string('construction_period');
-            $table->string('payment_type');
-            $table->string('expiration_date');
-            $table->text('remarks');
-            $table->string('charger_name');
-            $table->string('department_name');
-            $table->string('construction_name');
-            $table->string('construction_item');
-            $table->string('specification');
-            $table->integer('quantity');
-            $table->string('unit');
-            $table->integer('unit_price');
-            $table->integer('amount');
-            $table->text('remarks2');
+            $table->string('customer_name')->nullable();
+            $table->string('creation_date')->nullable();
+            $table->string('subject_name')->nullable();
+            $table->string('delivery_place')->nullable();
+            $table->string('construction_period')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('expiration_date')->nullable();
+            $table->text('remarks')->nullable();
+            $table->string('charger_name')->nullable();
+            $table->string('department_name')->nullable();
+            $table->string('construction_name')->nullable();
+            $table->string('construction_item')->nullable();
+            $table->string('specification')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('unit')->nullable();
+            $table->integer('unit_price')->nullable();
+            $table->integer('amount')->nullable();
+            $table->text('remarks2')->nullable();
             $table->timestamps();
         });
     }
