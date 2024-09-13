@@ -49,8 +49,9 @@ Route::get('/', function () {
 Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate');
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
-Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');
 
+Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 
 //THis route is fot the manager_index/view page
 

@@ -43,6 +43,7 @@ class EstimateController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'creation_date' => 'required',
             'customer_name' => 'required', //requiredは必須という意味です
             'price' => 'required',
             'charger_name' => 'required',
@@ -53,18 +54,19 @@ class EstimateController extends Controller
         ]);
 
         $estimate_info = new EstimateInfo([
+            'creation_date' => date("Y年m月d日"),
             'customer_name' => $request->get('customer_name'),
             'price' => $request->get('price'),
             'charger_name' => $request->get('charger_name'),
             'subject_name' => $request->get('subject_name'),
             'delivery_place' => $request->get('delivery_place'),
             'construction_period' => $request->get('construction_period'),
-            'payment_type' => $request->get('payment_type'),
+            'payment_type' => $request->get('payment_type')
         ]);
-
+        //dd($estimate_info);
         $estimate_info->save();
 
-        return redirect('tcpdf.index');
+        return redirect();
 
     }
 }

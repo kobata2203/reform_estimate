@@ -22,6 +22,11 @@ class EstimateInfo extends Model
         'construction_name',
         'charger_name',
         'department_name',
+        'price',
+        'subject_name',
+        'delivery_place',
+        'construction_period',
+        'payment_type'
     ];
 
 }

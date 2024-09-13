@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Managerinfo;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ManagerSeeder extends Seeder
 {
@@ -19,6 +21,7 @@ class ManagerSeeder extends Seeder
             'email' => 'john.doe@example.com',
             'password' => Hash::make('password'),
             'department_name' => 'Sales',
+        ]);
         // Create 10 Managerinfo records
         Managerinfo::factory(10)->create();
     }
