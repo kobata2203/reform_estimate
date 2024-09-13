@@ -53,12 +53,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        <div class="col-3 custom-margin-bottom d-flex justify-content-end" id="manager-menu">
-            <a href="{{ route('managers.create') }}" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー画面へ</a>
-        </div>
-
-
     </div>
 </body>
 </html>
