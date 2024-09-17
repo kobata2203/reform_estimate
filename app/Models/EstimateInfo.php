@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use App\Htpp\Controllers\EstimateController;
+use App\Htpp\Controllers\EstimateController;
 
 class EstimateInfo extends Model
 {
@@ -22,11 +22,19 @@ class EstimateInfo extends Model
         'construction_name',
         'charger_name',
         'department_name',
-        'price',
         'subject_name',
         'delivery_place',
         'construction_period',
-        'payment_type'
+        'payment_type',
+        'expiration_date',
+        'remarks',
+        'construction_item',
+        'specification',
+        'quantity',
+        'unit',
+        'unit_price',
+        'amount',
+        'remarks2',
     ];
 
 }
