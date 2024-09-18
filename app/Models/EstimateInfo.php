@@ -8,20 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstimateInfo extends Model
 {
-    use HasFactory;
-
-    // モデルに関連付けるテーブル
-    protected $table = 'estimate_info';
-
-    // テーブルに関連付ける主キー
-    protected $primaryKey = 'id';
-
+    protected $table = 'estimate_info'; // Ensure this matches your table name
     protected $fillable = [
-        'creation_date',
-        'customer_name',
-        'construction_name',
-        'charger_name',
-        'department_name',
-    ];
-
+        'customer_name', 'creation_date', 'construction_name', 'charger_name', 'department_name', 'expiration_date'
+    ]; // Add all relevant columns here
 }

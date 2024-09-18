@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
             $table->string('customer_name');
-            $table->string('creation_date');
+            $table->date('creation_date'); // Changed to date type
             $table->string('subject_name');
             $table->string('delivery_place');
             $table->string('construction_period');
             $table->string('payment_type');
-            $table->string('expiration_date');
+            $table->date('expiration_date'); // Changed to date type
             $table->text('remarks');
             $table->string('charger_name');
             $table->string('department_name');

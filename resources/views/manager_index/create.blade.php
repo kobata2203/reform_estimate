@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規作成</title>
-    <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/managerindex1.css') }}">
 </head>
 <body>
     <div>
-        <p>新規作成</p>
+        <h2 style="text-align: center;">新規作成</h2>
         <form action="{{ route('managers.store') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -27,7 +27,7 @@
                 <label for="department_name">部署名</label>
                 <input type="text" name="department_name" id="department_name" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary">保存</button>
+            <button type="submit" class="btn btn-primary margin-left-300">保存</button>
         </form>
     </div>
 </body>

@@ -78,5 +78,21 @@ class SalespersonController extends Controller
     //{
         //$data = SalespersonController::find($id);
         //return view('edit', compact('data',"id"));
+
     //}
+
+    public function list(Request $request)
+{
+    $query = Salesperson::query();
+
+    if ($request->filled('search')) {
+        $query->whereHas('department', function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    $salespersons = $query->with('department')->get();
+    return view('salespersons.list', compact('salespersons'));
+}
+
 }

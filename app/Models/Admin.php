@@ -27,3 +27,5 @@ class Admin extends User
         'email_verified_at' => 'datetime',
     ];
 }
+
+

@@ -3,6 +3,8 @@ use App\Http\Controllers\SalespersonController;
 use App\Http\Controllers\EstimateController;
 use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminController1;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +23,14 @@ Route::get('/', function () {
 Route::get('/salesperson/add', 'App\Http\Controllers\SalespersonController@add')->name('salesperson_add');
 Route::post('/salesperson/add', 'App\Http\Controllers\SalespersonController@create')->name('salesperson_create');
 Route::get('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit')->name('salesperson_edit');
+
+// Authentication Routes
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+// Admin Routes
 Route::view('/admin/login', 'admin/login')->name('admin/login');
 Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
 Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
@@ -45,24 +51,66 @@ Route::get('/', function () {
     }
 });
 
+
+// Estimate Routes
 //Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
 Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate');
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
-Route::view('/salesperson_menu', '/salesperson_menu')->name('/salesperson_menu');
+
+//salesperson Menu
+Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
 
 
-//THis route is fot the manager_index/view page
+//THis route is fot the manager_index/view page [Manager Routes]
 
 Route::resource('managers', ManagerController::class);
 
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
 
 
-//remove if necessery
-Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
+//Salesperson Routes
+Route::get('/salespersons', [ManagerController::class, 'index'])->name('manager_index.index');
 Route::get('/salespersons/create', [SalespersonController::class, 'create'])->name('salespersons.create');
 Route::post('/salespersons', [SalespersonController::class, 'store'])->name('salespersons.store');
 Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'edit'])->name('salespersons.edit');
 
+
+//for the ichiran menu 画面へ [ Admin Resource Routes]
+
+Route::resource('admins', AdminController::class);
+
+Route::get('/manager-menu', function () {
+    return view('manager_menu.index');
+})->name('manager_menu.index');
+
+
+
+Route::get('/salespersons/list', [SalespersonController::class, 'list'])->name('salespersons.list');
+
 //additional
+// For the first case (admin list and search functionality)
+Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
+Route::get('/admins/create', [AdminController::class, 'create'])->name('admin.create');
+Route::post('/admins', [AdminController::class, 'store'])->name('admin.store');
+
+
+
+
+
+
+
+// Define routes for the admin management
+Route::get('/estimate/admins', [AdminController1::class, 'index'])->name('estimate.index');
+Route::get('/estimate/admins/create', [AdminController1::class, 'create'])->name('estimate.create');
+Route::post('/estimate/admins', [AdminController1::class, 'store'])->name('estimate.store');
+Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
+
+Route::get('estimate/pdf/{id}', [AdminController1::class, 'pdf'])->name('estimate.pdf');
+
+
+// // Show details with view functionality
+// Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
+
+// // PDF-specific route
+// Route::get('estimate/admins/{id}/pdf', [AdminController1::class, 'pdf'])->name('estimate.pdf');
