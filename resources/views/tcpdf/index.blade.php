@@ -61,49 +61,11 @@
       <tr>
         <th>工事名</th>
         <td>
-          <input id="construction_name" type="text" name="construction_name">
-        </td>
-      </tr>
-      <tr>
-        <th>項目名</th>
-        <td>
-          <input id="construction_item" type="text" name="construction_item">
-        </td>
-      </tr>
-      <tr>
-        <th>仕様・摘要</th>
-        <td>
-          <input id="specification" type="text" name="specification">
-        </td>
-      </tr>
-      <tr>
-        <th>数量</th>
-        <td>
-          <input id="quantity" type="text" name="quantity">
-        </td>
-      </tr>
-      <tr>
-        <th>単位</th>
-        <td>
-          <input id="unit" type="text" name="unit">
-        </td>
-      </tr>
-      <tr>
-        <th>単価</th>
-        <td>
-          <input id="unit_price" type="text" name="unit_price">
-        </td>
-      </tr>
-      <tr>
-        <th>金額</th>
-        <td>
-          <input id="amount" type="text" name="amount">
-        </td>
-      </tr>
-      <tr>
-        <th>備考2</th>
-        <td>
-          <textarea id="remarks2" type="text" name="remarks2"></textarea>
+          <select id="construction_name" type="text" name="construction_name">
+            @foreach($construction_name as $construction)
+              <option value={{ $construction ->id }}>{{ $construction ->construction_name }}</option>
+            @endforeach
+          </select>
         </td>
       </tr>
     </table>

@@ -19,7 +19,7 @@ class EstimateInfo extends Model
     protected $fillable = [
         'creation_date',
         'customer_name',
-        'construction_name',
+        //'construction_name',
         'charger_name',
         'department_name',
         'subject_name',
@@ -28,13 +28,23 @@ class EstimateInfo extends Model
         'payment_type',
         'expiration_date',
         'remarks',
-        'construction_item',
-        'specification',
-        'quantity',
-        'unit',
-        'unit_price',
-        'amount',
-        'remarks2',
+        //'construction_item',
+        //'specification',
+        //'quantity',
+        //'unit',
+        //'unit_price',
+        //'amount',
+        //'remarks2',
     ];
+
+    public function construction_name()
+    {
+    return $this->belongsTo('App\Models\ConstructionName');
+    }
+
+    public function breakdown()
+    {
+    return $this->hasMany('App\Models\Breakdown');
+    }
 
 }
