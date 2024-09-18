@@ -1,79 +1,71 @@
-<form method="post" action="{{ route('estimate.store') }}" target="_blank">
+<form method="post" action="{{ route('estimate.store') }}">
     @csrf
     <table>
       <tr>
         <th>お客様名</th>
         <td>
-          <input type="text" name="customer_name" value="山田太郎">
-        </td>
-      </tr>
-      <tr>
-        <th>金額</th>
-        <td>
-          ￥<input type="text" name="price" value="1320000">
+          <input id="customer_name" type="text" name="customer_name">
         </td>
       </tr>
       <tr>
         <th>担当者名</th>
         <td>
-          <input type="text" name="charger_name" value="田中花子">
+          <input id="charger_name" type="text" name="charger_name">
         </td>
       </tr>
       <tr>
         <th>件名</th>
         <td>
-          <input type="text" name="subject_name" value="山田太郎邸　浴室改修工事">
+          <input id="subject_name" type="text" name="subject_name">
         </td>
       </tr>
       <tr>
         <th>納入場所</th>
         <td>
-          <input type="text" name="delivery_place" value="大阪府堺市北区●●町○ー○○">
+          <input id="delivery_place" type="text" name="delivery_place">
         </td>
       </tr>
       <tr>
         <th>工期</th>
         <td>
-          <input type="text" name="construction_period" value="約2週間">
+          <input id="construction_period" type="text" name="construction_period">
         </td>
       </tr>
       <tr>
         <th>支払方法</th>
         <td>
-        <select name="payment_type">
+        <select id="payment_type" name="payment_type">
           <option>現金</option>
           <option>信販</option>
         </select>
         </td>
       </tr>
-    </table>
-
-    <button type="submit">PDF</button>
-</form>
-<form method="post" action="breakdown-pdf.php" target="_blank">
-    <table>
       <tr>
-        <th>No.</th>
+        <th>有効期限</th>
         <td>
-          <input type="text" name="number" value="0001">
+          <input id="expiration_date" type="text" name="expiration_date">
         </td>
       </tr>
       <tr>
-        <th>名前</th>
+        <th>備考</th>
         <td>
-          <input type="text" name="name" value="山田太郎">
+          <textarea id="remarks" type="text" name="remarks"></textarea>
         </td>
       </tr>
       <tr>
-        <th>金額</th>
+        <th>部署名</th>
         <td>
-          <input type="text" name="price" value="50000">
+          <input id="department_name" type="text" name="department_name">
         </td>
       </tr>
       <tr>
-        <th>但し書き</th>
+        <th>工事名</th>
         <td>
-          <input type="text" name="proviso" value="お品代として">
+          <select id="construction_name" type="text" name="construction_name">
+            @foreach($construction_name as $construction)
+              <option value={{ $construction ->id }}>{{ $construction ->construction_name }}</option>
+            @endforeach
+          </select>
         </td>
       </tr>
     </table>

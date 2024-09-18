@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
             $table->string('customer_name');
             $table->date('creation_date'); // Changed to date type
             $table->string('subject_name');
@@ -33,6 +34,26 @@ return new class extends Migration
             $table->integer('unit_price');
             $table->integer('amount');
             $table->text('remarks2');
+=======
+            $table->string('customer_name')->nullable();
+            $table->string('creation_date')->nullable();
+            $table->string('subject_name')->nullable();
+            $table->string('delivery_place')->nullable();
+            $table->string('construction_period')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('expiration_date')->nullable();
+            $table->text('remarks')->nullable();
+            $table->string('charger_name')->nullable();
+            $table->string('department_name')->nullable();
+            //$table->string('construction_name')->nullable();
+            //$table->string('construction_item')->nullable();
+            //$table->string('specification')->nullable();
+            //$table->integer('quantity')->nullable();
+            //$table->string('unit')->nullable();
+            //$table->integer('unit_price')->nullable();
+            //$table->integer('amount')->nullable();
+            //$table->text('remarks2')->nullable();
+>>>>>>> 77cf654eba123dafc4e50cdcfded18a332b3b0f6
             $table->timestamps();
         });
     }

@@ -6,7 +6,10 @@ use Illuminate\Database\Seeder;
 use App\Models\Managerinfo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 use Faker\Factory as Faker;
+=======
+>>>>>>> 77cf654eba123dafc4e50cdcfded18a332b3b0f6
 
 class ManagerSeeder extends Seeder
 {
@@ -17,6 +20,7 @@ class ManagerSeeder extends Seeder
      */
     public function run() : void
     {
+<<<<<<< HEAD
         // Check if the record already exists
         $existingManager = DB::table('managers')->where('email', 'john.doe@example.com')->first();
 
@@ -43,6 +47,15 @@ class ManagerSeeder extends Seeder
         }
 
         // Create 10 Managerinfo records using the factory
+=======
+        DB::table('managers')->insert([
+            'name' => 'John Doe',
+            'email' => 'john.doe@example.com',
+            'password' => Hash::make('password'),
+            'department_name' => 'Sales',
+        ]);
+        // Create 10 Managerinfo records
+>>>>>>> 77cf654eba123dafc4e50cdcfded18a332b3b0f6
         Managerinfo::factory(10)->create();
     }
 }

@@ -54,7 +54,10 @@
     </div>
 
     <div>
-        <button id="menu" href="{{ url('salesperson_menu.index') }}">営業者メニュー</button>
+        <form action="{{ route('salesperson_menu') }}" method="GET">
+            @csrf
+            <button>営業者メニュー</button>
+        </form>
     </div>
 </body>
 
