@@ -22,7 +22,7 @@
           <input type="text" name="keyword" value="{{ $keyword }}">
           <input type="submit" value="検索">
         </form>
-      </div>
+    </div>
 
     <div class="table-container">
         <table>

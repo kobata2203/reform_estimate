@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(EstimateInfoSeeder::class);
         $this->call(ManagerSeeder::class);
+<<<<<<< HEAD
+        $this->call(EstimateInfoSeeder::class);
+=======
         $this->call(ConstructionNameSeeder::class);
+>>>>>>> 77cf654eba123dafc4e50cdcfded18a332b3b0f6
     }
 }

@@ -4,20 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Manager;
 use App\Models\Managerinfo;
+use App\Models\EstimateInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class ManagerController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $manager_info = Manager::where('name', 'like', "%{$search}%")
-            ->orWhere('email', 'like', "%{$search}%")
-            ->orWhere('department_name', 'like', "%{$search}%")
-            ->get();
+        $keyword = $request->input('keyword');
+        $estimate_info = EstimateInfo::query();
 
-        return view('manager_index.index', compact('manager_info', 'search'));
+        if (!empty($keyword)) {
+            $estimate_info = $estimate_info->where('creation_date', 'LIKE', "%{$keyword}%")
+                ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('department_name', 'LIKE', "%{$keyword}%")
+                ->get();
+        } else {
+            $estimate_info = $estimate_info->get();
+        }
+
+        return view('manager_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
 
     public function create()

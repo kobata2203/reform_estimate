@@ -154,7 +154,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => [ Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...

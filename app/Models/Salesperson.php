@@ -8,5 +8,15 @@ use App\Http\Controllers\SalespersonController;
 
 class Salesperson extends Model
 {
-    protected $fillable = ['id', 'name', 'department_name','password'];
+    use HasFactory;
+
+    protected $table = 'salespeople'; // Ensure this matches the table name in your migration
+
+
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
 }

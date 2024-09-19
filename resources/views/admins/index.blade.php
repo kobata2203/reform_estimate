@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>営業者一覧画面</title>
+    <title>管理者一覧画面</title>
     <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
 </head>
 <body>
     <div>
-        <p>営業者一覧画面</p>
+        <p>管理者一覧画面</p>
     </div>
-    <form action="{{ route('managers.index') }}" method="GET" class="form-inline">
-        <div class="form-group d-flex align-items-center"> <!-- Use d-flex to make the elements align in a row -->
+    <form action="{{ route('admins.index') }}" method="GET" class="form-inline">
+        <div class="form-group d-flex align-items-center">
             <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい" value="{{ request()->input('search') }}">
-            <!-- Added me-2 for margin to the right side of the search box -->
             <button type="submit" class="btn btn-primary custom-margin">検索</button>
         </div>
 
+
     </form>
-    <div class="col-3 custom-margin-bottom">
-        <a href="{{ route('managers.create') }}" class="btn btn-primary custom-margin custom-border mb-3">新規作成へ</a>
-    </div>
-
-
 
     <div>
         <table>
@@ -43,9 +38,8 @@
                     <td>{{ $manager->password }}</td>
                     <td>{{ $manager->department_name }}</td>
                     <td>
-                        <a href="{{ route('managers.edit', $manager->id) }}" class="btn btn-dark">編集</a>
-                        <form action="{{ route('managers.destroy', $manager->id) }}" method="POST" style="display:inline;">
-                            @csrf
+                        <a href="{{ route('admins.edit', $manager->id) }}" class="btn btn-dark">編集</a>
+                        <form action="{{ route('admins.destroy', $manager->id) }}" method="POST" style="display:inline;">
 
                         </form>
                     </td>
@@ -53,6 +47,10 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="col-3 custom-margin-bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
+            <a href="{{ route('manager_menu.index') }}" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー画面へ</a>
+        </div>
     </div>
 </body>
 </html>
