@@ -15,7 +15,7 @@
         <button onclick="window.location='{{ route('manager_estimate') }}'">見積書一覧へ</button>
         <button onclick="window.location='{{ route('salesperson_add') }}'">営業者登録へ</button>
         <button onclick="window.location='{{ route('manager_index.index') }}'">営業者一覧へ</button>
-        <button onclick="window.location='{{ route('admins.index') }}'">管理者一覧画面へ</button>
+        <button onclick="window.location='{{ route('managers.index') }}'">管理者一覧画面へ</button>
     </div>
 </body>
 </html>

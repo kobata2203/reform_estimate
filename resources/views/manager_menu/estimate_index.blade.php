@@ -48,7 +48,7 @@
     </div>
 
     <div class="col-3 margin-top-example" style="text-align: right;">
-        <a href="{{ route('manager_menu.index') }}" class="btn btn-primary custom-border">管理者メニュー画面へ</a>
+        <a href="{{ route('manager_menu') }}" class="btn btn-primary custom-border">管理者メニュー画面へ</a>
     </div>
 </body>
 
