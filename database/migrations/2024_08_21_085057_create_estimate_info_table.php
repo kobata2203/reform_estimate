@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->string('charger_name')->nullable();
             $table->string('department_name')->nullable();
-            //$table->string('construction_name')->nullable();
+            $table->string('construction_name')->nullable();
             //$table->string('construction_item')->nullable();
             //$table->string('specification')->nullable();
             //$table->integer('quantity')->nullable();

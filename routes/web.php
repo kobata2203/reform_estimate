@@ -53,6 +53,9 @@ Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 
 Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 
+Route::get('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'manager_menu'])->name('manager_menu');
+Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'manager_menu'])->name('manager_menu');
+
 //THis route is fot the manager_index/view page
 
 Route::resource('managers', ManagerController::class);

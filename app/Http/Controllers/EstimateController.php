@@ -20,13 +20,11 @@ class EstimateController extends Controller
         if(!empty($keyword)) {//$keyword　が空ではない場合、検索処理を実行します
                           $estimate_info = EstimateInfo::where('creation_date', 'LIKE', "%{$keyword}%")
                           ->orwhere('customer_name', 'LIKE', "%{$keyword}%")
-                          //->orwhere('construction_name', 'LIKE', "%{$keyword}%")
+                          ->orwhere('construction_name', 'LIKE', "%{$keyword}%")
                           ->orwhere('charger_name', 'LIKE', "%{$keyword}%")
                           ->orwhere('department_name', 'LIKE', "%{$keyword}%")
                           ->get();
         }
-
-    
 
         /* ページネーション */
         //$estimate_info ->paginate(5);
@@ -72,7 +70,7 @@ class EstimateController extends Controller
         $estimate_info->expiration_date = $request->expiration_date;
         $estimate_info->remarks = $request->remarks;
         $estimate_info->department_name = $request->department_name;
-        //$estimate_info->construction_name = $request->construction_name;
+        $estimate_info->construction_name = $request->construction_name;
         //$estimate_info->construction_item = $request->construction_item;
         //$estimate_info->specification = $request->specification;
         //$estimate_info->quantity = $request->quantity;

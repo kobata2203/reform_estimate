@@ -63,7 +63,7 @@
         <td>
           <select id="construction_name" type="text" name="construction_name">
             @foreach($construction_name as $construction)
-              <option value={{ $construction ->id }}>{{ $construction ->construction_name }}</option>
+              <option value={{ $construction ->construction_name }}>{{ $construction ->construction_name }}</option>
             @endforeach
           </select>
         </td>

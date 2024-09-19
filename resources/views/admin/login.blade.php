@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/reform_estimate/resources/views/manager_menu/index.blade.php">
+                    <form method="POST" action="{{ route('manager_menu') }}">
                         @csrf
 
                         <div class="row mb-3">

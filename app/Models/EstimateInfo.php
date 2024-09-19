@@ -28,7 +28,7 @@ class EstimateInfo extends Model
         'payment_type',
         'expiration_date',
         'remarks',
-        //'construction_item',
+        'construction_item',
         //'specification',
         //'quantity',
         //'unit',
