@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EstimateInfo;
+use App\Models\ConstructionName;
 use Illuminate\Support\Facades\DB;
 
 class EstimateController extends Controller
@@ -29,7 +30,9 @@ class EstimateController extends Controller
 
     public function create()
     {
-        return view('salesperson_menu.estimate_index');
+        $construction_name = ConstructionName::all();
+
+        return view('tcpdf.index',compact('construction_name'));
     }
 
     public function store(Request $request)
@@ -55,13 +58,13 @@ class EstimateController extends Controller
             'charger_name' => $request->get('charger_name'),
             'department_name' => $request->get('department_name'),
             'construction_name' => $request->get('construction_name'),
-            'construction_item' => $request->get('construction_item'),
-            'specification' => $request->get('specification'),
-            'quantity' => $request->get('quantity'),
-            'unit' => $request->get('unit'),
-            'unit_price' => $request->get('unit_price'),
-            'amount' => $request->get('amount'),
-            'remarks2' => $request->get('remarks2'),
+            //'construction_item' => $request->get('construction_item'),
+            //'specification' => $request->get('specification'),
+            //'quantity' => $request->get('quantity'),
+            //'unit' => $request->get('unit'),
+            //'unit_price' => $request->get('unit_price'),
+            //'amount' => $request->get('amount'),
+            //'remarks2' => $request->get('remarks2'),
         ]);
 
         return redirect()->route('estimate.index');
