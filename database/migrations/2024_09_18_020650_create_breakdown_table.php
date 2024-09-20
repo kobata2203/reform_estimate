@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('breakdown', function (Blueprint $table) {
             $table->id();
-            $table->integer('estimate_id');
-            $table->integer('construction_id');
+            $table->integer('estimate_id')->nullable();
+            $table->integer('construction_id')->nullable();
             $table->string('construction_item')->nullable();
             $table->string('specification')->nullable();
             $table->integer('quantity')->nullable();

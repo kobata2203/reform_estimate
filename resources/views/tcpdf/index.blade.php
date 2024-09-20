@@ -70,5 +70,5 @@
       </tr>
     </table>
 
-    <button type="submit">PDF</button>
+    <button type="submit">登録</button>
 </form>

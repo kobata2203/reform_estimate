@@ -17,8 +17,8 @@ class Breakdown extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'estimate_id',
-        'construction_id',
+        //'estimate_id',
+        //'construction_id',
         'construction_item',
         'specification',
         'quantity',

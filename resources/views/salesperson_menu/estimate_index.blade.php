@@ -33,6 +33,7 @@
                 <th>営業担当</th>
                 <th>営業部署</th>
                 <th></th>
+                <th></th>
             </thead>
             <tbody>
                 @foreach ($estimate_info as $estimate)
@@ -44,6 +45,9 @@
                             <td>{{ $estimate->construction_name }}</td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $estimate->department_name }}</td>
+                            <td><a action="{{ route('estimate.breakdown_create') }}" method="GET">
+                                @csrf
+                                <button type="button">内訳明細書作成へ</button></a></td>
                             <td><button type="button">閲覧</button></td>
                         </tr>
 
