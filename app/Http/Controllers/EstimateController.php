@@ -37,27 +37,43 @@ class EstimateController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'customer_name' => 'required',
-            'creation_date' => 'required|date',
-            'subject_name' => 'required',
-            'delivery_place' => 'required',
-            'construction_period' => 'required',
-            'payment_type' => 'required',
-        ]);
+        DB::beginTransaction();
 
-        $estimate_info = EstimateInfo::create([
-            'customer_name' => $request->get('customer_name'),
-            'creation_date' => $request->get('creation_date'),
-            'subject_name' => $request->get('subject_name'),
-            'delivery_place' => $request->get('delivery_place'),
-            'construction_period' => $request->get('construction_period'),
-            'payment_type' => $request->get('payment_type'),
-            'expiration_date' => $request->get('expiration_date'),
-            'remarks' => $request->get('remarks'),
-            'charger_name' => $request->get('charger_name'),
-            'department_name' => $request->get('department_name'),
-            'construction_name' => $request->get('construction_name'),
+        //$request->validate([
+            //'customer_name' => 'required',
+            //'creation_date' => 'required',
+            //'subject_name' => 'required',
+            //'delivery_place' => 'required',
+            //'construction_period' => 'required',
+            //'payment_type' => 'required',
+        //]);
+
+        $estimate_info = new EstimateInfo();
+        //$estimate_info->$id = id();
+        $estimate_info->creation_date = date("Y年m月d日");
+        $estimate_info->customer_name = $request->customer_name;
+        $estimate_info->subject_name = $request->subject_name;
+        $estimate_info->delivery_place = $request->delivery_place;
+        $estimate_info->construction_period = $request->construction_period;
+        $estimate_info->payment_type = $request->payment_type;
+        $estimate_info->expiration_date = $request->expiration_date;
+        $estimate_info->remarks = $request->remarks;
+        $estimate_info->charger_name = $request->charger_name;
+        $estimate_info->department_name = $request->department_name;
+        $estimate_info->construction_name = $request->construction_name;
+
+        //$estimate_info = EstimateInfo::create([
+            //'creation_date' => date('y年m月d日'),
+            //'customer_name' => $request->get('customer_name'),
+            //'subject_name' => $request->get('subject_name'),
+            //'delivery_place' => $request->get('delivery_place'),
+            //'construction_period' => $request->get('construction_period'),
+            //'payment_type' => $request->get('payment_type'),
+            //'expiration_date' => $request->get('expiration_date'),
+            //'remarks' => $request->get('remarks'),
+            //'charger_name' => $request->get('charger_name'),
+            //'department_name' => $request->get('department_name'),
+            //'construction_name' => $request->get('construction_name'),
             //'construction_item' => $request->get('construction_item'),
             //'specification' => $request->get('specification'),
             //'quantity' => $request->get('quantity'),
@@ -65,8 +81,12 @@ class EstimateController extends Controller
             //'unit_price' => $request->get('unit_price'),
             //'amount' => $request->get('amount'),
             //'remarks2' => $request->get('remarks2'),
-        ]);
+        //]);
 
-        return redirect()->route('estimate.index');
+        $estimate_info->save();
+
+        DB::commit();
+
+        return redirect('estimate');
     }
 }

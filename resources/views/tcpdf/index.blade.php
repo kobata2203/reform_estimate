@@ -34,7 +34,7 @@
       <tr>
         <th>支払方法</th>
         <td>
-        <select id="payment_type" name="payment_type">
+        <select id="payment_type" type="text" name="payment_type">
           <option>現金</option>
           <option>信販</option>
         </select>
