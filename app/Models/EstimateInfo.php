@@ -19,6 +19,7 @@ class EstimateInfo extends Model
     protected $fillable = [
         'customer_name',
         'creation_date',
+        //'construction_id',
         'construction_name',
         'delivery_place',
         'construction_period',

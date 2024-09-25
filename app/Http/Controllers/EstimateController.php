@@ -49,6 +49,8 @@ class EstimateController extends Controller
             //'payment_type' => 'required',
         //]);
 
+        //$construction_id = $request->input('contruction_id');
+
         $estimate_info = new EstimateInfo();
         //$estimate_info->$id = id();
         $estimate_info->creation_date = date("Y年m月d日");
@@ -61,6 +63,8 @@ class EstimateController extends Controller
         $estimate_info->remarks = $request->remarks;
         $estimate_info->charger_name = $request->charger_name;
         $estimate_info->department_name = $request->department_name;
+        //$estimate_info->construction_id = $request->construction_id;
+        //$estimate_info->construction_id = $construction_id;
         $estimate_info->construction_name = $request->construction_name;
 
         //$estimate_info = EstimateInfo::create([
@@ -83,7 +87,7 @@ class EstimateController extends Controller
             //'amount' => $request->get('amount'),
             //'remarks2' => $request->get('remarks2'),
         //]);
-
+        //dd($estimate_info);
         $estimate_info->save();
 
         DB::commit();
@@ -91,9 +95,12 @@ class EstimateController extends Controller
         return redirect('estimate');
     }
 
-    public function breakdown_create()
+    public function breakdown_create(EstimateInfo $estimate_info ,$id)
     {
-        return view('tcpdf.breakdown_index');
+        $estimate_info = EstimateInfo::find($id);
+
+        //return view('tcpdf.breakdown_index',['estimate_info' => $estimate_info]);
+        return view('tcpdf.breakdown_index', ['id' => $id],['estimate_info' => $estimate_info]);
     }
 
     public function breakdown_store(Request $request)
@@ -109,10 +116,13 @@ class EstimateController extends Controller
             //'payment_type' => 'required',
         //]);
 
+        $estimate_info = EstimateInfo::all();
+        $construction_name = ConstructionName::all();
+
         $breakdown = new Breakdown();
-        //$estimate_info->$id = id();
-        //$breakdown->estimate_id = estimate_info_id();
-        //$breakdown->construction_id = construction_name_id();
+        //$breakdown->$id = $id->id;
+        $breakdown->estimate_id = $estimate_info->id;
+        $breakdown->construction_id = $construction_name->id;
         $breakdown->construction_item = $request->construction_item;
         $breakdown->specification = $request->specification;
         $breakdown->quantity = $request->quantity;
@@ -121,6 +131,9 @@ class EstimateController extends Controller
         $breakdown->amount = $request->amount;
         $breakdown->remarks2 = $request->remarks2;
 
+        //$breakdown = Breakdown::upsert(
+        //[],['id'],['id','estimate_id','construction_id','construction_item','specification','quantity','unit','unit_price','amount','remarks2']
+        //);
 
         //$estimate_info = EstimateInfo::create([
             //'creation_date' => date('y年m月d日'),
@@ -142,7 +155,7 @@ class EstimateController extends Controller
             //'amount' => $request->get('amount'),
             //'remarks2' => $request->get('remarks2'),
         //]);
-
+        //dd($breakdown);
         $breakdown->save();
 
         DB::commit();

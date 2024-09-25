@@ -45,9 +45,10 @@
                             <td>{{ $estimate->construction_name }}</td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $estimate->department_name }}</td>
-                            <td><a action="{{ route('estimate.breakdown_create') }}" method="GET">
+                            <td><form action="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">
                                 @csrf
-                                <button type="button">内訳明細書作成へ</button></a></td>
+                                <button>内訳明細書作成へ</button>
+                            </form></td>
                             <td><button type="button">閲覧</button></td>
                         </tr>
 

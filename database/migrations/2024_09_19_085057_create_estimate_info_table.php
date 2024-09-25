@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->string('charger_name')->nullable();
             $table->string('department_name')->nullable();
+            //$table->foreignId('construction_id')->constrained('construction_name')->nullable();
+            //$table->unsignedBigInteger('construction_id')->unique()->nullable();
             $table->string('construction_name')->nullable();
             //$table->string('construction_item')->nullable();
             //$table->string('specification')->nullable();
@@ -34,6 +36,10 @@ return new class extends Migration
             //$table->integer('amount')->nullable();
             //$table->text('remarks2')->nullable();
             $table->timestamps();
+
+            // 外部キー制約を追加
+            //$table->foreign('construction_id')->references('id')->on('construction_name');
+            //$table->foreign('construction_name')->references('construction_name')->on('construction_name');
         });
     }
 
