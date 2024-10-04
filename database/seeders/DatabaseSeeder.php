@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ConstructionNameSeeder::class);
-        $this->call(EstimateInfoSeeder::class);
+        $this->call(ConstructionItemSeeder::class);
     }
 }

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('breakdown', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('estimate_id')->constrained('estimate_info');
+            $table->foreignId('estimate_id')->constrained('estimate_info')->nullable();
             //$table->unsignedBigInteger('estimate_id')->unique();
-            $table->foreignId('construction_id')->constrained('construction_name');
-            //$table->unsignedBigInteger('construction_id')->unique();
+            //$table->foreignId('construction_id')->constrained('construction_name')->nullable();
+            $table->unsignedBigInteger('construction_id')->nullable();
             $table->string('construction_item')->nullable();
             $table->string('specification')->nullable();
             $table->integer('quantity')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
 
             // 外部キー制約を追加
             //$table->foreign('estimate_id')->references('id')->on('estimate_info');
-            //$table->foreign('construction_id')->references('id')->on('construction_name');
+            $table->foreign('construction_id')->references('construction_id')->on('construction_name');
         });
     }
 

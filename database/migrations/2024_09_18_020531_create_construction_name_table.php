@@ -14,11 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('construction_name', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('construction_name')->nullable();
+            $table->id('construction_id');
+            $table->string('construction_name');
+            $table->integer('loop_count');
+            $table->biginteger('item_id');
             $table->timestamps();
 
-            //$table->foreign('id')->references('construction_id')->on('estimate_info');
+            //$table->foreign('construction_id')->references('construction_id')->on('estimate_info');
             //$table->foreign('construction_name')->references('construction_name')->on('estimate_info');
         });
     }

@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Htpp\Controllers\EstimateController;
 
-class ConstructionName extends Model
+class ConstructionItem extends Model
 {
     use HasFactory;
 
     // モデルに関連付けるテーブル
-    protected $table = 'construction_name';
+    protected $table = 'construction_item';
 
     // テーブルに関連付ける主キー
-    protected $primaryKey = 'construcution_id';
+    protected $primaryKey = 'item_id';
 
     protected $fillable = [
-        'construction_name',
+        'item',
     ];
 
     public function estimate_info()
@@ -29,5 +29,4 @@ class ConstructionName extends Model
     {
     return $this->hasMany('App\Models\Breakdown');
     }
-
 }
