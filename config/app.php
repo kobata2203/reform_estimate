@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Barryvdh\DomPDF\Facade\PDF;
 
 return [
 
@@ -154,11 +155,13 @@ return [
     |
     */
 
-    'providers' => [ Barryvdh\DomPDF\ServiceProvider::class,
+    'providers' => [
 
         /*
          * Laravel Framework Service Providers...
          */
+        Elibyy\TCPDF\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -181,7 +184,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -209,7 +212,13 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
+
 ];
+
+

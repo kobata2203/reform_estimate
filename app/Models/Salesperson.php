@@ -10,7 +10,7 @@ class Salesperson extends Model
 {
     use HasFactory;
 
-    protected $table = 'salespeople'; // Ensure this matches the table name in your migration
+    protected $table = 'salesperson'; // Ensure this matches the table name in your migration
 
 
 

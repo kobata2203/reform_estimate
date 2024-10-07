@@ -59,7 +59,7 @@
     </div>
 
     <div>
-        <form action="{{ route('salesperson_menu') }}" method="GET">
+        <form action="{{ route('salesperson_menu.get') }}" method="GET">
             @csrf
             <button>営業者メニュー</button>
         </form>

@@ -7,6 +7,7 @@ use App\Models\EstimateInfo;
 use App\Models\ConstructionName;
 use App\Models\Breakdown;
 use Illuminate\Support\Facades\DB;
+use App\Models\Breakdown;
 
 class EstimateController extends Controller
 {
@@ -118,4 +119,21 @@ class EstimateController extends Controller
 
         return redirect('estimate');
     }
+
+    public function indexView()
+    {
+        $estimates = EstimateInfo::with('breakdowns')->get();
+        return view('estimate.index', compact('estimates'));
+    }
+
+    // public function show($id)
+    // {
+    //     // Fetch the breakdown record using the provided ID
+    //     $table  = EstimateInfo::findOrFail($id); // Make sure to handle this properly if the record doesn't exist
+
+    //     // Return the view with breakdown data
+    //     return view('manager_menu.show', compact('breakdown'));
+    // }
+
+
 }
