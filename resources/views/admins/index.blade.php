@@ -23,7 +23,6 @@
                 <tr>
                     <th>氏名</th>
                     <th>メールアドレス</th>
-                    <th>パスワード</th>
                     <th>部署名</th>
                     <th>アクション</th>
                 </tr>
@@ -33,7 +32,6 @@
                 <tr>
                     <td>{{ $manager->name }}</td>
                     <td>{{ $manager->email }}</td>
-                    <td>{{ $manager->password }}</td>
                     <td>{{ $manager->department_name }}</td>
                     <td>
                         <a href="{{ route('admins.edit', $manager->id) }}" class="btn btn-dark">編集</a>
