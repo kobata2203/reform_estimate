@@ -79,8 +79,13 @@ button {
     margin-top: 1rem;
     display: block;
     width: 100%;
-    margin-left: 2px; /* Adjust margin to match the existing layout */
+    margin-left:auto;
+    margin-right: auto;
 }
+
+
+
+
 
 /* Button hover effect */
 button:hover {

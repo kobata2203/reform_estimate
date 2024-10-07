@@ -275,31 +275,39 @@ class ManagerController extends Controller
     $pdf->AddFont('kozgopromedium', '', 'kozgopromedium.php'); // Adjust the path as necessary
     $pdf->SetFont('kozgopromedium', '', 12);
 
+    $pdf->SetFillColor(220, 220, 220);
     // Add title
-    $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
 
+
+    $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
+    $pdf->Ln(5);
+
+
+    $pdf->Cell(0,10, '株式会社サーバントップ',0, 1, 'R');
+
+    $pdf->Ln(5);
     // Construction Name
     $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
 
     // Add header for the breakdown table
     $pdf->SetFillColor(220, 220, 220); // Set fill color for header background
-    $pdf->Cell(40, 10, '工事項目', 1, 0, 'C', true); // Header for construction item
-    $pdf->Cell(40, 10, '仕様', 1, 0, 'C', true); // Header for specification
-    $pdf->Cell(30, 10, '数量', 1, 0, 'C', true); // Header for quantity
-    $pdf->Cell(30, 10, '単位', 1, 0, 'C', true); // Header for unit
-    $pdf->Cell(30, 10, '単価', 1, 0, 'C', true); // Header for unit price
-    $pdf->Cell(30, 10, '金額', 1, 0, 'C', true); // Header for amount
-    $pdf->Cell(30, 10, '備考', 1, 1, 'C', true); // Header for remarks
+    $pdf->Cell(45, 10, '工事項目', 1, 0, 'C', true); // Header for construction item
+    $pdf->Cell(60, 10, '仕様', 1, 0, 'C', true); // Header for specification
+    $pdf->Cell(35, 10, '数量', 1, 0, 'C', true); // Header for quantity
+    $pdf->Cell(35, 10, '単位', 1, 0, 'C', true); // Header for unit
+    $pdf->Cell(35, 10, '単価', 1, 0, 'C', true); // Header for unit price
+    $pdf->Cell(35, 10, '金額', 1, 0, 'C', true); // Header for amount
+    $pdf->Cell(35, 10, '備考', 1, 1, 'C', true); // Header for remarks
 
     // Loop through breakdown items and add data rows
     foreach ($breakdown as $item) {
-        $pdf->Cell(40, 10, $item->construction_item, 1);
-        $pdf->Cell(40, 10, $item->specification, 1);
-        $pdf->Cell(30, 10, $item->quantity, 1);
-        $pdf->Cell(30, 10, $item->unit, 1);
-        $pdf->Cell(30, 10, number_format($item->unit_price), 1);
-        $pdf->Cell(30, 10, number_format($item->amount), 1);
-        $pdf->Cell(30, 10, $item->remarks, 1);
+        $pdf->Cell(45, 10, $item->construction_item, 1);
+        $pdf->Cell(60, 10, $item->specification, 1);
+        $pdf->Cell(35, 10, $item->quantity, 1);
+        $pdf->Cell(35, 10, $item->unit, 1);
+        $pdf->Cell(35, 10, number_format($item->unit_price), 1);
+        $pdf->Cell(35, 10, number_format($item->amount), 1);
+        $pdf->Cell(35, 10, $item->remarks, 1);
         $pdf->Ln();
     }
 
@@ -311,12 +319,12 @@ class ManagerController extends Controller
     $grandTotal = $subtotal + $tax;
 
     // Output totals below the breakdown table
-    $pdf->Cell(170, 10, '小計（税抜）:', 1, 0, 'R');
-    $pdf->Cell(30, 10, number_format($subtotal), 1, 1);
-    $pdf->Cell(170, 10, '消費税（10%）:', 1, 0, 'R');
-    $pdf->Cell(30, 10, number_format($tax), 1, 1);
-    $pdf->Cell(170, 10, '合計（税込）:', 1, 0, 'R');
-    $pdf->Cell(30, 10, number_format($grandTotal), 1, 1);
+    $pdf->Cell(210, 10, '小計（税抜）:', 1, 0, 'R');
+    $pdf->Cell(35, 10, number_format($subtotal), 1, 1);
+    $pdf->Cell(210, 10, '消費税（10%）:', 1, 0, 'R');
+    $pdf->Cell(35, 10, number_format($tax), 1, 1);
+    $pdf->Cell(210, 10, '合計（税込）:', 1, 0, 'R');
+    $pdf->Cell(35, 10, number_format($grandTotal), 1, 1);
 
     // Output the PDF
     $pdf->Output("output.pdf", "I");

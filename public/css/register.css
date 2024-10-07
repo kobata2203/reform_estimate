@@ -43,6 +43,7 @@ input[type="password"] {
     flex-direction: column;
     margin-top: 20px;
     align-items: stretch; /* Make buttons take the full width */
+
 }
 
 .button-container button {

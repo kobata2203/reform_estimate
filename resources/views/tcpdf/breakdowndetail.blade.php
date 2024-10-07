@@ -61,7 +61,7 @@
     <div>
         <p><strong>お客様名 :</strong> {{ $estimate_info->customer_name }} 様</p>
         <p style="font-size: 8px;">下記の通りお見積り申し上げます。</p>
-        <p style="text-align: center;"><strong>お見積り金額 :</strong> {{ number_format($estimate_info->estimate_amount) }} （税込）</p>
+        <p style="text-align: center;"><strong>お見積り金額 : ¥ </strong> {{ number_format($estimate_info->estimate_amount) }} （税込）</p>
     </div>
 
 
