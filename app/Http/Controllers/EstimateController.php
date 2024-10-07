@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\EstimateInfo;
 use App\Models\ConstructionName;
+use App\Models\Breakdown;
 use Illuminate\Support\Facades\DB;
 use App\Models\Breakdown;
 
@@ -32,105 +33,28 @@ class EstimateController extends Controller
     public function create()
     {
         $construction_name = ConstructionName::all();
-
-        return view('tcpdf.index', compact('construction_name'));
+        //dd($construction_name);
+        return view('tcpdf.index',compact('construction_name'));
     }
 
-
-    public function breakdown_create($id)
-    {
-        $estimate_info = EstimateInfo::find($id);
-
-        if (!$estimate_info) {
-            return redirect()->route('estimate')->with('error', 'Estimate not found.');
-        }
-    // get by id From Breakdown
-    $datalis=[
-
-    ];
-
-        return view('tcpdf.breakdown_index', [
-        // 'datalist'=>
-            'estimate_info' => $estimate_info,
-            'id' => $id,
-            // 'construction_id' =>
-        ]);
-    }
-
-    public function breakdown_store(Request $request)
-{
-    DB::beginTransaction();
-
-
-    try {
-        // Validate incoming data
-        $validatedData = $request->validate([
-            'construction_item' => 'required|string',
-            'specification' => 'nullable|string',
-            'quantity' => 'required|numeric',
-            'unit' => 'nullable|string',
-            'unit_price' => 'required|numeric',
-            'amount' => 'required|numeric',
-            'remarks2' => 'nullable|string',
-            'estimate_id' => 'required|exists:estimate_info,id', // Ensure the estimate ID exists
-            'construction_id' => 'required|exists:construction_names,id' // Ensure the construction ID exists
-        ]);
-
-        // Fetch the specific EstimateInfo and ConstructionName records
-        $estimate_info = EstimateInfo::findOrFail($validatedData['estimate_id']);
-        $construction_name = ConstructionName::findOrFail($validatedData['construction_id']);
-
-        // Create a new Breakdown record
-        $breakdown = new Breakdown();
-        $breakdown->estimate_id = $estimate_info->id; // Use the retrieved estimate info
-        $breakdown->construction_id = $construction_name->id; // Use the retrieved construction name
-        $breakdown->construction_item = $validatedData['construction_item'];
-        $breakdown->specification = $validatedData['specification'];
-        $breakdown->quantity = $validatedData['quantity'];
-        $breakdown->unit = $validatedData['unit'];
-        $breakdown->unit_price = $validatedData['unit_price'];
-        $breakdown->amount = $validatedData['amount'];
-        $breakdown->remarks2 = $validatedData['remarks2'];
-
-        // Save the breakdown
-        $breakdown->save();
-
-        DB::commit();
-
-        return redirect('estimate')->with('success', 'Data saved successfully!');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        echo $e->getMessage();
-   die();
-        return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
-    }
-}
-
-
-public function showBreakdownForm($id)
-{
-    $estimate_info = EstimateInfo::findOrFail($id);
-    $construction_names = ConstructionName::all(); // Get all construction names
-
-    return view('tcpdf.breakdown_index', compact('estimate_info', 'construction_names'));
-}
-
-    public function store(Request $request)
+    public function store(Request $request,ConstructionName $construction_name)
     {
         DB::beginTransaction();
 
         //$request->validate([
-        //'customer_name' => 'required',
-        //'creation_date' => 'required',
-        //'subject_name' => 'required',
-        //'delivery_place' => 'required',
-        //'construction_period' => 'required',
-        //'payment_type' => 'required',
+            //'customer_name' => 'required',
+            //'creation_date' => 'required',
+            //'subject_name' => 'required',
+            //'delivery_place' => 'required',
+            //'construction_period' => 'required',
+            //'payment_type' => 'required',
         //]);
 
         //$construction_id = $request->input('contruction_id');
+        $construction_name = ConstructionName::all();
 
         $estimate_info = new EstimateInfo();
+        $estimate_info->join('estimate_info', 'construction_name.construction_name', '=', 'estimate_info.construction_name');
         //$estimate_info->$id = id();
         $estimate_info->creation_date = date("Y年m月d日");
         $estimate_info->customer_name = $request->customer_name;
@@ -142,34 +66,56 @@ public function showBreakdownForm($id)
         $estimate_info->remarks = $request->remarks;
         $estimate_info->charger_name = $request->charger_name;
         $estimate_info->department_name = $request->department_name;
-        //$estimate_info->construction_id = $request->construction_id;
+        $estimate_info->construction_id = $request->construction_id;
         //$estimate_info->construction_id = $construction_id;
-        $estimate_info->construction_name = $request->construction_name;
-
-        //$estimate_info = EstimateInfo::create([
-        //'creation_date' => date('y年m月d日'),
-        //'customer_name' => $request->get('customer_name'),
-        //'subject_name' => $request->get('subject_name'),
-        //'delivery_place' => $request->get('delivery_place'),
-        //'construction_period' => $request->get('construction_period'),
-        //'payment_type' => $request->get('payment_type'),
-        //'expiration_date' => $request->get('expiration_date'),
-        //'remarks' => $request->get('remarks'),
-        //'charger_name' => $request->get('charger_name'),
-        //'department_name' => $request->get('department_name'),
-        //'construction_name' => $request->get('construction_name'),
-        //'construction_item' => $request->get('construction_item'),
-        //'specification' => $request->get('specification'),
-        //'quantity' => $request->get('quantity'),
-        //'unit' => $request->get('unit'),
-        //'unit_price' => $request->get('unit_price'),
-        //'amount' => $request->get('amount'),
-        //'remarks2' => $request->get('remarks2'),
-        //]);
+        $estimate_info->construction_name = $estimate_info->construction_name;
+        //$estimate_info->construction_id = $request->construction_id;
         //dd($estimate_info);
         $estimate_info->save();
 
         DB::commit();
+
+        return redirect('estimate');
+    }
+
+    public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
+    {
+        $estimate_info = EstimateInfo::find($id);
+        //$construction_name = ConstructionName::find();
+        //dd($estimate_info);
+        return view('tcpdf.breakdown_index', ['id' => $id],['estimate_info' => $estimate_info],['construction_name' => $construction_name]);
+    }
+
+    public function breakdown_store(Request $request ,EstimateInfo $estimate_info)
+    {
+        //$estimate_info = EstimateInfo::find($id);
+
+        //$j = 0;
+        $j = count($request['construction_item'])-1;
+        //dd($j);
+        for($i = 0;$i < $j;$i++){
+        $breakdown = new Breakdown;
+        //dd($i);
+        //echo($request->construction_id);
+        //dd($request->estimate_id);
+        $breakdown->estimate_id = $request->estimate_id;
+        $breakdown->construction_id = $request->construction_id;
+        //dd($request->construction_item);
+        $_request = $request->toArray();
+        //dd($_request['construction_item'][$i]);
+        $breakdown->construction_item = $_request['construction_item'][$i];
+        $breakdown->specification = $_request['specification'][$i];
+        $breakdown->quantity = $_request['quantity'][$i];
+        $breakdown->unit = $_request['unit'][$i];
+        $breakdown->unit_price = $_request['unit_price'][$i];
+        $breakdown->amount = $_request['amount'][$i];
+        $breakdown->remarks2 = $_request['remarks2'][$i];
+        //dd($breakdown);
+        $breakdown->save();
+        }
+
+
+        //DB::commit();
 
         return redirect('estimate');
     }

@@ -9,24 +9,35 @@ class EstimateInfo extends Model
 {
     use HasFactory;
 
-    protected $table = 'estimate_info'; // Your table name
+    // モデルに関連付けるテーブル
+    protected $table = 'estimate_info';
+
+    // テーブルに関連付ける主キー
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'customer_name',
-         'creation_date',
-         'subject_name',
-         'delivery_place',
-         'construction_period',
-         'payment_type',
-         'expiration_date',
-         'remarks',
-         'charger_name',
-         'department_name',
-         'construction_name',
-     ];
+        'creation_date',
+        'construction_id',
+        //'construction_name',
+        'delivery_place',
+        'construction_period',
+        'subject_name',
+        'payment_type',
+        'expiration_date',
+        'remarks',
+        'charger_name',
+        'department_name',
+    ]; // Add all relevant columns here
 
-    // Define relationship
-    public function breakdowns()
+    public function estimate_info()
     {
-        return $this->hasMany(Breakdown::class, 'estimate_id'); // Adjust foreign key if necessary
+    return $this->belongsTo('App\Models\ConstructionName');
     }
+
+    public function breakdown()
+    {
+    return $this->hasMany('App\Models\Breakdown');
+    }
+
 }

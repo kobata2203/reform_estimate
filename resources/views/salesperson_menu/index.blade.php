@@ -17,10 +17,7 @@
         </form>
         <form method="GET" action="estimate">
             @csrf
-
-
                 <button>見積書一覧へ</button>
-
         </form>
     </div>
 </body>

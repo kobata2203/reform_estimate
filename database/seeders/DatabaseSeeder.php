@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstimateInfoSeeder::class);
         $this->call(ManagerSeeder::class);
         $this->call(ConstructionNameSeeder::class);
+        $this->call(ConstructionNameSeeder::class);
+        $this->call(ConstructionItemSeeder::class);
     }
 }
