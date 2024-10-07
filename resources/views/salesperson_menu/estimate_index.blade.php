@@ -33,6 +33,7 @@
                 <th>営業担当</th>
                 <th>営業部署</th>
                 <th></th>
+                <th></th>
             </thead>
             <tbody>
                 @foreach ($estimate_info as $estimate)
@@ -44,6 +45,10 @@
                             <td>{{ $estimate->construction_name }}</td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $estimate->department_name }}</td>
+                            <td><form action="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">
+                                @csrf
+                                <button>内訳明細書作成へ</button>
+                            </form></td>
                             <td><button type="button">閲覧</button></td>
                         </tr>
 
@@ -54,7 +59,7 @@
     </div>
 
     <div>
-        <form action="{{ route('salesperson_menu') }}" method="GET">
+        <form action="{{ route('salesperson_menu.get') }}" method="GET">
             @csrf
             <button>営業者メニュー</button>
         </form>

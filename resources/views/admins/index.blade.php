@@ -15,8 +15,6 @@
             <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい" value="{{ request()->input('search') }}">
             <button type="submit" class="btn btn-primary custom-margin">検索</button>
         </div>
-
-
     </form>
 
     <div>
@@ -39,9 +37,6 @@
                     <td>{{ $manager->department_name }}</td>
                     <td>
                         <a href="{{ route('admins.edit', $manager->id) }}" class="btn btn-dark">編集</a>
-                        <form action="{{ route('admins.destroy', $manager->id) }}" method="POST" style="display:inline;">
-
-                        </form>
                     </td>
                 </tr>
                 @endforeach
@@ -49,7 +44,7 @@
         </table>
 
         <div class="col-3 custom-margin-bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
-            <a href="{{ route('manager_menu.index') }}" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー画面へ</a>
+            <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー</button>
         </div>
     </div>
 </body>

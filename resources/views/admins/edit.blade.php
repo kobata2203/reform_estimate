@@ -1,4 +1,3 @@
-<!-- resources/views/admins/edit.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +10,9 @@
     <div>
         <h1>管理者編集画面</h1>
     </div>
-    <form action="{{ route('admins.update', $admin->id) }}" method="POST">
+    <form action="{{ route('admin.update', $admin->id) }}" method="POST">
         @csrf
-        @method('PUT') <!-- This is required to send a PUT request for updating -->
+        @method('PUT')
 
         <div class="form-group">
             <label for="name">氏名:</label>
@@ -33,11 +32,10 @@
         <div class="form-group">
             <label for="password">パスワード:</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="新しいパスワードを入力してください">
-            <!-- Leave this blank if you do not want to change the password -->
+            
         </div>
 
-        <button type="submit" class="btn btn-primary ">更新</button>
-
+        <button type="submit" class="btn btn-primary">更新</button>
     </form>
 </body>
 </html>

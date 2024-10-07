@@ -25,6 +25,7 @@ class ManagerinfoFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // Hash the password
             'department_name' => fake()->sentence(3),
+            'construction_name' => $this->faker->word,
         ];
     }
 }

@@ -25,17 +25,29 @@ class Breakdown extends Model
         'unit',
         'unit_price',
         'amount',
-        'remarks2',
+        'remarks',
+        'construction_name',
     ];
 
     public function estimate_info()
     {
-    return $this->belongsTo('App\Models\EstimateInfo');
+        return $this->belongsTo(EstimateInfo::class, 'estimate_info_id');
     }
 
     public function construction_name()
     {
     return $this->belongsTo('App\Models\ConstructionName');
     }
+
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
+    }
+
+    public function estimate()
+{
+    return $this->belongsTo(Estimate::class);
+}
 
 }

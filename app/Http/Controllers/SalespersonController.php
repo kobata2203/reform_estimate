@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Salesperson;
 use App\Models\Department;
-use Illuminate\Support\Facades\Hash; // Include Hash for password hashing
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class SalespersonController extends Controller
 {
     public function add()
     {
-        return view('salesperson_add');
+        return view('salesperson_add.index');
     }
 
     public function create(Request $request)
@@ -21,25 +22,41 @@ class SalespersonController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'department_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email', // Ensure email is unique
             'password' => 'required|string|min:6',
         ]);
 
-        $salesperson = new Salesperson;
-        $salesperson->id = $request->id; // Ensure this is necessary or handle it in a different way (usually ID is auto-generated)
-        $salesperson->name = $request->name;
-        $salesperson->department_name = $request->department_name;
-        $salesperson->password = Hash::make($request->password);
-        $salesperson->save();
+        // Debugging: Log validated data
+        \Log::info('Validated Data: ', $validated);
 
-        return redirect('/');
+
+        $user = new User;
+        $user->name = $request->name;
+        $user->department_name = $request->department_name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->input('password')); // Hash the password for security
+
+        if ($user->save()) {
+            // Debugging: Log success message
+            \Log::info('User saved successfully: ', [$user]);
+            return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
+        } else {
+            // Debugging: Log failure message
+            \Log::error('Failed to save user: ', [$user]);
+            return back()->withErrors('User could not be saved.');
+        }
     }
-
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $search = $request['search'] ?? '';
-        $salesperson = Salesperson::where('name', 'LIKE', '%' . $search . '%')->first();
-        $salesperson = Salesperson::where('department_name', 'LIKE', '%' . $search . '%')->first();
+        $user = User::findOrFail($id);
+        return view('manager_index.edit', compact('user'));
     }
+
+
+
+
+
+
 
     public function showForm()
     {
@@ -59,9 +76,50 @@ class SalespersonController extends Controller
         ]);
     }
 
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+    //     $query = Salesperson::query();
+
+    //     if ($request->filled('search')) {
+    //         $query->whereHas('department', function ($q) use ($request) {
+    //             $q->where('name', 'like', '%' . $request->search . '%');
+    //         });
+    //     }
+
+    //     $salespersons = $query->with('department')->get();
+    //     return view('manager_index.index', compact('salespersons'));
+    // }
+//     public function index()
+// {
+//     // Fetch the manager information from the database
+//     $manager_info = User::all();  // Or adjust as necessary based on your table structure
+
+    //     // Pass the variable to the view
+//     return view('manager_index.index', compact('manager_info'));
+// }
+
+public function index(Request $request)
+{
+    $keyword = $request->input('search');
+    $users = User::query();
+
+    if (!empty($keyword)) {
+        $users = $users->where('name', 'LIKE', "%{$keyword}%")
+            ->orWhere('email', 'LIKE', "%{$keyword}%")
+            ->orWhere('department_name', 'LIKE', "%{$keyword}%")
+            ->get();
+    } else {
+        $users = $users->get();
+    }
+
+    return view('manager_index.index', compact('users'));
+}
+
+
+
+    public function list(Request $request)
     {
-        $query = Salesperson::query();
+        $query = User::query();
 
         if ($request->filled('search')) {
             $query->whereHas('department', function ($q) use ($request) {
@@ -70,29 +128,47 @@ class SalespersonController extends Controller
         }
 
         $salespersons = $query->with('department')->get();
-        return view('manager_index.index', compact('salespersons'));
-
+        return view('salespersons.list', compact('salespersons'));
     }
 
-    //public function edit($data $id)
-    //{
-        //$data = SalespersonController::find($id);
-        //return view('edit', compact('data',"id"));
+    // In ManagerController.php
+    public function menu()
+    {
+        return view('manager_menu'); // Assuming you have a 'manager_menu.blade.php' file
+    }
 
-    //}
-
-    public function list(Request $request)
+    public function update(Request $request, $id)
 {
-    $query = Salesperson::query();
+    // Validate the request
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+        // Add other fields as necessary
+    ]);
 
-    if ($request->filled('search')) {
-        $query->whereHas('department', function ($q) use ($request) {
-            $q->where('name', 'like', '%' . $request->search . '%');
-        });
+
+    $users = User::findOrFail($id);
+
+
+    $users->update($validatedData);
+
+    // Redirect or return response
+    return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+}
+
+public function show($id)
+{
+    $users = User::findOrFail($id);
+    return view('salesperson.show', compact('salesperson')); // Adjust the view as needed
+}
+
+public function manager_menu()
+    {
+        return view('manager_menu/index');
     }
 
-    $salespersons = $query->with('department')->get();
-    return view('salespersons.list', compact('salespersons'));
-}
+
 
 }
+
+

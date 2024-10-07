@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
 use database\seeders\Adminseeder;
 
+
 class Admin extends User
 {
     use HasFactory, Notifiable;
@@ -16,6 +17,7 @@ class Admin extends User
         'department_name',
         'email',
         'password',
+
     ];
 
     protected $hidden = [
@@ -27,5 +29,10 @@ class Admin extends User
         'email_verified_at' => 'datetime',
     ];
 }
+
+
+
+
+
 
 
