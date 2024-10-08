@@ -17,8 +17,9 @@ use setasign\Fpdi\Tcpdf\Fpdi;
 use TCPDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Mpdf\Mpdf;
-use TCPDF_FONTS;
+use Mccarlosen\LaravelMpdf\Facades\Mpdf; // Make sure to import the correct namespace
+use Mpdf\MpdfException; // Import the exception class for mPDF
+
 
 
 
@@ -180,24 +181,24 @@ class ManagerController extends Controller
 //         return view('manager_menu.item', compact('breakdown', 'id as estimate_id')); // Pass the ID as estimate_id
 //     }
 // THis was previously made for VIEW PDF
-    public function generatePDF()
-    {
-        // Fetch all breakdown data from the 'breakdown' table
-        $breakdown = Breakdown::all(); // Retrieve all records
+    // public function generatePDF()
+    // {
+    //     // Fetch all breakdown data from the 'breakdown' table
+    //     $breakdown = Breakdown::all(); // Retrieve all records
 
-        // Calculate the total amount, discount, etc.
-        $totalAmount = $breakdown->sum('amount'); // Sum of amounts
-        $discount = 1000; // Example discount value
-        $subtotal = $totalAmount - $discount; // Subtotal after discount
-        $tax = $subtotal * 0.1; // 10% tax calculation
-        $grandTotal = $subtotal + $tax; // Total after tax
+    //     // Calculate the total amount, discount, etc.
+    //     $totalAmount = $breakdown->sum('amount'); // Sum of amounts
+    //     $discount = 1000; // Example discount value
+    //     $subtotal = $totalAmount - $discount; // Subtotal after discount
+    //     $tax = $subtotal * 0.1; // 10% tax calculation
+    //     $grandTotal = $subtotal + $tax; // Total after tax
 
-        // Pass data to the PDF view
-        $pdf = PDF::loadView('manager_menu.pdf', compact('breakdown', 'subtotal', 'tax', 'grandTotal', 'discount'))->setPaper('A4', 'portrait');
+    //     // Pass data to the PDF view
+    //     $pdf = PDF::loadView('manager_menu.pdf', compact('breakdown', 'subtotal', 'tax', 'grandTotal', 'discount'))->setPaper('A4', 'portrait');
 
-        // Return the generated PDF
-        return $pdf->stream('item.pdf'); // Stream the PDF to the browser
-    }
+    //     // Return the generated PDF
+    //     return $pdf->stream('item.pdf'); // Stream the PDF to the browser
+    // }
 
 
 
@@ -214,45 +215,45 @@ class ManagerController extends Controller
     }
 
 
-    public function pdfget($id)
-    {
-        // Retrieve the breakdown data for the given estimate_id (or however you want to relate it)
-        $breakdown = Breakdown::where('estimate_id', $id)->get();
+    // public function pdfget($id)
+    // {
+    //     // Retrieve the breakdown data for the given estimate_id (or however you want to relate it)
+    //     $breakdown = Breakdown::where('estimate_id', $id)->get();
 
-        // Pass the data to the view
-        //    return view(view: 'manager_menu.item', compact('breakdown'));
-        // Fetch breakdown data from the database
-        // $breakdown = Breakdown::latest()->get();
+    //     // Pass the data to the view
+    //     //    return view(view: 'manager_menu.item', compact('breakdown'));
+    //     // Fetch breakdown data from the database
+    //     // $breakdown = Breakdown::latest()->get();
 
-        // Perform necessary calculations for the totals
-        $subtotal = $breakdown->sum('amount');
-        $discount = 0; // Assuming there's a discount, adjust this value as necessary
-        $taxRate = 0.10; // 10% tax rate
-        $tax = $subtotal * $taxRate;
-        $grandTotal = $subtotal + $tax - $discount;
+    //     // Perform necessary calculations for the totals
+    //     $subtotal = $breakdown->sum('amount');
+    //     $discount = 0; // Assuming there's a discount, adjust this value as necessary
+    //     $taxRate = 0.10; // 10% tax rate
+    //     $tax = $subtotal * $taxRate;
+    //     $grandTotal = $subtotal + $tax - $discount;
 
-        // Pass the data to the Blade view and render it as a PDF
-        $pdfView = view('manager_menu.pdftrail', [
-            'id' => $id,
-            'breakdown' => $breakdown,
-            'subtotal' => $subtotal,
-            'discount' => $discount,
-            'tax' => $tax,
-            'grandTotal' => $grandTotal
-        ])->render();
-        // Initialize mPDF
-        $mpdf = new \Mpdf\Mpdf();
+    //     // Pass the data to the Blade view and render it as a PDF
+    //     $pdfView = view('manager_menu.pdftrail', [
+    //         'id' => $id,
+    //         'breakdown' => $breakdown,
+    //         'subtotal' => $subtotal,
+    //         'discount' => $discount,
+    //         'tax' => $tax,
+    //         'grandTotal' => $grandTotal
+    //     ])->render();
+    //     // Initialize mPDF
+    //     $mpdf = new \Mpdf\Mpdf();
 
-        // Enable auto language and font detection for Japanese text
-        $mpdf->autoScriptToLang = true;
-        $mpdf->autoLangToFont = true;
+    //     // Enable auto language and font detection for Japanese text
+    //     $mpdf->autoScriptToLang = true;
+    //     $mpdf->autoLangToFont = true;
 
-        // Write the rendered Blade HTML into the PDF
-        $mpdf->WriteHTML($pdfView);
+    //     // Write the rendered Blade HTML into the PDF
+    //     $mpdf->WriteHTML($pdfView);
 
-        // Output the PDF for download
-        $mpdf->Output('Breakdown_Statement.pdf', dest: 'I'); // 'D' forces download
-    }
+    //     // Output the PDF for download
+    //     $mpdf->Output('Breakdown_Statement.pdf', dest: 'I'); // 'D' forces download
+    // }
 
 
 
@@ -266,7 +267,7 @@ class ManagerController extends Controller
     $breakdown = Breakdown::where('estimate_id', $id)->get();
 
     // Create new PDF document
-    $pdf = new TCPDF("L", "mm", "A4", true, "UTF-8");
+    $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
     $pdf->AddPage();
@@ -291,23 +292,23 @@ class ManagerController extends Controller
 
     // Add header for the breakdown table
     $pdf->SetFillColor(220, 220, 220); // Set fill color for header background
-    $pdf->Cell(45, 10, '工事項目', 1, 0, 'C', true); // Header for construction item
-    $pdf->Cell(60, 10, '仕様', 1, 0, 'C', true); // Header for specification
-    $pdf->Cell(35, 10, '数量', 1, 0, 'C', true); // Header for quantity
-    $pdf->Cell(35, 10, '単位', 1, 0, 'C', true); // Header for unit
-    $pdf->Cell(35, 10, '単価', 1, 0, 'C', true); // Header for unit price
-    $pdf->Cell(35, 10, '金額', 1, 0, 'C', true); // Header for amount
-    $pdf->Cell(35, 10, '備考', 1, 1, 'C', true); // Header for remarks
+    $pdf->Cell(25, 10, '工事項目', 1, 0, 'C', true); // Header for construction item
+    $pdf->Cell(83, 10, '仕様', 1, 0, 'C', true); // Header for specification
+    $pdf->Cell(15, 10, '数量', 1, 0, 'C', true); // Header for quantity
+    $pdf->Cell(15, 10, '単位', 1, 0, 'C', true); // Header for unit
+    $pdf->Cell(15, 10, '単価', 1, 0, 'C', true); // Header for unit price
+    $pdf->Cell(20, 10, '金額', 1, 0, 'C', true); // Header for amount
+    $pdf->Cell(25, 10, '備考', 1, 1, 'C', true); // Header for remarks
 
     // Loop through breakdown items and add data rows
     foreach ($breakdown as $item) {
-        $pdf->Cell(45, 10, $item->construction_item, 1);
-        $pdf->Cell(60, 10, $item->specification, 1);
-        $pdf->Cell(35, 10, $item->quantity, 1);
-        $pdf->Cell(35, 10, $item->unit, 1);
-        $pdf->Cell(35, 10, number_format($item->unit_price), 1);
-        $pdf->Cell(35, 10, number_format($item->amount), 1);
-        $pdf->Cell(35, 10, $item->remarks, 1);
+        $pdf->Cell(25, 10, $item->construction_item, 1);
+        $pdf->Cell(83, 10, $item->specification, 1);
+        $pdf->Cell(15, 10, $item->quantity, 1);
+        $pdf->Cell(15, 10, $item->unit, 1);
+        $pdf->Cell(15, 10, number_format($item->unit_price), 1);
+        $pdf->Cell(20, 10, number_format($item->amount), 1);
+        $pdf->Cell(25, 10, $item->remarks, 1);
         $pdf->Ln();
     }
 
@@ -319,12 +320,12 @@ class ManagerController extends Controller
     $grandTotal = $subtotal + $tax;
 
     // Output totals below the breakdown table
-    $pdf->Cell(210, 10, '小計（税抜）:', 1, 0, 'R');
-    $pdf->Cell(35, 10, number_format($subtotal), 1, 1);
-    $pdf->Cell(210, 10, '消費税（10%）:', 1, 0, 'R');
-    $pdf->Cell(35, 10, number_format($tax), 1, 1);
-    $pdf->Cell(210, 10, '合計（税込）:', 1, 0, 'R');
-    $pdf->Cell(35, 10, number_format($grandTotal), 1, 1);
+    $pdf->Cell(153, 10, '小計（税抜）:', 1, 0, 'R');
+    $pdf->Cell(20, 10, number_format($subtotal), 1, 1);
+    $pdf->Cell(153, 10, '消費税（10%）:', 1, 0, 'R');
+    $pdf->Cell(20, 10, number_format($tax), 1, 1);
+    $pdf->Cell(153, 10, '合計（税込）:', 1, 0, 'R');
+    $pdf->Cell(20, 10, number_format($grandTotal), 1, 1);
 
     // Output the PDF
     $pdf->Output("output.pdf", "I");
@@ -343,7 +344,7 @@ public function PDFshow($id)
     // Initialize mPDF for generating PDF
     $mpdf = new \Mpdf\Mpdf([
         'mode' => 'utf-8',
-        'format' => 'A4-L', // Landscape A4
+        'format' => 'A4-P', // Landscape A4
         'autoScriptToLang' => true,
         'autoLangToFont' => true,
     ]);

@@ -185,6 +185,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        
         /*
          * Package Service Providers...
          */
@@ -215,8 +216,13 @@ return [
 
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
 
-        'PDF' => Barryvdh\DomPDF\Facade::class,
+         'DomPDF' => Barryvdh\DomPDF\Facade::class,
+
+         'Pdf' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class,
+
     ])->toArray(),
+
+
 
 
 ];

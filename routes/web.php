@@ -67,10 +67,10 @@ Route::get('/estimate/breakdown_create/{id}', [App\Http\Controllers\EstimateCont
 Route::post('/estimate/breakdown_store', [App\Http\Controllers\EstimateController::class, 'breakdown_store'])->name('estimate.breakdown_store');
 
 //salesperson Menu
-Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
+//Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
 
-Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu.get');
-Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu.post');
+Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 
 
 
@@ -212,7 +212,7 @@ Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('
 //togenerate pdf
 
 #to view pdf
-Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
+// Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
 
 #to print pdf
 // Route::get('/print-pdf', [ManagerController::class, 'printPDF'])->name('pdf.print');

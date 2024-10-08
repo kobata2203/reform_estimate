@@ -49,7 +49,7 @@
             position: absolute; /* Use absolute positioning for placement */
             bottom: 50px; /* Adjust as needed */
             right: 20px; /* Adjust as needed */
-            margin-bottom:310px;
+            margin-bottom:640px;
 
         }
     </style>
