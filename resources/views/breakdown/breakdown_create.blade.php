@@ -44,7 +44,7 @@
                     @php
                         $j = DB::{'construction_name'->loop_count}
                     @endphp
-                    @for($i = 0;$i < $j;$i++)
+                    @for($i = 1;$i < $j;$i++)
                         <tr>
                             <td><input id="construction_item1" type="text" name="construction_item[$i]" placeholder="既存洗い場タイル解体" value="既存洗い場タイル解体"></td>
                             <td><input id="specification1" type="text" name="specification[$i]"></input></td>

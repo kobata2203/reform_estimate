@@ -63,7 +63,7 @@
         <td>
           <select id="construction_id" type="text" name="construction_id" required>
             @foreach($construction_name as $construction)
-              <option value={{ $construction ->construction_id }}>{{ $construction ->construction_name }}</option>
+              <option value={{ $construction ->construction_id }}@if($construction['construction_name'] === $construction['construction_id']) selected @endif>{{ $construction ->construction_name }}</option>
             @endforeach
           </select>
         </td>
@@ -72,3 +72,12 @@
 
     <button type="submit">登録</button>
 </form>
+
+<script>
+// 選択されている<option>要素を取り出す
+    var selected = $("#construction_id").children("option:selected"); //「option」は省略可
+
+    // 値とテキストを取り出す
+    var selectedValue = selected.val();
+    var selectedText = selected.text();
+</script>

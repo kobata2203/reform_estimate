@@ -49,7 +49,7 @@
                                 @csrf
                                 <button>内訳明細書作成へ</button>
                             </form></td>
-                            <td><button type="button">閲覧</button></td>
+                            <td><a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
                         </tr>
 
                     </div>
@@ -59,7 +59,7 @@
     </div>
 
     <div>
-        <form action="{{ route('salesperson_menu.get') }}" method="GET">
+        <form action="{{ route('salesperson_menu') }}" method="GET">
             @csrf
             <button>営業者メニュー</button>
         </form>

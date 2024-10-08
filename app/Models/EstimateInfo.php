@@ -19,7 +19,7 @@ class EstimateInfo extends Model
         'customer_name',
         'creation_date',
         'construction_id',
-        //'construction_name',
+        'construction_name',
         'delivery_place',
         'construction_period',
         'subject_name',

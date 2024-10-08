@@ -7,7 +7,6 @@ use App\Models\EstimateInfo;
 use App\Models\ConstructionName;
 use App\Models\Breakdown;
 use Illuminate\Support\Facades\DB;
-use App\Models\Breakdown;
 
 class EstimateController extends Controller
 {
@@ -34,7 +33,7 @@ class EstimateController extends Controller
     {
         $construction_name = ConstructionName::all();
         //dd($construction_name);
-        return view('tcpdf.index',compact('construction_name'));
+        return view('cover.index',compact('construction_name'));
     }
 
     public function store(Request $request,ConstructionName $construction_name)
@@ -48,13 +47,16 @@ class EstimateController extends Controller
             //'delivery_place' => 'required',
             //'construction_period' => 'required',
             //'payment_type' => 'required',
+            //'expiration_date' => 'required',
+            //'charger_name' => 'required',
+            //'department_name' => 'required',
         //]);
 
         //$construction_id = $request->input('contruction_id');
         $construction_name = ConstructionName::all();
 
         $estimate_info = new EstimateInfo();
-        $estimate_info->join('estimate_info', 'construction_name.construction_name', '=', 'estimate_info.construction_name');
+        //$estimate_info->join('estimate_info', 'construction_name.construction_name', '=', 'estimate_info.construction_name');
         //$estimate_info->$id = id();
         $estimate_info->creation_date = date("Y年m月d日");
         $estimate_info->customer_name = $request->customer_name;
@@ -68,9 +70,10 @@ class EstimateController extends Controller
         $estimate_info->department_name = $request->department_name;
         $estimate_info->construction_id = $request->construction_id;
         //$estimate_info->construction_id = $construction_id;
-        $estimate_info->construction_name = $estimate_info->construction_name;
-        //$estimate_info->construction_id = $request->construction_id;
         //dd($estimate_info);
+        $estimate_info->construction_name = $request->construction_name;
+        //$estimate_info->construction_id = $request->construction_id;
+        dd($estimate_info);
         $estimate_info->save();
 
         DB::commit();
@@ -81,9 +84,12 @@ class EstimateController extends Controller
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
     {
         $estimate_info = EstimateInfo::find($id);
+
+        //$construction_item = ConstructionItem::all();
+
         //$construction_name = ConstructionName::find();
         //dd($estimate_info);
-        return view('tcpdf.breakdown_index', ['id' => $id],['estimate_info' => $estimate_info],['construction_name' => $construction_name]);
+        return view('breakdown.breakdown_create', ['id' => $id],['estimate_info' => $estimate_info],['construction_name' => $construction_name]);
     }
 
     public function breakdown_store(Request $request ,EstimateInfo $estimate_info)
@@ -91,9 +97,9 @@ class EstimateController extends Controller
         //$estimate_info = EstimateInfo::find($id);
 
         //$j = 0;
-        $j = count($request['construction_item'])-1;
+        $j = count($request['construction_item']);
         //dd($j);
-        for($i = 0;$i < $j;$i++){
+        for($i = 1;$i < $j;$i++){
         $breakdown = new Breakdown;
         //dd($i);
         //echo($request->construction_id);

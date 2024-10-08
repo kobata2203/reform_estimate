@@ -422,40 +422,241 @@ class ConstructionItemSeeder extends Seeder
                 'item' => '各所役物',
                 'construction_id' => '12'
             ],[
-                'item_id' => '87',
-                'item' => 'ルーフィング新設',
-                'construction_id' => '11'
-            ],[
-                'item_id' => '88',
-                'item' => 'ガルバ新設',
-                'construction_id' => '11'
-            ],[
-                'item_id' => '89',
-                'item' => '各所役物',
-                'construction_id' => '11'
-            ],[
-                'item_id' => '90',
+                'item_id' => '102',
                 'item' => '各所板金',
-                'construction_id' => '11'
+                'construction_id' => '12'
             ],[
-                'item_id' => '91',
+                'item_id' => '103',
                 'item' => '水切り',
-                'construction_id' => '11'
+                'construction_id' => '12'
             ],[
-                'item_id' => '92',
+                'item_id' => '104',
                 'item' => '各所シーリング',
-                'construction_id' => '11'
+                'construction_id' => '12'
             ],[
-                'item_id' => '93',
+                'item_id' => '105',
                 'item' => '資材運搬費',
-                'construction_id' => '11'
+                'construction_id' => '12'
             ],[
-                'item_id' => '94',
+                'item_id' => '106',
+                'item' => '廃材処分費',
+                'construction_id' => '12'
+            ],[
+                'item_id' => '107',
                 'item' => '諸経費',
-                'construction_id' => '11'
+                'construction_id' => '12'
             ],[
-                'item_id' => '48',
+                'item_id' => '108',
+                'item' => '仮設足場',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '109',
+                'item' => '既存屋根材撤去',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '110',
+                'item' => '下地新設',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '111',
+                'item' => 'ルーフィング新設',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '112',
+                'item' => 'ガルバ新設',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '113',
+                'item' => '各所役物',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '114',
+                'item' => '各所板金',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '115',
+                'item' => '水切り',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '116',
+                'item' => '各所シーリング',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '117',
+                'item' => '資材運搬費',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '118',
+                'item' => '廃材処分費',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '119',
+                'item' => '諸経費',
+                'construction_id' => '13'
+            ],[
+                'item_id' => '120',
+                'item' => '仮設足場',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '121',
+                'item' => '既存屋根材撤去',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '122',
+                'item' => '既存土撤去',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '123',
+                'item' => '下地新設',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '124',
+                'item' => 'ルーフィング新設',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '125',
+                'item' => '瓦新設',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '126',
+                'item' => '各所役物',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '127',
+                'item' => '各所板金',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '128',
+                'item' => '水切り',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '129',
+                'item' => '各所シーリング',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '130',
+                'item' => '資材運搬費',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '131',
+                'item' => '廃材処分費',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '132',
+                'item' => '諸経費',
+                'construction_id' => '14'
+            ],[
+                'item_id' => '133',
+                'item' => '床下整地',
+                'construction_id' => '15'
+            ],[
+                'item_id' => '134',
+                'item' => '調湿材',
+                'construction_id' => '15'
+            ],[
+                'item_id' => '135',
+                'item' => '資材運搬費',
+                'construction_id' => '15'
+            ],[
+                'item_id' => '136',
+                'item' => '諸経費',
+                'construction_id' => '15'
+            ],[
+                'item_id' => '137',
+                'item' => '基礎扱きケレン作業',
+                'construction_id' => '16'
+            ],[
+                'item_id' => '138',
+                'item' => 'タックダイン塗布',
+                'construction_id' => '16'
+            ],[
+                'item_id' => '139',
+                'item' => 'タックダイン塗布（2回目）',
+                'construction_id' => '16'
+            ],[
+                'item_id' => '140',
+                'item' => '資材運搬費',
+                'construction_id' => '16'
+            ],[
+                'item_id' => '141',
+                'item' => '諸経費',
+                'construction_id' => '16'
+            ],[
+                'item_id' => '142',
+                'item' => '基礎扱きケレン作業',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '143',
+                'item' => '立ち上がり部分彫り込み',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '144',
+                'item' => 'タックダイン塗布',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '145',
+                'item' => 'タックダイン塗布（2回目）',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '146',
+                'item' => '資材運搬費',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '147',
+                'item' => '諸経費',
+                'construction_id' => '17'
+            ],[
+                'item_id' => '148',
+                'item' => '基礎扱きケレン作業',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '149',
+                'item' => 'タックダイン塗布',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '150',
                 'item' => 'アラミド繊維貼り付け',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '151',
+                'item' => 'タックダイン塗布（2回目）',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '152',
+                'item' => '資材運搬費',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '153',
+                'item' => '諸経費',
+                'construction_id' => '18'
+            ],[
+                'item_id' => '154',
+                'item' => '基礎扱きケレン作業',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '155',
+                'item' => '立ち上がり部分彫り込み',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '156',
+                'item' => 'タックダイン塗布',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '157',
+                'item' => 'アラミド繊維貼り付け',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '158',
+                'item' => 'タックダイン塗布（2回目）',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '159',
+                'item' => '資材運搬費',
+                'construction_id' => '19'
+            ],[
+                'item_id' => '160',
+                'item' => '諸経費',
+                'construction_id' => '19'
             ]]);
 
     }

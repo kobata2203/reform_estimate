@@ -25,8 +25,8 @@ class Breakdown extends Model
         'unit',
         'unit_price',
         'amount',
-        'remarks',
-        'construction_name',
+        'remarks2',
+        'construction_name'
     ];
 
     public function estimate_info()
