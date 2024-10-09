@@ -32,8 +32,8 @@ class EstimateController extends Controller
 
     public function create()
     {
-        $construction_name = ConstructionName::all();
-        //dd($construction_name);
+        $construction_name = \DB::table('construction_name')->get();
+
         return view('cover.index',compact('construction_name'));
     }
 
@@ -41,102 +41,8 @@ class EstimateController extends Controller
     {
         DB::beginTransaction();
 
-        //$request->validate([
-            //'customer_name' => 'required',
-            //'creation_date' => 'required',
-            //'subject_name' => 'required',
-            //'delivery_place' => 'required',
-            //'construction_period' => 'required',
-            //'payment_type' => 'required',
-            //'expiration_date' => 'required',
-            //'charger_name' => 'required',
-            //'department_name' => 'required',
-        //]);
-
-        $construction_name=([[
-            'construction_id' => '1',
-            'construction_name' => '外壁塗装工事a',
-            'loop_count' => '10'
-        ],[
-            'construction_id' => '2',
-            'construction_name' => '外壁塗装工事b',
-            'loop_count' => '11'
-        ],[
-            'construction_id' => '3',
-            'construction_name' => '外壁重ね張り工事',
-            'loop_count' => '10'
-        ],[
-            'construction_id' => '4',
-            'construction_name' => '浴室改修工事　※タイルのみ',
-            'loop_count' => '6'
-        ],[
-            'construction_id' => '5',
-            'construction_name' => '浴室改修工事　※バスナフローレのみ',
-            'loop_count' => '5'
-        ],[
-            'construction_id' => '6',
-            'construction_name' => '浴室改修工事　※タイル・浴槽',
-            'loop_count' => '7'
-        ],[
-            'construction_id' => '7',
-            'construction_name' => '浴室改修工事　※バスナ・浴槽',
-            'loop_count' => '7'
-        ],[
-            'construction_id' => '8',
-            'construction_name' => '浴室改修工事　※タイル・浴槽・壁',
-            'loop_count' => '8'
-        ],[
-            'construction_id' => '9',
-            'construction_name' => '浴室改修工事　※バスナ・浴槽・壁',
-            'loop_count' => '8'
-        ],[
-            'construction_id' => '10',
-            'construction_name' => 'システムバス工事',
-            'loop_count' => '12'
-        ],[
-            'construction_id' => '11',
-            'construction_name' => '屋根重ね張り工事',
-            'loop_count' => '10'
-        ],[
-            'construction_id' => '12',
-            'construction_name' => '屋根葺き替え工事　※瓦→他',
-            'loop_count' => '13'
-        ],[
-            'construction_id' => '13',
-            'construction_name' => '屋根葺き替え工事　※他→他',
-            'loop_count' => '12'
-        ],[
-            'construction_id' => '14',
-            'construction_name' => '屋根葺き替え工事　※瓦→瓦',
-            'loop_count' => '13'
-        ],[
-            'construction_id' => '15',
-            'construction_name' => '調湿材工事',
-            'loop_count' => '4'
-        ],[
-            'construction_id' => '16',
-            'construction_name' => '基礎補強工事　※ベタ基礎の場合',
-            'loop_count' => '5'
-        ],[
-            'construction_id' => '17',
-            'construction_name' => '基礎補強工事　※土の場合',
-            'loop_count' => '6'
-        ],[
-            'construction_id' => '18',
-            'construction_name' => 'アラミド基礎補強工事　※ベタ基礎の場合',
-            'loop_count' => '6'
-        ],[
-            'construction_id' => '19',
-            'construction_name' => 'アラミド基礎補強工事　※土の場合',
-            'loop_count' => '7'
-        ]]);
-
-        //$construction_id = $request->input('contruction_id');
-        $construction_name = ConstructionName::all();
-
         $estimate_info = new EstimateInfo();
-        //$estimate_info->join('estimate_info', 'construction_name.construction_name', '=', 'estimate_info.construction_name');
-        //$estimate_info->$id = id();
+
         $estimate_info->creation_date = date("Y年m月d日");
         $estimate_info->customer_name = $request->customer_name;
         $estimate_info->subject_name = $request->subject_name;
@@ -148,11 +54,7 @@ class EstimateController extends Controller
         $estimate_info->charger_name = $request->charger_name;
         $estimate_info->department_name = $request->department_name;
         $estimate_info->construction_id = $request->construction_id;
-        //$estimate_info->construction_id = $construction_id;
-        //dd($estimate_info);
-        $estimate_info->construction_name = $request->construction_name;
-        //$estimate_info->construction_id = $request->construction_id;
-        dd($estimate_info);
+
         $estimate_info->save();
 
         DB::commit();
