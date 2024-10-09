@@ -32,10 +32,17 @@
         <div class="form-group">
             <label for="password">パスワード:</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="新しいパスワードを入力してください">
-            
+
         </div>
 
         <button type="submit" class="btn btn-primary">更新</button>
     </form>
+    <div class="bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
+        <button type="button"
+                onclick="window.location.href='{{ route('manager_menu') }}'"
+                class="btn btn-primary custom-margin custom-border mb-3"
+                style="width: 120px; height: 40px; float: right;">管理者メニュー
+        </button>
+    </div>
 </body>
 </html>

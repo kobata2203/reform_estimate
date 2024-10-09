@@ -112,3 +112,12 @@ button {
 .custom-margin {
     margin: 10px; /* Example of custom margin, adjust as needed */
 }
+
+
+.estimate {
+    margin: 5px;          /* Adds 20px margin on all sides */
+    padding: 5px;
+}
+
+
+

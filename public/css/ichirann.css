@@ -328,13 +328,13 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 /* Specific styles for header */
 .estimate-item-table th {
-    background-color: #d9e4f5; /* Light blue for header */
+    background-color: #b0b4ba; /* Light blue for header */
     font-weight: bold; /* Bold text for header */
 }
 
 /* Optional: You can customize other styles as needed */
 .estimate-item-table tr:hover {
-    background-color: #f1f1f1; /* Highlight row on hover */
+    background-color: #7f7a7a; /* Highlight row on hover */
 }
 /* for 内訳明細書 buttons */
 

@@ -13,7 +13,9 @@
         <p>見積書一覧画面<br>（管理者用）</p>
     </div>
 
-    <div>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</div>
+    <div class="estimate">
+        見積書発行日, お客様名, 工事名, 営業担当, 営業部署
+    </div>
     <div>
         <form action="{{ route('manager_estimate') }}" method="GET">
 

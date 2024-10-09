@@ -63,7 +63,7 @@
         <td>
           <select id="construction_id" type="text" name="construction_id" required>
             @foreach($construction_name as $construction)
-              <option value={{ $construction ->construction_id }}@if($construction['construction_name'] === $construction['construction_id']) selected @endif>{{ $construction ->construction_name }}</option>
+              <option value={{ $construction ->construction_id }}@if($construction_name['construction_name'] === $construction) selected @endif>{{ $construction ->construction_name }}</option>
             @endforeach
           </select>
         </td>

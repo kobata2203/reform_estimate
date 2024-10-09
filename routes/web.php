@@ -212,7 +212,7 @@ Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('
 //togenerate pdf
 
 #to view pdf
-Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
+// Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
 
 #to print pdf
 // Route::get('/print-pdf', [ManagerController::class, 'printPDF'])->name('pdf.print');

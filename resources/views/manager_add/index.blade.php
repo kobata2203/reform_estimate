@@ -56,7 +56,7 @@
 
             <div class="button-container">
                 <button type="submit">登録</button>
-                <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">管理者メニュー</button>
+                <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">管理者<br>メニュー</button>
             </div>
         </form>
     </div>
