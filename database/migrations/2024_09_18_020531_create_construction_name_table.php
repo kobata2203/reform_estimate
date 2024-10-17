@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id('construction_id');
             $table->string('construction_name');
             $table->integer('loop_count');
-            $table->biginteger('item_id');
             $table->timestamps();
 
             //$table->foreign('construction_id')->references('construction_id')->on('estimate_info');

@@ -13,11 +13,6 @@ return new class extends Migration
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
             $table->string('construction_name');
-            $table->timestamps();
-
-            $table->id(); // This should only be declared once
-
-            $table->id()->nullable();
             $table->string('customer_name')->nullable();
             $table->string('name')->nullable();
             $table->string('creation_date')->nullable();
@@ -31,7 +26,6 @@ return new class extends Migration
             $table->string('department_name')->nullable();
             //$table->foreignId('construction_id')->constrained('construction_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
-            $table->string('construction_name')->nullable();
             $table->string('construction_item')->nullable();
             $table->string('specification')->nullable();
             $table->integer('quantity')->nullable();

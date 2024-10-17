@@ -43,6 +43,10 @@ form {
     color: #333;
 }
 
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
 /* Input styling */
 .form-group input {
     width: 75%;
@@ -60,8 +64,8 @@ form {
     outline: none;
 }
 
-/* Button styling */
-/* button {
+
+button {
     background-color: #007bff;
     color: white;
     border: none;
@@ -69,11 +73,106 @@ form {
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 1rem;
+    margin-top: 2rem;
     display: block;
-    width: 100%;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-} */
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.form-group select {
+    width: 75%; /* Adjust as needed for your layout */
+    border: 2px solid #007bff; /* Same border as the input */
+    border-radius: 4px; /* Same border radius */
+    padding: 8px; /* Same padding */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    margin-top: 8px; /* Match the top margin */
+    appearance: none; /* Optional: Removes default dropdown arrow */
+}
+
+/* Optional: Add a custom arrow for the dropdown */
+.form-group {
+    position: relative; /* Required for positioning the custom arrow */
+}
+
+.form-group select::after {
+    content: ''; /* Creates a custom arrow */
+    position: absolute;
+    top: 50%; /* Center the arrow vertically */
+    right: 10px; /* Space from the right */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333; /* Arrow color */
+    pointer-events: none; /* Ensure the arrow doesn't capture clicks */
+}
+
+
+/* Below this is the input is below the label */
+/*
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+
+h1 {
+    text-align: center;
+    background-color: orange;
+    color: white;
+    padding: 15px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #333;
+}
+
+
+.form-group input, .form-group select {
+    width: 100%;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+    outline: none;
+}
 
 button {
     background-color: #007bff;
@@ -86,11 +185,8 @@ button {
     margin-top: 1rem;
     display: block;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-/* Button hover effect */
 button:hover {
     background-color: #0056b3;
-}
+} */

@@ -42,12 +42,12 @@ class Breakdown extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); 
     }
 
     public function estimate()
 {
-    return $this->belongsTo(Estimate::class);
+    return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
 }
 
 }

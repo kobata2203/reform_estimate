@@ -36,13 +36,14 @@
         </div>
 
         <button type="submit" class="btn btn-primary">更新</button>
+        <div class="bottom mb-3 text-right mr-3">
+            <button type="button"
+                    onclick="window.location.href='{{ route('manager_menu') }}'"
+                    class="btn btn-primary custom-margin custom-border"
+                    style="width: 50%; height: 40px;">管理者メニュー
+            </button>
+        </div>
     </form>
-    <div class="bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
-        <button type="button"
-                onclick="window.location.href='{{ route('manager_menu') }}'"
-                class="btn btn-primary custom-margin custom-border mb-3"
-                style="width: 120px; height: 40px; float: right;">管理者メニュー
-        </button>
-    </div>
+   
 </body>
 </html>

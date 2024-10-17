@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
 use App\Models\Breakdown;
 use App\Models\Estimate;
+use App\Models\EstimateCalculate;
 use Barryvdh\DomPDF\Facade\PDF;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use TCPDF;
@@ -136,33 +137,83 @@ class ManagerController extends Controller
     }
 
     public function show($id)
-    {
-        // Fetch the estimate info by ID
-        $estimate_info = EstimateInfo::findOrFail($id);
+{
+    // Fetch the estimate info by ID
+    $estimate_info = EstimateInfo::findOrFail($id);
 
-        // Pass the estimate_info data to the view
-        return view('manager_menu.show', ['estimate_info' => $estimate_info]);
+    // Fetch related breakdown data for calculation
+    $breakdown = Breakdown::where('estimate_id', $id)->get(); // Adjust based on your relationships
+
+    // Calculate the total amount
+    $totalAmount = 0;
+    foreach ($breakdown as $item) {
+        $totalAmount += $item->amount;
     }
 
-    public function itemView($id)
+    // Discount example
+    $discount = 0; // You might have this stored in your database or some logic to calculate it
+
+    // Calculate subtotal, tax, and grand total
+    $subtotal = $totalAmount - $discount;
+    $tax = $subtotal * 0.1;
+    $grandTotal = $subtotal + $tax;
+
+    // Pass the estimate_info, breakdown, and grandTotal to the view
+    return view('manager_menu.show', [
+        'estimate_info' => $estimate_info,
+        'grandTotal' => $grandTotal // Pass the grand total to the view
+    ]);
+}
+
+
+public function itemView($id)
 {
-    // Fetch necessary data related to the $id (e.g., from Estimate or Breakdown models)
-    $estimate_info = Estimate::find($id);
+    // Fetch necessary data related to the $id (from Estimate and Breakdown models)
+    $estimate_info = Estimate::find($id); // Fetch the estimate record
+    if (!$estimate_info) {
+        return redirect()->back()->withErrors(['error' => 'Estimate not found']);
+    }
 
+    $breakdown = Breakdown::where('estimate_id', $id)->get(); // Fetch breakdown related to estimate
 
+    // Calculate totalAmount from breakdown
+    $totalAmount = 0;
+    foreach ($breakdown as $item) {
+        $totalAmount += $item->amount; // Sum of all amounts
+    }
 
-    $breakdown = Breakdown::where('estimate_id', $id)->get();
+    // Fetch estimate_calculate record or create a new one if it doesn't exist
+    $estimate_calculate = EstimateCalculate::firstOrNew(['estimate_id' => $id]); // Ensure estimate_id is set
 
-    // Calculate totals, etc.
-    $subtotal = $breakdown->sum('amount');
-    $discount = 0;
-    $taxRate = 0.10;
-    $tax = $subtotal * $taxRate;
-    $grandTotal = $subtotal + $tax - $discount;
+    // Set special_discount, default to 0 if null
+    $discount = $estimate_calculate->special_discount ?? 0;
+
+    // Perform calculations
+    $subtotal = $totalAmount - $discount;
+    $tax = $subtotal * 0.1;
+    $grandTotal = $subtotal + $tax;
+
+    // Save or update the estimate_calculate record
+    $estimate_calculate->estimate_id = $id; // Set the estimate_id
+    $estimate_calculate->special_discount = $discount; // Ensure special_discount is saved
+    $estimate_calculate->subtotal_price = $subtotal;
+    $estimate_calculate->consumption_tax = $tax;
+    $estimate_calculate->total_price = $grandTotal;
+
+    // Save the changes
+    try {
+        $estimate_calculate->save(); // Save the changes
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Handle any errors during save
+        return redirect()->back()->withErrors(['error' => 'Error saving estimate calculations: ' . $e->getMessage()]);
+    }
 
     // Pass all data to the view
     return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
 }
+
+
+
 
 
     public function breakdowns()
@@ -275,17 +326,11 @@ class ManagerController extends Controller
     // Set the font - ensure the font is installed and path is correct
     $pdf->AddFont('kozgopromedium', '', 'kozgopromedium.php'); // Adjust the path as necessary
     $pdf->SetFont('kozgopromedium', '', 12);
-
     $pdf->SetFillColor(220, 220, 220);
     // Add title
-
-
     $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
     $pdf->Ln(5);
-
-
     $pdf->Cell(0,10, '株式会社サーバントップ',0, 1, 'R');
-
     $pdf->Ln(5);
     // Construction Name
     $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
@@ -302,13 +347,13 @@ class ManagerController extends Controller
 
     // Loop through breakdown items and add data rows
     foreach ($breakdown as $item) {
-        $pdf->Cell(25, 10, $item->construction_item, 1);
-        $pdf->Cell(83, 10, $item->specification, 1);
-        $pdf->Cell(15, 10, $item->quantity, 1);
-        $pdf->Cell(15, 10, $item->unit, 1);
-        $pdf->Cell(15, 10, number_format($item->unit_price), 1);
-        $pdf->Cell(20, 10, number_format($item->amount), 1);
-        $pdf->Cell(25, 10, $item->remarks, 1);
+        $pdf->Cell(25, 10, $item->construction_item, 1, 0, 'C');
+        $pdf->Cell(83, 10, $item->specification, 1, 0, 'C');
+        $pdf->Cell(15, 10, $item->quantity, 1, 0, 'C');
+        $pdf->Cell(15, 10, $item->unit, 1, 0, 'C');
+        $pdf->Cell(15, 10, number_format($item->unit_price), 1, 0, 'C');
+        $pdf->Cell(20, 10, number_format($item->amount), 1, 0, 'C');
+        $pdf->Cell(25, 10, $item->remarks, 1, 0, 'C');
         $pdf->Ln();
     }
 
@@ -321,11 +366,11 @@ class ManagerController extends Controller
 
     // Output totals below the breakdown table
     $pdf->Cell(153, 10, '小計（税抜）:', 1, 0, 'R');
-    $pdf->Cell(20, 10, number_format($subtotal), 1, 1);
+    $pdf->Cell(20, 10, number_format($subtotal), 1, 1, 'C');
     $pdf->Cell(153, 10, '消費税（10%）:', 1, 0, 'R');
-    $pdf->Cell(20, 10, number_format($tax), 1, 1);
+    $pdf->Cell(20, 10, number_format($tax), 1, 1, 'C');
     $pdf->Cell(153, 10, '合計（税込）:', 1, 0, 'R');
-    $pdf->Cell(20, 10, number_format($grandTotal), 1, 1);
+    $pdf->Cell(20, 10, number_format($grandTotal), 1, 1, 'C');
 
     // Output the PDF
     $pdf->Output("output.pdf", "I");
@@ -338,13 +383,28 @@ public function PDFshow($id)
     // Retrieve the estimate info by ID
     $estimate_info = EstimateInfo::findOrFail($id);
 
-    // Generate the Blade view for the PDF
-    $pdfView = view('tcpdf.breakdowndetail', compact('estimate_info'))->render();
+    // Fetch related breakdown data for calculation
+    $breakdown = Breakdown::where('estimate_id', $id)->get();
 
-    // Initialize mPDF for generating PDF
+    // Calculate the total amount
+    $totalAmount = 0;
+    foreach ($breakdown as $item) {
+        $totalAmount += $item->amount;
+    }
+
+    // Discount and tax calculation (same as in show method)
+    $discount = 0;
+    $subtotal = $totalAmount - $discount;
+    $tax = $subtotal * 0.1;
+    $grandTotal = $subtotal + $tax;
+
+    // Generate the Blade view for the PDF
+    $pdfView = view('tcpdf.breakdowndetail', compact('estimate_info', 'grandTotal'))->render(); // Pass grandTotal
+
+    // Initialize mPDF
     $mpdf = new \Mpdf\Mpdf([
         'mode' => 'utf-8',
-        'format' => 'A4-P', // Landscape A4
+        'format' => 'A4-P',
         'autoScriptToLang' => true,
         'autoLangToFont' => true,
     ]);
@@ -352,8 +412,8 @@ public function PDFshow($id)
     // Write the rendered Blade HTML into the PDF
     $mpdf->WriteHTML($pdfView);
 
-    // Output the PDF for download or inline view
-    return $mpdf->Output('Estimate_Details.pdf', 'I');  // 'I' displays inline, 'D' forces download
+    // Output the PDF
+    return $mpdf->Output('Estimate_Details.pdf', 'I');
 }
 
 

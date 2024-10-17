@@ -28,6 +28,11 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+label {
+    display: flex;
+    margin: 10px 0 5px;
+}
+
 /* Form group styling */
 .form-group {
     margin-bottom: 1rem;
@@ -76,9 +81,9 @@ button {
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 1rem;
+    margin-top: 2rem;
     display: block;
-    width: 100%;
+    width: 50%;
     margin-left:auto;
     margin-right: auto;
 }
@@ -87,7 +92,39 @@ button {
 
 
 
+
+
 /* Button hover effect */
 button:hover {
     background-color: #0056b3;
+}
+
+
+.form-group select {
+    width: 75%; /* Adjust as needed for your layout */
+    border: 2px solid #007bff; /* Same border as the input */
+    border-radius: 4px; /* Same border radius */
+    padding: 8px; /* Same padding */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    margin-top: 8px; /* Match the top margin */
+    appearance: none; /* Optional: Removes default dropdown arrow */
+}
+
+/* Optional: Add a custom arrow for the dropdown */
+.form-group {
+    position: relative; /* Required for positioning the custom arrow */
+}
+
+.form-group select::after {
+    content: ''; /* Creates a custom arrow */
+    position: absolute;
+    top: 50%; /* Center the arrow vertically */
+    right: 10px; /* Space from the right */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333; /* Arrow color */
+    pointer-events: none; /* Ensure the arrow doesn't capture clicks */
 }

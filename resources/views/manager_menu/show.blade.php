@@ -31,10 +31,11 @@
             <div class="input-suffix">
                 <label for="estimate-amount">お見積り金額 :</label>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                    value="{{ old('estimate_amount', $estimate_info->estimate_amount) }}">
+                       value="{{ number_format($grandTotal) }}"> <!-- Show the grandTotal here -->
                 <span class="suffix">（税込）</span>
             </div>
         </div>
+
 
         <div class="details" id="div1">
             <div class="show-page">
@@ -76,7 +77,6 @@
                 担当：{{ $estimate_info->charger_name }}</p>
         </div>
         <div class="action2">
-            <a href="{{ route('manager.item', $estimate_info->id) }}" class="btn btn-warning">内訳明細書</a>
             <a href="{{ route('managers.pdfshow', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
         </div>
