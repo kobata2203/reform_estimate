@@ -3,18 +3,23 @@ p {
     text-align: center;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 8px;
+/* table02 */
+#table02 th, #table02 td {
     text-align: center;
-
-    
-}
+    width: 20%;
+    min-width: 130px;
+    padding: 10px;
+    height: 60px;
+  }
+  
+  /* tab */
+  @media only screen and (max-width: 768px) {
+    #table03 {
+      display: block;
+      overflow-x: scroll;
+      white-space: nowrap;
+    }
+  }
 
 th {
     background-color: rgb(121, 168, 51);

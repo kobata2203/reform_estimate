@@ -25,6 +25,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
+        "laravelcollective/html": "^6.4",
         "mpdf/mpdf": "^8.2.4",
         "setasign/fpdi": "^2.6",
         "tecnickcom/tcpdf": "6.2.*|6.3.*|6.4.*|6.5.*|6.6.*|6.7.*|dev-main",
