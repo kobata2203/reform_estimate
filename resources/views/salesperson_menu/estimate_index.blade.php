@@ -25,7 +25,7 @@
     </div>
 
     <div class="table-container">
-        <table>
+        <table id="table02">
             <thead>
                 <th>見積書発行日</th>
                 <th>お客様名</th>
