@@ -10,7 +10,7 @@ html, body, form {
 }
 
 body {
-    background-color: palegreen; /* Optional: Set a background color for better visibility */
+    background-color: #f0f0f0; /* Optional: Set a background color for better visibility */
 }
 
 h1 {
@@ -41,7 +41,7 @@ form .estimate {
 }
 
 button {
-    border-radius: 10px;
+    border-radius: 2px;
     margin: 10px;
     cursor: pointer;
     padding: 5px 10px;

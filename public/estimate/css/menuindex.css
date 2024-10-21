@@ -1,0 +1,85 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.hero {
+    text-align: center; /* Center the text in the hero section */
+    background-color: orange;
+    padding: 5px; /* Reduced padding */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align buttons horizontally */
+    margin: 20px; /* Add margin around the button container */
+}
+
+button {
+    background-color: #007bff; /* Primary color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px; /* Space between buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    width: 200px; /* Set a fixed width for consistent button size */
+    text-align: center; /* Center text inside the button */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0; /* Add margin above and below the table */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(241, 168, 84);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    width: 20%;
+    float: left;
+    margin-right: 1rem;
+    text-align: right;
+}
+
+.form-group input {
+    width: 75%;
+}
+
+.form-control {
+    width: 100%; /* Full width for input */
+    border: 2px solid black;
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+}
