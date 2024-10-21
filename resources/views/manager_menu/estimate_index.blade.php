@@ -35,6 +35,7 @@
                 <th>営業担当</th>
                 <th>営業部署</th>
                 <th></th>
+                <th></th>
             </tr>
             @foreach ($estimate_info as $estimate)
                 <tr>
@@ -43,7 +44,8 @@
                     <td>{{ $estimate->construction_name }}</td>
                     <td>{{ $estimate->charger_name }}</td>
                     <td>{{ $estimate->department_name }}</td>
-                    <td><a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
+                    <td><a href="{{route('manager.delete', $estimate->id)}}" class="btn btn-danger">削除</a></td>
+                    <td><a href="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
 
                 </tr>
             @endforeach

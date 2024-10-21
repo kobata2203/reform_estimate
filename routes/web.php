@@ -79,7 +79,8 @@ Route::get('/manager_estimate', [App\Http\Controllers\ManagerController::class, 
 Route::resource('managers', ManagerController::class);
 
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
-
+//to delete the data in blade file 見積書一覧管理用
+Route::get('/manager/{id}/delete', [ManagerController::class, 'delete'])->name('manager.delete');
 
 
 
@@ -208,6 +209,9 @@ Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('s
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
+
+//for the discount part
+Route::post('/estimate/calculate/{id}', [ManagerController::class, 'calculateDiscount'])->name('estimate.calculate');
 
 //togenerate pdf
 

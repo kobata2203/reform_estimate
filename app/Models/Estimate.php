@@ -10,7 +10,7 @@ class Estimate extends Model
     use HasFactory;
 
     protected $table = 'estimates';
-    
+
 
     protected $fillable = [
         'issued_date',

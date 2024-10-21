@@ -25,8 +25,8 @@ class Breakdown extends Model
         'unit',
         'unit_price',
         'amount',
-        'remarks2',
-        'construction_name'
+        'remarks',
+        'construction_name',
     ];
 
     public function estimate_info()
@@ -47,7 +47,7 @@ class Breakdown extends Model
 
     public function estimate()
 {
-    return $this->belongsTo(Estimate::class);
+    return $this->belongsTo(Estimate::class,'estimate_id','id');
 }
 
 }

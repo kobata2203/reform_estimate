@@ -1,10 +1,7 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-
 
 return new class extends Migration
 {
@@ -12,7 +9,9 @@ return new class extends Migration
     {
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
+
             $table->string('customer_name')->nullable();
+            // $table->string('name')->nullable();
             $table->string('creation_date')->nullable();
             $table->string('subject_name')->nullable();
             $table->string('delivery_place')->nullable();
@@ -22,14 +21,14 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->string('charger_name')->nullable();
             $table->string('department_name')->nullable();
-            //$table->foreignId('construction_id')->constrained('construction_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
-            $table->string('construction_name')->nullable();
+        
+            $table->boolean('is_hidden')->default(false);
+            $table->string('construction_name');
             $table->timestamps();
 
-            // 外部キー制約を追加
+            // Foreign key constraint
             $table->foreign('construction_id')->references('construction_id')->on('construction_name');
-
         });
     }
 
