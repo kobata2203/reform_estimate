@@ -16,7 +16,7 @@
             @csrf
                 <button>見積書作成へ</button><br>
         </form>
-        <form method="GET" action="estimate">
+        <form method="GET" action="estimate/index">
             @csrf
                 <button>見積書一覧へ</button>
         </form>

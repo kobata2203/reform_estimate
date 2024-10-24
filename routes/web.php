@@ -58,9 +58,12 @@ Route::get('/', function () {
 });
 
 
+Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+
 // Estimate Routes
 //Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
-Route::get('/estimate', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate');
+Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate.index');
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
 Route::get('/estimate/breakdown_create/{id}', [App\Http\Controllers\EstimateController::class, 'breakdown_create'])->name('estimate.breakdown_create');
@@ -69,8 +72,7 @@ Route::post('/estimate/breakdown_store', [App\Http\Controllers\EstimateControlle
 //salesperson Menu
 //Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
 
-Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
-Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+
 
 
 
@@ -165,7 +167,7 @@ Route::get('/managers', [ManagerController::class, 'index'])->name('managers.ind
 Route::get('/admin/{id}/edit', 'App\Http\Controllers\ManagerController@edit')->name('admins.edit');
 Route::put('/admin/{admin}', 'App\Http\Controllers\ManagerController@update')->name('admin.update');
 
-route::resource('salespersons', SalespersonController::class);
+//route::resource('salespersons', SalespersonController::class);
 
 
 
