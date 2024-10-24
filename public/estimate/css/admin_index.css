@@ -1,0 +1,123 @@
+/* General Styles */
+p {
+    background-color: orange;
+    text-align: center;
+    padding: 10px;
+    margin: 0; /* Ensure no margin affects layout */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Space above the table */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: orange;
+}
+
+/* Button and Margin Styles */
+#menue {
+    margin: 27px;
+    margin-left: 83%; /* Specific positioning */
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.row-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px; /* Space between button rows */
+}
+
+.btn, .btn-primary, .btn-dark, .btn-danger {
+    text-align: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.btn + .btn {
+    margin-left: 10px; /* Space between buttons */
+}
+
+button {
+    margin-top: 1rem;
+}
+
+.margin-left-300 {
+    margin-left: 300px;
+}
+
+.custom-border {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: white;
+    background-color: #007bff;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* Form Styles */
+.form-inline {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+    margin-bottom: 20px; /* Space below the form */
+    margin-left: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    width: 20%; /* Set label width */
+    float: left;
+    margin-right: 1rem; /* Space between label and input */
+    text-align: right; /* Align text to the right */
+}
+
+.form-group input {
+    width: 75%; /* Set input width */
+}
+
+.form-control {
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+}
+
+/* Custom Margin Classes */
+.margin-top-example {
+    margin-top: 10px;
+}
+
+.custom-margin {
+    margin: 10px; /* Example of custom margin, adjust as needed */
+}
+
+
+.estimate {
+    margin: 5px;          /* Adds 20px margin on all sides */
+    padding: 5px;
+}
+
+
+

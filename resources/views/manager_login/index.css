@@ -1,0 +1,23 @@
+.hero {
+    background-color: orange;
+    text-align: center;
+    padding: 1px;
+}
+
+button {
+    border-radius: 2px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.container {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.label {
+    margin-right: 15px;
+}
+

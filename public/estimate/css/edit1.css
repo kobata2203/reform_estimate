@@ -1,0 +1,93 @@
+/* managerindex1.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Heading style */
+h2 {
+    text-align: center;
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+/* Form styling */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Label styling */
+.form-group label {
+    display: block;
+    width: 20%;
+    float: left;
+    margin-right: 1rem;
+    text-align: right;
+    color: #333;
+}
+
+/* Input styling */
+.form-group input {
+    width: 75%;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+/* Input focus styling */
+.form-group input:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+    outline: none;
+}
+
+/* Small text styling */
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+}
+
+/* Button styling */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    display: block;
+    width: 100%;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+
+
+
+
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3;
+}
