@@ -9,7 +9,7 @@ return new class extends Migration
     {
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
-
+            $table->string('construction_name');
             $table->string('customer_name')->nullable();
             // $table->string('name')->nullable();
             $table->string('creation_date')->nullable();
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('charger_name')->nullable();
             $table->string('department_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
-        
+
             $table->boolean('is_hidden')->default(false);
-            $table->string('construction_name');
+
             $table->timestamps();
 
             // Foreign key constraint

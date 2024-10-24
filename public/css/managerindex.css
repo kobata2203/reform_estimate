@@ -121,3 +121,31 @@ button {
     border-color: dodgerblue; /* Fixed the typo 'dodgeBlue' to 'dodgerblue' */
     box-shadow: 0 0 8px 0 dodgerblue; /* Fixed the typo 'dogerBlue' to 'dodgerblue' */
 }
+
+.btn {
+    display: inline-block; /* Ensure it behaves like a button */
+    padding: 10px 20px; /* Padding for the button */
+    font-size: 16px; /* Font size */
+    color: white; /* Text color */
+    background-color: #007bff; /* Bootstrap primary color */
+    border: 1px solid transparent; /* Default border style */
+    border-radius: 4px; /* Rounded corners */
+    text-decoration: none; /* Remove underline from links */
+    text-align: center; /* Center text */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transition for hover effects */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    border-color: #004085; /* Darker border on hover */
+}
+
+.btn-dark {
+    background-color: #343a40; /* Dark button color */
+}
+
+.btn-dark:hover {
+    background-color: #23272b; /* Darker shade on hover */
+}
+
+/* Other existing styles remain unchanged */

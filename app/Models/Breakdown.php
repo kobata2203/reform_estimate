@@ -27,6 +27,7 @@ class Breakdown extends Model
         'amount',
         'remarks',
         'construction_name',
+
     ];
 
     public function estimate_info()
@@ -42,7 +43,7 @@ class Breakdown extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); 
     }
 
     public function estimate()

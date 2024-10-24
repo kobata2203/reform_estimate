@@ -84,47 +84,12 @@ Route::get('/manager/{id}/delete', [ManagerController::class, 'delete'])->name('
 
 
 
-
-//for the ichiran menu 画面へ [ Admin Resource Routes]
-
-//Route::resource('admins', AdminController::class);
-
-//Route::get('/manager-menu', function () {
-//return view('manager_menu.index');
-//})->name('manager_menu.index');
-
 //for the 営業者登録画面
 Route::view('/salesperson/add', 'salesperson_add/index')->name('salesperson_add.index');
 Route::view('/manager/add', 'manager_add/index')->name('manager_add.index');
 
 Route::get('/salespersons/list', [SalespersonController::class, 'list'])->name('salespersons.list');
 
-//additional
-// For the first case (admin list and search functionality)
-//Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
-//Route::get('/admins/create', [AdminController::class, 'create'])->name('admin.create');
-//Route::post('/admins', [AdminController::class, 'store'])->name('admin.store');
-
-
-
-
-
-
-
-// Define routes for the admin management
-//Route::get('/estimate/admins', [AdminController1::class, 'index'])->name('estimate.index');
-//Route::get('/estimate/admins/create', [AdminController1::class, 'create'])->name('estimate.create');
-//Route::post('/estimate/admins', [AdminController1::class, 'store'])->name('estimate.store');
-//Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
-
-//Route::get('estimate/pdf/{id}', [AdminController1::class, 'pdf'])->name('estimate.pdf');
-
-
-// // Show details with view functionality
-// Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
-
-// // PDF-specific route
-// Route::get('estimate/admins/{id}/pdf', [AdminController1::class, 'pdf'])->name('estimate.pdf');
 
 
 Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
@@ -180,10 +145,7 @@ Route::get('edit/{id}', 'SalespersonController@edit');
 Route::get('/salesperson/edit/{id}', [SalespersonController::class, 'edit']);
 
 
-// Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salesperson.index');
-// Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'edit'])->name('salesperson.edit');
-// Route::put('/salespersons/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
-// Route::delete('/salespersons/{id}', [SalespersonController::class, 'destroy'])->name('salesperson.destroy');
+
 
 //Routes for the 管理者メニュー画面
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salesperson.index');
@@ -197,31 +159,23 @@ Route::get('/manager_menu', [App\Http\Controllers\SalespersonController::class, 
 Route::post('/manager_menu', [App\Http\Controllers\SalespersonController::class, 'manager_menu'])->name('manager_menu');
 Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('salesperson.show');
 
-// //for viewing 御　見　積　書
-// Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-// // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-// // Define route for displaying the 'item' view
-// Route::get('/manager/item', [ManagerController::class, 'itemView'])->name('manager.item');
 
 
 
-// Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
+
+
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
 
-//for the discount part
-Route::post('/estimate/calculate/{id}', [ManagerController::class, 'calculateDiscount'])->name('estimate.calculate');
+// for discound deduction by user
+Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 
-//togenerate pdf
 
-#to view pdf
-// Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
+
 
 #to print pdf
-// Route::get('/print-pdf', [ManagerController::class, 'printPDF'])->name('pdf.print');
-// Route::get('/manager/pdf', [ManagerController::class, 'getpdf'])->name('pdf.print1');
-// Route::get('/manager_menu/pdftrail/{id}', [ManagerController::class, 'pdfget'])->name('Pdftrail');
+
 Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'pdf'])->name('showPdftrail');
 Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');

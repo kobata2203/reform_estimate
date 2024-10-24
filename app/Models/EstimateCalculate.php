@@ -24,4 +24,9 @@ class EstimateCalculate extends Model
     {
         return $this->belongsTo(Estimate::class, 'id', 'id');
     }
+
+    public function estimate2()
+    {
+        return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
+    }
 }

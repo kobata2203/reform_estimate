@@ -33,16 +33,21 @@
                 <input type="text" name="department_name" id="department_name" class="form-control" value="{{ $user->department_name }}" required>
             </div>
             <button type="submit" class="btn btn-primary margin-left-300">更新</button>
+            <button type="button"
+            onclick="window.location.href='{{ route('manager_menu') }}'"
+            class="btn btn-primary custom-border">管理者メニュー
+            
+            </button>
         </form>
     </div>
 
-    <div class="bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
+    {{-- <div class="bottom" style="margin-top: 20px; text-align: right;">
         <button type="button"
                 onclick="window.location.href='{{ route('manager_menu') }}'"
-                class="btn btn-primary custom-margin custom-border mb-3"
-                style="width: 120px; height: 40px; float: right;">管理者メニュー
+                class="btn btn-primary custom-border"
+                style="width: 120px;">管理者メニュー
         </button>
-    </div>
+    </div> --}}
 </body>
 </html>
 
