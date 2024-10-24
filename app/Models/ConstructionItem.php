@@ -29,4 +29,19 @@ class ConstructionItem extends Model
     {
     return $this->hasMany('App\Models\Breakdown');
     }
+
+    public function get_target_items($id)
+    {
+        $items = $this->select('item_id', 'item')->where('construction_id', $id)->get();
+
+        return $items;
+    }
+
+
+    public function get_required($id)
+    {
+        $item = $this->select('breakdown_required')->where('item_id', $id)->first();
+
+        return $item->breakdown_required;
+    }
 }
