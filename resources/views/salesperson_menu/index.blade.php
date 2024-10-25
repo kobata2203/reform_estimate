@@ -8,7 +8,7 @@
 </head>
 <body>
     <div>
-      <h1>営業者Menu</h1>
+      <h1>担当者Menu</h1>
       <p>見積書作成、見積書一覧のいずれかのボタンをクリックしてください。</p>
     </div>
     <div class="btn">

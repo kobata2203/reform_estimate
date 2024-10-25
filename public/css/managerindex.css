@@ -10,7 +10,8 @@ body {
 }
 
 p {
-    background-color: orange;
+    font-size: 200%;
+    font-weight: bold;
     text-align: center;
     padding: 10px;
     margin: 0; /* Ensure no margin affects layout */
@@ -18,7 +19,6 @@ p {
 
 h2 {
     text-align: center;
-    background-color: orange; /* Light grey background */
     padding: 10px; /* Optional: Add some padding for better spacing */
     border-radius: 5px; /* Optional: Add rounded corners */
 }
@@ -30,6 +30,7 @@ table {
 }
 
 th, td {
+    background-color: white;
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -53,11 +54,15 @@ th {
     margin-left: 20px;
 }
 
-.btn {
-    text-align: center;
-    margin-top: 1px;
+.btn-dark {
     background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
 
+.btn-dark:hover {
+    background-color: #0056b3;
 }
 
 .margin-left-300 {

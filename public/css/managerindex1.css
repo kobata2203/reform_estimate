@@ -10,7 +10,8 @@ body {
 }
 
 p {
-    background-color: orange;
+    font-size: 200%;
+    font-weight: bold;
     text-align: center;
     padding: 10px;
     margin: 0;
@@ -18,7 +19,6 @@ p {
 
 h2 {
     text-align: center;
-    background-color: orange;
     padding: 10px;
     border-radius: 5px;
 }
@@ -30,6 +30,7 @@ table {
 }
 
 th, td {
+    background-color: white;
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -41,10 +42,15 @@ th {
 
 /* Button styles */
 
-.btn {
-    text-align: center;
-    margin-top: 1px;
+.btn-dark {
     background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-dark:hover {
+    background-color: #0056b3;
 }
 
 .btn-primary, .btn-dark, .btn-danger {
