@@ -71,7 +71,7 @@ class EstimateController extends Controller
 
         DB::commit();
 
-        return redirect('estimate');
+        return redirect('estimate/index');
     }
 
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
