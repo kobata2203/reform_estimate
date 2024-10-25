@@ -14,7 +14,7 @@ class ConstructionName extends Model
     protected $table = 'construction_name';
 
     // テーブルに関連付ける主キー
-    protected $primaryKey = 'construction_id';
+    protected $primaryKey = 'construcution_id';
 
     protected $fillable = [
         'construction_name',

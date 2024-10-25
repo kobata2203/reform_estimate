@@ -7,15 +7,11 @@ html, body, form {
     flex-direction: column;
     text-align: center;
     align-items: center;
+    background-color: palegreen;
 }
 
-html {
-    width: 100%;
-    background-image: url(../image/back.png);  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
-    background-size: cover;
+body {
+    background-color: palegreen; /* Optional: Set a background color for better visibility */
 }
 
 h1 {
@@ -23,18 +19,63 @@ h1 {
 }
 
 p {
+    background-color:palegreen;
     text-align: center;
-    flex-direction: column;
     margin: 0; /* Remove default margins */
     padding: 10px; /* Add padding for better appearance */
 }
 
-form .estimate {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    text-align: center; 
+form,input .estimate {
+    display: block;
+    flex-direction: column;  
     margin-top: 20px;
+}
+
+table{
+    border-collapse:separate;
+    border-spacing: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+table th,table td{
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+table th{
+    background-color: #c79852;
+    text-align: left;
+    color: white;
+    border:solid 1px #927141;
+}
+
+table td{
+    background-color: #e4d4bc;
+    border:solid 1px #af9d85;
+    text-align: left;
+}
+
+input .customer_name{
+    display: block;
+    text-align: left;
+}
+
+input {
+    background-color: #e4d4bc;
+    border:solid 0px #af9d85;
+    width: 90%;
+}
+
+select {
+    background-color: #e4d4bc;
+    border:solid 0px #af9d85;
+}
+
+textarea {
+    background-color: #e4d4bc;
+    border:solid 0px #af9d85;
+    width: 90%;
 }
 
 .btn {
@@ -42,12 +83,24 @@ form .estimate {
     flex-direction: column; 
     align-items: center;
     text-align: center; 
-    margin-top: 20px;
+    margin-top: 50px;
+}
+
+button .btn1{
+    border-radius: 10px;
+    margin: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background-color: black; 
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
 button {
-    border-radius: 2px;
-    margin: 10px;
+    border-radius: 10px;
+    margin: 0px;
     cursor: pointer;
     padding: 5px 10px;
     border: none;

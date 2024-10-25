@@ -78,7 +78,7 @@ button {
     cursor: pointer;
     margin-top: 1rem;
     display: block;
-    width: 50%;
+    width: 100%;
     margin-left:auto;
     margin-right: auto;
 }

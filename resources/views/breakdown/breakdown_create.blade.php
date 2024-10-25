@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書作成画面(内訳明細書)</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/estimate_index.css">
-    <script src="{{ asset('/js/estimate/breakdown_create.js') }}"></script>
 </head>
 
 <body>
@@ -15,11 +13,23 @@
         <p>見積書作成画面<br>(内訳明細書)</p>
     </div>
     <div class="table-container">
+        <table>
         <form action="{{ route('estimate.breakdown_store') }}" method="post">
             @csrf
-            <table>
-            <input type="hidden" name="estimate_id" value="{{ $estimate_info->id}}">
-            <input type="hidden" name="construction_id" value="{{ $estimate_info->construction_id }}">
+            <div>
+                <table>
+                    <thead>
+                        <th>見積書id</th>
+                        <th>工事id</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="hidden"name="estimate_id" value="{{ $estimate_info->id}}">{{ $estimate_info->id}}</td>
+                            <td><input type="hidden"name="construction_id" value="{{ $estimate_info->construction_id }}">{{ $estimate_info->construction_id }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <table>
                 <thead>
                     <th>項目</th>
@@ -31,72 +41,23 @@
                     <th>備考</th>
                 </thead>
                 <tbody>
-                    @for($i = 1; $i <= $construction_loop_count; $i++)
+                    @php
+                        $j = DB::{'construction_name'->loop_count}
+                    @endphp
+                    @for($i = 1;$i < $j;$i++)
                         <tr>
-                            <td>
-                                <select name="construction_item[{{$i}}]">
-                                    @foreach ($construction_items as $construction_item)
-                                        <option value="{{$construction_item['item_id']}}"
-                                            @if (old("construction_item.$i") == $construction_item['item_id'])
-                                                selected
-                                            @endif
-                                        >{{$construction_item['item']}}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has("construction_item.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("construction_item.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="specification_{{$i}}" type="text" name="specification[{{$i}}]" value="{{ old("specification.$i") }}">
-                                @if ($errors->has("specification.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("specification.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="quantity_{{$i}}" class="amount_output" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i") }}">
-                                @if ($errors->has("quantity.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("quantity.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="unit_{{$i}}" type="text" name="unit[{{$i}}]" value="{{ old("unit.$i") }}">
-                                @if ($errors->has("unit.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("unit.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="unit_price_{{$i}}" class="amount_output" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i") }}">
-                                @if ($errors->has("unit_price.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("unit_price.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="amount_{{$i}}" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i") }}">
-                                @if ($errors->has("amount.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("amount.$i") }}
-                                    </div>
-                                @endif
-                            </td>
-                            <td><input id="remarks2_{{$i}}" type="text" name="remarks2[{{$i}}]" value="{{ old("remarks2.$i") }}">
-                                @if ($errors->has("remarks2.$i"))
-                                    <div class="invalid-feedback" role="alert">
-                                        {{ $errors->first("remarks2.$i") }}
-                                    </div>
-                                @endif
-                            </td>
+                            <td><input id="construction_item1" type="text" name="construction_item[$i]" placeholder="既存洗い場タイル解体" value="既存洗い場タイル解体"></td>
+                            <td><input id="specification1" type="text" name="specification[$i]"></input></td>
+                            <td><input id="quantity1" type="text" name="quantity[$i]"></input></td>
+                            <td><input id="unit1" type="text" name="unit[$i]"></input></td>
+                            <td><input id="unit_price1" type="text" name="unit_price[$i]"></input></td>
+                            <td><input id="amount1" type="text" name="amount[$i]"></input></td>
+                            <td><input id="remarks2_1" type="text" name="remarks2[$i]"></input></td>
                         </tr>
                     @endfor
                 </tbody>
             </table>
-            <button type="submit">登録</button>
-            <input type="hidden" name="construction_loop_count" value="{{$construction_loop_count}}">
+                <td><button type="submit">登録</button></td>
         </form>
     </div>
 </body>

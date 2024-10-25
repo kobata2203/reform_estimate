@@ -18,8 +18,8 @@ class BreakdownSeeder extends Seeder
     {
         DB::table('breakdown')->insert([
             [
-                'id' => '1',
-                'estimate_id' => '1',
+
+                'estimate_id' => '3',
                 'construction_id' => '1',
                 'construction_item' => '仮設足場',
                 'specification' => '',
@@ -29,7 +29,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '2',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '養生',
@@ -40,7 +40,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '3',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '高圧洗浄',
@@ -51,7 +51,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '4',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '下塗り',
@@ -62,7 +62,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '5',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '中塗り',
@@ -73,7 +73,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '6',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '上塗り',
@@ -84,7 +84,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '7',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '付帯塗装',
@@ -95,7 +95,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '8',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '目地',
@@ -106,7 +106,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '9',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '廃材処分費',
@@ -117,7 +117,7 @@ class BreakdownSeeder extends Seeder
                 'amount' => '50000',
                 'remarks' => '',
             ],[
-                'id' => '10',
+
                 'estimate_id' => '1',
                 'construction_id' => '1',
                 'construction_item' => '諸経費',

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Faker\Factory as Faker; // Correct Faker import
+use Faker\Factory as Faker;
 
 class EstimateInfoSeeder extends Seeder
 {
@@ -30,14 +30,14 @@ class EstimateInfoSeeder extends Seeder
                 'charger_name' => '田中　花子',
                 'department_name' => '営業1課',
                 'construction_name' => 'テスト太郎邸　浴室改修工事',
-                'construction_item' => '既存浴槽解体',
-                'specification' => '',
-                'quantity' => '1',
-                'unit' => '式',
-                'unit_price' => '188000',
-                'amount' => '188000',
-                'remarks2' => '',
-                //'construction_id' => '6',
+                // 'construction_item' => '既存浴槽解体',
+                // 'specification' => '',
+                // 'quantity' => '1',
+                // 'unit' => '式',
+                // 'unit_price' => '188000',
+                // 'amount' => '188000',
+                // 'remarks2' => '',
+                'construction_id' => null,
                 //construction_name' => '浴室改修工事　※タイル・浴槽',
                 //'construction_item' => '既存浴槽解体',
                 //'specification' => '',
@@ -57,8 +57,8 @@ class EstimateInfoSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
                 'department_name' => $faker->word,
-                'construction_name' => $faker->word, // Provide a value here
-                'customer_name' => $faker->name,     // Provide a value here
+
+
             ]);
         }
         //$faker = Faker::create();
