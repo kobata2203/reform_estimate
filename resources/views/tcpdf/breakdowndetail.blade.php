@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>御見積書</title>
+    <title>見積書詳細</title>
     <style>
         body {
             font-family: 'DejaVu Sans', sans-serif;
@@ -18,11 +18,10 @@
             padding: 20px;
             margin: 2px;
             background-color: rgb(186, 182, 182);
-
         }
 
         table {
-            width: 50%;
+            width: 68%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
@@ -49,23 +48,20 @@
             font-size: 14px;
             position: absolute; /* Use absolute positioning for placement */
             bottom: 50px; /* Adjust as needed */
-            right: -50px; /* Adjust as needed */
-            margin-bottom:320px;
+            right: 20px; /* Adjust as needed */
+            margin-bottom:640px;
 
         }
-
-
     </style>
 </head>
 
 <body>
-    <h2>御　見　積　書</h2>
+    <h2>見積書詳細画面</h2>
 
     <div>
         <p><strong>お客様名 :</strong> {{ $estimate_info->customer_name }} 様</p>
         <p style="font-size: 8px;">下記の通りお見積り申し上げます。</p>
-        <p style="text-align: center;"><strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）</p>
-
+        <p style="text-align: center;"><strong>お見積り金額 : ¥ </strong> {{ number_format($estimate_info->estimate_amount) }} （税込）</p>
     </div>
 
 

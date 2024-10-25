@@ -35,24 +35,14 @@
 
         </div>
 
-        <!-- 更新 button -->
-<button type="submit" class="btn btn-primary">更新</button>
-
-<!-- 管理者メニュー button -->
-<div class="bottom" ">
-    <button type="button"
-            onclick="window.location.href='{{ route('manager_menu') }}'"
-            class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー
-    </button>
-</div>
-
+        <button type="submit" class="btn btn-primary">更新</button>
     </form>
-    {{-- <div class="bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
+    <div class="bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
         <button type="button"
                 onclick="window.location.href='{{ route('manager_menu') }}'"
-                class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー
+                class="btn btn-primary custom-margin custom-border mb-3"
+                style="width: 120px; height: 40px; float: right;">管理者メニュー
         </button>
-    </div> --}}
-
+    </div>
 </body>
 </html>

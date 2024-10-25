@@ -34,8 +34,7 @@
                     <td>{{ $manager->email }}</td>
                     <td>{{ $manager->department_name }}</td>
                     <td>
-                        <a href="{{ route('admins.edit', $manager->id) }}" class="btn btn-primary custom-border">編集</a>
-
+                        <button href="{{ route('admins.edit', $manager->id) }}" class="btn btn-dark">編集</button>
                     </td>
                 </tr>
                 @endforeach

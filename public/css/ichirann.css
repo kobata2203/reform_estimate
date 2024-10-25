@@ -12,7 +12,7 @@ body {
     border-radius: 5px;
 }
 table {
-    width: 50%;
+    width: 60%;
     margin-left: 10px;
     border-collapse: collapse;
     margin-left: 20px;
@@ -20,7 +20,7 @@ table {
 th, td {
     border: 1px solid black;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 th {
     background-color: #f2f2f2;
@@ -143,8 +143,7 @@ input[type="text"] {
 }
 
 .details {
-    width: 100%;                  /* Set width for the table section */
-    padding-left: 10px;
+    width: 90%;                  /* Set width for the table section */
 }
 
 .contact-info {
@@ -219,10 +218,10 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 #div2
  {
-    width: 37%;
+    width: 41%;
     float: right;
     height: 100px;
-    margin-top: -130px;
+    margin-top: -110px;
 
  }
  #customer {
@@ -311,7 +310,6 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 .estimate-detail {
     padding: 20px; /* Adjust overall padding */
-
 }
 
 /* New styles specific to the estimate-item-table */
@@ -379,29 +377,29 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     display: flex;                /* Use flexbox for alignment */
     flex-direction: column;       /* Stack buttons vertically */
     align-items: center;          /* Center align buttons horizontally */
-    margin-top: 10px;            /* Space above the button container */
+    margin-top: 20px;            /* Space above the button container */
 }
 
 .action2 a {
-    display: block;
-    padding: 10px 15px;
-    margin: 10px 0;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    width: 70px;
-    text-align: center;
+    display: block;               /* Make buttons block elements */
+    padding: 10px 15px;          /* Add padding for better appearance */
+    margin: 10px 0;              /* Vertical margin for space between buttons */
+    color: white;                 /* Text color */
+    text-decoration: none;        /* Remove underline */
+    border-radius: 5px;          /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth background color transition */
+    width: 70px;                 /* Set a fixed width for the buttons */
+    text-align: center;           /* Center text inside the buttons */
     margin-left: 700px;
     margin-top: 20px;
 }
 
 .btn-warning {
-    background-color: #007bff;
+    background-color: #ccc;   /* Warning button color */
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #007bff;   /* Primary button color */
 }
 
 .action2 button {
@@ -418,7 +416,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 
 /* for the print */
-/* .print-button {
+.print-button {
     margin: 10px;
     padding: 10px 20px;
     font-size: 16px;
@@ -427,7 +425,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-} */
+}
 
 
 /* this if he says put in vertically */
@@ -437,95 +435,8 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 }
 
 .actions-2 .btn {
-    margin: 5px; /* Add margin around all buttons */
+    margin: 10px; /* Add margin around all buttons */
 }
-
-.amount-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align content to the left */
-}
-
-.amount-container .yen-symbol {
-    margin-right: 5px; /* Space between the ¥ symbol and the input */
-}
-
-.amount-container input {
-    width: 100%; /* Ensures the input takes up the remaining space */
-    max-width: 90%; /* Ensures it doesn't overflow beyond 90% of the container */
-}
-
-.amount-container {
-    display: inline-flex; /* Aligns the yen symbol and input field side by side */
-    align-items: center;  /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the content */
-}
-
-.amount-container input {
-    width: 120px; /* Set the input width */
-    padding: 5px;
-    font-size: 16px;
-}
-
-/*test for button*/
-.button-group {
-    display: flex;
-    flex-direction: column;  /* Stack buttons vertically */
-    margin-top: 20px;        /* Space between table and buttons */
-    position: relative;      /* Enable positioning */
-    left: 500px;              /* Move buttons to the right independently of the table */
-    border: none;
-}
-
-/* Styling for buttons */
-.btn-stacked {
-    display: block;
-    width: 80px;             /* Fixed button width */
-    padding: 15px 20px;
-    margin: 10px 0;           /* Add space between stacked buttons */
-    text-align: center;
-
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Styling for each button specifically */
-#view-pdf-btn {
-    background-color: #007bff; /* Orange (warning) button */
-}
-
-#back-btn {
-    background-color: #007bff; /* Blue (primary) button */
-}
-
-.custom-button-group {
-    display: flex;
-    flex-direction: column; /* Stack buttons on top of each other */
-    align-items: center; /* Center buttons horizontally */
-    gap: 10px; /* Space between the buttons */
-    margin-top: 20px; /* Space above the button group */
-    width: 7%; /* Set the width of the button group to 70% of the page */
-    margin-left: auto; /* Center the button group */
-    margin-right: auto; /* Center the button group */
-}
-
-.btn-custom {
-    width: 100%; /* Make the buttons take the full width of the button group */
-    background-color: #007BFF; /* Bootstrap primary color */
-    color: white; /* Text color */
-    padding: 15px; /* Padding for the buttons */
-    text-decoration: none; /* Remove underline */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth background color change */
-    text-align: center; /* Center text in the button */
-}
-
-.btn-custom:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-}
-
 
 /* to not print few contents */
 @media print {
