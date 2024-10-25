@@ -86,8 +86,7 @@ return [
     'max' => [
         'numeric' => ':attributeには、:max以下の数字を指定してください。',
         'file' => ':attributeには、:max kb以下のファイルを指定してください。',
-//        'string' => ':attributeは、:max文字以下で指定してください。',
-        'string' => ':attributeは、:max文字以下で入力してください。',
+        'string' => ':attributeは、:max文字以下で指定してください。',
         'array' => ':attributeは:max個以下指定してください。',
     ],
     'max_digits' => ':attributeは、:max桁以下で指定してください。',
@@ -126,8 +125,7 @@ return [
     'prohibited_unless' => ':otherが:valueでない場合、:attributeは入力禁止です。',
     'prohibits' => 'attributeは:otherの入力を禁じています。',
     'regex' => ':attributeに正しい形式を指定してください。',
-//    'required' => ':attributeは必ず指定してください。',
-    'required' => ':attributeは必須入力です。',
+    'required' => ':attributeは必ず指定してください。',
     'required_array_keys' => ':attributeは、:valuesの項目を含めてください。',
     'required_if' => ':otherが:valueの場合、:attributeも指定してください。',
     'required_if_accepted' => ':attributeは、:otherが承認された場合は、必ず指定してください。',
@@ -258,13 +256,6 @@ return [
         'updated_at' => '更新日',
         'username' => 'ユーザー名',
         'year' => '年',
-        'construction_item.*' => config('column_names.breakdown_construction_item'),
-        'specification.*' => config('column_names.breakdown_specification'),
-        'quantity.*' => config('column_names.breakdown_quantity'),
-        'unit.*' => config('column_names.breakdown_unit'),
-        'unit_price.*' => config('column_names.breakdown_unit_price'),
-        'amount.*' => config('column_names.breakdown_amount'),
-        'remarks2.*' => config('column_names.breakdown_remarks2'),
     ],
 
 ];

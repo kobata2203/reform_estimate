@@ -8,8 +8,7 @@
 </head>
 <body>
     <div class="hero">
-        <p>管理者Menu</p>
-        <h2>いずれかのボタンをクリックしてください。</h2>
+        <p>管理者メニュー画面</p>
     </div>
 
     <div class="button-container">

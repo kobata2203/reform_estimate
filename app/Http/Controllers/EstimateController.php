@@ -8,21 +8,9 @@ use App\Models\ConstructionName;
 use App\Models\ConstructionItem;
 use App\Models\Breakdown;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\BreakdownRequest;
 
 class EstimateController extends Controller
 {
-    /**
-     * 初期処理
-     * 使用するクラスのインスタンス化
-     */
-    public function __construct()
-    {
-        $this->estimateInfo = new EstimateInfo();
-        $this->constructionName = new ConstructionName();
-        $this->constructionItem = new ConstructionItem();
-        $this->breakdown = new Breakdown();
-    }
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -71,44 +59,52 @@ class EstimateController extends Controller
 
         DB::commit();
 
-        return redirect('estimate/index');
+        return redirect('estimate');
     }
 
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
     {
-        $estimate_info = $this->estimateInfo::find($id);
-        $construction_name = $this->constructionName::find($id);
+        $estimate_info = EstimateInfo::find($id);
 
-        /**
-         * SQLはモデルに記載する
-         */
-        $construction_items = $this->constructionItem->get_target_items($estimate_info->construction_id);
+        //$construction_item = ConstructionItem::all();
 
-        return view('breakdown.breakdown_create')->with([
-            'id' => $id,
-            'estimate_info' => $estimate_info,
-            'construction_name' => $construction_name,
-            'construction_loop_count' => $construction_name->loop_count,
-            'construction_items' => $construction_items,
-        ]);
+        //$construction_name = ConstructionName::find();
+        //dd($estimate_info);
+        return view('breakdown.breakdown_create', ['id' => $id],['estimate_info' => $estimate_info],['construction_name' => $construction_name]);
     }
 
-    /**
-     * 登録処理
-     * @param BreakdownRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function breakdown_store(BreakdownRequest $request)
+    public function breakdown_store(Request $request ,EstimateInfo $estimate_info)
     {
-        $regist_breakdown = $this->breakdown->regist_breakdown($request);
+        //$estimate_info = EstimateInfo::find($id);
 
-        if($regist_breakdown === true) {
-            $message = config('message.regist_complete');
-        } else {
-            $message = config('message.regist_fail');
+        //$j = 0;
+        $j = count($request['construction_item']);
+        //dd($j);
+        for($i = 1;$i < $j;$i++){
+        $breakdown = new Breakdown;
+        //dd($i);
+        //echo($request->construction_id);
+        //dd($request->estimate_id);
+        $breakdown->estimate_id = $request->estimate_id;
+        $breakdown->construction_id = $request->construction_id;
+        //dd($request->construction_item);
+        $_request = $request->toArray();
+        //dd($_request['construction_item'][$i]);
+        $breakdown->construction_item = $_request['construction_item'][$i];
+        $breakdown->specification = $_request['specification'][$i];
+        $breakdown->quantity = $_request['quantity'][$i];
+        $breakdown->unit = $_request['unit'][$i];
+        $breakdown->unit_price = $_request['unit_price'][$i];
+        $breakdown->amount = $_request['amount'][$i];
+        $breakdown->remarks2 = $_request['remarks2'][$i];
+        //dd($breakdown);
+        $breakdown->save();
         }
 
-        return redirect('estimate')->with('message', $message);
+
+        //DB::commit();
+
+        return redirect('estimate');
     }
 
     public function indexView()
