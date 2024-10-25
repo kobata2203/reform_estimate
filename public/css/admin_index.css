@@ -1,4 +1,17 @@
 /* General Styles */
+body {
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    width: 100%;
+    height:100vh;
+    background-image: url(../image/back2.png);  
+    background-position: center center; 
+    background-repeat: no-repeat;  
+    background-attachment: fixed; 
+    background-size: cover;
+}
+
 p {
     background-color: orange;
     text-align: center;
@@ -23,47 +36,54 @@ th {
 }
 
 /* Button and Margin Styles */
+#menue {
+    margin: 27px;
+    margin-left: 83%; /* Specific positioning */
+    cursor: pointer;
+    border: 2px solid black;
+}
+
 .row-button {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px; /* Space between button rows */
 }
 
-.btn {
-    display: inline-block;
+.btn, .btn-primary, .btn-dark, .btn-danger {
     text-align: center;
     background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     font-size: 16px;
-    border: none;
+}
+
+.btn + .btn {
+    margin-left: 10px; /* Space between buttons */
+}
+
+button {
+    margin-top: 1rem;
+}
+
+.margin-left-300 {
+    margin-left: 300px;
+}
+
+.custom-border {
+    border: 1px solid black;
     border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-}
-
-.btn-primary {
+    padding: 6px 12px;
+    color: white;
     background-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0069d9;
+    display: inline-block;
+    text-decoration: none;
 }
 
 /* Form Styles */
 .form-inline {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+    margin-bottom: 20px; /* Space below the form */
     margin-left: 20px;
 }
 
@@ -71,22 +91,46 @@ th {
     margin-bottom: 1rem;
 }
 
+.form-group label {
+    display: block;
+    width: 20%; /* Set label width */
+    float: left;
+    margin-right: 1rem; /* Space between label and input */
+    text-align: right; /* Align text to the right */
+}
+
+.form-group input {
+    width: 75%; /* Set input width */
+}
+
+.form-control {
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+}
+
+/* Custom Margin Classes */
+.margin-top-example {
+    margin-top: 10px;
+}
+
+.custom-margin {
+    margin: 10px; /* Example of custom margin, adjust as needed */
+}
+
+
 .estimate {
-    margin: 5px;
+    margin: 5px;          /* Adds 20px margin on all sides */
     padding: 5px;
 }
 
 
-/* Custom Margin Classes */
-.margin-top-example {
-    margin-top: 20px; /* Add desired top margin */
-    margin-bottom: 10px; /* Optional: Add bottom margin */
-    margin-right: 10px; /* Optional: Add right margin */
-    text-align: right; /* Ensure text is aligned right */
-}
 
-/* Alternatively, if you create a new class */
-.margin-custom {
-    margin: 20px 10px; /* Adjust these values as needed (top/bottom, left/right) */
-    text-align: right; /* Ensure text is aligned right */
-}

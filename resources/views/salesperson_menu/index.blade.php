@@ -8,14 +8,15 @@
 </head>
 <body>
     <div>
-        <p>営業者メニュー画面</p>
+      <h1>担当者Menu</h1>
+      <p>見積書作成、見積書一覧のいずれかのボタンをクリックしてください。</p>
     </div>
     <div class="btn">
         <form method="GET" action="estimate/create">
             @csrf
                 <button>見積書作成へ</button><br>
         </form>
-        <form method="GET" action="estimate">
+        <form method="GET" action="estimate/index">
             @csrf
                 <button>見積書一覧へ</button>
         </form>

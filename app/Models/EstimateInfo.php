@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EstimateInfo extends Model
 {
-
+    use HasFactory;
 
     // モデルに関連付けるテーブル
     protected $table = 'estimate_info';

@@ -27,7 +27,6 @@ class Breakdown extends Model
         'amount',
         'remarks',
         'construction_name',
-
     ];
 
     public function estimate_info()
@@ -43,12 +42,34 @@ class Breakdown extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); 
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
     }
 
     public function estimate()
-{
-    return $this->belongsTo(Estimate::class,'estimate_id','id');
-}
+    {
+        return $this->belongsTo(Estimate::class,'estimate_id','id');
+    }
+
+    public function regist_breakdown($request)
+    {
+        $datas = [];
+
+        for($i=1; $i <= $request->construction_loop_count; $i++) {
+            $data = [];
+            $data['estimate_id'] = $request->estimate_id;
+            $data['construction_id'] = $request->construction_id;
+            $data['construction_item'] = $request->construction_item[$i];
+            $data['specification'] = $request->specification[$i];
+            $data['quantity'] = $request->quantity[$i];
+            $data['unit'] = $request->unit[$i];
+            $data['unit_price'] = $request->unit_price[$i];
+            $data['amount'] = $request->amount[$i];
+            $data['remarks'] = $request->remarks2[$i];
+
+            $datas[] = $data;
+        }
+
+        return $this->insert($datas);
+    }
 
 }
