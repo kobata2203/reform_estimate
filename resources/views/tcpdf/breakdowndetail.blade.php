@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>見積書詳細</title>
+    <title>御見積書</title>
     <style>
         body {
             font-family: 'DejaVu Sans', sans-serif;
@@ -22,7 +22,7 @@
         }
 
         table {
-            width: 75%;
+            width: 60%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
@@ -53,11 +53,13 @@
             margin-bottom:320px;
 
         }
+
+        
     </style>
 </head>
 
 <body>
-    <h2>見積書詳細画面</h2>
+    <h2>御　見　積　書</h2>
 
     <div>
         <p><strong>お客様名 :</strong> {{ $estimate_info->customer_name }} 様</p>
