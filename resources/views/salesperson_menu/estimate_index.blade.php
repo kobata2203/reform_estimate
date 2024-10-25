@@ -13,6 +13,12 @@
             <p>見積書一覧画面<br>(営業者用)</p>
         </div>
 
+        @if(session('message'))
+            <div>
+                {{ session('message') }}
+            </div>
+        @endif
+
         <div>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</div>
         <div>
             <form action="{{ route('estimate.index') }}" method="GET">

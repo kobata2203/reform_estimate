@@ -25,8 +25,8 @@ class Breakdown extends Model
         'unit',
         'unit_price',
         'amount',
-        'remarks2',
-        'construction_name'
+        'remarks',
+        'construction_name',
     ];
 
     public function estimate_info()
@@ -46,8 +46,30 @@ class Breakdown extends Model
     }
 
     public function estimate()
-{
-    return $this->belongsTo(Estimate::class);
-}
+    {
+        return $this->belongsTo(Estimate::class,'estimate_id','id');
+    }
+
+    public function regist_breakdown($request)
+    {
+        $datas = [];
+
+        for($i=1; $i <= $request->construction_loop_count; $i++) {
+            $data = [];
+            $data['estimate_id'] = $request->estimate_id;
+            $data['construction_id'] = $request->construction_id;
+            $data['construction_item'] = $request->construction_item[$i];
+            $data['specification'] = $request->specification[$i];
+            $data['quantity'] = $request->quantity[$i];
+            $data['unit'] = $request->unit[$i];
+            $data['unit_price'] = $request->unit_price[$i];
+            $data['amount'] = $request->amount[$i];
+            $data['remarks'] = $request->remarks2[$i];
+
+            $datas[] = $data;
+        }
+
+        return $this->insert($datas);
+    }
 
 }
