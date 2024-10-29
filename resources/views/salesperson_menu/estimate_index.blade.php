@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</div>
+        <h1>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</h1>
         <div>
             <form action="{{ route('estimate.index') }}" method="GET">
 
