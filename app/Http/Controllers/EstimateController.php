@@ -44,7 +44,7 @@ class EstimateController extends Controller
 
     public function create()
     {
-        $construction_name = \DB::table('construction_name')->get();
+        $construction_name = ConstructionName::all();
         return view('cover.index',compact('construction_name'));
     }
     /**
