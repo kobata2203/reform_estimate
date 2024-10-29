@@ -45,33 +45,24 @@ class EstimateController extends Controller
     public function create()
     {
         $construction_name = \DB::table('construction_name')->get();
-
         return view('cover.index',compact('construction_name'));
     }
-
+    /**
+     * 登録処理
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request,ConstructionName $construction_name)
     {
-        DB::beginTransaction();
+        $regist_estimate_info = $this->estimate_info->regist_estimate_info($request);
 
-        $estimate_info = new EstimateInfo();
+        if($regist_estimate_info === true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
 
-        $estimate_info->creation_date = date("Y年m月d日");
-        $estimate_info->customer_name = $request->customer_name;
-        $estimate_info->subject_name = $request->subject_name;
-        $estimate_info->delivery_place = $request->delivery_place;
-        $estimate_info->construction_period = $request->construction_period;
-        $estimate_info->payment_type = $request->payment_type;
-        $estimate_info->expiration_date = $request->expiration_date;
-        $estimate_info->remarks = $request->remarks;
-        $estimate_info->charger_name = $request->charger_name;
-        $estimate_info->department_name = $request->department_name;
-        $estimate_info->construction_id = $request->construction_id;
-
-        $estimate_info->save();
-
-        DB::commit();
-
-        return redirect('estimate/index');
+        return redirect('estimate/index')->with('message', $message);
     }
 
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)

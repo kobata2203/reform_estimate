@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>見積書一覧画面(営業者用)</title>
-        <link rel="stylesheet" href="css/estimate_index.css">
+        <link rel="stylesheet" href="/estimate/css/estimate_index.css">
     </head>
 
     <body>
