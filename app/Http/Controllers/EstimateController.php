@@ -44,7 +44,7 @@ class EstimateController extends Controller
 
     public function create()
     {
-        $construction_name = ConstructionName::all();
+        $construction_name = $this->constructionName->get_target_construction_name();
         return view('cover.index',compact('construction_name'));
     }
     /**
