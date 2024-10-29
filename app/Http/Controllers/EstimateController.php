@@ -69,6 +69,7 @@ class EstimateController extends Controller
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);
+        $prevurl = url()->previous();
 
         /**
          * SQLはモデルに記載する
@@ -81,6 +82,7 @@ class EstimateController extends Controller
             'construction_name' => $construction_name,
             'construction_loop_count' => $construction_name->loop_count,
             'construction_items' => $construction_items,
+            'prevurl' => $prevurl,
         ]);
     }
 
@@ -91,6 +93,13 @@ class EstimateController extends Controller
      */
     public function breakdown_store(BreakdownRequest $request)
     {
+        $prevurl = $request->prevurl;
+
+        //直前のページURLが一覧画面（パラメータ有）ではない場合
+        if(false === strpos($prevurl, 'estimate_info?')){
+            $prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
+        }
+
         $regist_breakdown = $this->breakdown->regist_breakdown($request);
 
         if($regist_breakdown === true) {

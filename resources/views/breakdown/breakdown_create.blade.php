@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>見積書作成画面(内訳明細書)</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="breakdown_create.css">
+        <link rel="stylesheet" href="{{ asset('css/breakdown_create.css') }}">
         <script src="{{ asset('/js/estimate/breakdown_create.js') }}"></script>
     </head>
 
@@ -97,13 +97,8 @@
             </table>
             <button type="submit">登録</button>
             <input type="hidden" name="construction_loop_count" value="{{$construction_loop_count}}">
+            <button type="button" class="btn btn-link" href="{{$prevurl}}">戻る</button>
         </form>
-        <div>
-          <form method="GET" action="estimate/index">
-            @csrf
-                <button>見積書一覧へ</button>
-        </form>
-        </div>
     </div>
 </body>
 
