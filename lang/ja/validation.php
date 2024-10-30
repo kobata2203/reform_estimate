@@ -84,7 +84,8 @@ return [
     ],
     'mac_address' => ':attributeには、有効なMACアドレスを指定してください。',
     'max' => [
-        'numeric' => ':attributeには、:max以下の数字を指定してください。',
+//        'numeric' => ':attributeには、:max以下の数字を指定してください。',
+        'numeric' => ':attributeには、:max以下の数字で入力してください。',
         'file' => ':attributeには、:max kb以下のファイルを指定してください。',
 //        'string' => ':attributeは、:max文字以下で指定してください。',
         'string' => ':attributeは、:max文字以下で入力してください。',
@@ -94,9 +95,11 @@ return [
     'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'mimetypes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'min' => [
-        'numeric' => ':attributeには、:min以上の数字を指定してください。',
+//        'numeric' => ':attributeには、:min以上の数字を指定してください。',
+        'numeric' => ':attributeには、:min以上の数字で入力してください。',
         'file' => ':attributeには、:min kb以上のファイルを指定してください。',
-        'string' => ':attributeは、:min文字以上で指定してください。',
+//        'string' => ':attributeは、:min文字以上で指定してください。',
+        'string' => ':attributeは、:min文字以上で入力してください。',
         'array' => ':attributeは:min個以上指定してください。',
     ],
     'min_digits' => ':attributeは、:min桁以上で指定してください。',
@@ -108,7 +111,8 @@ return [
     'multiple_of' => ':attributeには、:valueの倍数を指定してください。',
     'not_in' => '選択された:attributeは正しくありません。',
     'not_regex' => ':attributeの形式が正しくありません。',
-    'numeric' => ':attributeには、数字を指定してください。',
+//    'numeric' => ':attributeには、数字を指定してください。',
+    'numeric' => ':attributeには、数字を入力してください。',
     'password' => [
         'letters' => ':attributeは、最低1文字以上の文字を含めてください。',
         'mixed' => ':attributeは、最低1文字以上の大文字と小文字をそれぞれ含めてください。',
