@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Salesperson;
-use App\Models\Department;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -14,7 +12,7 @@ class SalespersonController extends Controller
     public function __construct()
     {
         $this->user = new User();
-     
+
     }
 
 

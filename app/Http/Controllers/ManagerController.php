@@ -8,18 +8,13 @@ use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
 use App\Models\Breakdown;
 use App\Models\Estimate;
 use App\Models\EstimateCalculate;
-use Barryvdh\DomPDF\Facade\PDF;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use TCPDF;
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use Mccarlosen\LaravelMpdf\Facades\Mpdf; // Make sure to import the correct namespace
-use Mpdf\MpdfException; // Import the exception class for mPDF
+
 
 
 
@@ -29,7 +24,8 @@ class ManagerController extends Controller
 {
     $this->manager = new Manager();
     $this->managerInfo = new Managerinfo();
-    $this->admin = new Manager();
+    $this->estimateInfo = new EstimateInfo();
+    $this->admin = new Admin();
     $this->breakdown = new Breakdown();
     $this->estimate = new Estimate();
     $this->estimateCalculate = new EstimateCalculate();

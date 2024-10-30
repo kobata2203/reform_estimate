@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('unit_price')->nullable();
             $table->integer('amount')->nullable();
             $table->text('remarks')->nullable();
-            $table->string('construction_name')->nullable();
+            // $table->string('construction_name')->nullable();
             $table->timestamps();
         });
     }
