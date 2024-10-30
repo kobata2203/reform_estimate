@@ -25,6 +25,7 @@ return new class extends Migration
             //$table->foreignId('construction_id')->constrained('construction_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
             $table->string('construction_name')->nullable();
+            $table->boolean('is_hidden')->default(false);
             $table->timestamps();
 
             // 外部キー制約を追加

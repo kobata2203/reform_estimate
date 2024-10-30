@@ -5,10 +5,10 @@ body {
     padding: 0; /* Remove default padding */
     width: 100%;
     height:100vh;
-    background-image: url(../image/back2.png);  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
+    background-image: url(../image/back2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
 }
 
@@ -132,5 +132,35 @@ button {
     padding: 5px;
 }
 
+/* Button Styles */
+td .btn {
+    display: inline-block;
+    width: 80px;                 /* Consistent width */
+    padding: 8px 12px;           /* Padding for a comfortable button size */
+    font-size: 14px;             /* Font size for readability */
+    color: #fff;                 /* White text for contrast */
+    border-radius: 4px;          /* Rounded corners for a smoother look */
+    text-decoration: none;       /* Remove underline from links */
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Specific Color for '削除' Button */
+td .btn-danger {
+    background-color: #dc3545;   /* Red background */
+}
+
+td .btn-danger:hover {
+    background-color: #c82333;   /* Darker red on hover */
+}
+
+/* Specific Color for '閲覧' Button */
+td .btn-primary {
+    background-color: #007bff;   /* Blue background */
+}
+
+td .btn-primary:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
 
 

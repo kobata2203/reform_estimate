@@ -81,7 +81,7 @@ Route::get('/manager_estimate', [App\Http\Controllers\ManagerController::class, 
 Route::resource('managers', ManagerController::class);
 
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
-
+Route::get('/manager/{id}/delete', [ManagerController::class, 'delete'])->name('manager.delete');
 
 
 
@@ -210,7 +210,7 @@ Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('s
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
-
+Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 //togenerate pdf
 
 #to view pdf

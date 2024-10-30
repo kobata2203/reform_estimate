@@ -11,7 +11,7 @@
 <body>
     <div class="stimate-detail">
         <div>
-            <h2>見積書詳細画面</h2>
+            <h2>御　見　積　書</h2>
         </div>
 
         <div class="input-container" id="customer">
@@ -30,9 +30,11 @@
         <div class="input-suffix-wrapper">
             <div class="input-suffix">
                 <label for="estimate-amount">お見積り金額 :</label>
+                <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                    value="{{ old('estimate_amount', $estimate_info->estimate_amount) }}">
-                <span class="suffix">（税込）</span>
+                       value="{{ number_format($grandTotal) }}"> <!-- Show the grandTotal here -->
+
+                       <span class="suffix">（税込）</span>
             </div>
         </div>
 
@@ -76,7 +78,7 @@
                 担当：{{ $estimate_info->charger_name }}</p>
         </div>
         <div class="action2">
-            <a href="{{ route('manager.item', $estimate_info->id) }}" class="btn btn-warning">内訳明細書</a>
+
             <a href="{{ route('managers.pdfshow', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
         </div>
@@ -84,3 +86,6 @@
 </body>
 
 </html>
+
+
+

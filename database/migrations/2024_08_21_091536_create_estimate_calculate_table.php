@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('estimate_calculate', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estimate_id');
             $table->integer('special_discount');
             $table->integer('subtotal_price');
             $table->integer('consumption_tax');

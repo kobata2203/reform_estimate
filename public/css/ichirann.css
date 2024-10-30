@@ -395,7 +395,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 }
 
 .btn-warning {
-    background-color: #ccc;   /* Warning button color */
+    background-color: #007bff;   /* Warning button color */
 }
 
 .btn-primary {
