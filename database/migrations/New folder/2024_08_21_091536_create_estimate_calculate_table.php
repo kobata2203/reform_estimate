@@ -21,8 +21,6 @@ return new class extends Migration
             $table->integer('consumption_tax');
             $table->integer('total_price');
             $table->timestamps();
-
-            $table->foreign('estimate_id')->references('id')->on('estimates')->onDelete('cascade');
         });
     }
 

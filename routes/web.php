@@ -152,10 +152,10 @@ Route::get('/salespersons/show', [SalespersonController::class, 'index'])->name(
 
 
 Route::get('/admins', [ManagerController::class, 'admin_index'])->name('admins.index');
-route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
-route::resource('salespersons', SalespersonController::class);
+Route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
+Route::resource('salespersons', SalespersonController::class);
 // route::resource('admins', ManagerController::class);
-route::resource('managers', ManagerController::class);
+Route::resource('managers', ManagerController::class);
 
 
 

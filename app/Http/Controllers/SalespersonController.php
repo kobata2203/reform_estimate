@@ -11,6 +11,13 @@ use App\Models\User;
 
 class SalespersonController extends Controller
 {
+    public function __construct()
+    {
+        $this->user = new User();
+     
+    }
+
+
     public function add()
     {
         return view('salesperson_add.index');

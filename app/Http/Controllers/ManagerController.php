@@ -23,10 +23,18 @@ use Mpdf\MpdfException; // Import the exception class for mPDF
 
 
 
-
-
 class ManagerController extends Controller
 {
+    public function __construct()
+{
+    $this->manager = new Manager();
+    $this->managerInfo = new Managerinfo();
+    $this->admin = new Manager();
+    $this->breakdown = new Breakdown();
+    $this->estimate = new Estimate();
+    $this->estimateCalculate = new EstimateCalculate();
+}
+
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -227,6 +235,8 @@ class ManagerController extends Controller
 
     public function updateDiscount(Request $request, $id)
     {
+        // dd($request->all());
+
         // Validate the request
         $request->validate([
             'special_discount' => 'required|numeric|min:0', // Ensure it's a valid number
@@ -252,7 +262,7 @@ class ManagerController extends Controller
         // Update the discount from the form input
         $estimate_calculate->special_discount = $request->input('special_discount');
 
-        // Recalculate the subtotal, tax, and total
+        // 再計算 subtotal, tax, and total
         $subtotal = $totalAmount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
@@ -264,9 +274,11 @@ class ManagerController extends Controller
 
         try {
             // Save the changes to the database
+
             $estimate_calculate->save();
             return redirect()->back()->with('success', 'Discount updated successfully');
         } catch (\Illuminate\Database\QueryException $e) {
+
             return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
         }
     }
@@ -369,6 +381,7 @@ class ManagerController extends Controller
 
     //using tcpdf pacage but the fonts are not shown in japanese
     public function pdf($id)
+
     {
         // Fetching the estimate info and breakdown based on the given ID
         $estimate_info = EstimateInfo::findOrFail($id);
@@ -450,6 +463,7 @@ class ManagerController extends Controller
         // Output the PDF
         $pdf->Output("output.pdf", "I");
     }
+
 
 
 
