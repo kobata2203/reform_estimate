@@ -29,5 +29,11 @@ class ConstructionName extends Model
     {
     return $this->hasMany('App\Models\Breakdown');
     }
+    
+    public function get_target_construction_name()
+    {
+        $construction_name = ConstructionName::all();
 
+        return $construction_name;
+    }
 }
