@@ -20,6 +20,9 @@ use TCPDF;
 
 class ManagerController extends Controller
 {
+    
+
+
     public function __construct()
 {
     $this->manager = new Manager();
@@ -34,7 +37,8 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = EstimateInfo::where('is_hidden', false);
+        $estimate_info = $this->estimateInfo::where('is_deleted', false);
+        // $estimate_info = EstimateInfo::where('is_hidden', false);
 
         if (!empty($keyword)) {
             $estimate_info = $estimate_info->where('creation_date', 'LIKE', "%{$keyword}%")
@@ -53,8 +57,8 @@ class ManagerController extends Controller
     public function delete($id)
     {
         // Find the estimate by ID and update the 'is_hidden' column to true
-        $estimate = EstimateInfo::findOrFail($id);
-        $estimate->is_hidden = true;
+        $estimate = $this->estimateInfo::findOrFail($id);
+        $estimate->is_deleted = true;
         $estimate->save();
 
         // Redirect back to the estimate list
@@ -63,7 +67,7 @@ class ManagerController extends Controller
     public function admin_index(Request $request)
     {
         $keyword = $request->input('search'); // Ensure you are getting the right input
-        $manager_info = Admin::query();
+        $manager_info = $this->admin::query();
 
         if (!empty($keyword)) {
             $manager_info = $manager_info->where('name', 'LIKE', "%{$keyword}%")
@@ -110,7 +114,7 @@ class ManagerController extends Controller
 
     public function edit($id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = $this->admin::findOrFail($id);
         return view('admins.edit', [
             'admin' => $admin
         ]);
@@ -121,7 +125,7 @@ class ManagerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = $this->admin::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -153,10 +157,10 @@ class ManagerController extends Controller
     public function show($id)
     {
         // Fetch the estimate info by ID
-        $estimate_info = EstimateInfo::findOrFail($id);
+        $estimate_info = $this->estimateInfo::findOrFail($id);
 
         // Fetch related breakdown data for calculation
-        $breakdown = Breakdown::where('estimate_id', $id)->get(); // Adjust based on your relationships
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get(); // Adjust based on your relationships
 
         // Calculate the total amount
         $totalAmount = 0;
@@ -165,7 +169,7 @@ class ManagerController extends Controller
         }
 
         // Fetch discount from database or set as needed
-        $estimateCalculate = EstimateCalculate::where('estimate_id', $id)->first();
+        $estimateCalculate = $this->estimateCalculate::where('estimate_id', $id)->first();
         $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
 
         $inputDiscount = request()->input('discount', $discount);
@@ -185,13 +189,13 @@ class ManagerController extends Controller
     public function itemView($id)
     {
         // Fetch necessary data related to the $id (from Estimate and Breakdown models)
-        $estimate_info = EstimateInfo::find($id); // Fetch the estimate record
+        $estimate_info = $this->estimateInfo::find($id); // Fetch the estimate record
         if (!$estimate_info) {
             return redirect()->back()->withErrors(['error' => 'Estimate not found']);
         }
 
 
-        $breakdown = Breakdown::where('estimate_id', $id)->get(); // Fetch breakdown related to estimate
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get(); // Fetch breakdown related to estimate
 
         // Calculate totalAmount from breakdown
         $totalAmount = 0;
@@ -200,7 +204,7 @@ class ManagerController extends Controller
         }
 
         // Fetch estimate_calculate record or create a new one if it doesn't exist
-        $estimate_calculate = EstimateCalculate::firstOrNew(['estimate_id' => $id]); // Ensure estimate_id is set
+        $estimate_calculate = $this->estimateCalculate::firstOrNew(['estimate_id' => $id]); // Ensure estimate_id is set
 
         // Set special_discount, default to 0 if null
         $discount = $estimate_calculate->special_discount ?? 0;
@@ -239,12 +243,12 @@ class ManagerController extends Controller
         ]);
 
         // Fetch the estimate and related breakdown
-        $estimate_info = Estimate::find($id);
+        $estimate_info = $this->estimate::find($id);
         if (!$estimate_info) {
             return redirect()->back()->withErrors(['error' => 'Estimate not found']);
         }
 
-        $breakdown = Breakdown::where('estimate_id', $id)->get();
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get();
 
         // Calculate the total amount from the breakdown
         $totalAmount = 0;
@@ -253,7 +257,7 @@ class ManagerController extends Controller
         }
 
         // Fetch the estimate_calculate record or create a new one if it doesn't exist
-        $estimate_calculate = EstimateCalculate::firstOrNew(['estimate_id' => $id]);
+        $estimate_calculate = $this->estimateCalculate::firstOrNew(['estimate_id' => $id]);
 
         // Update the discount from the form input
         $estimate_calculate->special_discount = $request->input('special_discount');
@@ -283,7 +287,7 @@ class ManagerController extends Controller
 
     public function breakdowns()
     {
-        return $this->hasMany(Breakdown::class, 'estimate_id');
+        return $this->hasMany($this->breakdown::class, 'estimate_id');
     }
     // to generate pdf
 
@@ -321,7 +325,7 @@ class ManagerController extends Controller
     public function showEstimate($id)
     {
         // Retrieve the estimate by ID
-        $estimate = Estimate::find($id);
+        $estimate = $this->estimate::find($id);
 
         // Pass the estimate and its ID to the view
         return view('manager_estimate_index.estimate_index', [
@@ -380,10 +384,10 @@ class ManagerController extends Controller
 
     {
         // Fetching the estimate info and breakdown based on the given ID
-        $estimate_info = EstimateInfo::findOrFail($id);
-        $breakdown = Breakdown::where('estimate_id', $id)->get();
+        $estimate_info = $this->estimateInfo::findOrFail($id);
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get();
 
-        $estimate = Estimate::with('calculate')->findOrFail($id);
+        $estimate = $this->estimate::with('calculate')->findOrFail($id);
         // Create new PDF document
         $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
         $pdf->setPrintHeader(false);
@@ -466,10 +470,10 @@ class ManagerController extends Controller
     public function PDFshow($id)
     {
         // Retrieve the estimate info by ID
-        $estimate_info = EstimateInfo::findOrFail($id);
+        $estimate_info = $this->estimateInfo::findOrFail($id);
 
         // Fetch related breakdown data for calculation
-        $breakdown = Breakdown::where('estimate_id', $id)->get();
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get();
 
         // Calculate the total amount
         $totalAmount = 0;
@@ -477,7 +481,7 @@ class ManagerController extends Controller
             $totalAmount += $item->amount;
         }
 
-        $estimateCalculate = EstimateCalculate::where('estimate_id', $id)->first();
+        $estimateCalculate = $this->estimateCalculate::where('estimate_id', $id)->first();
         $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
         $inputDiscount = request()->input('discount', $discount);
         // Discount and tax calculation (same as in show method)
@@ -510,8 +514,8 @@ class ManagerController extends Controller
     public function generatefpdi($id)
     {
         // Fetching the estimate info and breakdown based on the given ID
-        $estimate_info = EstimateInfo::findOrFail($id);
-        $breakdown = Breakdown::where('estimate_id', $id)->get();
+        $estimate_info = $this->estimateInfo::findOrFail($id);
+        $breakdown = $this->breakdown::where('estimate_id', $id)->get();
 
         // Create new PDF document
         $pdf = new Fpdi("L", "mm", "A4", true, "UTF-8");

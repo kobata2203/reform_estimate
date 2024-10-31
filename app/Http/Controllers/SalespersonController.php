@@ -9,6 +9,7 @@ use App\Models\User;
 
 class SalespersonController extends Controller
 {
+   
     public function __construct()
     {
         $this->user = new User();
@@ -35,7 +36,7 @@ class SalespersonController extends Controller
         \Log::info('Validated Data: ', $validated);
 
 
-        $user = new User;
+        $user = new $this->user;
         $user->name = $request->name;
         $user->department_name = $request->department_name;
         $user->email = $request->email;
@@ -53,7 +54,7 @@ class SalespersonController extends Controller
     }
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user::findOrFail($id);
         return view('manager_index.edit', compact('user'));
     }
 
@@ -106,7 +107,7 @@ class SalespersonController extends Controller
 public function index(Request $request)
 {
     $keyword = $request->input('search');
-    $users = User::query();
+    $users = $this->user::query();
 
     if (!empty($keyword)) {
         $users = $users->where('name', 'LIKE', "%{$keyword}%")
@@ -124,7 +125,7 @@ public function index(Request $request)
 
     public function list(Request $request)
     {
-        $query = User::query();
+        $query = $this->user::query();
 
         if ($request->filled('search')) {
             $query->whereHas('department', function ($q) use ($request) {
@@ -152,7 +153,7 @@ public function index(Request $request)
     ]);
 
 
-    $users = User::findOrFail($id);
+    $users = $this->user::findOrFail($id);
 
 
     $users->update($validatedData);
@@ -163,7 +164,7 @@ public function index(Request $request)
 
 public function show($id)
 {
-    $users = User::findOrFail($id);
+    $users = $this->user::findOrFail($id);
     return view('salesperson.show', compact('salesperson')); // Adjust the view as needed
 }
 

@@ -16,7 +16,9 @@ class EstimateController extends Controller
      * 初期処理
      * 使用するクラスのインスタンス化
      */
-    public function __construct()
+  
+
+     public function __construct()
     {
         $this->estimateInfo = new EstimateInfo();
         $this->constructionName = new ConstructionName();
@@ -26,7 +28,8 @@ class EstimateController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = EstimateInfo::query();
+        $estimate_info = $this->estimateInfo::query();
+        // $estimate_info = EstimateInfo::query();
 
         if (!empty($keyword)) {
             $estimate_info = $estimate_info->where('creation_date', 'LIKE', "%{$keyword}%")
@@ -113,7 +116,7 @@ class EstimateController extends Controller
 
     public function indexView()
     {
-        $estimates = EstimateInfo::with('breakdowns')->get();
+        $estimates = $this->estimateInfo::with('breakdowns')->get();
         return view('estimate.index', compact('estimates'));
     }
 
