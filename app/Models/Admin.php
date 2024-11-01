@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
-use database\seeders\Adminseeder;
-
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends User
 {
@@ -28,6 +27,51 @@ class Admin extends User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+//Adminテーブルのデータ検索
+    public static function searchAdmin($keyword = null)
+    {
+        $query = self::query();
+
+        if (!empty($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('email', 'LIKE', "%{$keyword}%")
+                      ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        return $query->get();
+    }
+
+     // Method to create a new admin
+     public static function createAdmin($data)
+     {
+         return self::create([
+             'name' => $data['name'],
+             'email' => $data['email'],
+             'password' => Hash::make($data['password']),
+             'department_name' => $data['department_name'],
+         ]);
+     }
+//編集機能
+     public static function findAdminById($id)
+    {
+        return self::findOrFail($id);
+    }
+
+    //update on admins
+    public static function updateAdmin($admin, $data)
+{
+    $admin->name = $data['name'];
+    $admin->email = $data['email'];
+    if (!empty($data['password'])) {
+        $admin->password = Hash::make($data['password']);
+    }
+    $admin->department_name = $data['department_name'];
+
+    return $admin->save();
+}
+
 }
 
 

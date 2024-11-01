@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('construction_name', function (Blueprint $table) {
-            $table->id('construction_id');
+        Schema::create('estimates', function (Blueprint $table) {
+            $table->id();
+            $table->string('customer_name');
             $table->string('construction_name');
-            $table->integer('loop_count');
-
+            $table->string('charger_name');
+            $table->string('department_name');
+            $table->date('creation_date');
+            $table->string('expiration_date');
             $table->timestamps();
-
-            //$table->foreign('construction_id')->references('construction_id')->on('estimate_info');
-            //$table->foreign('construction_name')->references('construction_name')->on('estimate_info');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('construction_name');
+        Schema::dropIfExists('estimates');
     }
 };

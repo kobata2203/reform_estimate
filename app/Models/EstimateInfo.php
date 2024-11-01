@@ -39,12 +39,14 @@ class EstimateInfo extends Model
 
     public function breakdown()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany('App\Models\Breakdown', 'estimate_id');
     }
+
+
 
     public function regist_estimate_info($request)
     {
-        
+
 
         $estimate_info = new EstimateInfo();
 
@@ -62,4 +64,64 @@ class EstimateInfo extends Model
 
         $estimate_info->save();
     }
+    //テーブルからデータを検索
+    public static function searchEstimateInfo($keyword = null)
+    {
+        $query = self::where('is_deleted', false);
+
+        if (!empty($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('creation_date', 'LIKE', "%{$keyword}%")
+                      ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        return $query->get();
+    }
+
+    //削除機能
+    public function deleteEstimate()
+    {
+        $this->is_deleted = true;
+        $this->save();
+    }
+
+// EstimateInfo.php
+public function getEstimateWithDetails($id)
+{
+    // Fetch the estimate info by ID
+    $estimate_info = $this->findOrFail($id);
+
+    // Fetch related breakdown data
+    $breakdown = $estimate_info->breakdown; // Uses the relationship defined
+
+    return [$estimate_info, $breakdown];
+}
+
+//内訳明細書
+public function getEstimateById($id)
+{
+    return $this->find($id);
+}
+
+//pdf method on the ManagerController
+public function fetchEstimateInfoById($id)
+{
+    return $this->findOrFail($id);
+}
+
+//PDFshow on ManagerController
+public function fetchingEstimateInfoById($id)
+{
+    return $this->findOrFail($id);
+}
+
+//breakdown_create メソッド　EstimateController
+public static function getById($id)
+{
+    return self::find($id);
+}
 }

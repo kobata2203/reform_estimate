@@ -38,4 +38,16 @@ class Estimate extends Model
     {
         return $this->hasOne(EstimateCalculate::class, 'estimate_id');
     }
+
+    // for updateDiscount method on ManagerController
+public function getEstimateById($id)
+{
+    return $this->find($id);
+}
+
+//pdf method on the ManagerController
+public function fetchEstimateWithCalculations($id)
+    {
+        return $this->with('calculate')->findOrFail($id);
+    }
 }

@@ -38,10 +38,10 @@
                                 <div>
                                     <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark edit-button">編集</a>
                                 </div>
-                                <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                {{-- <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                </form>
+                                </form> --}}
 
 
                     </tr>

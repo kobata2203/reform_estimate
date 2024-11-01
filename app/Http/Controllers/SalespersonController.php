@@ -9,7 +9,9 @@ use App\Models\User;
 
 class SalespersonController extends Controller
 {
-   
+
+    protected $user;
+
     public function __construct()
     {
         $this->user = new User();
@@ -35,34 +37,25 @@ class SalespersonController extends Controller
         // Debugging: Log validated data
         \Log::info('Validated Data: ', $validated);
 
-
+        // Use the User model to create a new user
         $user = new $this->user;
-        $user->name = $request->name;
-        $user->department_name = $request->department_name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->input('password')); // Hash the password for security
 
-        if ($user->save()) {
+        if ($user->createUser($validated)) {
             // Debugging: Log success message
-            \Log::info('User saved successfully: ', [$user]);
+            \Log::info('User saved successfully: ', [$validated]);
             return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
         } else {
             // Debugging: Log failure message
-            \Log::error('Failed to save user: ', [$user]);
+            \Log::error('Failed to save user: ', [$validated]);
             return back()->withErrors('User could not be saved.');
         }
     }
+
     public function edit($id)
     {
-        $user = $this->user::findOrFail($id);
-        return view('manager_index.edit', compact('user'));
+        $user = $this->user->fetchUserById($id);
+    return view('manager_index.edit', compact('user'));
     }
-
-
-
-
-
-
 
     public function showForm()
     {
@@ -82,60 +75,22 @@ class SalespersonController extends Controller
         ]);
     }
 
-    // public function index(Request $request)
-    // {
-    //     $query = Salesperson::query();
 
-    //     if ($request->filled('search')) {
-    //         $query->whereHas('department', function ($q) use ($request) {
-    //             $q->where('name', 'like', '%' . $request->search . '%');
-    //         });
-    //     }
+    public function index(Request $request)
+    {
+        $keyword = $request->input('search');
+        $users = User::searchUsers($keyword); // Call the search method from the User model
 
-    //     $salespersons = $query->with('department')->get();
-    //     return view('manager_index.index', compact('salespersons'));
-    // }
-//     public function index()
-// {
-//     // Fetch the manager information from the database
-//     $manager_info = User::all();  // Or adjust as necessary based on your table structure
-
-    //     // Pass the variable to the view
-//     return view('manager_index.index', compact('manager_info'));
-// }
-
-public function index(Request $request)
-{
-    $keyword = $request->input('search');
-    $users = $this->user::query();
-
-    if (!empty($keyword)) {
-        $users = $users->where('name', 'LIKE', "%{$keyword}%")
-            ->orWhere('email', 'LIKE', "%{$keyword}%")
-            ->orWhere('department_name', 'LIKE', "%{$keyword}%")
-            ->get();
-    } else {
-        $users = $users->get();
+        return view('manager_index.index', compact('users'));
     }
 
-    return view('manager_index.index', compact('users'));
+  // In your Controller
+public function list(Request $request)
+{
+    $salespersons = $this->user::searchWithDepartment($request->input('search'))->get();
+    return view('salespersons.list', compact('salespersons'));
 }
 
-
-
-    public function list(Request $request)
-    {
-        $query = $this->user::query();
-
-        if ($request->filled('search')) {
-            $query->whereHas('department', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        $salespersons = $query->with('department')->get();
-        return view('salespersons.list', compact('salespersons'));
-    }
 
     // In ManagerController.php
     public function menu()
@@ -149,24 +104,24 @@ public function index(Request $request)
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        // Add other fields as necessary
+
     ]);
 
-
-    $users = $this->user::findOrFail($id);
-
-
-    $users->update($validatedData);
+    $this->user->updateUser($id, $validatedData);
 
     // Redirect or return response
     return redirect()->route('manager_menu.index')->with('success', '更新されました。');
 }
 
+
 public function show($id)
 {
-    $users = $this->user::findOrFail($id);
-    return view('salesperson.show', compact('salesperson')); // Adjust the view as needed
+    // Use the model method to find the user
+    $user = $this->user->findUserWithId($id);
+
+    return view('salesperson.show', compact('user')); // Adjust the view as needed
 }
+
 
 public function manager_menu()
     {

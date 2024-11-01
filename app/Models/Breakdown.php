@@ -42,7 +42,7 @@ class Breakdown extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id');
     }
 
     public function estimate()
@@ -71,5 +71,36 @@ class Breakdown extends Model
 
         return $this->insert($datas);
     }
+
+    public static function getBreakdownsByEstimateId($estimateId)
+{
+    return self::where('estimate_id', $estimateId)->get();
+}
+
+//内訳明細書
+// Breakdown.php
+public function getBreakdownByEstimateId($estimateId)
+{
+    return $this->where('estimate_id', $estimateId)->get();
+}
+
+// for updateDiscount method on ManagerController
+// Breakdown.php
+public function breakdownByEstimateId($estimateId)
+{
+    return $this->where('estimate_id', $estimateId)->get();
+}
+
+//pdf method on the ManagerController
+public function fetchBreakdownsByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+    //PDFshow on ManagerController
+    public function fetchingBreakdownsByEstimateId($estimateId)
+{
+    return $this->where('estimate_id', $estimateId)->get();
+}
 
 }
