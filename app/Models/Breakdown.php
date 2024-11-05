@@ -103,4 +103,14 @@ public function fetchBreakdownsByEstimateId($estimateId)
     return $this->where('estimate_id', $estimateId)->get();
 }
 
+
+//show method on ManagerController p2
+// Breakdown.php
+public static function getTotalAmountByEstimateId($estimateId)
+{
+    $breakdown = self::where('estimate_id', $estimateId)->get();
+    $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
+    return $totalAmount;
+}
+
 }

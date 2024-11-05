@@ -36,7 +36,7 @@ class EstimateCalculate extends Model
 }
 
 // EstimateCalculate.php
-public function getDiscountByEstimateId($id)
+public function getDiscountByEstimateIds($id)
 {
     return $this->where('estimate_id', $id)->first()->special_discount ?? 0;
 }
@@ -77,6 +77,14 @@ public function estimateCalculateUpdate($estimateCalculate, $subtotal, $tax, $gr
 public function fetchEstimateCalculateByEstimateId($estimateId)
 {
     return $this->where('estimate_id', $estimateId)->first();
+}
+
+//show method on the ManagerCOntroller
+// EstimateCalculate.php
+public static function getDiscountByEstimateId($estimateId)
+{
+    $estimateCalculate = self::where('estimate_id', $estimateId)->first();
+    return $estimateCalculate ? $estimateCalculate->special_discount : 0;
 }
 
 }

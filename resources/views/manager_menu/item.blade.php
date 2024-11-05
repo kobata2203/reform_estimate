@@ -15,7 +15,7 @@
     <div class="contact-info">
         <p>株式会社サーバントップ</p>
     </div>
-
+   
     <div class="construction-name">
         <label for="construction-name">工事名</label>
         <input type="text" id="construction-name" name="construction_name"

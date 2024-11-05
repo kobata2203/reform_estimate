@@ -9,7 +9,7 @@ return new class extends Migration
     {
         Schema::create('estimate_info', function (Blueprint $table) {
             $table->id();
-            $table->string('construction_name')->nullable();
+            $table->string('construction_name');
             $table->string('customer_name')->nullable();
             // $table->string('name')->nullable();
             $table->string('creation_date')->nullable();
@@ -23,11 +23,11 @@ return new class extends Migration
             $table->string('department_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
 
-            $table->boolean('is_deleted')->default(false);
+            $table->boolean('delet_flag')->default(false);
 
             $table->timestamps();
 
-             // ŠO•”ƒL[§–ñ‚ð’Ç‰Á
+             // ï¿½Oï¿½ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ç‰ï¿½
             $table->foreign('construction_id')->references('construction_id')->on('construction_name');
         });
     }

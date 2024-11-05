@@ -44,13 +44,15 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('keyword');
 
-        $estimate_info = EstimateInfo::searchEstimateInfo($keyword);
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
+
 
         return view('manager_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
 
     public function delete($id)
     {
+
         $estimate = $this->estimateInfo::findOrFail($id);
         $estimate->deleteEstimate();
         return redirect()->route('manager_estimate')->with('status', 'Data successfully hidden!');
@@ -61,7 +63,7 @@ class ManagerController extends Controller
         $keyword = $request->input('search'); // Ensure you are getting the right input
 
 
-        $manager_info = Admin::searchAdmin($keyword);
+        $manager_info = $this->admin->searchAdmin($keyword);
 
         return view('admins.index', compact('manager_info'));
     }
@@ -82,7 +84,7 @@ class ManagerController extends Controller
         ]);
 
 
-        Admin::createAdmin($validated);
+        $this->admin->createAdmin($validated);
 
 
         return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
@@ -96,7 +98,7 @@ class ManagerController extends Controller
 
     public function edit($id)
     {
-        $admin = Admin::findAdminById($id);
+        $admin = $this->admin->findAdminById($id);
         return view('admins.edit', [
             'admin' => $admin
         ]);
@@ -107,7 +109,7 @@ class ManagerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $admin = Admin::findAdminById($id);
+        $admin = $this->admin->findAdminById($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -117,39 +119,86 @@ class ManagerController extends Controller
         ]);
 
         // Use the updateAdmin method from the Admin model
-        Admin::updateAdmin($admin, $validated);
+        $this->admin->updateAdmin($admin, $validated);
 
         return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
     }
 
 
+    // public function show($id)
+    // {
+    //     // Fetch the estimate info and breakdown data
+    //     list($estimate_info, $breakdown) = $this->estimateInfo->getEstimateWithDetails($id);
+
+    //     // Calculate the total amount
+    //     $totalAmount = $breakdown ? $breakdown->sum('amount') : 0;
+
+    //     // Fetch the discount using the EstimateCalculate model
+    //     $discount = $this->estimateCalculate->getDiscountByEstimateIds($id);
+
+    //     $inputDiscount = request()->input('discount', $discount);
+
+    //     // Calculate subtotal, tax, and grand total
+    //     $subtotal = $totalAmount - $inputDiscount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
+
+    //     // Pass the estimate_info, breakdown, and grandTotal to the view
+    //     return view('manager_menu.show', [
+    //         'estimate_info' => $estimate_info,
+    //         'grandTotal' => $grandTotal,
+    //         'discount' => $inputDiscount,
+    //     ]);
+    // }
+    // public function show($id)
+    // {
+    //     // Fetch the estimate info by ID
+    //     $estimate_info = $this->estimateInfo::findOrFail($id);
+
+    //     // Fetch related breakdown data for calculation
+    //     $breakdown = $this->breakdown::where('estimate_id', $id)->get(); // Adjust based on your relationships
+
+    //     // Calculate the total amount
+    //     $totalAmount = 0;
+    //     foreach ($breakdown as $item) {
+    //         $totalAmount += $item->amount;
+    //     }
+
+    //     // Fetch discount from database or set as needed
+    //     $estimateCalculate = $this->estimateCalculate::where('estimate_id', $id)->first();
+    //     $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
+
+    //     $inputDiscount = request()->input('discount', $discount);
+    //     // Calculate subtotal, tax, and grand total
+    //     $subtotal = $totalAmount - $discount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
+
+    //     // Pass the estimate_info, breakdown, and grandTotal to the view
+    //     return view('manager_menu.show', [
+    //         'estimate_info' => $estimate_info,
+    //         'grandTotal' => $grandTotal, // Pass the grand total to the view
+    //          'discount' => $inputDiscount
+    //     ]);
+    // }
+
     public function show($id)
-    {
-        // Fetch the estimate info and breakdown data
-        list($estimate_info, $breakdown) = $this->estimateInfo->getEstimateWithDetails($id);
-
-        // Calculate the total amount
-        $totalAmount = $breakdown->sum('amount');
-
-        // Fetch the discount using the EstimateCalculate model
-        $discount = $this->estimateCalculate->getDiscountByEstimateId($id);
-
-        $inputDiscount = request()->input('discount', $discount);
-
-        // Calculate subtotal, tax, and grand total
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1; // Assuming 10% tax
-        $grandTotal = $subtotal + $tax;
-
-        // Pass the estimate_info, breakdown, and grandTotal to the view
-        return view('manager_menu.show', [
-            'estimate_info' => $estimate_info,
-            'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount,
-        ]);
-    }
-
-
+{
+    $estimate_info = $this->estimateInfo::getEstimateByIde($id);
+    $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+    $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
+    $inputDiscount = request()->input('discount', $discount);
+    // Calculate subtotal, tax, and grand total
+    $subtotal = $totalAmount - $inputDiscount;
+    $tax = $subtotal * 0.1;
+    $grandTotal = $subtotal + $tax;
+    // Pass the estimate_info, breakdown, and grandTotal to the view
+    return view('manager_menu.show', [
+        'estimate_info' => $estimate_info,
+        'grandTotal' => $grandTotal,
+        'discount' => $inputDiscount
+    ]);
+}
 
     public function itemView($id)
     {

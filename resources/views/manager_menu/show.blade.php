@@ -32,7 +32,7 @@
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}"> <!-- Show the grandTotal here -->
+                       value="{{ number_format($grandTotal) }}">
 
                        <span class="suffix">（税込）</span>
             </div>

@@ -37,11 +37,21 @@ class EstimateInfo extends Model
     return $this->belongsTo('App\Models\ConstructionName');
     }
 
-    public function breakdown()
-    {
-        return $this->hasMany('App\Models\Breakdown', 'estimate_id');
-    }
+    // public function breakdown()
+    // {
+    //     return $this->hasMany('App\Models\Breakdown', 'estimate_id');
+    // }
 
+        public function breakdowns() {
+            return $this->hasMany(Breakdown::class, 'estimate_id');
+        }
+
+
+
+    public function constructionName()
+    {
+        return $this->belongsTo('App\Models\ConstructionName', 'construction_id', 'id');
+    }
 
 
     public function regist_estimate_info($request)
@@ -64,16 +74,18 @@ class EstimateInfo extends Model
 
         $estimate_info->save();
     }
-    //テーブルからデータを検索
-    public static function searchEstimateInfo($keyword = null)
+
+
+    // 新しい見積書作成登録保存についてメソッドを追加
+    public static function getEstimateInfo($keyword = null)
     {
-        $query = self::where('is_deleted', false);
+        $query = self::where('delet_flag', false);
 
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                       ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
+                    //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
                       ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
                       ->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
@@ -85,7 +97,7 @@ class EstimateInfo extends Model
     //削除機能
     public function deleteEstimate()
     {
-        $this->is_deleted = true;
+        $this->delet_flag = true;
         $this->save();
     }
 
@@ -123,5 +135,11 @@ public function fetchingEstimateInfoById($id)
 public static function getById($id)
 {
     return self::find($id);
+}
+
+//show method on the ManagerController p2
+public static function getEstimateByIde($id)
+{
+    return self::findOrFail($id);
 }
 }
