@@ -28,6 +28,26 @@ class Admin extends User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function validate(array $params)
+    {
+        $validator = Validator::make($params, [
+            'email' => array('required','email'),
+            'password'  => 'required',
+        ]);
+
+        if ($validator->passes()) {
+            return true;
+        } else {
+            $this->errors = $validator->messages();
+            return false;
+        }
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
 }
 
 

@@ -11,6 +11,19 @@ body {
 p {
     background-color: rgb(135, 197, 48);
     text-align: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+h1 {
+    background-color: rgb(135, 197, 48);
+    font-size: medium;
+    font-weight: bold;
+}
+
+td {
+    background-color: white;
+    text-align: center;
 }
 
 /* table02 */

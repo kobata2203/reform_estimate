@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Http\Controllers\Auth\UserController;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function validate(array $params)
+    {
+        $validator = Validator::make($params, [
+            'email' => array('required','email'),
+            'password'  => 'required',
+        ]);
+
+        if ($validator->passes()) {
+            return true;
+        } else {
+            $this->errors = $validator->messages();
+            return false;
+        }
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
 }

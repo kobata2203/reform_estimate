@@ -32,7 +32,7 @@ class EstimateInfo extends Model
         'department_name',
     ]; // Add all relevant columns here
 
-    public function estimate_info()
+    public function construction_name()
     {
     return $this->belongsTo('App\Models\ConstructionName');
     }
