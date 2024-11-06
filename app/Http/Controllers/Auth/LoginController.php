@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use app\Models\User; // User モデルを追加
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -15,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    
     
     protected function redirectPath()
     {
@@ -48,13 +49,8 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $this->validate($request, [
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
