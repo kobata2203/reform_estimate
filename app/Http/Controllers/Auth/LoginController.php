@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace app\Http\Controllers\Auth;
 
 use app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use app\Models\User; // User モデルを追加
-use App\Http\Requests\LoginRequest;
+use app\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
