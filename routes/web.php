@@ -31,12 +31,12 @@ Route::get('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit
 
 //最初はここに飛ぶ(名前をaction_indexからgetLoginに)
 //Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('login');
+Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 //Route::get('/login', function () {
     //return view('login');
 //});
 //POSTされたときはこっち
-Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth_login');
 
 // Authentication Routes
 Auth::routes();
@@ -45,8 +45,9 @@ Auth::routes();
 
 
 // Admin Routes
-Route::view('/admin/login', 'admin/login')->name('login');
-Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
+//Route::view('/admin/login', 'admin/login')->name('login');
+Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('login');
 Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);

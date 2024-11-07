@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use app\Models\Admin; // Admin モデルを追加
+use Illuminate\Support\Facades\DB;
 use app\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
@@ -16,7 +17,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    
+    //public function __construct()
+    //{
+        //$this->admin = new Admin();
+    //}
     
     protected function redirectPath()
     {
@@ -53,13 +57,17 @@ class LoginController extends Controller
     {
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
+            $login_admin = $this->admin->login_admin($request);
 
-            return redirect()->intended($this->redirectPath());
+            if($login_admin === true) {
+                $message = config('message.login_complete');
+            } else {
+                $message = config('message.login_fail');
+            }
+            return redirect()->intended($this->redirectPath())->with('message', $message);
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        
     }
 
     /**
