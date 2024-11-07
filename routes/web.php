@@ -45,7 +45,7 @@ Auth::routes();
 
 
 // Admin Routes
-Route::view('/admin/login', 'admin/login')->name('admin/login');
+Route::view('/admin/login', 'admin/login')->name('login');
 Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login']);
 Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
 Route::view('/admin/register', 'admin/register')->name('admin/register');
