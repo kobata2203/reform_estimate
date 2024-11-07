@@ -15,7 +15,7 @@
     <div class="contact-info">
         <p>株式会社サーバントップ</p>
     </div>
-   
+
     <div class="construction-name">
         <label for="construction-name">工事名</label>
         <input type="text" id="construction-name" name="construction_name"
@@ -41,8 +41,8 @@
             @endphp
             @foreach ($breakdown as $item)
                 @php
-                    $totalAmount += $item->amount; // Calculate total amount for subtotal
-                @endphp
+                    $totalAmount += $item->amount;
+                    @endphp
                 <tr>
                     <td>{{ $item->construction_item }}</td>
                     <td>{{ $item->specification }}</td>

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\EstimateInfo;
-use App\Models\ConstructionName;
-use App\Models\ConstructionItem;
 use App\Models\Breakdown;
+use App\Models\EstimateInfo;
+use Illuminate\Http\Request;
+use App\Models\ConstructionItem;
+use App\Models\ConstructionName;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\EstimateRequest;
 use App\Http\Requests\BreakdownRequest;
 
 class EstimateController extends Controller
@@ -46,6 +47,9 @@ class EstimateController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+
+
+
     public function store(Request $request,ConstructionName $construction_name)
     {
         $regist_estimate_info = $this->estimateInfo->regist_estimate_info($request);
@@ -58,6 +62,8 @@ class EstimateController extends Controller
 
         return redirect('estimate/index')->with('message', $message);
     }
+
+
 
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
     {

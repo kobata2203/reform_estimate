@@ -95,11 +95,25 @@ class EstimateInfo extends Model
     }
 
     //削除機能
-    public function deleteEstimate()
-    {
-        $this->delet_flag = true;
-        $this->save();
-    }
+    // public function deleteEstimate()
+    // {
+
+    //     $this->delet_flag = true;
+    //     $this->save();
+
+    // }
+
+    public function deleteEstimate($id)
+{
+    // Find the estimate record by ID
+    $estimate = $this->findOrFail($id);
+
+    // Update the delete_flag to true
+    $estimate->delet_flag = true;
+
+    // Save the changes to the database
+    $estimate->save();
+}
 
 // EstimateInfo.php
 public function getEstimateWithDetails($id)

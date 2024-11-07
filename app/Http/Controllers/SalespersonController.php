@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Requests\SalespersonRequest;
+use App\Http\Requests\UpdateSalespersonRequest;
 
 class SalespersonController extends Controller
 {
@@ -20,20 +22,12 @@ class SalespersonController extends Controller
         return view('salesperson_add.index');
     }
 
-    public function create(Request $request)
+    public function create(SalespersonRequest $request)
     {
-        // Validate the incoming request data
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'department_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6',
-        ]);
+        // Data is already validated at this point
+        $validated = $request->validated();
 
-        // Debugging: Log validated data
         \Log::info('Validated Data: ', $validated);
-
-        // Use the User model to create a new user
         if ($this->user->createUser($validated)) {
             \Log::info('User saved successfully: ', [$validated]);
             return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
@@ -42,6 +36,28 @@ class SalespersonController extends Controller
             return back()->withErrors('User could not be saved.');
         }
     }
+    // public function create(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'department_name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users,email',
+    //         'password' => 'required|string|min:6',
+    //     ]);
+
+    //     // Debugging: Log validated data
+    //     \Log::info('Validated Data: ', $validated);
+
+    //     // Use the User model to create a new user
+    //     if ($this->user->createUser($validated)) {
+    //         \Log::info('User saved successfully: ', [$validated]);
+    //         return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
+    //     } else {
+    //         \Log::error('Failed to save user: ', [$validated]);
+    //         return back()->withErrors('User could not be saved.');
+    //     }
+    // }
 
     public function edit($id)
     {
@@ -62,17 +78,30 @@ class SalespersonController extends Controller
         return view('salespersons.list', compact('salespersons'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        ]);
 
-        $this->user->updateUser($id, $validatedData);
 
-        return redirect()->route('manager_menu.index')->with('success', '更新されました。');
-    }
+
+    public function update(SalespersonRequest $request, $id)
+{
+
+    $validatedData = $request->validated();
+
+    $this->user->updateUser($id, $validatedData);
+
+    return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+}
+
+
+
+    // public function update(Request $request, $id)
+    // {
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+    //     ]);
+    //     $this->user->updateUser($id, $validatedData);
+    //     return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+    // }
 
     public function show($id)
     {

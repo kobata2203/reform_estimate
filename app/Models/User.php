@@ -62,6 +62,9 @@ class User extends Authenticatable
         return $user;
     }
 
+
+
+
     public function findUserWithId($id)
     {
         return $this->findOrFail($id);

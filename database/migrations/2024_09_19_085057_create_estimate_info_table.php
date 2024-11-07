@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-             // �O���L�[�����ǉ�
+              // 外部キー制約を追加
             $table->foreign('construction_id')->references('construction_id')->on('construction_name');
         });
     }

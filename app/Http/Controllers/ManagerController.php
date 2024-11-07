@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 
+use TCPDF;
+use App\Models\Admin;
 use App\Models\Manager;
+use App\Models\Estimate;
+use App\Models\Breakdown;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Admin;
-use App\Models\Breakdown;
-use App\Models\Estimate;
-use App\Models\EstimateCalculate;
 use setasign\Fpdi\Tcpdf\Fpdi;
-use TCPDF;
+use App\Models\EstimateCalculate;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\CreateAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
+use App\Http\Requests\UpdateEstimateRequest;
 
 
 
@@ -43,28 +46,24 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-
-
         return view('manager_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
 
+
+
     public function delete($id)
     {
-
-        $estimate = $this->estimateInfo::findOrFail($id);
-        $estimate->deleteEstimate();
+        // $estimate = $this->estimateInfo::findOrFail($id);
+        // $estimate->deleteEstimate();
+        $this->estimateInfo->deleteEstimate($id);
         return redirect()->route('manager_estimate')->with('status', 'Data successfully hidden!');
     }
 
     public function admin_index(Request $request)
     {
-        $keyword = $request->input('search'); // Ensure you are getting the right input
-
-
+        $keyword = $request->input('search');
         $manager_info = $this->admin->searchAdmin($keyword);
-
         return view('admins.index', compact('manager_info'));
     }
 
@@ -74,21 +73,28 @@ class ManagerController extends Controller
         return view('manager_index.create');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:admins',
-            'password' => 'required|string|min:6',
-            'department_name' => 'required|string|max:255',
-        ]);
+    public function store(CreateAdminRequest $request)
+{
+    $validated = $request->validated();
+    $this->admin->createAdmin($validated);
+    return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
+}
+
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:admins',
+    //         'password' => 'required|string|min:6',
+    //         'department_name' => 'required|string|max:255',
+    //     ]);
 
 
-        $this->admin->createAdmin($validated);
+    //     $this->admin->createAdmin($validated);
 
 
-        return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
-    }
+    //     return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
+    // }
 
     //     public function edit($id)
 // {
@@ -107,80 +113,33 @@ class ManagerController extends Controller
 
 
 
-    public function update(Request $request, $id)
+    // public function update(Request $request, $id)
+    // {
+    //     $admin = $this->admin->findAdminById($id);
+
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:admins,email,' . $id, // Ensure unique email but allow current one
+    //         'password' => 'nullable|string|min:6', // Make password optional for update
+    //         'department_name' => 'required|string|max:255',
+    //     ]);
+
+    //     // Use the updateAdmin method from the Admin model
+    //     $this->admin->updateAdmin($admin, $validated);
+
+    //     return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
+    // }
+    public function update(UpdateAdminRequest $request, $id)
     {
+        $validated = $request->validated();
+
         $admin = $this->admin->findAdminById($id);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:admins,email,' . $id, // Ensure unique email but allow current one
-            'password' => 'nullable|string|min:6', // Make password optional for update
-            'department_name' => 'required|string|max:255',
-        ]);
-
-        // Use the updateAdmin method from the Admin model
         $this->admin->updateAdmin($admin, $validated);
 
         return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
     }
 
-
-    // public function show($id)
-    // {
-    //     // Fetch the estimate info and breakdown data
-    //     list($estimate_info, $breakdown) = $this->estimateInfo->getEstimateWithDetails($id);
-
-    //     // Calculate the total amount
-    //     $totalAmount = $breakdown ? $breakdown->sum('amount') : 0;
-
-    //     // Fetch the discount using the EstimateCalculate model
-    //     $discount = $this->estimateCalculate->getDiscountByEstimateIds($id);
-
-    //     $inputDiscount = request()->input('discount', $discount);
-
-    //     // Calculate subtotal, tax, and grand total
-    //     $subtotal = $totalAmount - $inputDiscount;
-    //     $tax = $subtotal * 0.1;
-    //     $grandTotal = $subtotal + $tax;
-
-    //     // Pass the estimate_info, breakdown, and grandTotal to the view
-    //     return view('manager_menu.show', [
-    //         'estimate_info' => $estimate_info,
-    //         'grandTotal' => $grandTotal,
-    //         'discount' => $inputDiscount,
-    //     ]);
-    // }
-    // public function show($id)
-    // {
-    //     // Fetch the estimate info by ID
-    //     $estimate_info = $this->estimateInfo::findOrFail($id);
-
-    //     // Fetch related breakdown data for calculation
-    //     $breakdown = $this->breakdown::where('estimate_id', $id)->get(); // Adjust based on your relationships
-
-    //     // Calculate the total amount
-    //     $totalAmount = 0;
-    //     foreach ($breakdown as $item) {
-    //         $totalAmount += $item->amount;
-    //     }
-
-    //     // Fetch discount from database or set as needed
-    //     $estimateCalculate = $this->estimateCalculate::where('estimate_id', $id)->first();
-    //     $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
-
-    //     $inputDiscount = request()->input('discount', $discount);
-    //     // Calculate subtotal, tax, and grand total
-    //     $subtotal = $totalAmount - $discount;
-    //     $tax = $subtotal * 0.1;
-    //     $grandTotal = $subtotal + $tax;
-
-    //     // Pass the estimate_info, breakdown, and grandTotal to the view
-    //     return view('manager_menu.show', [
-    //         'estimate_info' => $estimate_info,
-    //         'grandTotal' => $grandTotal, // Pass the grand total to the view
-    //          'discount' => $inputDiscount
-    //     ]);
-    // }
 
     public function show($id)
 {
@@ -200,6 +159,8 @@ class ManagerController extends Controller
     ]);
 }
 
+
+//for displaying the data from the breakdown tbl in the estimate_info tbl section
     public function itemView($id)
     {
         // Fetch necessary data related to the $id (from Estimate and Breakdown models)
@@ -237,44 +198,42 @@ class ManagerController extends Controller
     }
 
 
-    public function updateDiscount(Request $request, $id)
-    {
-        // Validate the request
-        $request->validate([
-            'special_discount' => 'required|numeric|min:0', // Ensure it's a valid number
-        ]);
 
-        // Fetch the estimate
-        $estimate_info = $this->estimate->getEstimateById($id);
-        if (!$estimate_info) {
-            return redirect()->back()->withErrors(['error' => 'Estimate not found']);
-        }
+   public function updateDiscount(UpdateEstimateRequest $request, $id)
+{
+    $validated = $request->validated();
 
-        // Fetch related breakdown data
-        $breakdown = $this->breakdown->breakdownByEstimateId($id);
+    // Fetch the estimate
+    $estimate_info = $this->estimate->getEstimateById($id);
+    if (!$estimate_info) {
+        return redirect()->back()->withErrors(['error' => 'Estimate not found']);
+    }
 
-        // Calculate the total amount from the breakdown
-        $totalAmount = $breakdown->sum('amount'); // Sum amounts directly
+    // Fetch related breakdown data
+    $breakdown = $this->breakdown->breakdownByEstimateId($id);
 
-        // Fetch the estimate_calculate record or create a new one
-        $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id);
+    // Calculate the total amount from the breakdown
+    $totalAmount = $breakdown->sum('amount'); // Sum amounts directly
 
-        // Update the discount from the form input
-        $estimate_calculate->special_discount = $request->input('special_discount');
+    // Fetch the estimate_calculate record or create a new one
+    $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id);
 
-        // Recalculate subtotal, tax, and total
-        $subtotal = $totalAmount - $estimate_calculate->special_discount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
+    // Update the discount from the form input
+    $estimate_calculate->special_discount = $validated['special_discount'];
 
-        try {
-            // Update the estimate_calculate record with the new values
-            $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
+    // Recalculate subtotal, tax, and total
+    $subtotal = $totalAmount - $estimate_calculate->special_discount;
+    $tax = $subtotal * 0.1;
+    $grandTotal = $subtotal + $tax;
 
-            return redirect()->back()->with('success', 'Discount updated successfully');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
-        }
+    try {
+        // Update the estimate_calculate record with the new values
+        $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
+
+        return redirect()->back()->with('success', 'Discount updated successfully');
+    } catch (\Illuminate\Database\QueryException $e) {
+        return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
+    }
     }
 
     // public function showEstimate($id)
