@@ -18,15 +18,7 @@
     @endif
     <h1>営業者登録画面</h1>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
     <!-- Form to register salesperson -->
 
     <div class="form-container">
@@ -34,17 +26,10 @@
 
             @csrf
             <label for="name">氏名</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name">
 
             <label for="department">部署名</label>
             <select id="department" name="department_name" required>
-                {{-- <option value="sales">本部</option>
-                <option value="sales1">営業１課１係</option>
-                <option value="sales2">営業１課２係</option>
-                <option value="sales3">営業１課３係</option>
-                <option value="sales4">営業２課１係</option>
-                <option value="sales5">営業２課２係</option>
-                <option value="sales6">営業３課</option> --}}
                 <option value="本部">本部</option>
                 <option value="営業１課１係">営業１課１係</option>
                 <option value="営業１課２係">営業１課２係</option>
@@ -67,6 +52,15 @@
                 <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">管理者<br>メニュー</button>
             </div>
         </form>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     </div>
 
 </body>
