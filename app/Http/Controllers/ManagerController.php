@@ -130,15 +130,14 @@ class ManagerController extends Controller
     //     return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
     // }
     public function update(UpdateAdminRequest $request, $id)
-    {
-        $validated = $request->validated();
+{
+    $validated = $request->validated();
 
-        $admin = $this->admin->findAdminById($id);
+    $this->admin->updateAdmin($id, $validated);
 
-        $this->admin->updateAdmin($admin, $validated);
+    return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
+}
 
-        return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
-    }
 
 
     public function show($id)
@@ -269,20 +268,14 @@ class ManagerController extends Controller
 
         $pdf->SetFillColor(220, 220, 220);
         // Add title
-
-
         $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
         $pdf->Ln(5);
-
-
         $pdf->Cell(0,10, '株式会社サーバントップ',0, 1, 'R');
-
         $pdf->Ln(5);
         // Construction Name
 
         // dd($estimate->toArray());
         $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
-
 
         // Add header for the breakdown table
         $pdf->SetX(5);
@@ -332,9 +325,6 @@ class ManagerController extends Controller
         // Output the PDF
         $pdf->Output("output.pdf", "I");
     }
-
-
-
 
     public function PDFshow($id)
 {

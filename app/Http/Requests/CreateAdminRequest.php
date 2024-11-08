@@ -31,21 +31,5 @@ class CreateAdminRequest extends FormRequest
             'department_name' => 'required|string|max:255',
         ];
     }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'name.required' => '管理者名は必須です。',
-            'email.required' => 'メールアドレスは必須です。',
-            'email.unique' => 'そのメールアドレスはすでに使用されています。',
-            'password.required' => 'パスワードは必須です。',
-            'password.min' => 'パスワードは6文字以上でなければなりません。',
-            'department_name.required' => '部署名は必須です。',
-        ];
     }
-}
+

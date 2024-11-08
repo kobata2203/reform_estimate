@@ -30,21 +30,4 @@ class SalespersonRequest extends FormRequest
             'password'       => 'required|string|min:6',
         ];
     }
-
-    /**
-     * Get custom error messages for the validation rules.
-     *
-     * @return array<string, string>
-     */
-    public function messages()
-    {
-        return [
-            'name.required'           => 'Name is required.',
-            'department_name.required' => 'Department name is required.',
-            'email.required'          => 'Email is required.',
-            'email.unique'            => 'This email is already in use.',
-            'password.required'       => 'Password is required.',
-            'password.min'            => 'Password must be at least 6 characters.',
-        ];
-    }
 }

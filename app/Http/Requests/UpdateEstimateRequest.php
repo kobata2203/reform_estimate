@@ -30,13 +30,5 @@ class UpdateEstimateRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'special_discount.required' => '割引額は必須です。',
-            'special_discount.numeric' => '割引額は数字で入力してください。',
-            'special_discount.min' => '割引額は0以上である必要があります。',
-        ];
-    }
 }
 

@@ -60,17 +60,26 @@ class Admin extends User
     }
 
     //update on admins
-    public static function updateAdmin($admin, $data)
-{
-    $admin->name = $data['name'];
-    $admin->email = $data['email'];
-    if (!empty($data['password'])) {
-        $admin->password = Hash::make($data['password']);
-    }
-    $admin->department_name = $data['department_name'];
+    public static function updateAdmin($id, $data )
+    {
+        // Retrieve the admin by id
+        $admin = self::findOrFail($id); // This will fetch the admin model by its ID, or fail if not found
 
-    return $admin->save();
-}
+        // Update the admin model with the validated data
+        $admin->name = $data['name'];
+        $admin->email = $data['email'];
+
+        // Update password only if it's provided
+        if (!empty($data['password'])) {
+            $admin->password = Hash::make($data['password']);
+        }
+
+        $admin->department_name = $data['department_name'];
+
+        // Save the updated model and return the result
+        return $admin->save();
+    }
+
 
 }
 

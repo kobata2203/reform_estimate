@@ -31,15 +31,5 @@ class UpdateAdminRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'name.required' => '管理者名は必須です。',
-            'email.required' => 'メールアドレスは必須です。',
-            'email.unique' => 'そのメールアドレスはすでに使用されています。',
-            'password.min' => 'パスワードは6文字以上でなければなりません。',
-            'department_name.required' => '部署名は必須です。',
-        ];
-    }
 }
 
