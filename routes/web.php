@@ -46,12 +46,12 @@ Auth::routes();
 
 // Admin Routes
 //Route::view('/admin/login', 'admin/login')->name('login');
-Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('login');
+Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('admin_login');
+Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('admin_login');
 Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
-Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
+//Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
 
 //Route::get('/', function () {
     // ウェブサイトのホームページ（'/'のURL）にアクセスした場合のルートです

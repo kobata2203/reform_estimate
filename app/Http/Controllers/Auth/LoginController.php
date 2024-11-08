@@ -58,20 +58,11 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
-            //$login_user = $this->user->login_user($request);
-
-            //if($login_user === true) {
-                //$message = config('message.login_complete');
-            //} else {
-                //$message = config('message.login_fail');
-            //}
-
             return redirect()->intended($this->redirectPath());
-        } else {
-            $message = config('message.login_fail');
-            return view('auth.login')->with('message', $message);
         }
-        
+        return back()->withErrors([
+            'email' => 'ログイン処理に失敗しました。メールアドレス・パスワードを確認ください。',
+        ]);
     }
 
     /**

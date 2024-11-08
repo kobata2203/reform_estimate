@@ -1,14 +1,14 @@
 <?php
 
-namespace app\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
-use app\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use app\Models\Admin; // Admin モデルを追加
+use App\Models\Admin; // Admin モデルを追加
 use Illuminate\Support\Facades\DB;
-use app\Http\Requests\LoginRequest;
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -57,17 +57,12 @@ class LoginController extends Controller
     {
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            $login_admin = $this->admin->login_admin($request);
 
-            if($login_admin === true) {
-                $message = config('message.login_complete');
-            } else {
-                $message = config('message.login_fail');
-            }
-            return redirect()->intended($this->redirectPath())->with('message', $message);
+            return redirect()->intended($this->redirectPath());
         }
-
-        
+        return back()->withErrors([
+            'email' => 'ログイン処理に失敗しました。メールアドレス・パスワードを確認ください。',
+        ]);
     }
 
     /**
