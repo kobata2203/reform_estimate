@@ -98,22 +98,22 @@ class SalespersonController extends Controller
 //     return view('manager_index.index', compact('manager_info'));
 // }
 
-public function index(Request $request)
-{
-    $keyword = $request->input('search');
-    $users = User::query();
+    public function index(Request $request)
+    {
+        $keyword = $request->input('search');
+        $users = User::query();
 
-    if (!empty($keyword)) {
-        $users = $users->where('name', 'LIKE', "%{$keyword}%")
-            ->orWhere('email', 'LIKE', "%{$keyword}%")
-            ->orWhere('department_name', 'LIKE', "%{$keyword}%")
-            ->get();
-    } else {
-        $users = $users->get();
+        if (!empty($keyword)) {
+            $users = $users->where('name', 'LIKE', "%{$keyword}%")
+                ->orWhere('email', 'LIKE', "%{$keyword}%")
+                ->orWhere('department_name', 'LIKE', "%{$keyword}%")
+                ->get();
+        } else {
+            $users = $users->get();
+        }
+
+        return view('manager_index.index', compact('users'));
     }
-
-    return view('manager_index.index', compact('users'));
-}
 
 
 
@@ -138,7 +138,7 @@ public function index(Request $request)
     }
 
     public function update(Request $request, $id)
-{
+    {
     // Validate the request
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
@@ -154,15 +154,15 @@ public function index(Request $request)
 
     // Redirect or return response
     return redirect()->route('manager_menu.index')->with('success', '更新されました。');
-}
+    }
 
-public function show($id)
-{
-    $users = User::findOrFail($id);
-    return view('salesperson.show', compact('salesperson')); // Adjust the view as needed
-}
+    public function show($id)
+    {
+        $users = User::findOrFail($id);
+        return view('salesperson.show', compact('salesperson')); // Adjust the view as needed
+    }
 
-public function manager_menu()
+    public function manager_menu()
     {
         return view('manager_menu/index');
     }

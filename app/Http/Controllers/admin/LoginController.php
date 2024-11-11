@@ -61,7 +61,7 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectPath());
         }
         return back()->withErrors([
-            'email' => 'ログイン処理に失敗しました。メールアドレス・パスワードを確認ください。',
+            'email' => config('message.login_fail'), // 定数を取得して使用
         ]);
     }
 
