@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理者一覧画面</title>
+@extends('layouts.main')
+@section('title', '管理者一覧画面')
+@section('headder')
+    <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
-</head>
-<body>
+@endsection
+@section('content')
+    <!-- bobyタグ内の処理を記述 -->
     <div>
         <p>管理者一覧画面</p>
     </div>
@@ -45,5 +44,4 @@
             <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー</button>
         </div>
     </div>
-</body>
-</html>
+@endsection

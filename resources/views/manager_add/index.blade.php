@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>管理者登録画面</title>
+@extends('layouts.main')
+@section('title', '管理者登録画面')
+@section('headder')
+    <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
-</head>
-
-<body>
+@endsection
+@section('content')
+    <!-- bobyタグ内の処理を記述 -->
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -60,5 +56,4 @@
             </div>
         </form>
     </div>
-</body>
-</html>
+@endsection
