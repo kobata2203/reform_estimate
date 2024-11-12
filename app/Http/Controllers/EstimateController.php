@@ -69,7 +69,7 @@ class EstimateController extends Controller
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);
-        $prevurl = url()->previous();
+        $prevurl = url()->previous()?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
         /**
          * SQLはモデルに記載する
@@ -93,11 +93,17 @@ class EstimateController extends Controller
      */
     public function breakdown_store(BreakdownRequest $request)
     {
-        $prevurl = $request->prevurl;
+        //$prevurl = $request->prevurl;
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if(false === strpos($prevurl, 'estimate_info?')){
-            $prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
+        //if(false === strpos($prevurl, 'estimate_info?')){
+            //$prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
+        //}
+
+        if (isset($prevurl)) {
+            $prevurl = url('estimate/index');// $prevurl 変数が存在する場合、処理を行う
+        } else {
+            // $prevurl 変数が存在しない場合、処理を行う
         }
 
         $regist_breakdown = $this->breakdown->regist_breakdown($request);

@@ -21,6 +21,11 @@ h1 {
     font-weight: bold;
 }
 
+body {
+    display: block;
+    align-items: center;
+}
+
 /* table02 */
 #table02 th, #table02 td {
     text-align: center;

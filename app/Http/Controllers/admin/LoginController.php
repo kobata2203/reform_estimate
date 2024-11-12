@@ -1,37 +1,159 @@
 <?php
 
-namespace App\Http\Controllers\admin;                       //修正
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;                        //追記
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Admin; // Admin モデルを追加
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
-    // use AuthenticatesUsers;                              //削除
-    use AuthenticatesUsers {                                //追記
-        logout as performLogout;                            //追記
-    }                                                       //追記
-
-    protected $redirectTo = '/admin/home';                  //修正
-
-
-    public function __construct()
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    //public function __construct()
+    //{
+        //$this->admin = new Admin();
+    //}
+    
+    protected function redirectPath()
     {
-        $this->middleware('guest:admin')->except('logout'); //修正
+        return '/manager_menu'; // ログイン後にリダイレクトする URL を指定
     }
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
 
-    protected function guard()                              //追記
-    {                                                       //追記
-        return Auth::guard('admin');                        //追記
-    }                                                       //追記
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('admin.login');
+    }
 
+    /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function login(LoginRequest $request)
+    {
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
 
-    public function logout(Request $request)                //追記
-    {                                                       //追記
-        $this->performLogout($request);                     //追記
-        return redirect('admin/login');                     //追記
-    }                                                       //追記
+            return redirect()->intended($this->redirectPath());
+        }
+        return back()->withErrors([
+            'email' => config('message.login_fail'), // 定数を取得して使用
+        ]);
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+    // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only('email', 'password');
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+                        ?: redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // ログイン成功後の追加処理
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $request->session()->flash('error', trans('auth.failed'));
+
+        return redirect()->back()
+                        ->withInput($request->only($this->username(), 'remember'));
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
+    }
 }

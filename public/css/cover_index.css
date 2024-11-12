@@ -37,6 +37,12 @@ form .estimate {
     margin-top: 20px;
 }
 
+input {
+    display: flex;
+    align-items: left;
+    text-align: left;
+}
+
 .btn {
     display: flex;
     flex-direction: column; 

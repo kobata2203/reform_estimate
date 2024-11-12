@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>営業者一覧画面</title>
+@extends('layouts.main')
+@section('title', '営業者一覧画面')
+@section('headder')
+    <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/managerindex1.css') }}">
-</head>
-<body>
+@endsection
+@section('content')
+    <!-- bobyタグ内の処理を記述 -->
     <div>
         <h1 style="text-align: center; background-color:orange ; margin:10px">営業者一覧画面</h1>
     </div>
@@ -34,16 +33,14 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->department_name }}</td>
                         <td>
+                            <button href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark">編集</button>
 
-                                <div>
-                                    <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark edit-button">編集</a>
-                                </div>
-                                {{-- <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                </form> --}}
+                            <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
 
-
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -53,5 +50,4 @@
             <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー</button>
         </div>
     </div>
-</body>
-</html>
+@endsection

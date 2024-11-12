@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
-
+use App\Http\Requests\UpdateSalespersonRequest;
 
 class SalespersonController extends Controller
 {
@@ -36,7 +36,28 @@ class SalespersonController extends Controller
             return back()->withErrors('User could not be saved.');
         }
     }
+    // public function create(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validated = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'department_name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users,email',
+    //         'password' => 'required|string|min:6',
+    //     ]);
 
+    //     // Debugging: Log validated data
+    //     \Log::info('Validated Data: ', $validated);
+
+    //     // Use the User model to create a new user
+    //     if ($this->user->createUser($validated)) {
+    //         \Log::info('User saved successfully: ', [$validated]);
+    //         return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
+    //     } else {
+    //         \Log::error('Failed to save user: ', [$validated]);
+    //         return back()->withErrors('User could not be saved.');
+    //     }
+    // }
 
     public function edit($id)
     {
@@ -60,16 +81,27 @@ class SalespersonController extends Controller
 
 
 
-        public function update(SalespersonRequest $request, $id)
-    {
+    public function update(SalespersonRequest $request, $id)
+{
 
-        $validated  = $request->validated();
+    $validated  = $request->validated();
 
-        $this->user->updateUser($id, $validated );
+    $this->user->updateUser($id, $validated );
 
-        return redirect()->route('manager_menu.index')->with('success', '更新されました。');
-    }
+    return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+}
 
+
+
+    // public function update(Request $request, $id)
+    // {
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+    //     ]);
+    //     $this->user->updateUser($id, $validatedData);
+    //     return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+    // }
 
     public function show($id)
     {
