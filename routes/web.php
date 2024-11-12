@@ -90,7 +90,7 @@ Route::get('/manager_estimate', [App\Http\Controllers\ManagerController::class, 
 Route::resource('managers', ManagerController::class);
 
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
-
+Route::get('/manager/{id}/delete', [ManagerController::class, 'delete'])->name('manager.delete');
 
 
 
@@ -161,10 +161,10 @@ Route::get('/salespersons/show', [SalespersonController::class, 'index'])->name(
 
 
 Route::get('/admins', [ManagerController::class, 'admin_index'])->name('admins.index');
-route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
-route::resource('salespersons', SalespersonController::class);
+Route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
+Route::resource('salespersons', SalespersonController::class);
 // route::resource('admins', ManagerController::class);
-route::resource('managers', ManagerController::class);
+Route::resource('managers', ManagerController::class);
 
 
 
@@ -219,7 +219,7 @@ Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('s
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
-
+Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 //togenerate pdf
 
 #to view pdf

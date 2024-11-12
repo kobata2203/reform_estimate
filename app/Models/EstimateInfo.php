@@ -37,14 +37,27 @@ class EstimateInfo extends Model
     return $this->belongsTo('App\Models\ConstructionName');
     }
 
-    public function breakdown()
+    // public function breakdown()
+    // {
+    //     return $this->hasMany('App\Models\Breakdown', 'estimate_id');
+    // }
+
+    public function breakdowns()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany(Breakdown::class, 'estimate_id');
     }
+
+
+
+    public function constructionName()
+    {
+        return $this->belongsTo('App\Models\ConstructionName', 'construction_id', 'id');
+    }
+
 
     public function regist_estimate_info($request)
     {
-        
+
 
         $estimate_info = new EstimateInfo();
 
@@ -61,5 +74,94 @@ class EstimateInfo extends Model
         $estimate_info->construction_id = $request->construction_id;
 
         $estimate_info->save();
+    }
+
+
+    // 新しい見積書作成登録保存についてメソッドを追加
+    public static function getEstimateInfo($keyword = null)
+    {
+        $query = self::where('delet_flag', false);
+
+        if (!empty($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('creation_date', 'LIKE', "%{$keyword}%")
+                      ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                    //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        return $query->get();
+    }
+
+    //削除機能
+    // public function deleteEstimate()
+    // {
+
+    //     $this->delet_flag = true;
+    //     $this->save();
+
+    // }
+
+    public function deleteEstimate($id)
+    {
+        // Find the estimate record by ID
+        $estimate = $this->findOrFail($id);
+
+        // Update the delete_flag to true
+        $estimate->delet_flag = true;
+
+        // Save the changes to the database
+        $estimate->save();
+    }
+
+    // EstimateInfo.php
+    public function getEstimateWithDetails($id)
+    {
+        // Fetch the estimate info by ID
+        $estimate_info = $this->findOrFail($id);
+
+        // Fetch related breakdown data
+        $breakdown = $estimate_info->breakdown; // Uses the relationship defined
+
+        return [$estimate_info, $breakdown];
+    }
+
+    //内訳明細書
+    public function getEstimateById($id)
+    {
+        return $this->find($id);
+    }
+
+    //pdf method on the ManagerController
+    public function fetchEstimateInfoById($id)
+    {
+        return $this->findOrFail($id);
+    }
+
+    //PDFshow on ManagerController
+    public function fetchingEstimateInfoById($id)
+    {
+        return $this->findOrFail($id);
+    }
+
+    //breakdown_create メソッド　EstimateController
+    public static function getById($id)
+    {
+        return self::find($id);
+    }
+
+    // no calculation
+    public static function idGet($id)
+    {
+        return self::find($id);
+    }
+
+
+    //show method on the ManagerController p2
+    public static function getEstimateByIde($id)
+    {
+        return self::findOrFail($id);
     }
 }

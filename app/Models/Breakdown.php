@@ -34,6 +34,13 @@ class Breakdown extends Model
         return $this->belongsTo(EstimateInfo::class, 'estimate_info_id');
     }
 
+    //changing estimates table to breakdown
+    public function estimateCalculate()
+{
+    return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
+}
+
+
     public function construction_name()
     {
     return $this->belongsTo('App\Models\ConstructionName');
@@ -42,7 +49,7 @@ class Breakdown extends Model
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id'); // Adjust the foreign key and local key as needed
+        return $this->belongsTo(Admin::class, 'estimate_id', 'id');
     }
 
     public function estimate()
@@ -70,6 +77,55 @@ class Breakdown extends Model
         }
 
         return $this->insert($datas);
+    }
+
+    public static function getBreakdownsByEstimateId($estimateId)
+    {
+        return self::where('estimate_id', $estimateId)->get();
+    }
+
+    //内訳明細書
+    // Breakdown.php
+    public function getBreakdownByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+    // for updateDiscount method on ManagerController
+    // Breakdown.php
+    public function breakdownByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+    //pdf method on the ManagerController
+    public function fetchBreakdownsByEstimateId($estimateId)
+        {
+            return $this->where('estimate_id', $estimateId)->get();
+        }
+
+        //PDFshow on ManagerController
+    public function fetchingBreakdownsByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+
+    //show method on ManagerController p2
+    // Breakdown.php
+    public static function getTotalAmountByEstimateId($estimateId)
+    {
+        $breakdown = self::where('estimate_id', $estimateId)->get();
+        $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
+        return $totalAmount;
+    }
+
+
+    //nocalculation
+    // In Breakdown.php model
+    public static function getByEstimateId($estimateId)
+    {
+        return self::where('estimate_id', $estimateId)->get();
     }
 
 }

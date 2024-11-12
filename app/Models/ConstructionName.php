@@ -29,11 +29,26 @@ class ConstructionName extends Model
     {
     return $this->hasMany('App\Models\Breakdown');
     }
-    
+
     public function get_target_construction_name()
     {
         $construction_name = ConstructionName::all();
 
         return $construction_name;
     }
+
+    //create method in EstimateController
+    // ConstructionName.php (Model)
+public function get_construction_name()
+{
+    // Assuming it retrieves some records, e.g., all construction names
+    return $this->all(); // or another query to retrieve specific data
+}
+
+//breakdowncreate メソッド　EstimateController
+public static function getById($id)
+{
+    return self::find($id);
+}
+
 }

@@ -75,6 +75,7 @@ form {
 
 } */
 
+/* Button styling */
 button {
     background-color: #007bff;
     color: white;
@@ -85,7 +86,7 @@ button {
     cursor: pointer;
     margin-top: 1rem;
     display: block;
-    width: 100%;
+    width: 50%; /* Flexible width for both buttons */
     margin-left: auto;
     margin-right: auto;
 }
@@ -94,3 +95,4 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+

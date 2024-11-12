@@ -23,11 +23,11 @@ return new class extends Migration
             $table->string('department_name')->nullable();
             $table->unsignedBigInteger('construction_id')->nullable();
 
-            $table->boolean('delet_flag')->default(false);
+            $table->boolean('is_deleted')->default(false);
 
             $table->timestamps();
 
-              // 外部キー制約を追加
+            // Foreign key constraint
             $table->foreign('construction_id')->references('construction_id')->on('construction_name');
         });
     }

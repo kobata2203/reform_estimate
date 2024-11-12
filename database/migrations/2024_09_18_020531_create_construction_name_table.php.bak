@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('construction_name', function (Blueprint $table) {
             $table->id('construction_id');
             $table->string('construction_name');
-            $table->integer('loop_count');
-
+            $table->integer('loop_count')->nullable();
+            $table->integer('item_id')->nullable();
             $table->timestamps();
 
             //$table->foreign('construction_id')->references('construction_id')->on('estimate_info');

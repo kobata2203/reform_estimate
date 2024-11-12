@@ -10,7 +10,7 @@ class Estimate extends Model
     use HasFactory;
 
     protected $table = 'estimates';
-    
+
 
     protected $fillable = [
         'issued_date',
@@ -32,5 +32,22 @@ class Estimate extends Model
     public function breakdown()
     {
         return $this->hasMany(Breakdown::class);  // Adjust based on your actual table/model
+    }
+
+    public function calculate()
+    {
+        return $this->hasOne(EstimateCalculate::class, 'estimate_id');
+    }
+
+    // for updateDiscount method on ManagerController
+public function getEstimateById($id)
+{
+    return $this->find($id);
+}
+
+//pdf method on the ManagerController
+public function fetchEstimateWithCalculations($id)
+    {
+        return $this->with('calculate')->findOrFail($id);
     }
 }

@@ -16,6 +16,7 @@
         "aura/sql": "^5.0",
         "barryvdh/laravel-dompdf": "^3.0",
         "carlos-meneses/laravel-mpdf": "^2.1.13",
+        "doctrine/dbal": "^4.2",
         "dompdf/dompdf": "^3.0",
         "elibyy/tcpdf-laravel": "^11.1",
         "guzzlehttp/guzzle": "^7.2",

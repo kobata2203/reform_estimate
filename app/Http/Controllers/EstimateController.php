@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\EstimateInfo;
-use App\Models\ConstructionName;
-use App\Models\ConstructionItem;
 use App\Models\Breakdown;
+use App\Models\EstimateInfo;
+use Illuminate\Http\Request;
+use App\Models\ConstructionItem;
+use App\Models\ConstructionName;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\EstimateRequest;
 use App\Http\Requests\BreakdownRequest;
 
 class EstimateController extends Controller
@@ -16,7 +17,11 @@ class EstimateController extends Controller
      * 初期処理
      * 使用するクラスのインスタンス化
      */
-    public function __construct()
+    protected $estimateInfo;
+    protected $constructionName;
+    protected $constructionItem;
+    protected $breakdown;
+     public function __construct()
     {
         $this->estimateInfo = new EstimateInfo();
         $this->constructionName = new ConstructionName();
@@ -26,21 +31,11 @@ class EstimateController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = EstimateInfo::query();
-
-        if (!empty($keyword)) {
-            $estimate_info = $estimate_info->where('creation_date', 'LIKE', "%{$keyword}%")
-                ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('department_name', 'LIKE', "%{$keyword}%")
-                ->get();
-        } else {
-            $estimate_info = $estimate_info->get();
-        }
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword); // Use the new model method
 
         return view('salesperson_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
+
 
     public function create()
     {
@@ -52,6 +47,9 @@ class EstimateController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+
+
+
     public function store(Request $request,ConstructionName $construction_name)
     {
         $regist_estimate_info = $this->estimateInfo->regist_estimate_info($request);
@@ -64,6 +62,8 @@ class EstimateController extends Controller
 
         return redirect('estimate/index')->with('message', $message);
     }
+
+
 
     public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
     {
@@ -123,14 +123,5 @@ class EstimateController extends Controller
         return view('estimate.index', compact('estimates'));
     }
 
-    // public function show($id)
-    // {
-    //     // Fetch the breakdown record using the provided ID
-    //     $table  = EstimateInfo::findOrFail($id); // Make sure to handle this properly if the record doesn't exist
-
-    //     // Return the view with breakdown data
-    //     return view('manager_menu.show', compact('breakdown'));
-    // }
-
-
 }
+

@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estimate_calculate', function (Blueprint $table) {
+        Schema::create('estimates', function (Blueprint $table) {
             $table->id();
-            $table->integer('special_discount');
-            $table->integer('subtotal_price');
-            $table->integer('consumption_tax');
-            $table->integer('total_price');
+            $table->string('customer_name');
+            $table->string('construction_name');
+            $table->string('charger_name');
+            $table->string('department_name');
+            $table->date('creation_date');
+            $table->string('expiration_date');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estimate_calculate');
+        Schema::dropIfExists('estimates');
     }
 };
