@@ -1,13 +1,14 @@
 <?php
 
-namespace app\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use app\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use app\Models\User; // User モデルを追加
-use app\Http\Requests\LoginRequest;
+use App\Models\User; // User モデルを追加
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
@@ -16,7 +17,10 @@ class LoginController extends Controller
      *
      * @var string
      */
-    
+    //public function __construct()
+    //{
+        //$this->user = new User();
+    //}
     
     protected function redirectPath()
     {
@@ -56,9 +60,8 @@ class LoginController extends Controller
 
             return redirect()->intended($this->redirectPath());
         }
-
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => config('message.login_fail'), // 定数を取得して使用
         ]);
     }
 

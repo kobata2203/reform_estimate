@@ -1,5 +1,0 @@
-<?php
-$servername="localhost";
-$username="";
-$password="";
-$database_name="reform_estimate";
