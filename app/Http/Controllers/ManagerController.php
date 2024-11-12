@@ -259,7 +259,7 @@ class ManagerController extends Controller
     // Output totals below the breakdown table
     $pdf->SetX(5);
     $pdf->Cell(130, 10, '特別お値引き ', 1, 0, 'R');
-    $pdf->Cell(25, 10, '¥ ' . number_format(- $discount), 1, 1, 'C');
+    $pdf->Cell(25, 10, '¥ ' . number_format( $discount), 1, 1, 'C');
     $pdf->SetX(5);
     $pdf->Cell(130, 10, '小計（税抜）', 1, 0, 'R');
     $pdf->Cell(25, 10, '¥ ' . number_format($subtotal), 1, 1, 'C');
