@@ -33,7 +33,8 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->department_name }}</td>
                         <td>
-                            <button href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark">編集</button>
+                            {{-- <button href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark">編集</button> --}}
+                            <button onclick="window.location.href='{{ route('salesperson.edit', $user->id) }}'" class="btn btn-dark">編集</button>
 
                             <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
