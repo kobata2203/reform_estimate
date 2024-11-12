@@ -19,7 +19,7 @@ class EstimateController extends Controller
      */
     protected $estimateInfo;
     protected $constructionName;
-     protected $constructionItem;
+    protected $constructionItem;
     protected $breakdown;
      public function __construct()
     {

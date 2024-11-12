@@ -42,9 +42,10 @@ class EstimateInfo extends Model
     //     return $this->hasMany('App\Models\Breakdown', 'estimate_id');
     // }
 
-        public function breakdowns() {
-            return $this->hasMany(Breakdown::class, 'estimate_id');
-        }
+    public function breakdowns()
+    {
+        return $this->hasMany(Breakdown::class, 'estimate_id');
+    }
 
 
 
@@ -104,63 +105,63 @@ class EstimateInfo extends Model
     // }
 
     public function deleteEstimate($id)
-{
-    // Find the estimate record by ID
-    $estimate = $this->findOrFail($id);
+    {
+        // Find the estimate record by ID
+        $estimate = $this->findOrFail($id);
 
-    // Update the delete_flag to true
-    $estimate->delet_flag = true;
+        // Update the delete_flag to true
+        $estimate->delet_flag = true;
 
-    // Save the changes to the database
-    $estimate->save();
-}
+        // Save the changes to the database
+        $estimate->save();
+    }
 
-// EstimateInfo.php
-public function getEstimateWithDetails($id)
-{
-    // Fetch the estimate info by ID
-    $estimate_info = $this->findOrFail($id);
+    // EstimateInfo.php
+    public function getEstimateWithDetails($id)
+    {
+        // Fetch the estimate info by ID
+        $estimate_info = $this->findOrFail($id);
 
-    // Fetch related breakdown data
-    $breakdown = $estimate_info->breakdown; // Uses the relationship defined
+        // Fetch related breakdown data
+        $breakdown = $estimate_info->breakdown; // Uses the relationship defined
 
-    return [$estimate_info, $breakdown];
-}
+        return [$estimate_info, $breakdown];
+    }
 
-//内訳明細書
-public function getEstimateById($id)
-{
-    return $this->find($id);
-}
+    //内訳明細書
+    public function getEstimateById($id)
+    {
+        return $this->find($id);
+    }
 
-//pdf method on the ManagerController
-public function fetchEstimateInfoById($id)
-{
-    return $this->findOrFail($id);
-}
+    //pdf method on the ManagerController
+    public function fetchEstimateInfoById($id)
+    {
+        return $this->findOrFail($id);
+    }
 
-//PDFshow on ManagerController
-public function fetchingEstimateInfoById($id)
-{
-    return $this->findOrFail($id);
-}
+    //PDFshow on ManagerController
+    public function fetchingEstimateInfoById($id)
+    {
+        return $this->findOrFail($id);
+    }
 
-//breakdown_create メソッド　EstimateController
-public static function getById($id)
-{
-    return self::find($id);
-}
+    //breakdown_create メソッド　EstimateController
+    public static function getById($id)
+    {
+        return self::find($id);
+    }
 
-// no calculation
-public static function idGet($id)
-{
-    return self::find($id);
-}
+    // no calculation
+    public static function idGet($id)
+    {
+        return self::find($id);
+    }
 
 
-//show method on the ManagerController p2
-public static function getEstimateByIde($id)
-{
-    return self::findOrFail($id);
-}
+    //show method on the ManagerController p2
+    public static function getEstimateByIde($id)
+    {
+        return self::findOrFail($id);
+    }
 }

@@ -60,15 +60,15 @@ class SalespersonController extends Controller
 
 
 
-    public function update(SalespersonRequest $request, $id)
-{
+        public function update(SalespersonRequest $request, $id)
+    {
 
-    $validated  = $request->validated();
+        $validated  = $request->validated();
 
-    $this->user->updateUser($id, $validated );
+        $this->user->updateUser($id, $validated );
 
-    return redirect()->route('manager_menu.index')->with('success', '更新されました。');
-}
+        return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+    }
 
 
     public function show($id)

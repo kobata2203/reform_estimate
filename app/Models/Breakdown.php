@@ -80,52 +80,52 @@ class Breakdown extends Model
     }
 
     public static function getBreakdownsByEstimateId($estimateId)
-{
-    return self::where('estimate_id', $estimateId)->get();
-}
+    {
+        return self::where('estimate_id', $estimateId)->get();
+    }
 
-//内訳明細書
-// Breakdown.php
-public function getBreakdownByEstimateId($estimateId)
-{
-    return $this->where('estimate_id', $estimateId)->get();
-}
-
-// for updateDiscount method on ManagerController
-// Breakdown.php
-public function breakdownByEstimateId($estimateId)
-{
-    return $this->where('estimate_id', $estimateId)->get();
-}
-
-//pdf method on the ManagerController
-public function fetchBreakdownsByEstimateId($estimateId)
+    //内訳明細書
+    // Breakdown.php
+    public function getBreakdownByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-    //PDFshow on ManagerController
+    // for updateDiscount method on ManagerController
+    // Breakdown.php
+    public function breakdownByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+    //pdf method on the ManagerController
+    public function fetchBreakdownsByEstimateId($estimateId)
+        {
+            return $this->where('estimate_id', $estimateId)->get();
+        }
+
+        //PDFshow on ManagerController
     public function fetchingBreakdownsByEstimateId($estimateId)
-{
-    return $this->where('estimate_id', $estimateId)->get();
-}
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
 
 
-//show method on ManagerController p2
-// Breakdown.php
-public static function getTotalAmountByEstimateId($estimateId)
-{
-    $breakdown = self::where('estimate_id', $estimateId)->get();
-    $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
-    return $totalAmount;
-}
+    //show method on ManagerController p2
+    // Breakdown.php
+    public static function getTotalAmountByEstimateId($estimateId)
+    {
+        $breakdown = self::where('estimate_id', $estimateId)->get();
+        $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
+        return $totalAmount;
+    }
 
 
-//nocalculation
-// In Breakdown.php model
-public static function getByEstimateId($estimateId)
-{
-    return self::where('estimate_id', $estimateId)->get();
-}
+    //nocalculation
+    // In Breakdown.php model
+    public static function getByEstimateId($estimateId)
+    {
+        return self::where('estimate_id', $estimateId)->get();
+    }
 
 }
