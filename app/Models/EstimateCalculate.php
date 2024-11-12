@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class EstimateCalculate extends Model
@@ -86,7 +85,6 @@ public function fetchEstimateCalculateByEstimateId($estimateId)
 }
 
 //show method on the ManagerCOntroller
-// EstimateCalculate.php
 public static function getDiscountByEstimateId($estimateId)
 {
     $estimateCalculate = self::where('estimate_id', $estimateId)->first();
@@ -94,7 +92,6 @@ public static function getDiscountByEstimateId($estimateId)
 }
 
 // In EstimateCalculate.php model
-
 public static function getOrCreateByEstimateId($estimateId)
 {
     return self::firstOrNew(['estimate_id' => $estimateId]);

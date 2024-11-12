@@ -55,8 +55,6 @@ class ManagerController extends Controller
 
     public function delete($id)
     {
-        // $estimate = $this->estimateInfo::findOrFail($id);
-        // $estimate->deleteEstimate();
         $this->estimateInfo->deleteEstimate($id);
         return redirect()->route('manager_estimate')->with('status', 'Data successfully hidden!');
     }
@@ -81,28 +79,6 @@ class ManagerController extends Controller
     return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
 }
 
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|unique:admins',
-    //         'password' => 'required|string|min:6',
-    //         'department_name' => 'required|string|max:255',
-    //     ]);
-
-
-    //     $this->admin->createAdmin($validated);
-
-
-    //     return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
-    // }
-
-    //     public function edit($id)
-// {
-//     $admin = Admin::find($id);
-//     return view('admins.edit', compact('admin'));
-// }
-
     public function edit($id)
     {
         $admin = $this->admin->findAdminById($id);
@@ -111,25 +87,6 @@ class ManagerController extends Controller
         ]);
     }
 
-
-
-
-    // public function update(Request $request, $id)
-    // {
-    //     $admin = $this->admin->findAdminById($id);
-
-    //     $validated = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|unique:admins,email,' . $id, // Ensure unique email but allow current one
-    //         'password' => 'nullable|string|min:6', // Make password optional for update
-    //         'department_name' => 'required|string|max:255',
-    //     ]);
-
-    //     // Use the updateAdmin method from the Admin model
-    //     $this->admin->updateAdmin($admin, $validated);
-
-    //     return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
-    // }
     public function update(UpdateAdminRequest $request, $id)
 {
     $validated = $request->validated();
@@ -161,43 +118,6 @@ class ManagerController extends Controller
 
 
 //for displaying the data from the breakdown tbl in the estimate_info tbl section
-// public function itemView($id)
-// {
-//     // Fetch necessary data related to the $id (from Estimate and Breakdown models)
-//     $estimate_info = $this->estimateInfo->getEstimateById($id); // Fetch the estimate record
-//     if (!$estimate_info) {
-//         return redirect()->back()->withErrors(['error' => 'Estimate not found']);
-//     }
-
-//     $breakdown = $this->breakdown->getBreakdownByEstimateId($id); // Fetch breakdown related to estimate
-
-//     // Calculate totalAmount from breakdown
-//     $totalAmount = $breakdown->sum('amount'); // Sum of all amounts
-
-//     // Fetch estimate_calculate record or create a new one if it doesn't exist
-//     $estimate_calculate = $this->estimateCalculate->getOrCreateEstimateCalculate($id); // Ensure estimate_id is set
-
-//     // Set special_discount, default to 0 if null
-//     $discount = $estimate_calculate->special_discount ?? 0;
-
-//     // Perform calculations
-//     $subtotal = $totalAmount - $discount;
-//     $tax = $subtotal * 0.1;
-//     $grandTotal = $subtotal + $tax;
-
-//     // Save or update the estimate_calculate record
-//     try {
-//         $this->estimateCalculate->updateEstimateCalculate($estimate_calculate, $subtotal, $tax, $grandTotal);
-//     } catch (\Illuminate\Database\QueryException $e) {
-//         // Handle any errors during save
-//         return redirect()->back()->withErrors(['error' => 'Error saving estimate calculations: ' . $e->getMessage()]);
-//     }
-
-//     // Pass all data to the view
-//     return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
-// }
-
-//this method is without calculation
     public function itemView($id)
     {
         // Fetch the estimate record or use null if not found
@@ -229,7 +149,7 @@ class ManagerController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
-        // Pass all data to the view, even if estimate_info is missing
+
         return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
     }
 
@@ -240,13 +160,11 @@ class ManagerController extends Controller
 
     // Fetch the estimate
     $estimate_info = $this->estimate->getEstimateById($id);
-    // if (!$estimate_info) {
-    //     return redirect()->back()->withErrors(['error' => 'Estimate not found']);
-    // }
+
     if (!$estimate_info) {
         // Set default values or handle logic when the estimate is not found
-        $estimate_info = new \stdClass(); // Create an empty object as a placeholder
-        // You can also set other variables to default values
+        $estimate_info = new \stdClass();
+
     }
 
 
@@ -277,88 +195,6 @@ class ManagerController extends Controller
     }
     }
 
-
-    // public function pdf($id)
-
-    // {
-    //     // Fetching the estimate info and breakdown based on the given ID
-    //     $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
-
-    //     $breakdown = $this->breakdown->fetchBreakdownsByEstimateId($id);
-
-    //     // $estimate = $this->estimate->fetchEstimateWithCalculations($id);
-    //     // Create new PDF document
-    //     $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
-    //     $pdf->setPrintHeader(false);
-    //     $pdf->setPrintFooter(false);
-    //     $pdf->AddPage();
-
-    //     // Set the font - ensure the font is installed and path is correct
-    //     $pdf->AddFont('kozgopromedium', '', 'kozgopromedium.php'); // Adjust the path as necessary
-    //     $pdf->SetFont('kozgopromedium', '', 12);
-
-    //     $pdf->SetFillColor(220, 220, 220);
-    //     // Add title
-    //     $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
-    //     $pdf->Ln(5);
-    //     $pdf->Cell(0,10, '株式会社サーバントップ',0, 1, 'R');
-    //     $pdf->Ln(5);
-    //     // Construction Name
-
-    //     // dd($estimate->toArray());
-    //     $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
-
-    //     // Add header for the breakdown table
-    //     $pdf->SetX(5);
-    //     $pdf->SetFillColor(220, 220, 220); // Set fill color for header background
-    //     $pdf->Cell(20, 10, '工事項目', 1, 0, 'C', true); // Header for construction item
-    //     $pdf->Cell(70, 10, '仕様', 1, 0, 'C', true); // Header for specification
-    //     $pdf->Cell(15, 10, '数量', 1, 0, 'C', true); // Header for quantity
-    //     $pdf->Cell(10, 10, '単位', 1, 0, 'C', true); // Header for unit
-    //     $pdf->Cell(15, 10, '単価', 1, 0, 'C', true); // Header for unit price
-    //     $pdf->Cell(25, 10, '金額', 1, 0, 'C', true); // Header for amount
-    //     $pdf->Cell(45, 10, '備考', 1, 1, 'C', true); // Header for remarks
-
-    //     // Loop through breakdown items and add data rows
-    //     foreach ($breakdown as $item) {
-    //         $pdf->SetX(5);
-    //         $pdf->Cell(20, 10, $item->construction_item, 1, 0, 'C');
-    //         $pdf->Cell(70, 10, $item->specification, 1, 0, 'C');
-    //         $pdf->Cell(15, 10, $item->quantity, 1, 0, 'C');
-    //         $pdf->Cell(10, 10, $item->unit, 1, 0, 'C');
-    //         $pdf->Cell(15, 10, number_format($item->unit_price), 1, 0, 'C');
-    //         $pdf->Cell(25, 10, '¥ ' . number_format($item->amount), 1, 0, 'C');
-    //         $pdf->Cell(45, 10, $item->remarks, 1, 0, 'C');
-    //         $pdf->Ln();
-    //     }
-
-    //     // Calculate totals $discount
-    //     $totalAmount = $breakdown->sum('amount');
-    //     // $discount = $estimate->calculate->special_discount;
-    //     $subtotal = $totalAmount;
-    //     $tax = $subtotal * 0.1;
-    //     $grandTotal = $subtotal + $tax;
-
-
-    //     // Output totals below the breakdown table
-    //     $pdf->SetX(5);
-    //     $pdf->Cell(130,10, '特別お値引き ',1, 0, 'R');
-    //     $pdf->Cell(25, 10,'¥ ' . number_format( $subtotal), 1, 1, 'C');
-    //     $pdf->SetX(5);
-    //     $pdf->Cell(130, 10, '小計（税抜）', 1, 0, 'R');
-    //     $pdf->Cell(25, 10,'¥ ' . number_format($subtotal),1, 1, 'C');
-    //     $pdf->SetX(5);
-    //     $pdf->Cell(130, 10, '消費税（10%）',1, 0, 'R');
-    //     $pdf->Cell(25, 10,'¥ ' . number_format($tax),1, 1, 'C');
-    //     $pdf->SetX(5);
-    //     $pdf->Cell(130, 10, '合計（税込）', 1, 0, 'R');
-    //     $pdf->Cell(25, 10,'¥ ' . number_format($grandTotal),1, 1, 'C');
-
-    //     // Output the PDF
-    //     $pdf->Output("output.pdf", "I");
-    // }
-
-
     public function pdf($id)
 {
     // Fetching the estimate info and breakdown based on the given ID
@@ -367,7 +203,7 @@ class ManagerController extends Controller
 
 
       // Fetching the estimate calculation data based on the given estimate ID
-    $estimate_calculation = \App\Models\EstimateCalculate::fetchCalculationByEstimateId($id);
+    $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
 
     $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
     // Create new PDF document

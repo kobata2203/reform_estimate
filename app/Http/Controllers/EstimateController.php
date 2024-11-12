@@ -117,15 +117,5 @@ class EstimateController extends Controller
         return view('estimate.index', compact('estimates'));
     }
 
-    // public function show($id)
-    // {
-    //     // Fetch the breakdown record using the provided ID
-    //     $table  = EstimateInfo::findOrFail($id); // Make sure to handle this properly if the record doesn't exist
-
-    //     // Return the view with breakdown data
-    //     return view('manager_menu.show', compact('breakdown'));
-    // }
-
-
 }
 
