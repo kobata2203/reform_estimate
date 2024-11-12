@@ -31,7 +31,7 @@
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('name') }}
             </div>
-        @endif
+            @endif
             <label for="department">部署名</label>
             <select id="department" name="department_name"required>
                 <option value="本部">本部</option>
@@ -48,21 +48,21 @@
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('department_name') }}
             </div>
-        @endif
+            @endif
             <label for="email">メールアドレス</label>
             <input type="email" id="email" name="email" value="{{ old('email') }}" required>
             @if ($errors->has('email'))
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('email') }}
             </div>
-        @endif
+            @endif
             <label for="password">パスワード</label>
             <input type="password" id="password" name="password"required>
             @if ($errors->has('password'))
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('password') }}
             </div>
-        @endif
+            @endif
             <div class="button-container">
                 <button type="submit">登録</button>
                 <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">管理者<br>メニュー</button>

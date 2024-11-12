@@ -34,6 +34,13 @@ class Breakdown extends Model
         return $this->belongsTo(EstimateInfo::class, 'estimate_info_id');
     }
 
+    //changing estimates table to breakdown
+    public function estimateCalculate()
+{
+    return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
+}
+
+
     public function construction_name()
     {
     return $this->belongsTo('App\Models\ConstructionName');
@@ -111,6 +118,14 @@ public static function getTotalAmountByEstimateId($estimateId)
     $breakdown = self::where('estimate_id', $estimateId)->get();
     $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
     return $totalAmount;
+}
+
+
+//nocalculation
+// In Breakdown.php model
+public static function getByEstimateId($estimateId)
+{
+    return self::where('estimate_id', $estimateId)->get();
 }
 
 }

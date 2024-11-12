@@ -47,7 +47,7 @@
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('department_name') }}
             </div>
-             @endif
+            @endif
             <label for="email">メールアドレス</label>
             <input type="email" id="email" name="email"required>
             @if ($errors->has('email'))

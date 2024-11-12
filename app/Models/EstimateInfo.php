@@ -151,6 +151,13 @@ public static function getById($id)
     return self::find($id);
 }
 
+// no calculation
+public static function idGet($id)
+{
+    return self::find($id);
+}
+
+
 //show method on the ManagerController p2
 public static function getEstimateByIde($id)
 {
