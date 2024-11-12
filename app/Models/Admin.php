@@ -11,6 +11,7 @@ class Admin extends User
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'admins'; // Specify the table name if different
     protected $fillable = [
         'name',
         'department_name',
