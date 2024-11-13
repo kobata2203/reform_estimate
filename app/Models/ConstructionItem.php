@@ -27,7 +27,7 @@ class ConstructionItem extends Model
 
     public function breakdown()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany('App\Models\Breakdown');
     }
 
     public function get_target_items($id)

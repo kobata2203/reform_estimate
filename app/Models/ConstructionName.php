@@ -27,7 +27,7 @@ class ConstructionName extends Model
 
     public function breakdown()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany('App\Models\Breakdown');
     }
 
     public function get_target_construction_name()
@@ -40,15 +40,15 @@ class ConstructionName extends Model
     //create method in EstimateController
     // ConstructionName.php (Model)
 public function get_construction_name()
-{
-    // Assuming it retrieves some records, e.g., all construction names
-    return $this->all(); // or another query to retrieve specific data
-}
+    {
+
+        return $this->all();
+    }
 
 //breakdowncreate メソッド　EstimateController
 public static function getById($id)
-{
-    return self::find($id);
-}
+    {
+        return self::find($id);
+    }
 
 }

@@ -40,14 +40,14 @@ class Estimate extends Model
     }
 
     // for updateDiscount method on ManagerController
-public function getEstimateById($id)
-{
-    return $this->find($id);
-}
+    public function getEstimateById($id)
+    {
+        return $this->find($id);
+    }
 
 //pdf method on the ManagerController
-public function fetchEstimateWithCalculations($id)
+    public function fetchEstimateWithCalculations($id)
     {
-        return $this->with('calculate')->findOrFail($id);
+         return $this->with('calculate')->findOrFail($id);
     }
 }

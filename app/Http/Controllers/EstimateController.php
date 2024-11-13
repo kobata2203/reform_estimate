@@ -28,6 +28,8 @@ class EstimateController extends Controller
         $this->constructionItem = new ConstructionItem();
         $this->breakdown = new Breakdown();
     }
+
+    
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');

@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 
+use PHPUnit\Util\Xml\Validator;
 use App\Http\Controllers\Auth\LoginController;
 
 class Login extends Eloquent

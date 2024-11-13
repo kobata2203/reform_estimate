@@ -35,7 +35,7 @@ class EstimateCalculate extends Model
         return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
-        public static function getEstimateCalculateByEstimateId($estimateId)
+    public static function getEstimateCalculateByEstimateId($estimateId)
     {
         return self::where('estimate_id', $estimateId)->first();
     }
@@ -58,7 +58,6 @@ class EstimateCalculate extends Model
         $estimateCalculate->subtotal_price = $subtotal;
         $estimateCalculate->consumption_tax = $tax;
         $estimateCalculate->total_price = $grandTotal;
-
         return $estimateCalculate->save();
     }
 
