@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>見積書作成画面</title>
-    <link rel="stylesheet" href='css/cover_index.css'>
-  </head>
-  <body>
+@extends('layouts.main')
+
+@section('title', '見積書作成画面')
+
+@section('headder')
+    <link rel="stylesheet" href="{{ asset('css/cover_index.css') }}">
+    <script src="{{ asset('/js/cover/index.js') }}"></script>
+@endsection
+
+@section('content')
+
     <div>
       <h1>見積書作成</h1>
       <p>各項目を入力・選択後、登録ボタン押下してください。</p>
@@ -18,68 +20,88 @@
             <tr>
               <th>お客様名</th>
               <td>
-                <input id="customer_name" type="text" name="customer_name" required>
+                <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}" required>
               </td>
             </tr>
             <tr>
               <th>担当者名</th>
               <td>
-                <input id="charger_name" type="text" name="charger_name" required>
+                <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}" required>
               </td>
             </tr>
             <tr>
               <th>件名</th>
               <td>
-                <input id="subject_name" type="text" name="subject_name" required>
+                <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" required>
               </td>
             </tr>
             <tr>
               <th>納入場所</th>
               <td>
-                <input id="delivery_place" type="text" name="delivery_place" required>
+                <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" required>
               </td>
             </tr>
             <tr>
               <th>工期</th>
               <td>
-                <input id="construction_period" type="text" name="construction_period" required>
+                <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" required>
               </td>
             </tr>
             <tr>
               <th>支払方法</th>
               <td>
-              <select id="payment_type" type="text" name="payment_type" required>
-                <option>現金</option>
-                <option>信販</option>
+              <select id="payment_id" type="text" name="payment_id" value="{{ old("payment_id", $estimate_info->payment_id) }}" required>
+                  @foreach($payments as $payment)
+                      <option value={{ $payment ->id }}@if($payment->id == $estimate_info->payment_id) selected @endif>{{ $payment->name }}</option>
+                  @endforeach
               </select>
               </td>
             </tr>
             <tr>
               <th>有効期限</th>
               <td>
-                <input id="expiration_date" type="text" name="expiration_date" required>
+                <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" required>
               </td>
             </tr>
             <tr>
               <th>備考</th>
               <td>
-                <textarea id="remarks" type="text" name="remarks"></textarea>
+                <textarea id="remarks" type="text" name="remarks">{{ old("remarks", $estimate_info->remarks) }}</textarea>
               </td>
             </tr>
             <tr>
-              <th>部署名</th>
+              <th>部署名{{$estimate_info->department_id}}</th>
               <td>
-                <input id="department_name" type="text" name="department_name" required>
+                  <select id="department" name="department_id"  class="department_id" required>
+                      @foreach($departments as $department)
+                          <option value={{ $department->id }}@if($department->id == $estimate_info->department_id) selected @endif>{{ $department->name }}</option>
+                      @endforeach
+                  </select>
               </td>
             </tr>
             <tr>
               <th>工事名</th>
               <td>
-                <select id="construction_id" type="text" name="construction_id" required>
-                  @foreach($construction_name as $construction)
-                    <option value={{ $construction ->construction_id }}@if($construction->construction_name === $construction) selected @endif>{{ $construction->construction_name }}</option>
-                  @endforeach
-                </select>
+                  <ul class="list">
+                      <li class="list__item">
+                          @for ($i = 1; $i <= old("construction_count", $construction_count); $i++)
+                              <select id="select_construction{{ $i }}" name="select_construction{{ $i }}"  class="select_construction" data-no="{{ $i }}" required>
+                                  <option value=""></option>
+                                  @foreach($construction_name as $construction)
+                                      <option value={{ $construction->construction_name }}@if($construction->construction_name === $construction) selected @endif>{{ $construction->construction_name }}</option>
+                                  @endforeach
+                              </select>
+                              <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="@if(isset($construction_list[$i - 1]->name)) {{ $construction_list[$i - 1]->name  }} @else {{ old("construction_name") }} @endif">
+                              <p class="delete">
+                                  <button type="button" class="js-delete-btn">削除</button>
+                              </p>
+                          @endfor
+                      </li>
+                  </ul>
+                  <p class="add">
+                      <button id="add_construction" type="button">追加</button>
+                  </p>
+                  <input type="hidden" name="construction_count" class="construction_count" id="construction_count" value="{{ $construction_count }}">
               </td>
             </tr>
           </table>
@@ -92,5 +114,5 @@
             <button id="btn">営業者メニュー</button>
         </form>
     </div>
-  </body>
-</html>
+
+@endsection
