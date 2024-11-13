@@ -48,8 +48,8 @@ class User extends Authenticatable
 
         if (!empty($keyword)) {
             $query->where('name', 'LIKE', "%{$keyword}%")
-                  ->orWhere('email', 'LIKE', "%{$keyword}%")
-                  ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+                ->orWhere('email', 'LIKE', "%{$keyword}%")
+                ->orWhere('department_name', 'LIKE', "%{$keyword}%");
         }
 
         return $query->get();

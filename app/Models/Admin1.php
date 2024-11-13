@@ -24,7 +24,7 @@ class Admin1 extends Model
 
     // Define the attributes that should be hidden for arrays
     protected $hidden = [
-        
+
         'remember_token',
     ];
 

@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Htpp\Controllers\EstimateController;
-use Illuminate\Http\Request;
+
 
 class EstimateInfo extends Model
 {
@@ -34,13 +33,8 @@ class EstimateInfo extends Model
 
     public function construction_name()
     {
-    return $this->belongsTo('App\Models\ConstructionName');
+        return $this->belongsTo('App\Models\ConstructionName');
     }
-
-    // public function breakdown()
-    // {
-    //     return $this->hasMany('App\Models\Breakdown', 'estimate_id');
-    // }
 
     public function breakdowns()
     {
@@ -85,24 +79,15 @@ class EstimateInfo extends Model
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
-                      ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
                     //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
         return $query->get();
     }
-
-    //削除機能
-    // public function deleteEstimate()
-    // {
-
-    //     $this->delet_flag = true;
-    //     $this->save();
-
-    // }
 
     public function deleteEstimate($id)
     {
@@ -123,8 +108,7 @@ class EstimateInfo extends Model
         $estimate_info = $this->findOrFail($id);
 
         // Fetch related breakdown data
-        $breakdown = $estimate_info->breakdown; // Uses the relationship defined
-
+        $breakdown = $estimate_info->breakdown;
         return [$estimate_info, $breakdown];
     }
 
@@ -152,7 +136,7 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-    // no calculation
+
     public static function idGet($id)
     {
         return self::find($id);

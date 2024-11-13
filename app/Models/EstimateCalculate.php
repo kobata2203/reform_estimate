@@ -23,7 +23,7 @@ class EstimateCalculate extends Model
     {
         return $this->belongsTo(Estimate::class, 'id', 'id');
     }
-//added forchanging foreignid  from estimate to breakdown
+    //added forchanging foreignid  from estimate to breakdown
     public function breakdown()
     {
         return $this->belongsTo(Breakdown::class, 'estimate_id', 'id');
@@ -35,7 +35,7 @@ class EstimateCalculate extends Model
         return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
-        public static function getEstimateCalculateByEstimateId($estimateId)
+    public static function getEstimateCalculateByEstimateId($estimateId)
     {
         return self::where('estimate_id', $estimateId)->first();
     }
@@ -58,7 +58,6 @@ class EstimateCalculate extends Model
         $estimateCalculate->subtotal_price = $subtotal;
         $estimateCalculate->consumption_tax = $tax;
         $estimateCalculate->total_price = $grandTotal;
-
         return $estimateCalculate->save();
     }
 
