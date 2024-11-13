@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Htpp\Controllers\EstimateController;
-use Illuminate\Http\Request;
+
 
 class EstimateInfo extends Model
 {
@@ -80,10 +79,10 @@ class EstimateInfo extends Model
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
-                      ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
                     //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
@@ -137,7 +136,7 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-    
+
     public static function idGet($id)
     {
         return self::find($id);

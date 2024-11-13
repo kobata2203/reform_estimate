@@ -45,9 +45,9 @@ class Estimate extends Model
         return $this->find($id);
     }
 
-//pdf method on the ManagerController
+    //pdf method on the ManagerController
     public function fetchEstimateWithCalculations($id)
     {
-         return $this->with('calculate')->findOrFail($id);
+        return $this->with('calculate')->findOrFail($id);
     }
 }

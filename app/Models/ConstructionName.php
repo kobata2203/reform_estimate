@@ -22,7 +22,7 @@ class ConstructionName extends Model
 
     public function estimate_info()
     {
-    return $this->belongsTo('App\Models\EstimateInfo');
+        return $this->belongsTo('App\Models\EstimateInfo');
     }
 
     public function breakdown()
@@ -39,14 +39,14 @@ class ConstructionName extends Model
 
     //create method in EstimateController
     // ConstructionName.php (Model)
-public function get_construction_name()
+    public function get_construction_name()
     {
 
         return $this->all();
     }
 
-//breakdowncreate メソッド　EstimateController
-public static function getById($id)
+    //breakdowncreate メソッド　EstimateController
+    public static function getById($id)
     {
         return self::find($id);
     }

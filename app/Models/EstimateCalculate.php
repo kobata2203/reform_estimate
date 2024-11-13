@@ -23,7 +23,7 @@ class EstimateCalculate extends Model
     {
         return $this->belongsTo(Estimate::class, 'id', 'id');
     }
-//added forchanging foreignid  from estimate to breakdown
+    //added forchanging foreignid  from estimate to breakdown
     public function breakdown()
     {
         return $this->belongsTo(Breakdown::class, 'estimate_id', 'id');

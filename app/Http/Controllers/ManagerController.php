@@ -11,9 +11,7 @@ use App\Models\Breakdown;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
 use Illuminate\Http\Request;
-use setasign\Fpdi\Tcpdf\Fpdi;
 use App\Models\EstimateCalculate;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
@@ -32,15 +30,15 @@ class ManagerController extends Controller
     protected $estimate;
     protected $estimateCalculate;
 
-public function __construct(
+    public function __construct(
 
-    Manager $manager,
-    Managerinfo $managerInfo,
-    EstimateInfo $estimateInfo,
-    Admin $admin,
-    Breakdown $breakdown,
-    Estimate $estimate,
-    EstimateCalculate $estimateCalculate
+        Manager $manager,
+        Managerinfo $managerInfo,
+        EstimateInfo $estimateInfo,
+        Admin $admin,
+        Breakdown $breakdown,
+        Estimate $estimate,
+        EstimateCalculate $estimateCalculate
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -126,7 +124,7 @@ public function __construct(
     }
 
 
-//for displaying the data from the breakdown tbl in the estimate_info tbl section
+    //for displaying the data from the breakdown tbl in the estimate_info tbl section
     public function itemView($id)
     {
         // Fetch the estimate record or use null if not found
@@ -268,7 +266,7 @@ public function __construct(
         // Output totals below the breakdown table
         $pdf->SetX(5);
         $pdf->Cell(130, 10, '特別お値引き ', 1, 0, 'R');
-        $pdf->Cell(25, 10, '¥ ' . number_format( $discount), 1, 1, 'C');
+        $pdf->Cell(25, 10, '¥ ' . number_format($discount), 1, 1, 'C');
         $pdf->SetX(5);
         $pdf->Cell(130, 10, '小計（税抜）', 1, 0, 'R');
         $pdf->Cell(25, 10, '¥ ' . number_format($subtotal), 1, 1, 'C');

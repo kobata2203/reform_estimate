@@ -22,7 +22,7 @@ class ConstructionItem extends Model
 
     public function estimate_info()
     {
-    return $this->belongsTo('App\Models\EstimateInfo');
+        return $this->belongsTo('App\Models\EstimateInfo');
     }
 
     public function breakdown()

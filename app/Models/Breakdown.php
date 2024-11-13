@@ -54,14 +54,14 @@ class Breakdown extends Model
 
     public function estimate()
     {
-        return $this->belongsTo(Estimate::class,'estimate_id','id');
+        return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
     public function regist_breakdown($request)
     {
         $datas = [];
 
-        for($i=1; $i <= $request->construction_loop_count; $i++) {
+        for ($i = 1; $i <= $request->construction_loop_count; $i++) {
             $data = [];
             $data['estimate_id'] = $request->estimate_id;
             $data['construction_id'] = $request->construction_id;
