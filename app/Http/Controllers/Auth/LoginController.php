@@ -17,10 +17,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    //public function __construct()
-    //{
-        //$this->user = new User();
-    //}
+    protected $user;
+
+    public function __construct(
+        User $user,
+    )
+    {
+        $this->user = $user;
+    }
     
     protected function redirectPath()
     {
