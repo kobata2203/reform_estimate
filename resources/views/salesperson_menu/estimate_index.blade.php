@@ -53,7 +53,7 @@
                                 <td>{{ $estimate->department_name }}</td>
                                 <td><form action="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">
                                     @csrf
-                                    <button>内訳明細書作成へ</button>
+                                    <button class="btn btn-primary">内訳明細書作成へ</button>
                                 </form></td>
                                 <td><a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
                             </tr>
@@ -64,10 +64,10 @@
             </table>
         </div>
 
-        <div>
+        <div class="btn-menu">
             <form action="{{ route('salesperson_menu') }}" method="GET">
                 @csrf
-                <button>営業者メニュー</button>
+                <button class="btn btn-primary">営業者メニュー</button>
             </form>
         </div>
     </body>
