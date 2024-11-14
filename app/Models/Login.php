@@ -2,10 +2,14 @@
 namespace App\Models;
 
 
-use App\Http\Controllers\Auth\LoginController;
-use Illuminate\Database\Eloquent\Model;
 
-class Login extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Validator;
+
+
+
+class Login extends Model
 {
     protected $fillable = ['email', 'password'];
     protected $errors;

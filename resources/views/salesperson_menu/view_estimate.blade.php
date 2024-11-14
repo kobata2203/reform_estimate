@@ -11,7 +11,7 @@
 <body>
     <div class="stimate-detail">
         <div>
-            <h2>御　見　積　書</h2>
+            <h2>御　見　積　書</br>営業者</h2>
         </div>
 
         {{-- <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
