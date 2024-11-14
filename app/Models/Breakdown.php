@@ -121,17 +121,17 @@ class Breakdown extends Model
         }
     }
 
-    public static function getBreakdownsByEstimateId($estimateId)
-    {
-        return self::where('estimate_id', $estimateId)->get();
-    }
+    // public static function getBreakdownsByEstimateId($estimateId)
+    // {
+    //     return self::where('estimate_id', $estimateId)->get();
+    // }
 
     //内訳明細書
     // Breakdown.php
-    public function getBreakdownByEstimateId($estimateId)
-    {
-        return $this->where('estimate_id', $estimateId)->get();
-    }
+    // public function getBreakdownByEstimateId($estimateId)
+    // {
+    //     return $this->where('estimate_id', $estimateId)->get();
+    // }
 
     // for updateDiscount method on ManagerController
     // Breakdown.php
@@ -163,7 +163,7 @@ class Breakdown extends Model
     }
 
 
-    //nocalculation
+    //itemView on ManagerCOntroller
     // In Breakdown.php model
     public static function getByEstimateId($estimateId)
     {

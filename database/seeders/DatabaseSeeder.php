@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders;
-use Database\ManagerSeeders;
-use App\Models\Managerinfo;
+
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,8 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ManagerSeeder::class);
         $this->call(ConstructionNameSeeder::class);
-        $this->call(ConstructionItemSeeder::class);
+        // $this->call(ConstructionItemSeeder::class);
         $this->call(BreakdownSeeder::class);
-        // $this->call([EstimateSeeder::class,]);
+        $this->call(DepartmentsSeeder::class);
+        $this->call(PaymentsSeeder::class);
+       
     }
 }
