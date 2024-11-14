@@ -22,6 +22,7 @@ label {
 }
 
 .form-container {
+    background-color: #ccc;
     border: 2px solid #ccc;
     padding: 20px;
     margin: 0 30%;

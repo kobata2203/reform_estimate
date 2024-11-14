@@ -1,69 +1,179 @@
+/* General Styles */
 body {
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
     width: 100%;
-    height:100%;
-    background-image: url(../image/back.png);  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
+    height:100vh;
+    background-image: url(../image/back2.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
 }
 
 p {
-    background-color: rgb(135, 197, 48);
+    background-color: rgb(135,197,48);
+    font-size: large;
+    font-weight: bold;
     text-align: center;
+    padding: 10px;
+    margin: 0; /* Ensure no margin affects layout */
+}
+
+h1 {
+    background-color: rgb(135,197,48);
     font-size: large;
     font-weight: bold;
 }
 
-h1 {
-    background-color: rgb(135, 197, 48);
-    font-size: medium;
-    font-weight: bold;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Space above the table */
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(135,197,48);
 }
 
 td {
     background-color: white;
-    text-align: center;
 }
 
-/* table02 */
-#table02 th, #table02 td {
-    text-align: center;
-    width: 20%;
-    min-width: 130px;
-    padding: 10px;
-    height: 60px;
-  }
-  
-  /* tab */
-  @media only screen and (max-width: 768px) {
-    #table03 {
-      display: block;
-      overflow-x: scroll;
-      white-space: nowrap;
-    }
-  }
-
-th {
-    background-color: rgb(121, 168, 51);
-}
-
-#menue{
+/* Button and Margin Styles */
+#menue {
     margin: 27px;
-    margin-left: 83%;
+    margin-left: 83%; /* Specific positioning */
     cursor: pointer;
     border: 2px solid black;
-    
 }
 
 .row-button {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px; /* Space between rows of buttons */
+    margin-bottom: 10px; /* Space between button rows */
+}
+
+.btn, .btn-primary, .btn-dark, .btn-danger {
+    text-align: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    border-radius: 4px;
+}
+
+.btn + .btn {
+    margin-left: 10px; /* Space between buttons */
+}
+
+.margin-left-300 {
+    margin-left: 300px;
+}
+
+.custom-border {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: white;
+    background-color: #007bff;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* Form Styles */
+.form-inline {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+    margin-bottom: 20px; /* Space below the form */
+    margin-left: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    width: 20%; /* Set label width */
+    float: left;
+    margin-right: 1rem; /* Space between label and input */
+    text-align: right; /* Align text to the right */
+}
+
+.form-group input {
+    width: 75%; /* Set input width */
+}
+
+.form-control {
+    width: 300px;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+}
+
+/* Custom Margin Classes */
+.margin-top-example {
+    margin-top: 10px;
+}
+
+.custom-margin {
+    margin: 10px; /* Example of custom margin, adjust as needed */
 }
 
 
-#btn {
-    margin-left: 50px;
+.estimate {
+    background-color: rgb(135,197,48);
+    margin: 5px;          /* Adds 20px margin on all sides */
+    padding: 5px;
 }
 
+/* Button Styles */
+td .btn {
+    display: inline-block;
+    padding: 8px 12px;           /* Padding for a comfortable button size */
+    font-size: 14px;             /* Font size for readability */
+    color: #fff;                 /* White text for contrast */
+    border-radius: 4px;          /* Rounded corners for a smoother look */
+    text-decoration: none;       /* Remove underline from links */
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Specific Color for '削除' Button */
+td .btn-danger {
+    background-color: #dc3545;   /* Red background */
+}
+
+td .btn-danger:hover {
+    background-color: #c82333;   /* Darker red on hover */
+}
+
+/* Specific Color for '閲覧' Button */
+td .btn-primary {
+    background-color: #007bff;   /* Blue background */
+}
+
+td .btn-primary:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.btn-menu {
+    text-align: right;
+    margin-top: 10px;
+}

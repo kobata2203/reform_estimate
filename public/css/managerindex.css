@@ -10,6 +10,7 @@ body {
 }
 
 p {
+    background-color: orange;
     font-size: 200%;
     font-weight: bold;
     text-align: center;
@@ -37,7 +38,7 @@ th, td {
 }
 
 th {
-    background-color: rgb(241, 168, 84);
+    background-color: orange;
 }
 
 .col-3 {
@@ -54,24 +55,21 @@ th {
     margin-left: 20px;
 }
 
-.btn-dark {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.row-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px; /* Space between button rows */
 }
 
-.btn-dark:hover {
-    background-color: #0056b3;
+.btn, .btn-primary, .btn-dark, .btn-danger {
+    text-align: center;
+    background-color: #007bff;
+    padding: 10px 20px;
+    font-size: 16px;
 }
 
 .margin-left-300 {
     margin-left: 300px;
-}
-
-.btn-primary, .btn-dark, .btn-danger {
-    padding: 10px 20px;
-    font-size: 16px;
 }
 
 .btn + .btn {
