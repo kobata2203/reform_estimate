@@ -21,8 +21,9 @@
 
         }
 
+
         table {
-            width: 50%;
+            width: 65%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
@@ -47,28 +48,33 @@
         .contact-info {
             width: 30%;
             font-size: 14px;
-            position: absolute; /* Use absolute positioning for placement */
-            bottom: 50px; /* Adjust as needed */
-            right: -50px; /* Adjust as needed */
-            margin-bottom:320px;
+            position: absolute;
+            bottom: 50px;
+            right: -50px;
+            margin-bottom: 300px;
 
         }
-
-
     </style>
 </head>
 
 <body>
     <h2>御　見　積　書</h2>
 
+    <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
+        <div style="text-align: right;">
+            <p>{{ $estimate_info->creation_date }}</p>
+        </div>
+    </div>
     <div>
-        <p><strong>お客様名 :</strong> {{ $estimate_info->customer_name }} 様</p>
-        <p style="font-size: 8px;">下記の通りお見積り申し上げます。</p>
-        <p style="text-align: center;"><strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）</p>
+        <p style="display: inline; text-decoration: underline; margin: 0; padding: 0;"><strong>お客様名 :</strong>
+            {{ $estimate_info->customer_name }} 様</p>
+        <p style="display: inline; font-size: 8px; margin: 0; padding: 0;">下記の通りお見積り申し上げます。</p>
+
+        <p style="text-align: center; margin-left: 150px; display: inline; text-decoration: underline;">
+            <strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）
+        </p>
 
     </div>
-
-
 
     <table>
         <tr>

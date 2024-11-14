@@ -55,7 +55,7 @@
                                     @csrf
                                     <button class="btn btn-primary">内訳明細書作成へ</button>
                                 </form></td>
-                                <td><a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
+                                <td><a href="{{ route('estimatesales', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
                             </tr>
 
                         </div>
