@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Htpp\Controllers\EstimateController;
+use Illuminate\Support\Facades\DB;
 
 class Breakdown extends Model
 {
@@ -26,7 +27,6 @@ class Breakdown extends Model
         'unit_price',
         'amount',
         'remarks',
-        'construction_name',
     ];
 
     public function estimate_info()
@@ -57,6 +57,14 @@ class Breakdown extends Model
         return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
+    public function get_breakdown_list($estimate_id)
+    {
+        $items = $this->select($this->fillable)->where('construction_id', $estimate_id)->get();
+
+        return $items;
+
+    }
+
     public function regist_breakdown($request)
     {
         $datas = [];
@@ -71,12 +79,46 @@ class Breakdown extends Model
             $data['unit'] = $request->unit[$i];
             $data['unit_price'] = $request->unit_price[$i];
             $data['amount'] = $request->amount[$i];
-            $data['remarks'] = $request->remarks2[$i];
+            $data['remarks'] = $request->remarks[$i];
 
             $datas[] = $data;
         }
 
         return $this->insert($datas);
+    }
+
+    public function update_breakdown($request)
+    {
+        $datas = [];
+
+        try {
+            DB::beginTransaction();
+
+            for ($i = 1; $i <= $request->construction_loop_count; $i++) {
+                $data = [];
+                $data['construction_item'] = $request->construction_item[$i];
+                $data['specification'] = $request->specification[$i];
+                $data['quantity'] = $request->quantity[$i];
+                $data['unit'] = $request->unit[$i];
+                $data['unit_price'] = $request->unit_price[$i];
+                $data['amount'] = $request->amount[$i];
+                $data['remarks'] = $request->remarks[$i];
+
+                $where = array(
+                    'estimate_id' => $request->estimate_id,
+                    'construction_id' => $request->construction_id,
+                );
+                DB::table('breakdown')->where($where)->update($data);
+            }
+
+            DB::commit();
+
+            return true;
+        } catch (\Throwable $e) {
+            DB::rollback();
+
+            throw $e;
+        }
     }
 
     public static function getBreakdownsByEstimateId($estimateId)
