@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\SpecificationRequired;
 
 class EstimateInfoRequest extends FormRequest
 {
@@ -38,6 +37,7 @@ class EstimateInfoRequest extends FormRequest
             'department_id'       => 'required',
             'remarks'             => 'required|max:100',
             'construction_name.*' => 'required|max:30',
+            'construction_count'  => 'required',
         ];
     }
 }

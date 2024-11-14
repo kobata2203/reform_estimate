@@ -10,103 +10,156 @@
 @section('content')
 
     <div>
-      <h1>見積書作成</h1>
-      <p>各項目を入力・選択後、登録ボタン押下してください。</p>
+        <h1>見積書作成</h1>
+        <p>各項目を入力・選択後、登録ボタン押下してください。</p>
     </div>
     <div id="estimate">
-      <form id="estimate" method="post" action="{{ route('estimate.store') }}">
-          @csrf
-          <table>
-            <tr>
-              <th>お客様名</th>
-              <td>
-                <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>担当者名</th>
-              <td>
-                <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>件名</th>
-              <td>
-                <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>納入場所</th>
-              <td>
-                <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>工期</th>
-              <td>
-                <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>支払方法</th>
-              <td>
-              <select id="payment_id" type="text" name="payment_id" value="{{ old("payment_id", $estimate_info->payment_id) }}" required>
-                  @foreach($payments as $payment)
-                      <option value={{ $payment ->id }}@if($payment->id == $estimate_info->payment_id) selected @endif>{{ $payment->name }}</option>
-                  @endforeach
-              </select>
-              </td>
-            </tr>
-            <tr>
-              <th>有効期限</th>
-              <td>
-                <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" required>
-              </td>
-            </tr>
-            <tr>
-              <th>備考</th>
-              <td>
-                <textarea id="remarks" type="text" name="remarks">{{ old("remarks", $estimate_info->remarks) }}</textarea>
-              </td>
-            </tr>
-            <tr>
-              <th>部署名{{$estimate_info->department_id}}</th>
-              <td>
-                  <select id="department" name="department_id"  class="department_id" required>
-                      @foreach($departments as $department)
-                          <option value={{ $department->id }}@if($department->id == $estimate_info->department_id) selected @endif>{{ $department->name }}</option>
-                      @endforeach
-                  </select>
-              </td>
-            </tr>
-            <tr>
-              <th>工事名</th>
-              <td>
-                  <ul class="list">
-                      <li class="list__item">
-                          @for ($i = 1; $i <= old("construction_count", $construction_count); $i++)
-                              <select id="select_construction{{ $i }}" name="select_construction{{ $i }}"  class="select_construction" data-no="{{ $i }}" required>
-                                  <option value=""></option>
-                                  @foreach($construction_name as $construction)
-                                      <option value={{ $construction->construction_name }}@if($construction->construction_name === $construction) selected @endif>{{ $construction->construction_name }}</option>
-                                  @endforeach
-                              </select>
-                              <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="@if(isset($construction_list[$i - 1]->name)) {{ $construction_list[$i - 1]->name  }} @else {{ old("construction_name") }} @endif">
-                              <p class="delete">
-                                  <button type="button" class="js-delete-btn">削除</button>
-                              </p>
-                          @endfor
-                      </li>
-                  </ul>
-                  <p class="add">
-                      <button id="add_construction" type="button">追加</button>
-                  </p>
-                  <input type="hidden" name="construction_count" class="construction_count" id="construction_count" value="{{ $construction_count }}">
-              </td>
-            </tr>
-          </table>
-          <button id="btn1" type="submit">登録</button>
-      </form>
+        <form id="estimate" method="post" action="{{ $action }}">
+            @csrf
+            <table>
+                <tr>
+                    <th>お客様名</th>
+                    <td>
+                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}">
+                        @if ($errors->has("customer_name"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("customer_name") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>担当者名</th>
+                    <td>
+                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}">
+                        @if ($errors->has("charger_name"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("charger_name") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>件名</th>
+                    <td>
+                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}">
+                        @if ($errors->has("subject_name"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("subject_name") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>納入場所</th>
+                    <td>
+                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}">
+                        @if ($errors->has("delivery_place"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("delivery_place") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>工期</th>
+                    <td>
+                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}">
+                        @if ($errors->has("construction_period"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("construction_period") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>支払方法</th>
+                    <td>
+                        <select id="payment_id" type="text" name="payment_id" value="{{ old("payment_id", $estimate_info->payment_id) }}">
+                            @foreach($payments as $payment)
+                                <option value={{ $payment ->id }}@if($payment->id == old("payment_id", $estimate_info->payment_id)) selected @endif>{{ $payment->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has("payment_id"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("payment_id") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>有効期限</th>
+                    <td>
+                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}">
+                        @if ($errors->has("expiration_date"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("expiration_date") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>備考</th>
+                    <td>
+                        <textarea id="remarks" type="text" name="remarks">{{ old("remarks", $estimate_info->remarks) }}</textarea>
+                        @if ($errors->has("remarks"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("remarks") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>部署名{{$estimate_info->department_id}}</th>
+                    <td>
+                        <select id="department" name="department_id"  class="department_id">
+                            @foreach($departments as $department)
+                                <option value={{ $department->id }}@if($department->id == $estimate_info->department_id) selected @endif>{{ $department->name }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has("department_id"))
+                            <div class="invalid-feedback" role="alert">
+                                {{ $errors->first("department_id") }}
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>工事名</th>
+                    <td>
+                        <ul class="list">
+                            @foreach($registered_construction_list as $registered_construction)
+                                <li class="list__item">{{ $registered_construction->name }}</li>
+                            @endforeach
+                            <li class="list__item">
+                                @for ($i = 1; $i <= old("construction_count", $construction_count); $i++)
+                                    <select id="select_construction{{ $i }}" name="select_construction{{ $i }}"  class="select_construction" data-no="{{ $i }}">
+                                        <option value=""></option>
+                                        @foreach($construction_name as $construction)
+                                            <option value={{ $construction->construction_name }}@if($construction->construction_name == $construction) selected @endif>{{ $construction->construction_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="{{ old("construction_name.$i") }}">
+                                    @if ($errors->has("construction_name.$i"))
+                                        <div class="invalid-feedback" role="alert">
+                                            {{ $errors->first("construction_name.$i") }}
+                                        </div>
+                                    @endif
+                                    <p class="delete">
+                                        <button type="button" class="js-delete-btn">削除</button>
+                                    </p>
+                                @endfor
+                            </li>
+                        </ul>
+                        <p class="add">
+                            <button id="add_construction" type="button">追加</button>
+                        </p>
+                        <input type="hidden" name="construction_count" class="construction_count" id="construction_count" value="{{ old("construction_count", $construction_count) }}">
+                    </td>
+                </tr>
+            </table>
+            <button id="btn1" type="submit">登録</button>
+        </form>
     </div>
     <div id="btn2">
         <form action="{{ route('salesperson_menu') }}" method="GET">

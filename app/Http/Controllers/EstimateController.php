@@ -27,6 +27,7 @@ class EstimateController extends Controller
     protected $constructionName;
     protected $constructionList;
 
+    protected $estimateInitCount = 1; // 工事名の初期表示数
     /**
      * 初期処理
      * 使用するクラスのインスタンス化
@@ -75,11 +76,13 @@ class EstimateController extends Controller
         $construction_name = $this->constructionName->get_target_construction_name();
 
         return view('cover.index',compact('construction_name'))->with([
-            'construction_count' => 1,
+            'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
             'estimate_info' => $this->estimateInfo,
-            'construction_list' => $this->constructionList
+            'construction_list' => $this->constructionList,
+            'registered_construction_list' => array(),
+            'action' => route('estimate.store'),
         ]);
     }
     /**
@@ -101,31 +104,53 @@ class EstimateController extends Controller
     }
 
     /**
-     * 登録処理
+     * 更新画面
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function edit($id)
     {
+        // 登録内容の取得
         $estimate_info = $this->estimateInfo::find($id);
         $construction_list = $this->constructionList->find_estimate_info_id($id);
-//        dd($construction_list);
 
         $departments = $this->department::all();
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.index',compact('construction_name'))->with([
+        return view('cover.index')->with([
+            'action' => route('estimate.update', ['id'=>$id]),
+            'construction_name' => $construction_name,
+            'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
             'estimate_info' => $estimate_info,
-            'construction_list' => $construction_list,
-            'construction_count' => count($construction_list),
+            'registered_construction_list' => $construction_list,
         ]);
-
     }
 
-    public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
+    /**
+     * 更新処理
+     * @param EstimateInfo $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(EstimateInfoRequest $request, $id)
+    {
+        // 更新処理
+        $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
+
+        if($update_estimate_info === true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
+
+        return redirect('estimate/index')->with([
+            'message' => $message,
+        ]);
+    }
+
+    public function breakdown_create($id)
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);

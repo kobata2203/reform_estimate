@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Htpp\Controllers\EstimateController;
 use Illuminate\Http\Request;
 use App\Models\ConstructionList;
+use Illuminate\Support\Facades\DB;
 
 class EstimateInfo extends Model
 {
@@ -51,10 +52,10 @@ class EstimateInfo extends Model
     return $this->hasMany('App\Models\Breakdown');
     }
 
-//    public function getConstructionList();
+
     public function regist_estimate_info($request)
     {
-        $datas = [
+        $data = [
             'customer_name' => $request->customer_name,
             'creation_date' => date('Y年m月d日'),
             'subject_name' => $request->subject_name,
@@ -64,32 +65,23 @@ class EstimateInfo extends Model
             'expiration_date' => $request->expiration_date,
             'remarks' => $request->remarks,
             'charger_name' => $request->charger_name,
-            'department_name' => $request->department_name,
+            'department_id' => $request->department_id,
         ];
 
-        $estimate_info = $this->create($datas);
+        $estimate_info = $this->create($data);
 
         if(!$estimate_info) {
             return false;
         }
 
-        $const_datas = [];
-        foreach ($request->construction_name as $value) {
-            $const_data = [];
-            $const_data['name'] = $value;
-            $const_data['estimate_info_id'] = $estimate_info->id;
-
-            $const_datas[] = $const_data;
-        }
-
-        return $this->constructionList->insert($const_datas);
-
+        return $this->constructionList->regist_estimate_info_id($request->construction_name, $estimate_info->id);
     }
 
-//    public function getConstructionList();
-    public function edit_estimate_info($request)
+    public function update_estimate_info($request, $id)
     {
-        $datas = [
+        $estimate_info = $this->find($id);
+
+        $data = [
             'customer_name' => $request->customer_name,
             'creation_date' => date('Y年m月d日'),
             'subject_name' => $request->subject_name,
@@ -99,25 +91,15 @@ class EstimateInfo extends Model
             'expiration_date' => $request->expiration_date,
             'remarks' => $request->remarks,
             'charger_name' => $request->charger_name,
-            'department_name' => $request->department_name,
+            'department_id' => $request->department_id,
         ];
 
-        $estimate_info = $this->create($datas);
+        $result_update = $estimate_info->fill($data)->save();
 
-        if(!$estimate_info) {
+        if(!$result_update) {
             return false;
         }
 
-        $const_datas = [];
-        foreach ($request->construction_name as $value) {
-            $const_data = [];
-            $const_data['name'] = $value;
-            $const_data['estimate_info_id'] = $estimate_info->id;
-
-            $const_datas[] = $const_data;
-        }
-
-        return $this->constructionList->insert($const_datas);
-
+        return $this->constructionList->regist_estimate_info_id($request->construction_name, $id);
     }
 }
