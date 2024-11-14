@@ -94,7 +94,7 @@ class Breakdown extends Model
         try {
             DB::beginTransaction();
 
-            for($i=1; $i <= $request->construction_loop_count; $i++) {
+            for ($i = 1; $i <= $request->construction_loop_count; $i++) {
                 $data = [];
                 $data['construction_item'] = $request->construction_item[$i];
                 $data['specification'] = $request->specification[$i];
@@ -119,6 +119,7 @@ class Breakdown extends Model
 
             throw $e;
         }
+    }
 
     public static function getBreakdownsByEstimateId($estimateId)
     {
