@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Payment extends Model
 {
     use HasFactory;
 
     // モデルに関連付けるテーブル
-    protected $table = 'departments';
+    protected $table = 'payments';
 
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';

@@ -268,7 +268,17 @@ return [
         'unit.*' => config('column_names.breakdown_unit'),
         'unit_price.*' => config('column_names.breakdown_unit_price'),
         'amount.*' => config('column_names.breakdown_amount'),
-        'remarks2.*' => config('column_names.breakdown_remarks2'),
+        'remarks2.*' => config('column_names.remarks'),
+        'customer_name' => config('column_names.customer_name'),
+        'charger_name' => config('column_names.charger_name'),
+        'subject_name' => config('column_names.subject_name'),
+        'delivery_place' => config('column_names.delivery_place'),
+        'construction_period' => config('column_names.construction_period'),
+        'payment_id' => config('column_names.payment_id'),
+        'expiration_date' => config('column_names.expiration_date'),
+        'department_id' => config('column_names.department_id'),
+        'remarks' => config('column_names.remarks'),
+        'construction_name.*' => config('column_names.construction_name'),
     ],
 
 ];
