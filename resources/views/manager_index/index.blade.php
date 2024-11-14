@@ -2,7 +2,7 @@
 @section('title', '営業者一覧画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/managerindex1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
@@ -33,6 +33,9 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->department_name }}</td>
                         <td>
+<<<<<<< HEAD
+                            <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark custom-border">編集</a>
+=======
                             {{-- <button href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark">編集</button> --}}
                             <button onclick="window.location.href='{{ route('salesperson.edit', $user->id) }}'" class="btn btn-dark">編集</button>
 
@@ -41,6 +44,7 @@
                                 @method('DELETE')
 
                             </form>
+>>>>>>> 3587024a7db3c48c75141534cc4a361aa7a16bdd
                         </td>
                     </tr>
                 @endforeach

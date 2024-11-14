@@ -14,6 +14,8 @@ body {
 
 p {
     background-color: orange;
+    font-size: large;
+    font-weight: bold;
     text-align: center;
     padding: 10px;
     margin: 0; /* Ensure no margin affects layout */
@@ -33,6 +35,10 @@ th, td {
 
 th {
     background-color: orange;
+}
+
+td {
+    background-color: white;
 }
 
 /* Button and Margin Styles */
@@ -128,6 +134,7 @@ button {
 
 
 .estimate {
+    background-color: orange;
     margin: 5px;          /* Adds 20px margin on all sides */
     padding: 5px;
 }
