@@ -9,6 +9,8 @@ use App\Rules\SpecificationRequired;
 
 class BreakdownRequest extends FormRequest
 {
+    protected $constructionItem;
+    protected $breakdown;
     public function __construct()
     {
         $this->constructionItem = new ConstructionItem();

@@ -6,6 +6,7 @@ use App\Models\ConstructionList;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Models\EstimateInfo;
+use Illuminate\Http\Request;
 use App\Models\ConstructionName;
 use App\Models\ConstructionItem;
 use App\Models\Breakdown;
@@ -42,7 +43,7 @@ class EstimateController extends Controller
         Payment $payment,
     )
     {
-        $this->estimateInfo = $constructionInfo;
+        $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
         $this->constructionItem = $constructionItem;
@@ -50,24 +51,16 @@ class EstimateController extends Controller
         $this->department = $department;
         $this->payment = $payment;
     }
+
+
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = EstimateInfo::query();
-
-        if (!empty($keyword)) {
-            $estimate_info = $estimate_info->where('creation_date', 'LIKE', "%{$keyword}%")
-                ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('department_name', 'LIKE', "%{$keyword}%")
-                ->get();
-        } else {
-            $estimate_info = $estimate_info->get();
-        }
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword); // Use the new model method
 
         return view('salesperson_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
+
 
     public function create()
     {
@@ -94,7 +87,7 @@ class EstimateController extends Controller
     {
         $regist_estimate_info = $this->estimateInfo->regist_estimate_info($request);
 
-        if($regist_estimate_info === true) {
+        if ($regist_estimate_info === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -154,7 +147,7 @@ class EstimateController extends Controller
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);
-        $prevurl = url()->previous()?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        $prevurl = url()->previous() ?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
         /**
          * SQLはモデルに記載する
@@ -224,14 +217,5 @@ class EstimateController extends Controller
         return view('estimate.index', compact('estimates'));
     }
 
-    // public function show($id)
-    // {
-    //     // Fetch the breakdown record using the provided ID
-    //     $table  = EstimateInfo::findOrFail($id); // Make sure to handle this properly if the record doesn't exist
-
-    //     // Return the view with breakdown data
-    //     return view('manager_menu.show', compact('breakdown'));
-    // }
-
-
 }
+

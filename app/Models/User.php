@@ -2,69 +2,81 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
-use App\Http\Controllers\Auth\UserController;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     *
-     *
-     */
-
-     protected $table = 'users'; // Specify the table name if different
-     protected $fillable = [
+    protected $table = 'users'; // Specify the table name if different
+    protected $fillable = [
         'name',
         'department_name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function validate(array $params)
+    public function createUser($data)
     {
-        $validator = Validator::make($params, [
-            'email' => array('required','email'),
-            'password'  => 'required',
-        ]);
-
-        if ($validator->passes()) {
-            return true;
-        } else {
-            $this->errors = $validator->messages();
-            return false;
-        }
+        $user = new self(); // Create a new instance of User
+        $user->fill($data);
+        $user->password = Hash::make($data['password']); // Hash the password
+        return $user->save(); // Return true/false based on save success
     }
 
-    public function errors()
+    public function fetchUserById($id)
     {
-        return $this->errors;
+        return $this->findOrFail($id);
+    }
+
+    public static function searchUsers($keyword)
+    {
+        $query = self::query();
+
+        if (!empty($keyword)) {
+            $query->where('name', 'LIKE', "%{$keyword}%")
+                ->orWhere('email', 'LIKE', "%{$keyword}%")
+                ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+        }
+
+        return $query->get();
+    }
+
+    public function updateUser($id, array $data)
+    {
+        $user = $this->findOrFail($id);
+        $user->update($data);
+        return $user;
+    }
+
+
+
+
+    public function findUserWithId($id)
+    {
+        return $this->findOrFail($id);
+    }
+
+    public function scopeSearchWithDepartment($query, $searchTerm)
+    {
+        if ($searchTerm) {
+            $query->whereHas('department', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+        return $query->with('department');
     }
 }

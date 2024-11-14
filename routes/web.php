@@ -23,7 +23,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 */
 
 //Route::get('/', function () {
-    //return view('welcome');
+//return view('welcome');
 //});
 Route::get('/salesperson/add', 'App\Http\Controllers\SalespersonController@add')->name('salesperson_add');
 Route::post('/salesperson/add', 'App\Http\Controllers\SalespersonController@create')->name('salesperson_create');
@@ -33,7 +33,7 @@ Route::get('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit
 //Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 //Route::get('/login', function () {
-    //return view('login');
+//return view('login');
 //});
 //POSTされたときはこっち
 Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth_login');
@@ -54,16 +54,16 @@ Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::c
 //Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
 
 //Route::get('/', function () {
-    // ウェブサイトのホームページ（'/'のURL）にアクセスした場合のルートです
-    //if (Auth::check()) {
-        // ログイン状態ならば
-        //return redirect()->route('login');
-        // 見積書一覧ページ（EstimateControllerのindexメソッドが処理）へリダイレクトします
-    //} else {
-        // ログイン状態でなければ
-        //return redirect()->route('login');
-        //　ログイン画面へリダイレクトします
-    //}
+// ウェブサイトのホームページ（'/'のURL）にアクセスした場合のルートです
+//if (Auth::check()) {
+// ログイン状態ならば
+//return redirect()->route('login');
+// 見積書一覧ページ（EstimateControllerのindexメソッドが処理）へリダイレクトします
+//} else {
+// ログイン状態でなければ
+//return redirect()->route('login');
+//　ログイン画面へリダイレクトします
+//}
 //});
 
 
@@ -92,7 +92,7 @@ Route::get('/manager_estimate', [App\Http\Controllers\ManagerController::class, 
 Route::resource('managers', ManagerController::class);
 
 Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
-
+Route::get('/manager/{id}/delete', [ManagerController::class, 'delete'])->name('manager.delete');
 
 
 
@@ -163,10 +163,10 @@ Route::get('/salespersons/show', [SalespersonController::class, 'index'])->name(
 
 
 Route::get('/admins', [ManagerController::class, 'admin_index'])->name('admins.index');
-route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
-route::resource('salespersons', SalespersonController::class);
+Route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
+Route::resource('salespersons', SalespersonController::class);
 // route::resource('admins', ManagerController::class);
-route::resource('managers', ManagerController::class);
+Route::resource('managers', ManagerController::class);
 
 
 
@@ -221,7 +221,7 @@ Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('s
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
-
+Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 //togenerate pdf
 
 #to view pdf

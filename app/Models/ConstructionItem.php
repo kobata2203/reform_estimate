@@ -22,12 +22,12 @@ class ConstructionItem extends Model
 
     public function estimate_info()
     {
-    return $this->belongsTo('App\Models\EstimateInfo');
+        return $this->belongsTo('App\Models\EstimateInfo');
     }
 
     public function breakdown()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany('App\Models\Breakdown');
     }
 
     public function get_target_items($id)

@@ -22,12 +22,12 @@ class ConstructionName extends Model
 
     public function estimate_info()
     {
-    return $this->belongsTo('App\Models\EstimateInfo');
+        return $this->belongsTo('App\Models\EstimateInfo');
     }
 
     public function breakdown()
     {
-    return $this->hasMany('App\Models\Breakdown');
+        return $this->hasMany('App\Models\Breakdown');
     }
 
     public function get_target_construction_name()
@@ -36,4 +36,19 @@ class ConstructionName extends Model
 
         return $construction_name;
     }
+
+    //create method in EstimateController
+    // ConstructionName.php (Model)
+    public function get_construction_name()
+    {
+
+        return $this->all();
+    }
+
+    //breakdowncreate メソッド　EstimateController
+    public static function getById($id)
+    {
+        return self::find($id);
+    }
+
 }
