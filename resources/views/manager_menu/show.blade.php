@@ -24,7 +24,8 @@
         </div>
 
         <div>
-            <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p>
+            {{-- <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p> --}}
+            <p style="display: inline; font-size: 9px; margin: 0; padding-left: 60px;">下記の通りお見積り申し上げます。</p>
         </div>
 
         <div class="input-suffix-wrapper">

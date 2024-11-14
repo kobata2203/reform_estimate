@@ -310,14 +310,14 @@ class ManagerController extends Controller
         // Initialize mPDF
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
-            'format' => 'A4-L',
+            'format' => 'A4-P',
             'autoScriptToLang' => true,
             'autoLangToFont' => true,
         ]);
 
         $mpdf->WriteHTML($pdfView);
 
-        return $mpdf->Output('Estimate_Details.pdf', 'I');
+        return $mpdf->Output('Reform_Estimate_Details.pdf', 'I');
     }
 
 }
