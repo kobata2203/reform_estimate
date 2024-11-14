@@ -32,7 +32,7 @@ class ConstructionName extends Model
 
     public function get_target_construction_name()
     {
-        $construction_name = ConstructionName::all();
+        $construction_name = $this->all();
 
         return $construction_name;
     }

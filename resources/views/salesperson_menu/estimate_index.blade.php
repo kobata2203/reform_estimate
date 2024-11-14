@@ -46,7 +46,7 @@
                         <div>
 
                             <tr>
-                                <td>{{ $estimate->creation_date }}</td>
+                                <td><a href="{{ route('estimate.edit', $estimate->id) }}" class="btn btn-primary">{{ $estimate->creation_date }}</a></td>
                                 <td>{{ $estimate->customer_name }}</td>
                                 <td>{{ $estimate->construction_name }}</td>
                                 <td>{{ $estimate->charger_name }}</td>
