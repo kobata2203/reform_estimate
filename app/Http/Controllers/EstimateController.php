@@ -6,7 +6,6 @@ use App\Models\ConstructionList;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Models\EstimateInfo;
-use Illuminate\Http\Request;
 use App\Models\ConstructionName;
 use App\Models\ConstructionItem;
 use App\Models\Breakdown;
@@ -34,7 +33,7 @@ class EstimateController extends Controller
      * 使用するクラスのインスタンス化
      */
     public function __construct(
-        EstimateInfo $constructionInfo,
+        EstimateInfo $estimateInfo,
         ConstructionList $constructionList,
         ConstructionName $constructionName,
         ConstructionItem $constructionItem,
