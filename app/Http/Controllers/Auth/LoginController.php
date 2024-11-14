@@ -19,26 +19,23 @@ class LoginController extends Controller
      */
     protected $user;
 
-    public function __construct(
-        User $user,
-    )
-    {
-        $this->user = $user;
-    }
-    
-    protected function redirectPath()
-    {
-        return '/salesperson_menu'; // ログイン後にリダイレクトする URL を指定
-    }
-
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        User $user,
+        
+    )
     {
+        $this->user = $user;
         $this->middleware('guest')->except('logout');
+    }
+    
+    protected function redirectPath()
+    {
+        return '/salesperson_menu'; // ログイン後にリダイレクトする URL を指定
     }
 
     /**
