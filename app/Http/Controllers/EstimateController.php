@@ -7,8 +7,6 @@ use App\Models\EstimateInfo;
 use Illuminate\Http\Request;
 use App\Models\ConstructionItem;
 use App\Models\ConstructionName;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\EstimateRequest;
 use App\Http\Requests\BreakdownRequest;
 
 class EstimateController extends Controller
@@ -21,13 +19,20 @@ class EstimateController extends Controller
     protected $constructionName;
     protected $constructionItem;
     protected $breakdown;
-     public function __construct()
-    {
-        $this->estimateInfo = new EstimateInfo();
-        $this->constructionName = new ConstructionName();
-        $this->constructionItem = new ConstructionItem();
-        $this->breakdown = new Breakdown();
+    public function __construct(
+
+        EstimateInfo $estimateInfo,
+        ConstructionName $constructionName,
+        ConstructionItem $constructionItem,
+        Breakdown $breakdown
+    ) {
+        $this->estimateInfo = $estimateInfo;
+        $this->constructionName = $constructionName;
+        $this->constructionItem = $constructionItem;
+        $this->breakdown = $breakdown;
     }
+
+
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -40,7 +45,7 @@ class EstimateController extends Controller
     public function create()
     {
         $construction_name = $this->constructionName->get_target_construction_name();
-        return view('cover.index',compact('construction_name'));
+        return view('cover.index', compact('construction_name'));
     }
     /**
      * 登録処理
@@ -50,11 +55,11 @@ class EstimateController extends Controller
 
 
 
-    public function store(Request $request,ConstructionName $construction_name)
+    public function store(Request $request, ConstructionName $construction_name)
     {
         $regist_estimate_info = $this->estimateInfo->regist_estimate_info($request);
 
-        if($regist_estimate_info === true) {
+        if ($regist_estimate_info === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -65,11 +70,11 @@ class EstimateController extends Controller
 
 
 
-    public function breakdown_create(EstimateInfo $estimate_info,ConstructionName $construction_name ,$id)
+    public function breakdown_create(EstimateInfo $estimate_info, ConstructionName $construction_name, $id)
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);
-        $prevurl = url()->previous()?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        $prevurl = url()->previous() ?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
         /**
          * SQLはモデルに記載する
@@ -97,7 +102,7 @@ class EstimateController extends Controller
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
         //if(false === strpos($prevurl, 'estimate_info?')){
-            //$prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
+        //$prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
         //}
 
         if (isset($prevurl)) {
@@ -108,7 +113,7 @@ class EstimateController extends Controller
 
         $regist_breakdown = $this->breakdown->regist_breakdown($request);
 
-        if($regist_breakdown === true) {
+        if ($regist_breakdown === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');

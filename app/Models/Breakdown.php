@@ -36,14 +36,14 @@ class Breakdown extends Model
 
     //changing estimates table to breakdown
     public function estimateCalculate()
-{
-    return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
-}
+    {
+        return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
+    }
 
 
     public function construction_name()
     {
-    return $this->belongsTo('App\Models\ConstructionName');
+        return $this->belongsTo('App\Models\ConstructionName');
     }
 
 
@@ -54,14 +54,14 @@ class Breakdown extends Model
 
     public function estimate()
     {
-        return $this->belongsTo(Estimate::class,'estimate_id','id');
+        return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
     public function regist_breakdown($request)
     {
         $datas = [];
 
-        for($i=1; $i <= $request->construction_loop_count; $i++) {
+        for ($i = 1; $i <= $request->construction_loop_count; $i++) {
             $data = [];
             $data['estimate_id'] = $request->estimate_id;
             $data['construction_id'] = $request->construction_id;
@@ -100,11 +100,11 @@ class Breakdown extends Model
 
     //pdf method on the ManagerController
     public function fetchBreakdownsByEstimateId($estimateId)
-        {
-            return $this->where('estimate_id', $estimateId)->get();
-        }
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
 
-        //PDFshow on ManagerController
+    //PDFshow on ManagerController
     public function fetchingBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();

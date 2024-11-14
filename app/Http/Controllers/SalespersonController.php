@@ -12,9 +12,10 @@ class SalespersonController extends Controller
 {
     protected $user;
 
-    public function __construct()
-    {
-        $this->user = new User();
+    public function __construct(
+        User $user
+    ) {
+        $this->user = $user;
     }
 
     public function add()
@@ -61,14 +62,12 @@ class SalespersonController extends Controller
 
 
     public function update(SalespersonRequest $request, $id)
-{
+    {
 
-    $validated  = $request->validated();
-
-    $this->user->updateUser($id, $validated );
-
-    return redirect()->route('manager_menu.index')->with('success', '更新されました。');
-}
+        $validated = $request->validated();
+        $this->user->updateUser($id, $validated);
+        return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+    }
 
 
     public function show($id)

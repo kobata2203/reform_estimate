@@ -16,7 +16,10 @@ class Managerinfo extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 'email', 'password', 'department_name',
+        'name',
+        'email',
+        'password',
+        'department_name',
     ];
 
 }
