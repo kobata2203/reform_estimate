@@ -310,7 +310,7 @@ class ManagerController extends Controller
         // Initialize mPDF
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
-            'format' => 'A4-P',
+            'format' => 'A4-L',
             'autoScriptToLang' => true,
             'autoLangToFont' => true,
         ]);

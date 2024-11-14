@@ -46,12 +46,12 @@
         }
 
         .contact-info {
-            width: 35%;
+            width: 30%;
             font-size: 14px;
             position: absolute;
             bottom: 50px;
             right: -50px;
-            margin-bottom: 620px;
+            margin-bottom: 300px;
 
         }
     </style>
@@ -62,7 +62,7 @@
 
     <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
         <div style="text-align: right;">
-            <p>{{ $estimate_info->created_at->format('Y/m/d') }}</p>
+            <p>{{ $estimate_info->creation_date }}</p>
         </div>
     </div>
     <div>

@@ -78,9 +78,10 @@ Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 
 Route::get('/estimate/breakdown_create/{id}', [App\Http\Controllers\EstimateController::class, 'breakdown_create'])->name('estimate.breakdown_create');
 Route::post('/estimate/breakdown_store', [App\Http\Controllers\EstimateController::class, 'breakdown_store'])->name('estimate.breakdown_store');
 
-//salesperson Menu
-//Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
 
+//20241114
+Route::get('estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
+Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 
 
@@ -165,8 +166,6 @@ Route::get('/managers', [ManagerController::class, 'index'])->name('manager_inde
 Route::resource('salespersons', SalespersonController::class);
 // route::resource('admins', ManagerController::class);
 Route::resource('managers', ManagerController::class);
-
-
 
 
 Route::get('/salespersons/show', [SalespersonController::class, 'edit'])->name('manager_index.index');

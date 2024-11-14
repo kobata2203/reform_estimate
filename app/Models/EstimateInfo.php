@@ -16,6 +16,8 @@ class EstimateInfo extends Model
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
+  
+
     protected $fillable = [
         'customer_name',
         'creation_date',
@@ -29,7 +31,8 @@ class EstimateInfo extends Model
         'remarks',
         'charger_name',
         'department_name',
-    ]; // Add all relevant columns here
+    ];
+
 
     public function construction_name()
     {
