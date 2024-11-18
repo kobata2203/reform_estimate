@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Htpp\Controllers\EstimateController;
 use Illuminate\Http\Request;
 use App\Models\ConstructionList;
+use App\Models\Breakdown;
 use Illuminate\Support\Facades\DB;
 
 class EstimateInfo extends Model
@@ -16,6 +17,7 @@ class EstimateInfo extends Model
     // モデルに関連付けるテーブル
     protected $table = 'estimate_info';
     protected $constructionList;
+    protected $breakdown;
 
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
@@ -39,6 +41,9 @@ class EstimateInfo extends Model
      */
     public function __construct()
     {
+        parent::__construct();
+
+        $this->breakdown = new Breakdown();
         $this->constructionList = new ConstructionList();
     }
 
@@ -114,7 +119,7 @@ class EstimateInfo extends Model
     // 新しい見積書作成登録保存についてメソッドを追加
     public static function getEstimateInfo($keyword = null)
     {
-        $query = self::where('delet_flag', false);
+        $query = self::where('delete_flag', false);
 
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword) {
@@ -135,10 +140,16 @@ class EstimateInfo extends Model
         $estimate = $this->findOrFail($id);
 
         // Update the delete_flag to true
-        $estimate->delet_flag = true;
+        $estimate->delete_flag = true;
 
         // Save the changes to the database
-        $estimate->save();
+        $result = $estimate->save();
+
+        if($result === true) {
+            return $this->breakdown->deleteBreakdownByEstimateId($id);
+        } else {
+            return false;
+        }
     }
 
     // EstimateInfo.php
