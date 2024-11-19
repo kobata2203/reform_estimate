@@ -55,9 +55,14 @@ class EstimateController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword); // Use the new model method
-
-        return view('salesperson_menu.estimate_index', compact('estimate_info', 'keyword'));
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
+        
+        return view('salesperson_menu.estimate_index')->with([
+                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
+                    'keyword' => $keyword,
+                    'departments' => $this->department->getDepartmentList(),
+                    'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+                ]);
     }
 
 
@@ -135,6 +140,27 @@ class EstimateController extends Controller
             $message = config('message.update_complete');
         } else {
             $message = config('message.update_fail');
+        }
+
+        return redirect('estimate/index')->with([
+            'message' => $message,
+        ]);
+    }
+
+    /**
+     * 削除処理
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function delete($id)
+    {
+        // 削除処理
+        $delete_estimate_info = $this->estimateInfo->deleteEstimate($id);
+
+        if($delete_estimate_info === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
         }
 
         return redirect('estimate/index')->with([

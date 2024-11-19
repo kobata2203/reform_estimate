@@ -18,4 +18,20 @@ class Department extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * IDと部署名のリスト作成
+     * @return array
+     */
+    public function getDepartmentList()
+    {
+        $department_all = $this->all();
+
+        $departments = [];
+        foreach ($department_all as $department) {
+            $departments[$department->id] = $department->name;
+        }
+
+        return $departments;
+    }
 }
