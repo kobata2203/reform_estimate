@@ -12,7 +12,7 @@ body {
     border-radius: 5px;
 }
 table {
-    width: 60%;
+    width: 58%;
     margin-left: 10px;
     border-collapse: collapse;
     margin-left: 20px;
@@ -390,7 +390,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     transition: background-color 0.3s; /* Smooth background color transition */
     width: 70px;                 /* Set a fixed width for the buttons */
     text-align: center;           /* Center text inside the buttons */
-    margin-left: 700px;
+    margin-left: 1400px;
     margin-top: 20px;
 }
 

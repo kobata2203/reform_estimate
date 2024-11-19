@@ -317,7 +317,7 @@ class ManagerController extends Controller
 
         $mpdf->WriteHTML($pdfView);
 
-        return $mpdf->Output('Estimate_Details.pdf', 'I');
+        return $mpdf->Output('Reform_Estimate_Details.pdf', 'I');
     }
 
 }
