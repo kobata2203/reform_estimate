@@ -1,14 +1,4 @@
 /* Existing CSS rules */
-body {
-    width: 100%;
-    height:100vh;
-    background-image: url(../image/back2.png);  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
-    background-size: cover;
-}
-
 p {
     background-color: orange;
     font-size: 200%;

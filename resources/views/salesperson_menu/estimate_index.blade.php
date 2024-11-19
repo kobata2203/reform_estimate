@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>見積書一覧画面(営業者用)</title>
-        <link rel="stylesheet" href="{{ asset('css/estimate_index.css') }}">
-    </head>
-
-    <body>
+@extends('layouts.main')
+@section('title', '管見積書一覧画面（営業者用）')
+@section('headder')
+    <!-- 個別のCSS・JSなどの読み込み -->
+    <link rel="stylesheet" href="{{ asset('css/estimate_index.css') }}">
+@endsection
+@section('content')
         <div>
-            <p>見積書一覧画面<br>(営業者用)</p>
+            <p>見積書一覧画面<br>（営業者用）</p>
         </div>
 
         @if(session('message'))
@@ -70,6 +66,4 @@
                 <button class="btn btn-primary">営業者メニュー</button>
             </form>
         </div>
-    </body>
-
-</html>
+@endsection

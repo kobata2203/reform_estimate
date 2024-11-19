@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>見積書一覧画面(管理者用)</title>
+@extends('layouts.main')
+@section('title', '見積書一覧画面（管理者用）')
+@section('headder')
+    <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/admin_index.css') }}">
-</head>
-
-<body>
+@endsection
+@section('content')
+    <!-- bobyタグ内の処理を記述 -->
     <div>
         <p>見積書一覧画面<br>（管理者用）</p>
     </div>
 
     <div class="estimate">
-        見積書発行日, お客様名, 工事名, 営業担当, 営業部署
+        <h1>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</h1>
     </div>
     <div>
         <form action="{{ route('manager_estimate') }}" method="GET">
@@ -55,6 +52,4 @@
     <div class="col-3 margin-top-example" style="text-align: right;">
         <a href="{{ route('manager_menu') }}" class="btn btn-primary custom-border">管理者メニュー画面へ</a>
     </div>
-</body>
-
-</html>
+@endsection
