@@ -20,7 +20,7 @@ class EstimateInfo extends Model
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
-  
+
 
     protected $fillable = [
         'customer_name',
@@ -80,7 +80,7 @@ class EstimateInfo extends Model
 
         $estimate_info = $this->create($data);
 
-        if(!$estimate_info) {
+        if (!$estimate_info) {
             return false;
         }
 
@@ -106,7 +106,7 @@ class EstimateInfo extends Model
 
         $result_update = $estimate_info->fill($data)->save();
 
-        if(!$result_update) {
+        if (!$result_update) {
             return false;
         }
 
@@ -124,8 +124,8 @@ class EstimateInfo extends Model
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
                     //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
+                // ->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
@@ -174,16 +174,16 @@ class EstimateInfo extends Model
     }
 
     //breakdown_create メソッド　EstimateController
-    public static function getById($id)
+    public function getById($id)
     {
         return self::find($id);
     }
 
 
-    public static function idGet($id)
-    {
-        return self::find($id);
-    }
+    // public static function idGet($id)
+    // {
+    //     return self::find($id);
+    // }
 
 
     //show method on the ManagerController p2

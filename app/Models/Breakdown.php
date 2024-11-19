@@ -121,51 +121,24 @@ class Breakdown extends Model
         }
     }
 
-    // public static function getBreakdownsByEstimateId($estimateId)
-    // {
-    //     return self::where('estimate_id', $estimateId)->get();
-    // }
-
-    //内訳明細書
-    // Breakdown.php
-    // public function getBreakdownByEstimateId($estimateId)
-    // {
-    //     return $this->where('estimate_id', $estimateId)->get();
-    // }
-
-    // for updateDiscount method on ManagerController
-    // Breakdown.php
-    public function breakdownByEstimateId($estimateId)
-    {
-        return $this->where('estimate_id', $estimateId)->get();
-    }
-
-    //pdf method on the ManagerController
-    public function fetchBreakdownsByEstimateId($estimateId)
-    {
-        return $this->where('estimate_id', $estimateId)->get();
-    }
-
+    //for updateDiscount method on ManagerController
     //PDFshow on ManagerController
-    public function fetchingBreakdownsByEstimateId($estimateId)
+    //pdf method on the ManagerController
+    public function getBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-
-    //show method on ManagerController p2
-    // Breakdown.php
-    public static function getTotalAmountByEstimateId($estimateId)
+    //show method on ManagerController
+    public function getTotalAmountByEstimateId($estimateId)
     {
         $breakdown = self::where('estimate_id', $estimateId)->get();
         $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
         return $totalAmount;
     }
 
-
     //itemView on ManagerCOntroller
-    // In Breakdown.php model
-    public static function getByEstimateId($estimateId)
+    public function getByEstimateId($estimateId)
     {
         return self::where('estimate_id', $estimateId)->get();
     }

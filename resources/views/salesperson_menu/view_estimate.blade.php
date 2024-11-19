@@ -46,9 +46,9 @@
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}">
+                    value="{{ number_format($grandTotal) }}">
 
-                       <span class="suffix">（税込）</span>
+                <span class="suffix">（税込）</span>
             </div>
         </div>
 
@@ -94,12 +94,11 @@
         <div class="action2">
 
             <a href="{{ route('managers.pdfshow', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
-            <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
+            <a href="{{ route('salesperson_menu') }}" class="btn btn-primary">戻る</a>
+            {{-- <a href="{{ $prevurl }}" class="btn btn-primary">戻る</a> --}}
         </div>
     </div>
+
 </body>
 
 </html>
-
-
-

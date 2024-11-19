@@ -108,7 +108,9 @@ class ManagerController extends Controller
     public function show($id)
     {
         $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+        // $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+        $breakdown = new Breakdown();
+        $totalAmount = $breakdown->getTotalAmountByEstimateId($id);
         $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
         $inputDiscount = request()->input('discount', $discount);
         // Calculate subtotal, tax, and grand total
@@ -176,7 +178,7 @@ class ManagerController extends Controller
 
 
         // Fetch related breakdown data
-        $breakdown = $this->breakdown->breakdownByEstimateId($id);
+        $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
 
         // Calculate the total amount from the breakdown
         $totalAmount = $breakdown->sum('amount'); // Sum amounts directly
@@ -206,7 +208,7 @@ class ManagerController extends Controller
     {
         // Fetching the estimate info and breakdown based on the given ID
         $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
-        $breakdown = $this->breakdown->fetchBreakdownsByEstimateId($id);
+        $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
 
 
         // Fetching the estimate calculation data based on the given estimate ID
@@ -287,10 +289,11 @@ class ManagerController extends Controller
         $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
 
         // Fetch related breakdown data for calculation
-        $breakdown = $this->breakdown->fetchingBreakdownsByEstimateId($id);
+        $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
 
         // Calculate the total amount
         $totalAmount = $breakdown->sum('amount');
+
 
         // Fetch the estimate calculation for discount
         $estimateCalculate = $this->estimateCalculate->fetchEstimateCalculateByEstimateId($id);

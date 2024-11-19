@@ -18,6 +18,7 @@ use App\Http\Requests\EstimateInfoRequest;
 class EstimateController extends Controller
 {
     protected $estimate;
+    protected $estimateInfo;
     protected $construction;
     protected $constructionItem;
     protected $breakdown;
@@ -40,8 +41,7 @@ class EstimateController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -55,11 +55,10 @@ class EstimateController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword); // Use the new model method
-
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         return view('salesperson_menu.estimate_index', compact('estimate_info', 'keyword'));
     }
-
+    
 
     public function create()
     {
@@ -67,7 +66,7 @@ class EstimateController extends Controller
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.index',compact('construction_name'))->with([
+        return view('cover.index', compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -111,7 +110,7 @@ class EstimateController extends Controller
         $construction_name = $this->constructionName->get_target_construction_name();
 
         return view('cover.index')->with([
-            'action' => route('estimate.update', ['id'=>$id]),
+            'action' => route('estimate.update', ['id' => $id]),
             'construction_name' => $construction_name,
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
@@ -131,7 +130,7 @@ class EstimateController extends Controller
         // 更新処理
         $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
 
-        if($update_estimate_info === true) {
+        if ($update_estimate_info === true) {
             $message = config('message.update_complete');
         } else {
             $message = config('message.update_fail');
@@ -154,7 +153,7 @@ class EstimateController extends Controller
         $construction_items = $this->constructionItem->get_target_items($estimate_info->construction_id);
         $breakdown_items = $this->breakdown->get_breakdown_list($id);
 
-        if(count($breakdown_items) == 0) {
+        if (count($breakdown_items) == 0) {
             $regist_flag = true;
         } else {
             $regist_flag = false;
@@ -182,14 +181,14 @@ class EstimateController extends Controller
         $prevurl = $request->prevurl;
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if(false === strpos($prevurl, 'estimate_info?')){
+        if (false === strpos($prevurl, 'estimate_info?')) {
             $prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
         }
 
-        if(!empty($request->regist_flag)) {
+        if (!empty($request->regist_flag)) {
             $regist_breakdown = $this->breakdown->regist_breakdown($request);
 
-            if($regist_breakdown === true) {
+            if ($regist_breakdown === true) {
                 $message = config('message.regist_complete');
             } else {
                 $message = config('message.regist_fail');
@@ -197,7 +196,7 @@ class EstimateController extends Controller
         } else {
             $regist_breakdown = $this->breakdown->update_breakdown($request);
 
-            if($regist_breakdown === true) {
+            if ($regist_breakdown === true) {
                 $message = config('message.update_complete');
             } else {
                 $message = config('message.update_fail');

@@ -121,6 +121,10 @@ class SalespersonController extends Controller
     //20241114
     public function itemView($id)
     {
+        // $prevurl = url()->previous() ?: url('/estimate/index');
+        $prevurl = url()->previous() ?: route('estimate.index');
+
+
         // Fetch the estimate record or use null if not found
         $estimate_info = $this->estimateInfo->getById($id);
 
@@ -151,13 +155,16 @@ class SalespersonController extends Controller
         }
 
 
-        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
+        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'prevurl'));
     }
 
     public function showestimate($id)
     {
+        $prevurl = url()->previous() ?: url('/salesperson_menu');
         $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+        // $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+        $breakdown = new Breakdown();
+        $totalAmount = $breakdown->getTotalAmountByEstimateId($id);
         $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
         $inputDiscount = request()->input('discount', $discount);
         // Calculate subtotal, tax, and grand total
@@ -168,7 +175,8 @@ class SalespersonController extends Controller
         return view('salesperson_menu.view_estimate', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount
+            'discount' => $inputDiscount,
+            'prevurl' => $prevurl,
         ]);
     }
 }
