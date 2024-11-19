@@ -89,8 +89,6 @@ class Breakdown extends Model
 
     public function update_breakdown($request)
     {
-        $datas = [];
-
         try {
             DB::beginTransaction();
 
@@ -117,6 +115,24 @@ class Breakdown extends Model
         } catch (\Throwable $e) {
             DB::rollback();
 
+            throw $e;
+        }
+    }
+
+    /**
+     * 見積書単位での削除処理
+     * @param $estimate_id
+     * @return false|void
+     * @throws \Throwable
+     */
+    public function deleteBreakdownByEstimateId($estimate_id)
+    {
+        try {
+            $this->where('estimate_id', $estimate_id)
+                ->update(['delete_flag' => true]);
+
+            return true;
+        } catch (\Throwable $e) {
             throw $e;
         }
     }

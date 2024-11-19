@@ -6,7 +6,6 @@ body {
 }
 
 p {
-    background-color: orange;
     font-size: large;
     font-weight: bold;
     text-align: center;
@@ -15,7 +14,6 @@ p {
 }
 
 h1 {
-    background-color: orange;
     font-size: large;
     font-weight: bold;
 }
@@ -129,12 +127,6 @@ button {
 
 .custom-margin {
     margin: 10px; /* Example of custom margin, adjust as needed */
-}
-
-
-.estimate {
-    margin: 0px;          /* Adds 20px margin on all sides */
-    padding: 0px;
 }
 
 /* Button Styles */

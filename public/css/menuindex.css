@@ -106,19 +106,6 @@ th {
         background-size: cover;
     }
 
-    p {
-        font-size: 200%;
-        font-weight: bold;
-        text-align: center; /* Center the text in the hero section */
-        padding: 5px; /* Reduced padding */
-    }
-
-    h2 {
-        font-size: 150%;
-        font-weight: bold;
-        text-align: center;
-    }
-
     .button-container {
         display: flex;
         flex-direction: column;

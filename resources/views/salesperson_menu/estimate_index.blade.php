@@ -44,14 +44,21 @@
                             <tr>
                                 <td><a href="{{ route('estimate.edit', $estimate->id) }}" class="btn btn-primary">{{ $estimate->creation_date }}</a></td>
                                 <td>{{ $estimate->customer_name }}</td>
-                                <td>{{ $estimate->construction_name }}</td>
+                                <td>
+                                    @foreach($construction_list[$estimate->id] as $item)
+                                        {{ $item }}<br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $estimate->charger_name }}</td>
-                                <td>{{ $estimate->department_name }}</td>
+                                <td>{{ $departments[$estimate->department_id] }}</td>
                                 <td><form action="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">
                                     @csrf
                                     <button class="btn btn-primary">内訳明細書作成へ</button>
                                 </form></td>
-                                <td><a href="{{ route('estimatesales', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
+                                <td>
+                                    <a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary">閲覧</a><br />
+                                    <button class="btn btn-primary btn_delete"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
+                                </td>
                             </tr>
 
                         </div>

@@ -7,8 +7,8 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div class="hero">
-        <p>管理者Menu</p>
-        <h2>いずれかのボタンをクリックしてください。</h2>
+        <h1>管理者Menu</h1>
+        <p>いずれかのボタンをクリックしてください。</p>
     </div>
 
     <div class="button-container">

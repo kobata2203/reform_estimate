@@ -10,8 +10,8 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-      <p>担当者Menu</p>
-      <h2>いずれかのボタンをクリックしてください。</h2>
+      <h1>担当者Menu</h1>
+      <p>いずれかのボタンをクリックしてください。</p>
     </div>
     <div class="button-container">
         <form method="GET" action="estimate/create">

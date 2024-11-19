@@ -7,7 +7,7 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-        <p>管理者一覧画面</p>
+        <h2>管理者一覧画面</h2>
     </div>
     <form action="{{ route('admins.index') }}" method="GET" class="form-inline">
         <div class="form-group d-flex align-items-center">

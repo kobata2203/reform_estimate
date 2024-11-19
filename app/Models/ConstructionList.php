@@ -56,4 +56,20 @@ class ConstructionList extends Model
 
         return $this->insert($datas);
     }
+
+    public function findConnectionLists($estimate_info) {
+        $datas = [];
+        foreach ($estimate_info as $item) {
+            $connectionList = $this->select('name')->where('estimate_info_id', $item->id)->get();
+
+            $data = [];
+            foreach ($connectionList as $value) {
+                $data[] = $value['name'];
+            }
+
+            $datas[$item->id] = $data;
+        }
+
+        return $datas;
+    }
 }

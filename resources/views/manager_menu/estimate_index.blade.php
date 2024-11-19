@@ -7,13 +7,13 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-        <p>見積書一覧画面<br>（管理者用）</p>
+        <p class="manager">見積書一覧画面<br>（管理者用）</p>
     </div>
 
-    <div class="estimate">
-        <h1>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</h1>
-    </div>
     <div>
+        <h1 class="manager">見積書発行日, お客様名, 工事名, 営業担当, 営業部署</h1>
+    </div>
+    <div class="search">
         <form action="{{ route('manager_estimate') }}" method="GET">
 
         @csrf

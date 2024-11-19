@@ -12,7 +12,7 @@
             {{ session('success') }}
         </div>
     @endif
-    <h1>管理者登録画面</h1>
+    <h2>管理者登録画面</h2>
 
     <!-- Display validation errors -->
     @if ($errors->any())
