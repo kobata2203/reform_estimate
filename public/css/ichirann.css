@@ -438,12 +438,10 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     margin: 10px; /* Add margin around all buttons */
 }
 
-/* to not print few contents */
-@media print {
-    .no-print {
-        display: none !important; /* Hide buttons with the no-print class */
-    }
-}
 
 
-/* Testing */
+
+
+
+
+

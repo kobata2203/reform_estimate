@@ -89,8 +89,6 @@ class Breakdown extends Model
 
     public function update_breakdown($request)
     {
-        $datas = [];
-
         try {
             DB::beginTransaction();
 
@@ -121,7 +119,49 @@ class Breakdown extends Model
         }
     }
 
-    //for updateDiscount method on ManagerController
+    /**
+     * 見積書単位での削除処理
+     * @param $estimate_id
+     * @return false|void
+     * @throws \Throwable
+     */
+    public function deleteBreakdownByEstimateId($estimate_id)
+    {
+        try {
+            $this->where('estimate_id', $estimate_id)
+                ->update(['delete_flag' => true]);
+
+            return true;
+        } catch (\Throwable $e) {
+            throw $e;
+        }
+    }
+
+    // public static function getBreakdownsByEstimateId($estimateId)
+    // {
+    //     return self::where('estimate_id', $estimateId)->get();
+    // }
+
+    //内訳明細書
+    // Breakdown.php
+    // public function getBreakdownByEstimateId($estimateId)
+    // {
+    //     return $this->where('estimate_id', $estimateId)->get();
+    // }
+
+    // for updateDiscount method on ManagerController
+    // Breakdown.php
+    public function breakdownByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
+    //pdf method on the ManagerController
+    public function fetchBreakdownsByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
     //PDFshow on ManagerController
     //pdf method on the ManagerController
     public function getBreakdownsByEstimateId($estimateId)

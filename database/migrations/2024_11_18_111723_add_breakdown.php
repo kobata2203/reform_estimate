@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,9 +13,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('construction_item', function ($table) {
-            $table->integer('breakdown_required')->after('construction_id');
-
+        Schema::table('breakdown', function (Blueprint $table) {
+            $table->boolean('delete_flag')->nullable(false)->default(0)->comment('削除フラグ')->after('remarks');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('construction_item', function ($table) {
-            $table->dropColumn('breakdown_required');
+        Schema::table('breakdown', function (Blueprint $table) {
+            $table->dropColumn('delete_flag');
         });
     }
 };

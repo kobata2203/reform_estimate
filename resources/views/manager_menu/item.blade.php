@@ -101,11 +101,5 @@
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
         </div>
     </div>
-
-    {{-- <script>
-        function printPage() {
-            window.print();
-        }
-    </script> --}}
 </body>
 </html>

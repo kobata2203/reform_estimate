@@ -20,6 +20,7 @@ class ConstructionItem extends Model
         'item',
     ];
 
+
     public function estimate_info()
     {
         return $this->belongsTo('App\Models\EstimateInfo');
