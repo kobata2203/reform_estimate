@@ -10,10 +10,10 @@
 @section('content')
 
     <div>
-        <h1>見積書作成</h1>
+        <h4>見積書作成</h4>
         <p>各項目を入力・選択後、登録ボタン押下してください。</p>
     </div>
-    <div id="estimate">
+    <div class="container">
         <form id="estimate" method="post" action="{{ $action }}">
             @csrf
             <table>
@@ -138,7 +138,7 @@
                                         @foreach($construction_name as $construction)
                                             <option value={{ $construction->construction_name }}@if($construction->construction_name == $construction) selected @endif>{{ $construction->construction_name }}</option>
                                         @endforeach
-                                    </select>
+                                    </select></br>
                                     <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="{{ old("construction_name.$i") }}">
                                     @if ($errors->has("construction_name.$i"))
                                         <div class="invalid-feedback" role="alert">
@@ -152,19 +152,21 @@
                             </li>
                         </ul>
                         <p class="add">
-                            <button id="add_construction" type="button">追加</button>
+                            <button class="btn-add" id="add_construction" type="button">追加</button>
                         </p>
                         <input type="hidden" name="construction_count" class="construction_count" id="construction_count" value="{{ old("construction_count", $construction_count) }}">
                     </td>
                 </tr>
             </table>
-            <button id="btn1" type="submit">登録</button>
+            <div class="btn-submit">
+                <button class="btn" id="btn1" type="submit">登録</button>
+            </div>
         </form>
     </div>
-    <div id="btn2">
+    <div id="btn2" class="btn-back">
         <form action="{{ route('salesperson_menu') }}" method="GET">
             @csrf
-            <button id="btn">営業者メニュー</button>
+            <button class="btn" id="btn">戻る</button>
         </form>
     </div>
 

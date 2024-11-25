@@ -10,14 +10,18 @@ use App\Models\Estimate;
 use App\Models\Breakdown;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
-use Illuminate\Http\Request;
+use App\Models\ConstructionList;
+use App\Models\ConstructionName;
+use App\Models\ConstructionItem;
+use App\Models\Department;
+use App\Models\Payment;
 use App\Models\EstimateCalculate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
-
-
-
+use App\Http\Requests\EstimateInfoRequest;
 
 
 class ManagerController extends Controller
@@ -29,6 +33,14 @@ class ManagerController extends Controller
     protected $breakdown;
     protected $estimate;
     protected $estimateCalculate;
+    protected $construction;
+    protected $constructionItem;
+    protected $department;
+    protected $payment;
+    protected $constructionInfo;
+    protected $constructionName;
+    protected $constructionList;
+    protected $estimateInitCount = 1; // 工事名の初期表示数
 
     public function __construct(
 
@@ -38,7 +50,12 @@ class ManagerController extends Controller
         Admin $admin,
         Breakdown $breakdown,
         Estimate $estimate,
-        EstimateCalculate $estimateCalculate
+        EstimateCalculate $estimateCalculate,
+        ConstructionList $constructionList,
+        ConstructionName $constructionName,
+        ConstructionItem $constructionItem,
+        Department $department,
+        Payment $payment,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -47,6 +64,11 @@ class ManagerController extends Controller
         $this->breakdown = $breakdown;
         $this->estimate = $estimate;
         $this->estimateCalculate = $estimateCalculate;
+        $this->constructionList = $constructionList;
+        $this->constructionName = $constructionName;
+        $this->constructionItem = $constructionItem;
+        $this->department = $department;
+        $this->payment = $payment;
     }
 
 
@@ -55,7 +77,13 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        return view('manager_menu.estimate_index', compact('estimate_info', 'keyword'));
+        
+        return view('manager_menu.estimate_index')->with([
+                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
+                    'keyword' => $keyword,
+                    'departments' => $this->department->getDepartmentList(),
+                    'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+                ]);
     }
 
 

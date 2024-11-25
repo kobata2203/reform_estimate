@@ -7,7 +7,7 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-        <h1 style="text-align: center; background-color:orange ; margin:10px">営業者一覧画面</h1>
+        <h2>営業者一覧画面</h2>
     </div>
     <form action="{{ route('salesperson.index') }}" method="GET" class="form-inline">
         <div class="form-group d-flex align-items-center">

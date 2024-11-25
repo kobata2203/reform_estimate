@@ -5,19 +5,6 @@ body {
     padding: 0; /* Remove default padding */
 }
 
-p {
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    margin: 0; /* Ensure no margin affects layout */
-}
-
-h1 {
-    font-size: large;
-    font-weight: bold;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -39,32 +26,14 @@ td {
 }
 
 /* Button and Margin Styles */
-#menue {
-    margin: 27px;
-    margin-left: 83%; /* Specific positioning */
-    cursor: pointer;
-    border: 2px solid black;
-}
-
 .row-button {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px; /* Space between button rows */
 }
 
-.btn, .btn-primary, .btn-dark, .btn-danger {
-    text-align: center;
-    background-color: #007bff;
-    padding: 10px 20px;
-    font-size: 16px;
-}
-
 .btn + .btn {
     margin-left: 10px; /* Space between buttons */
-}
-
-button {
-    margin-top: 1rem;
 }
 
 .margin-left-300 {
@@ -72,13 +41,13 @@ button {
 }
 
 .custom-border {
-    border: 1px solid black;
     border-radius: 4px;
     padding: 6px 12px;
     color: white;
     background-color: #007bff;
     display: inline-block;
     text-decoration: none;
+    border: none;
 }
 
 /* Form Styles */
@@ -108,11 +77,9 @@ button {
 
 .form-control {
     width: 300px;
-    border: 2px solid black;
     border-radius: 4px;
     padding: 8px;
     margin: 8px 0;
-    box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -132,7 +99,6 @@ button {
 /* Button Styles */
 td .btn {
     display: inline-block;
-    width: 80px;                 /* Consistent width */
     padding: 8px 12px;           /* Padding for a comfortable button size */
     font-size: 14px;             /* Font size for readability */
     color: #fff;                 /* White text for contrast */

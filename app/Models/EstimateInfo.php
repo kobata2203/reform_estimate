@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Htpp\Controllers\EstimateController;
+use App\Htpp\Controllers\ManagerController;
 use Illuminate\Http\Request;
 use App\Models\ConstructionList;
 use App\Models\Breakdown;

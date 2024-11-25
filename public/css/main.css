@@ -1,3 +1,32 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, button {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
 body {
     width: 100%;
     height:100vh;
@@ -16,8 +45,61 @@ h1 {
 }
 
 p {
-    font-size: 150%;
+    font-size: larger;
     font-weight: bold;
     text-align: center;
 }
 
+h2 {
+    /*background-color: rgba(255,165,0,0.5);*/
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center; /* Center the text in the hero section */
+    margin: 0% 40%;
+    padding: 5px; /* Reduced padding */
+}
+
+h5 {
+    font-size: larger;
+    font-weight: bold;
+}
+
+h3 {
+    /*background-color: rgb(135,197,48);*/
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0% 40%;
+    padding: 5px;
+    margin: 0; /* Ensure no margin affects layout */
+}
+
+h6 {
+    font-size: larger;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0% 40%;
+    padding: 5px;
+    margin: 0; /* Ensure no margin affects layout */
+}
+
+.search-salesperson {
+    background-color: rgba(135,197,48,0.7);
+    margin-right: 70%;
+}
+
+.search-manager {
+    background-color: rgba(255,165,0,0.7);
+    margin-right: 70%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}

@@ -172,7 +172,7 @@ class EstimateController extends Controller
     {
         $estimate_info = $this->estimateInfo::find($id);
         $construction_name = $this->constructionName::find($id);
-        $prevurl = url()->previous() ?: 'estimate/index'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        $prevurl = url()->previous() ?: 'utill.prevurl_breakdown_create'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
         /**
          * SQLはモデルに記載する
@@ -209,7 +209,7 @@ class EstimateController extends Controller
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
         if(false === strpos($prevurl, 'estimate_info?')){
-            $prevurl = url('/salesperson_menu/index');	//一覧画面のURLを直接指定
+            $prevurl = url('utill.prevurl_breakdown_store');	//一覧画面のURLを直接指定
         }
 
         if(!empty($request->regist_flag)) {

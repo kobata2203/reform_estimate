@@ -5,21 +5,6 @@ body {
     padding: 0; /* Remove default padding */
 }
 
-p {
-    background-color: rgb(135,197,48);
-    font-size: large;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
-    margin: 0; /* Ensure no margin affects layout */
-}
-
-h1 {
-    background-color: rgb(135,197,48);
-    font-size: large;
-    font-weight: bold;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -41,26 +26,10 @@ td {
 }
 
 /* Button and Margin Styles */
-#menue {
-    margin: 27px;
-    margin-left: 83%; /* Specific positioning */
-    cursor: pointer;
-    border: 2px solid black;
-}
-
 .row-button {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px; /* Space between button rows */
-}
-
-.btn, .btn-primary, .btn-dark, .btn-danger {
-    text-align: center;
-    background-color: #007bff;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    border-radius: 4px;
 }
 
 .btn + .btn {
@@ -72,13 +41,13 @@ td {
 }
 
 .custom-border {
-    border: 1px solid black;
     border-radius: 4px;
     padding: 6px 12px;
     color: white;
     background-color: #007bff;
     display: inline-block;
     text-decoration: none;
+    border: none;
 }
 
 /* Form Styles */
@@ -108,11 +77,9 @@ td {
 
 .form-control {
     width: 300px;
-    border: 2px solid black;
     border-radius: 4px;
     padding: 8px;
     margin: 8px 0;
-    box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -151,6 +118,7 @@ td .btn {
 /* Specific Color for '削除' Button */
 td .btn-danger {
     background-color: #dc3545;   /* Red background */
+    border: none;
 }
 
 td .btn-danger:hover {
