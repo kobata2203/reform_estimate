@@ -12,7 +12,7 @@
             {{ session('success') }}
         </div>
     @endif
-    <h1>営業者登録画面</h1>
+    <h2>営業者登録画面</h2>
 
 
     <!-- Form to register salesperson -->

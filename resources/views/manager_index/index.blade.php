@@ -7,7 +7,7 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-        <h1 style="text-align: center; background-color:orange ; margin:10px">営業者一覧画面</h1>
+        <h2>営業者一覧画面</h2>
     </div>
     <form action="{{ route('salesperson.index') }}" method="GET" class="form-inline">
         <div class="form-group d-flex align-items-center">
@@ -33,18 +33,7 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->department_name }}</td>
                         <td>
-<<<<<<< HEAD
                             <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark custom-border">編集</a>
-=======
-                            {{-- <button href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark">編集</button> --}}
-                            <button onclick="window.location.href='{{ route('salesperson.edit', $user->id) }}'" class="btn btn-dark">編集</button>
-
-                            <form action="{{ route('salesperson.destroy', $user->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-
-                            </form>
->>>>>>> 3587024a7db3c48c75141534cc4a361aa7a16bdd
                         </td>
                     </tr>
                 @endforeach

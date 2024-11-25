@@ -1,69 +1,84 @@
 /* index.css */
-form {
-    height: 100%; /* Ensure the body takes full height */
-    margin: 0; /* Remove default margins */
+.container {
+    /* 子要素を水平方向の中央に配置する */
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-}
-
-body {
-    height: 100%;
-    width: 100%;
-    background-image: url(../image/back.png)!important;  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
-    background-size: cover;
-}
-
-h1 {
-    text-align: center;
-}
-
-p {
-    text-align: center;
-    flex-direction: column;
-    margin: 0; /* Remove default margins */
-    padding: 10px; /* Add padding for better appearance */
-}
-
-form .estimate {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    text-align: center; 
-    margin-top: 20px;
+    justify-content: center;
 }
 
 input {
-    display: flex;
+    align-items: left;
+    text-align: left;
+    width: 270px;
+}
+
+textarea {
+    align-items: left;
+    text-align: left;
+    width: 270px;
+}
+
+select {
     align-items: left;
     text-align: left;
 }
 
-.btn {
-    display: flex;
-    flex-direction: column; 
+table {
     align-items: center;
-    text-align: center; 
-    margin-top: 20px;
 }
 
-button {
-    border-radius: 2px;
-    margin: 10px;
-    cursor: pointer;
-    padding: 5px 10px;
-    border: none;
-    background-color: black; 
+th {
+    background-color: rgba(135,197,48,0.7);
+}
+
+td {
+    background-color: #ccc;
+    align-items: left;
+    text-align: left;
+}
+
+.list {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+}
+  
+li {
+    list-style: none;
+    margin-right: 1rem;
+}
+
+.btn, .btn-primary, .btn-dark, .btn-danger,.js-delete-btn,.btn-add {
+    text-align: center;
+    background-color: #007bff;
     color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
     font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.3s ease; 
 }
 
-button:hover {
-    background-color: brown; 
-    transform: scale(1.05); 
+.js-delete-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.add {
+    border-top: 1px solid black;
+}
+
+.btn-add {
+    margin-top: 10px;
+    translate: 70% 0;
+}
+
+.btn-submit {
+    margin-top: 10px;
+    translate: 80% 0;
+}
+
+.btn-back {
+    /* 子要素を水平方向の中央に配置する */
+    display: flex;
+    justify-content: center;
 }
