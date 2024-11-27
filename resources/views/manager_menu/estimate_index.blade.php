@@ -9,6 +9,11 @@
     <div>
         <h2>見積書一覧画面<br>（管理者用）</h2>
     </div>
+    @if(session('message'))
+        <div>
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="search-manager">
         <h5>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h5>
         <div>
@@ -40,21 +45,19 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                    <a href="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">{{ $item }}</a></br>
+                                    <a href="{{ route('breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
                             <td><a href="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
                             <td><a href="{{ route('manager.delete', $estimate->id) }}" class="btn btn-danger">削除</a></td>
-
                         </tr>
                     </div>
                 @endforeach
             </tbody>
         </table>
     </div>
-
     <div class="col-3 margin-top-example" style="text-align: right;">
         <a href="{{ route('manager_menu') }}" class="btn btn-primary custom-border">戻る</a>
     </div>
