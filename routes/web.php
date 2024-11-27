@@ -232,7 +232,7 @@ Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'
 // Route::get('/manager/pdf', [ManagerController::class, 'getpdf'])->name('pdf.print1');
 // Route::get('/manager_menu/pdftrail/{id}', [ManagerController::class, 'pdfget'])->name('Pdftrail');
 Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'pdf'])->name('showPdftrail');
-Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
+//Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
 Route::get('/managers/pdf/{id}', [ManagerController::class, 'PDFshow'])->name('managers.pdfshow');
 
