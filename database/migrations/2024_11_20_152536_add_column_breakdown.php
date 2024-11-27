@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('breakdown', function (Blueprint $table) {
             $table->dropColumn('construction_id');
+            $table->dropColumn('construction_name');
             $table->dropColumn('construction_item');
             $table->dropColumn('specification');
         });
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->bigInteger('construction_list_id')->nullable()->comment('工事一覧ID')->after('estimate_id');
         });
         Schema::table('breakdown', function (Blueprint $table) {
-            $table->string('construction_name')->nullable()->comment('項目名')->after('construction_list_id');
+            $table->string('item')->nullable(false)->comment('項目名')->after('construction_list_id');
         });
         Schema::table('breakdown', function (Blueprint $table) {
             $table->string('maker')->nullable()->comment('メーカー名')->after('construction_name');
@@ -45,13 +46,13 @@ return new class extends Migration
     {
         Schema::table('breakdown', function (Blueprint $table) {
             $table->dropColumn('construction_list_id');
-            $table->dropColumn('construction_name');
             $table->dropColumn('maker');
             $table->dropColumn('series_name');
             $table->dropColumn('item_number');
         });
 
         Schema::table('breakdown', function (Blueprint $table) {
+            $table->string('construction_name')->nullable(false)->after('estimate_id');
             $table->bigInteger('construction_id')->nullable()->after('estimate_id');
             $table->bigInteger('construction_item')->nullable()->after('construction_id');
             $table->string('specification')->nullable()->after('construction_item');
