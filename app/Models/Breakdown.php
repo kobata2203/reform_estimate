@@ -96,7 +96,7 @@ class Breakdown extends Model
         return $datas;
     }
 
-    public function registRreakdown($request)
+    public function registBreakdown($request)
     {
         try {
             // 既存データの削除
