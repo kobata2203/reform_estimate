@@ -42,7 +42,7 @@ class ConstructionItemRequired implements Rule
         // 必須要否の確認
         $res = $this->construction_item->get_required($this->input_data['item'][$loop_no], $this->input_data['construction_id'], $this->column_name);
 
-        if(empty($input_data[$this->column_name][$loop_no]) && !empty($res)){
+        if(empty($this->input_data[$this->column_name][$loop_no]) && !empty($res)){
             return false;
         } else {
             return true;

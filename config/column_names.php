@@ -8,7 +8,6 @@ return [
     'breakdown_unit' => env('BREAKDOWN_UNIT','単位'),
     'breakdown_unit_price' => env('BREAKDOWN_UNIT_PRICE','単価'),
     'breakdown_amount' => env('BREAKDOWN_AMOUNT','金額'),
-    'breakdown_remarks' => env('BREAKDOWN_REMARKS','備考'),
 
     'customer_name' => env('CUSTOMER_NAME','お客様名'),
     'charger_name' => env('CHARGER_NAME','担当者名'),
