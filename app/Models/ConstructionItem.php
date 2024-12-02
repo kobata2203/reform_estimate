@@ -18,6 +18,12 @@ class ConstructionItem extends Model
 
     protected $fillable = [
         'item',
+        'maker',
+        'series_name',
+        'item_number',
+        'quantity',
+        'unit',
+        'remarks',
     ];
 
     public function estimate_info()
@@ -30,18 +36,29 @@ class ConstructionItem extends Model
         return $this->hasMany('App\Models\Breakdown');
     }
 
-    public function get_target_items($id)
+    public function getItemsByConstractionId($id)
     {
-        $items = $this->select('item_id', 'item')->where('construction_id', $id)->get();
+        $items = $this->select($this->fillable)->where('construction_id', $id)->get();
 
         return $items;
     }
 
-
-    public function get_required($id)
+    public function get_required($item, $construction_id, $column_name)
     {
-        $item = $this->select('breakdown_required')->where('item_id', $id)->first();
+        $required = $column_name. '_required';
+        $where = [
+            ['construction_id', '=', $construction_id],
+            ['item', '=', $item],
+        ];
 
-        return $item->breakdown_required;
+        $data = $this->select($required)->where($where)->first();
+
+        if(!empty($data->$required)) {
+            $res = $data->$required;
+        } else {
+            $res = false;
+        }
+
+        return $res;
     }
 }

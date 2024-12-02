@@ -17,6 +17,7 @@ class ConstructionName extends Model
     protected $primaryKey = 'construction_id';
 
     protected $fillable = [
+        'construction_id',
         'construction_name',
     ];
 
@@ -51,4 +52,16 @@ class ConstructionName extends Model
         return self::find($id);
     }
 
+    public function getByCconstructionName($construction_name)
+    {
+        $items = $this->select($this->fillable)
+            ->where('construction_name', $construction_name)
+            ->get()->first();
+
+        if(!empty($items->construction_id)) {
+            return $items->construction_id;
+        } else {
+            return null;
+        }
+    }
 }
