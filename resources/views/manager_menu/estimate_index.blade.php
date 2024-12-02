@@ -9,11 +9,6 @@
     <div>
         <h2>見積書一覧画面<br>（管理者用）</h2>
     </div>
-    @if(session('message'))
-        <div>
-            {{ session('message') }}
-        </div>
-    @endif
     <div class="search-manager">
         <h5>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h5>
         <div>
