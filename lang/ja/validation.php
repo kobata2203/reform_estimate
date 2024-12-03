@@ -279,6 +279,7 @@ return [
         'payment_id' => config('column_names.payment_id'),
         'expiration_date' => config('column_names.expiration_date'),
         'department_id' => config('column_names.department_id'),
+        'remarks.*' => config('column_names.remarks'),
         'remarks' => config('column_names.remarks'),
         'construction_name.*' => config('column_names.construction_name'),
     ],

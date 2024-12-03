@@ -86,7 +86,7 @@ class EstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
-        $regist_estimate_info = $this->estimateInfo->regist_estimate_info($request);
+        $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
 
         if ($regist_estimate_info === true) {
             $message = config('message.regist_complete');
