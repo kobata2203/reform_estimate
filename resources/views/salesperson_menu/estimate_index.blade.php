@@ -34,7 +34,7 @@
                 <th>PDF</th>
                 <th></th>
             </thead>
-            <tbody>
+            {{-- <tbody>
                 @foreach ($estimate_info as $estimate)
                     <div>
                         <tr>
@@ -52,6 +52,29 @@
                             </td>
                             <td>
                                 <button class="btn btn-danger"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
+                            </td>
+                        </tr>
+                    </div>
+                @endforeach
+            </tbody> --}}
+            <tbody>
+                @foreach ($estimate_info ?? [] as $estimate)
+                    <div>
+                        <tr>
+                            <td><a href="{{ route('estimate.edit', $estimate->id) }}">{{ $estimate->creation_date }}</a></td>
+                            <td>{{ $estimate->customer_name }}</td>
+                            <td>
+                                @foreach($construction_list[$estimate->id] ?? [] as $item)
+                                    <a href="{{ route('estimate.breakdown_create', ['id' => $estimate->id]) }}" method="GET">{{ $item }}</a></br>
+                                @endforeach
+                            </td>
+                            <td>{{ $estimate->charger_name }}</td>
+                            <td>{{ $departments[$estimate->department_id] ?? 'N/A' }}</td>
+                            <td>
+                                <a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border">閲覧</a><br/>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
                             </td>
                         </tr>
                     </div>

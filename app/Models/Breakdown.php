@@ -186,4 +186,11 @@ class Breakdown extends Model
         return self::where('estimate_id', $estimateId)->get();
     }
 
+     //PDFshow on ManagerController
+    //pdf method on the ManagerController
+    public function getBreakdownsByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
+
 }

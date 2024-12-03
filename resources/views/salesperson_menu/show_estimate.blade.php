@@ -97,7 +97,7 @@
         <div class="action2">
             <a href="{{ route('showestimate', ['id' => $id]) }}" class="btn btn-primary no-print">御見積書</a>
             {{-- <button class="btn btn-primary no-print" style="margin: 10px;" onclick="printPage()">Print PDF</button> --}}
-            <a href="{{ route('showPdftrail', ['id' => $id]) }}" class="btn btn-primary no-print">View PDF</a>
+            <a href="{{ route('generatebreakdown', ['id' => $id]) }}" class="btn btn-primary no-print">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
         </div>
     </div>

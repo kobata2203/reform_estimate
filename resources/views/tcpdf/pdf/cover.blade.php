@@ -49,8 +49,8 @@
             width: 30%;
             font-size: 14px;
             position: absolute;
-            bottom: 50px;
-            right: -50px;
+            bottom: 375px;
+            right: 15px;
             margin-bottom: 300px;
 
         }

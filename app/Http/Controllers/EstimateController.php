@@ -26,6 +26,7 @@ class EstimateController extends Controller
     protected $constructionInfo;
     protected $constructionName;
     protected $constructionList;
+    protected $estimateInfo;
 
     protected $estimateInitCount = 1; // 工事名の初期表示数
     /**
@@ -56,7 +57,7 @@ class EstimateController extends Controller
     {
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        
+
         return view('salesperson_menu.estimate_index')->with([
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
                     'keyword' => $keyword,

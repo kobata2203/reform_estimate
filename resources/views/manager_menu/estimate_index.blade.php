@@ -32,7 +32,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            {{-- <tbody>
                 @foreach ($estimate_info as $estimate)
                     <div>
                         <tr>
@@ -51,7 +51,27 @@
                         </tr>
                     </div>
                 @endforeach
+            </tbody> --}}
+            <tbody>
+                @foreach ($estimate_info as $estimate)
+                    <div>
+                        <tr>{{--added "?? []"--}}
+                            <td><a href="{{ route('estimate.edit', $estimate->id) }}">{{ $estimate->creation_date }}</a></td>
+                            <td>{{ $estimate->customer_name }}</td>
+                            <td>
+                                @foreach($construction_list[$estimate->id] ?? [] as $item)
+                                    <a href="{{ route('estimate.breakdown_create', ['id' => $estimate->id]) }}" method="GET">{{ $item }}</a></br>
+                                @endforeach
+                            </td>
+                            <td>{{ $estimate->charger_name }}</td>
+                            <td>{{ $departments[$estimate->department_id] ?? 'N/A' }}</td>
+                            <td><a href="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
+                            <td><a href="{{ route('manager.delete', $estimate->id) }}" class="btn btn-danger">削除</a></td>
+                        </tr>
+                    </div>
+                @endforeach
             </tbody>
+
         </table>
     </div>
 

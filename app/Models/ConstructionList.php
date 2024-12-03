@@ -72,4 +72,9 @@ class ConstructionList extends Model
 
         return $datas;
     }
+    //2024123
+    public static function getById($id)
+    {
+        return self::find($id);
+    }
 }

@@ -17,11 +17,10 @@ use App\Models\Department;
 use App\Models\Payment;
 use App\Models\EstimateCalculate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
-use App\Http\Requests\EstimateInfoRequest;
+use App\Services\PdfService;
 
 
 class ManagerController extends Controller
@@ -41,6 +40,7 @@ class ManagerController extends Controller
     protected $constructionName;
     protected $constructionList;
     protected $estimateInitCount = 1; // 工事名の初期表示数
+    protected $pdfService;
 
     public function __construct(
 
@@ -56,6 +56,7 @@ class ManagerController extends Controller
         ConstructionItem $constructionItem,
         Department $department,
         Payment $payment,
+        PdfService $pdfService,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -69,6 +70,7 @@ class ManagerController extends Controller
         $this->constructionItem = $constructionItem;
         $this->department = $department;
         $this->payment = $payment;
+        $this->pdfService = $pdfService;
     }
 
 
@@ -77,13 +79,13 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        
+
         return view('manager_menu.estimate_index')->with([
-                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
-                    'keyword' => $keyword,
-                    'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
-                ]);
+            'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
+            'keyword' => $keyword,
+            'departments' => $this->department->getDepartmentList(),
+            'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+        ]);
     }
 
 
@@ -157,6 +159,7 @@ class ManagerController extends Controller
     {
         // Fetch the estimate record or use null if not found
         $estimate_info = $this->estimateInfo->getById($id);
+        $construction_list = $this->constructionList->getById($id);
 
         // Fetch breakdown related to estimate or use an empty collection if no estimate is found
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
@@ -185,7 +188,7 @@ class ManagerController extends Controller
         }
 
 
-        return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
+        return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal','construction_list'));
     }
 
 
@@ -230,124 +233,132 @@ class ManagerController extends Controller
         }
     }
 
-    public function pdf($id)
+    // public function pdf($id)
+    // {
+    //     // Fetching the estimate info and breakdown based on the given ID
+    //     $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
+    //     $breakdown = $this->breakdown->fetchBreakdownsByEstimateId($id);
+
+
+    //     // Fetching the estimate calculation data based on the given estimate ID
+    //     $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
+
+    //     $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
+    //     // Create new PDF document
+    //     $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
+    //     $pdf->setPrintHeader(false);
+    //     $pdf->setPrintFooter(false);
+    //     $pdf->AddPage();
+
+    //     // Set the font - ensure the font is installed and path is correct
+    //     $pdf->AddFont('kozgopromedium', '', 'kozgopromedium.php'); // Adjust the path as necessary
+    //     $pdf->SetFont('kozgopromedium', '', 12);
+
+    //     // Title
+    //     $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
+    //     $pdf->Ln(5);
+    //     $pdf->Cell(0, 10, '株式会社サーバントップ', 0, 1, 'R');
+    //     $pdf->Ln(5);
+
+    //     // Construction Name
+    //     $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
+
+    //     // Add header for the breakdown table
+    //     $pdf->SetX(5);
+    //     $pdf->SetFillColor(220, 220, 220); // Set fill color for header background
+    //     $pdf->Cell(20, 10, '項目', 1, 0, 'C', true); // Header for construction item
+    //     $pdf->Cell(70, 10, '仕様・摘要', 1, 0, 'C', true); // Header for specification
+    //     $pdf->Cell(15, 10, '数量', 1, 0, 'C', true); // Header for quantity
+    //     $pdf->Cell(10, 10, '単位', 1, 0, 'C', true); // Header for unit
+    //     $pdf->Cell(15, 10, '単価', 1, 0, 'C', true); // Header for unit price
+    //     $pdf->Cell(25, 10, '金額', 1, 0, 'C', true); // Header for amount
+    //     $pdf->Cell(45, 10, '備考', 1, 1, 'C', true); // Header for remarks
+
+    //     // Loop through breakdown items and add data rows
+    //     $totalAmount = 0;
+    //     foreach ($breakdown as $item) {
+    //         $totalAmount += $item->amount;
+    //         $pdf->SetX(5);
+    //         $pdf->Cell(20, 10, $item->construction_item, 1, 0, 'C');
+    //         $pdf->Cell(70, 10, $item->specification, 1, 0, 'C');
+    //         $pdf->Cell(15, 10, $item->quantity, 1, 0, 'C');
+    //         $pdf->Cell(10, 10, $item->unit, 1, 0, 'C');
+    //         $pdf->Cell(15, 10, number_format($item->unit_price), 1, 0, 'C');
+    //         $pdf->Cell(25, 10, '¥ ' . number_format($item->amount), 1, 0, 'C');
+    //         $pdf->Cell(45, 10, $item->remarks, 1, 0, 'C');
+    //         $pdf->Ln();
+    //     }
+
+    //     // Calculate totals
+    //     $subtotal = $totalAmount - $discount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
+
+    //     // Output totals below the breakdown table
+    //     $pdf->SetX(5);
+    //     $pdf->Cell(130, 10, '特別お値引き ', 1, 0, 'R');
+    //     $pdf->Cell(25, 10, '¥ ' . number_format($discount), 1, 1, 'C');
+    //     $pdf->SetX(5);
+    //     $pdf->Cell(130, 10, '小計（税抜）', 1, 0, 'R');
+    //     $pdf->Cell(25, 10, '¥ ' . number_format($subtotal), 1, 1, 'C');
+    //     $pdf->SetX(5);
+    //     $pdf->Cell(130, 10, '消費税（10%）', 1, 0, 'R');
+    //     $pdf->Cell(25, 10, '¥ ' . number_format($tax), 1, 1, 'C');
+    //     $pdf->SetX(5);
+    //     $pdf->Cell(130, 10, '合計（税込）', 1, 0, 'R');
+    //     $pdf->Cell(25, 10, '¥ ' . number_format($grandTotal), 1, 1, 'C');
+
+    //     // Output the PDF
+    //     $pdf->Output("output.pdf", "I");
+    // }
+
+    // public function PDFshow($id)
+    // {
+    //     // Retrieve the estimate info by ID
+    //     $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
+
+    //     // Fetch related breakdown data for calculation
+    //     $breakdown = $this->breakdown->fetchingBreakdownsByEstimateId($id);
+
+    //     // Calculate the total amount
+    //     $totalAmount = $breakdown->sum('amount');
+
+    //     // Fetch the estimate calculation for discount
+    //     $estimateCalculate = $this->estimateCalculate->fetchEstimateCalculateByEstimateId($id);
+    //     $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
+
+    //     // Allow overriding the discount from the request
+    //     $inputDiscount = request()->input('discount', $discount);
+
+    //     // Discount and tax calculation
+    //     $subtotal = $totalAmount - $inputDiscount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
+
+    //     // Generate the Blade view for the PDF
+    //     $pdfView = view('tcpdf.breakdowndetail', compact('estimate_info', 'grandTotal', 'breakdown'))->render(); // Pass breakdown for detailed view
+
+    //     // Initialize mPDF
+    //     $mpdf = new \Mpdf\Mpdf([
+    //         'mode' => 'utf-8',
+    //         'format' => 'A4-L',
+    //         'autoScriptToLang' => true,
+    //         'autoLangToFont' => true,
+    //     ]);
+
+    //     $mpdf->WriteHTML($pdfView);
+
+    //     return $mpdf->Output('Reform_Estimate_Details.pdf', 'I');
+    // }
+    public function generateBreakdown($id)
     {
-        // Fetching the estimate info and breakdown based on the given ID
-        $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
-        $breakdown = $this->breakdown->fetchBreakdownsByEstimateId($id);
-
-
-        // Fetching the estimate calculation data based on the given estimate ID
-        $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
-
-        $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
-        // Create new PDF document
-        $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
-        $pdf->AddPage();
-
-        // Set the font - ensure the font is installed and path is correct
-        $pdf->AddFont('kozgopromedium', '', 'kozgopromedium.php'); // Adjust the path as necessary
-        $pdf->SetFont('kozgopromedium', '', 12);
-
-        // Title
-        $pdf->Cell(0, 10, '内訳明細書', 0, 1, 'C');
-        $pdf->Ln(5);
-        $pdf->Cell(0, 10, '株式会社サーバントップ', 0, 1, 'R');
-        $pdf->Ln(5);
-
-        // Construction Name
-        $pdf->Cell(0, 10, '工事名: ' . $estimate_info->construction_name, 0, 1);
-
-        // Add header for the breakdown table
-        $pdf->SetX(5);
-        $pdf->SetFillColor(220, 220, 220); // Set fill color for header background
-        $pdf->Cell(20, 10, '項目', 1, 0, 'C', true); // Header for construction item
-        $pdf->Cell(70, 10, '仕様・摘要', 1, 0, 'C', true); // Header for specification
-        $pdf->Cell(15, 10, '数量', 1, 0, 'C', true); // Header for quantity
-        $pdf->Cell(10, 10, '単位', 1, 0, 'C', true); // Header for unit
-        $pdf->Cell(15, 10, '単価', 1, 0, 'C', true); // Header for unit price
-        $pdf->Cell(25, 10, '金額', 1, 0, 'C', true); // Header for amount
-        $pdf->Cell(45, 10, '備考', 1, 1, 'C', true); // Header for remarks
-
-        // Loop through breakdown items and add data rows
-        $totalAmount = 0;
-        foreach ($breakdown as $item) {
-            $totalAmount += $item->amount;
-            $pdf->SetX(5);
-            $pdf->Cell(20, 10, $item->construction_item, 1, 0, 'C');
-            $pdf->Cell(70, 10, $item->specification, 1, 0, 'C');
-            $pdf->Cell(15, 10, $item->quantity, 1, 0, 'C');
-            $pdf->Cell(10, 10, $item->unit, 1, 0, 'C');
-            $pdf->Cell(15, 10, number_format($item->unit_price), 1, 0, 'C');
-            $pdf->Cell(25, 10, '¥ ' . number_format($item->amount), 1, 0, 'C');
-            $pdf->Cell(45, 10, $item->remarks, 1, 0, 'C');
-            $pdf->Ln();
-        }
-
-        // Calculate totals
-        $subtotal = $totalAmount - $discount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
-
-        // Output totals below the breakdown table
-        $pdf->SetX(5);
-        $pdf->Cell(130, 10, '特別お値引き ', 1, 0, 'R');
-        $pdf->Cell(25, 10, '¥ ' . number_format($discount), 1, 1, 'C');
-        $pdf->SetX(5);
-        $pdf->Cell(130, 10, '小計（税抜）', 1, 0, 'R');
-        $pdf->Cell(25, 10, '¥ ' . number_format($subtotal), 1, 1, 'C');
-        $pdf->SetX(5);
-        $pdf->Cell(130, 10, '消費税（10%）', 1, 0, 'R');
-        $pdf->Cell(25, 10, '¥ ' . number_format($tax), 1, 1, 'C');
-        $pdf->SetX(5);
-        $pdf->Cell(130, 10, '合計（税込）', 1, 0, 'R');
-        $pdf->Cell(25, 10, '¥ ' . number_format($grandTotal), 1, 1, 'C');
-
-        // Output the PDF
-        $pdf->Output("output.pdf", "I");
+        return $this->pdfService->generateBreakdown($id);
     }
 
-    public function PDFshow($id)
+    public function generateCover($id)
     {
-        // Retrieve the estimate info by ID
-        $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
-
-        // Fetch related breakdown data for calculation
-        $breakdown = $this->breakdown->fetchingBreakdownsByEstimateId($id);
-
-        // Calculate the total amount
-        $totalAmount = $breakdown->sum('amount');
-
-        // Fetch the estimate calculation for discount
-        $estimateCalculate = $this->estimateCalculate->fetchEstimateCalculateByEstimateId($id);
-        $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
-
-        // Allow overriding the discount from the request
-        $inputDiscount = request()->input('discount', $discount);
-
-        // Discount and tax calculation
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
-
-        // Generate the Blade view for the PDF
-        $pdfView = view('tcpdf.breakdowndetail', compact('estimate_info', 'grandTotal', 'breakdown'))->render(); // Pass breakdown for detailed view
-
-        // Initialize mPDF
-        $mpdf = new \Mpdf\Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4-L',
-            'autoScriptToLang' => true,
-            'autoLangToFont' => true,
-        ]);
-
-        $mpdf->WriteHTML($pdfView);
-
-        return $mpdf->Output('Reform_Estimate_Details.pdf', 'I');
+        return $this->pdfService->generateCover($id);
     }
-
 }
 
 
