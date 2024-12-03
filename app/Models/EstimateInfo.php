@@ -35,7 +35,7 @@ class EstimateInfo extends Model
         'expiration_date',
         'remarks',
         'charger_name',
-        'department_name',
+        'department_id',
     ];
 
 
@@ -69,7 +69,7 @@ class EstimateInfo extends Model
     }
 
 
-    public function regist_estimate_info($request)
+    public function registEstimateInfo($request)
     {
         $data = [
             'customer_name' => $request->customer_name,
@@ -90,7 +90,7 @@ class EstimateInfo extends Model
             return false;
         }
 
-        return $this->constructionList->regist_estimate_info_id($request->construction_name, $estimate_info->id);
+        return $this->constructionList->registEstimateInfoId($request->construction_name, $estimate_info->id);
     }
 
     public function update_estimate_info($request, $id)

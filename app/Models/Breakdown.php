@@ -19,9 +19,10 @@ class Breakdown extends Model
 
     protected $fillable = [
         'estimate_id',
-        'construction_id',
-        'construction_item',
-        'specification',
+        'item',
+        'maker',
+        'series_name',
+        'item_number',
         'quantity',
         'unit',
         'unit_price',
@@ -57,65 +58,78 @@ class Breakdown extends Model
         return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
-    public function get_breakdown_list($estimate_id)
+    public function getBreakdownList($estimate_id)
     {
-        $items = $this->select($this->fillable)->where('construction_id', $estimate_id)->get();
+        $items = $this->select($this->fillable)->where('estimate_id', $estimate_id)->get();
 
         return $items;
 
     }
 
-    public function regist_breakdown($request)
+    /**
+     * 内訳明細の初期処理用ダミーデータをセット
+     * @return array
+     */
+    public function setDummyData($old=null)
     {
-        $datas = [];
+        $item = [];
+        if(is_array($old)){
+            foreach ($old as $key => $old_item) {
+                if(in_array($key, $this->fillable)) {
+                    if(is_array($old_item)) {
+                        foreach ($old_item as $old_item_key => $value) {
+                            $item[$old_item_key][$key] = $value;
+                        }
+                    }
+                }
+            }
 
-        for ($i = 1; $i <= $request->construction_loop_count; $i++) {
-            $data = [];
-            $data['estimate_id'] = $request->estimate_id;
-            $data['construction_id'] = $request->construction_id;
-            $data['construction_item'] = $request->construction_item[$i];
-            $data['specification'] = $request->specification[$i];
-            $data['quantity'] = $request->quantity[$i];
-            $data['unit'] = $request->unit[$i];
-            $data['unit_price'] = $request->unit_price[$i];
-            $data['amount'] = $request->amount[$i];
-            $data['remarks'] = $request->remarks[$i];
+            $datas = json_decode(json_encode($item));
+        } else {
+            foreach ($this->fillable as $field) {
+                $item[$field] = null;
+            }
 
-            $datas[] = $data;
+            $datas[] = (object) $item;
         }
 
-        return $this->insert($datas);
+        return $datas;
     }
 
-    public function update_breakdown($request)
+    public function registBreakdown($request)
     {
         try {
-            DB::beginTransaction();
+            // 既存データの削除
+            $where = [
+                ['estimate_id', '=', $request->estimate_id],
+                ['construction_list_id', '=', $request->construction_list_id],
+            ];
 
-            for ($i = 1; $i <= $request->construction_loop_count; $i++) {
+            $this->where($where)->delete();
+
+            $datas = [];
+
+            $loop_count = count($request->item);
+            for ($i = 0; $i < $loop_count; $i++) {
                 $data = [];
-                $data['construction_item'] = $request->construction_item[$i];
-                $data['specification'] = $request->specification[$i];
+                $data['estimate_id'] = $request->estimate_id;
+                $data['construction_list_id'] = $request->construction_list_id;
+                $data['item'] = $request->item[$i];
+                $data['maker'] = $request->maker[$i];
+                $data['series_name'] = $request->series_name[$i];
+                $data['item_number'] = $request->item_number[$i];
                 $data['quantity'] = $request->quantity[$i];
                 $data['unit'] = $request->unit[$i];
                 $data['unit_price'] = $request->unit_price[$i];
                 $data['amount'] = $request->amount[$i];
                 $data['remarks'] = $request->remarks[$i];
 
-                $where = array(
-                    'estimate_id' => $request->estimate_id,
-                    'construction_id' => $request->construction_id,
-                );
-                DB::table('breakdown')->where($where)->update($data);
+                $datas[] = $data;
             }
 
-            DB::commit();
-
-            return true;
-        } catch (\Throwable $e) {
-            DB::rollback();
-
-            throw $e;
+            return $this->insert($datas);
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 

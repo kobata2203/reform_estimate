@@ -16,6 +16,7 @@ class ConstructionList extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'estimate_info_id',
         'name',
     ];
@@ -25,7 +26,7 @@ class ConstructionList extends Model
      * @param $estimate_info_id
      * @return mixed
      */
-    public function find_estimate_info_id($estimate_info_id)
+    public function getEstimateInfoId($estimate_info_id)
     {
         $items = $this->select($this->fillable)->where('estimate_info_id', $estimate_info_id)->get();
 
@@ -39,7 +40,7 @@ class ConstructionList extends Model
      * @param $id
      * @return true
      */
-    public function regist_estimate_info_id($construction_name, $id)
+    public function registEstimateInfoId($construction_name, $id)
     {
         if(count($construction_name) < 0) {
             return true;
@@ -57,17 +58,12 @@ class ConstructionList extends Model
         return $this->insert($datas);
     }
 
-    public function findConnectionLists($estimate_info) {
+    public function getConnectionLists($estimate_info) {
         $datas = [];
         foreach ($estimate_info as $item) {
-            $connectionList = $this->select('name')->where('estimate_info_id', $item->id)->get();
+            $connection_list = $this->select($this->fillable)->where('estimate_info_id', $item->id)->get();
 
-            $data = [];
-            foreach ($connectionList as $value) {
-                $data[] = $value['name'];
-            }
-
-            $datas[$item->id] = $data;
+            $datas[$item->id] = $connection_list;
         }
 
         return $datas;

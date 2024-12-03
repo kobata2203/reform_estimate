@@ -78,8 +78,8 @@ Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 
 Route::get('/estimate/edit/{id}', [App\Http\Controllers\EstimateController::class, 'edit'])->name('estimate.edit');
 Route::post('/estimate/update/{id}', [App\Http\Controllers\EstimateController::class, 'update'])->name('estimate.update');
 Route::get('/estimate/delete/{id}', [App\Http\Controllers\EstimateController::class, 'delete'])->name('estimate.delete');
-Route::get('/estimate/breakdown_create/{id}', [App\Http\Controllers\EstimateController::class, 'breakdown_create'])->name('estimate.breakdown_create');
-Route::post('/estimate/breakdown_store', [App\Http\Controllers\EstimateController::class, 'breakdown_store'])->name('estimate.breakdown_store');
+Route::get('/breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'create'])->name('breakdown.create');
+Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
 
 //20241114
