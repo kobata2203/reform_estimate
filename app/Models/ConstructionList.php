@@ -40,7 +40,7 @@ class ConstructionList extends Model
      * @param $id
      * @return true
      */
-    public function regist_estimate_info_id($construction_name, $id)
+    public function registEstimateInfoId($construction_name, $id)
     {
         if(count($construction_name) < 0) {
             return true;
