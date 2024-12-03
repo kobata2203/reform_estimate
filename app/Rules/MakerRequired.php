@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\ConstructionItem;
 
-class SpecificationRequired implements Rule
+class MakerRequired implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,7 +27,6 @@ class SpecificationRequired implements Rule
      */
     public function passes($attribute, $value)
     {
-        dd($this->input_data);
         // 入力値の取得
         $splits = explode('.', $attribute);
         $loop_no = $splits[1];

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConstructionList;
-use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Models\EstimateInfo;
 use App\Models\ConstructionName;
@@ -12,7 +11,6 @@ use App\Models\Breakdown;
 use App\Models\Department;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\BreakdownRequest;
 use App\Http\Requests\EstimateInfoRequest;
 
 class EstimateController extends Controller
@@ -23,7 +21,6 @@ class EstimateController extends Controller
     protected $breakdown;
     protected $department;
     protected $payment;
-    protected $constructionInfo;
     protected $constructionName;
     protected $constructionList;
 
@@ -56,12 +53,12 @@ class EstimateController extends Controller
     {
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        
+
         return view('salesperson_menu.estimate_index')->with([
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+                    'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
                 ]);
     }
 
@@ -109,7 +106,7 @@ class EstimateController extends Controller
     {
         // 登録内容の取得
         $estimate_info = $this->estimateInfo::find($id);
-        $construction_list = $this->constructionList->find_estimate_info_id($id);
+        $construction_list = $this->constructionList->getEstimateInfoId($id);
 
         $departments = $this->department::all();
         $payments = $this->payment::all();
@@ -168,79 +165,11 @@ class EstimateController extends Controller
         ]);
     }
 
-    public function breakdown_create($id)
+    public function indexView()
     {
-        $estimate_info = $this->estimateInfo::find($id);
-        $construction_name = $this->constructionName::find($id);
-        $prevurl = url()->previous() ?: 'utill.prevurl_breakdown_create'; // 直前のページURLを取得、取得できない場合はデフォルト値を設定
-
-        /**
-         * SQLはモデルに記載する
-         */
-        $construction_items = $this->constructionItem->get_target_items($estimate_info->construction_id);
-        $breakdown_items = $this->breakdown->get_breakdown_list($id);
-
-        if(count($breakdown_items) == 0) {
-            $regist_flag = true;
-        } else {
-            $regist_flag = false;
-        }
-
-        return view('breakdown.breakdown_create')->with([
-            'id' => $id,
-            'estimate_info' => $estimate_info,
-            'construction_name' => $construction_name,
-            'construction_loop_count' => $construction_name->loop_count,
-            'construction_items' => $construction_items,
-            'breakdown_items' => $breakdown_items,
-            'prevurl' => $prevurl,
-            'regist_flag' => $regist_flag,
-        ]);
+        $estimates = EstimateInfo::with('breakdowns')->get();
+        return view('estimate.index', compact('estimates'));
     }
-
-    /**
-     * 登録処理
-     * @param BreakdownRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function breakdown_store(BreakdownRequest $request)
-    {
-        $prevurl = $request->prevurl;
-
-        //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if(false === strpos($prevurl, 'estimate_info?')){
-            $prevurl = url('utill.prevurl_breakdown_store');	//一覧画面のURLを直接指定
-        }
-
-        if(!empty($request->regist_flag)) {
-            $regist_breakdown = $this->breakdown->regist_breakdown($request);
-
-            if($regist_breakdown === true) {
-                $message = config('message.regist_complete');
-            } else {
-                $message = config('message.regist_fail');
-            }
-        } else {
-            $regist_breakdown = $this->breakdown->update_breakdown($request);
-
-            if($regist_breakdown === true) {
-                $message = config('message.update_complete');
-            } else {
-                $message = config('message.update_fail');
-            }
-        }
-
-        return redirect('estimate')->with([
-            'message' => $message,
-            'prevurl' => $prevurl,
-        ]);
-    }
-
-    //public function indexView()
-    //{
-        //$estimates = EstimateInfo::with('breakdowns')->get();
-        //return view('estimate.index', compact('estimates'));
-    //}
 
 }
 
