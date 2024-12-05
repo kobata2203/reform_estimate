@@ -61,17 +61,18 @@ class BreakdownController extends Controller
          */
         $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
-
+        
         if(count($breakdown_items) == 0) {
             if(empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
+                //dd($breakdown_items);
             }
         } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
-
+        //dd($breakdown_items);
         return view('breakdown.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,

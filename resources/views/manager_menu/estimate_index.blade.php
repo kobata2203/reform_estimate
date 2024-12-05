@@ -40,7 +40,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                    <a href="{{ route('estimate.breakdown_create',['id' => $estimate->id]) }}" method="GET">{{ $item }}</a></br>
+                                    <a href="{{ route('breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
@@ -53,7 +53,6 @@
             </tbody>
         </table>
     </div>
-
     <div class="col-3 margin-top-example" style="text-align: right;">
         <a href="{{ route('manager_menu') }}" class="btn btn-primary custom-border">戻る</a>
     </div>

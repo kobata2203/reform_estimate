@@ -9,7 +9,7 @@
 
 @section('content')
     <div>
-        <p>見積書作成画面<br>(内訳明細書)</p>
+        <h4>見積書作成画面<br>（内訳明細書）</h4>
     </div>
     <div class="table-container">
         <form action="{{ route('breakdown.store') }}" method="post">
@@ -19,16 +19,16 @@
             <input type="hidden" name="construction_id" value="{{ $construction_id }}">
             <input type="hidden" name="construction_list_id" value="{{ $id }}">
 
-            <table id="breakdown_table">
+            <table id="breakdown_table" class="breakdown">
                 <thead>
                     <th>項目</th>
                     <th>メーカー名</th>
                     <th>シリーズ名（商品名）</th>
                     <th>品番</th>
-                    <th>数量</th>
-                    <th>単位</th>
-                    <th>単価</th>
-                    <th>金額</th>
+                    <th class="quantity">数量</th>
+                    <th class="unit">単位</th>
+                    <th class="unit_price">単価</th>
+                    <th class="amount">金額</th>
                     <th>備考</th>
                     <th></th>
                 </thead>
@@ -66,28 +66,28 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="quantity_{{$i}}" class="amount_output" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}">
+                            <td><input id="quantity_{{$i}}" class="quantity" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}">
                                 @if ($errors->has("quantity.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("quantity.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="unit_{{$i}}" type="text" name="unit[{{$i}}]" value="{{ old("unit.$i", $item->unit) }}">
+                            <td><input id="unit_{{$i}}" class="unit" type="text" name="unit[{{$i}}]" value="{{ old("unit.$i", $item->unit) }}">
                                 @if ($errors->has("unit.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("unit.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="unit_price_{{$i}}" class="amount_output" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}">
+                            <td><input id="unit_price_{{$i}}" class="unit_price" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}">
                                 @if ($errors->has("unit_price.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("unit_price.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="amount_{{$i}}" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}">
+                            <td><input id="amount_{{$i}}" class="amount" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}">
                                 @if ($errors->has("amount.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("amount.$i") }}
@@ -107,9 +107,9 @@
                 </tbody>
             </table>
                 <input type="hidden" id="breakdown_count" value="{{ $i }}">
-                <button type="button" id="add_breakdown">追加</button>
+                <button type="button" id="add_breakdown" class="btn-primary">追加</button>
 
-                <button type="submit">登録</button>
+                <button type="submit" class="btn-primary">登録</button>
 {{--            <input type="hidden" name="regist_flag" value="{{$regist_flag}}">--}}
 {{--            <input type="hidden" name="construction_loop_count" value="{{$construction_loop_count}}">--}}
             <button type="button" class="btn btn-link" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>

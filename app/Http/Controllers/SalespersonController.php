@@ -68,10 +68,10 @@ class SalespersonController extends Controller
         \Log::info('Validated Data: ', $validated);
         if ($this->user->createUser($validated)) {
             \Log::info('User saved successfully: ', [$validated]);
-            return redirect('manager_menu')->with('success', '営業者が正常に登録されました');
+            return redirect('manager_menu')->with('success', config('message.regist_complete'));
         } else {
             \Log::error('Failed to save user: ', [$validated]);
-            return back()->withErrors('User could not be saved.');
+            return back()->withErrors(config('message.regist_fail'));
         }
     }
 
@@ -103,7 +103,7 @@ class SalespersonController extends Controller
 
         $validated = $request->validated();
         $this->user->updateUser($id, $validated);
-        return redirect()->route('manager_menu.index')->with('success', '更新されました。');
+        return redirect()->route('manager_menu.index')->with('success', config('message.update_complete'));
     }
 
 

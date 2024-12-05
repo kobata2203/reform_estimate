@@ -82,7 +82,7 @@ class ManagerController extends Controller
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+                    'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
                 ]);
     }
 
@@ -91,7 +91,7 @@ class ManagerController extends Controller
     public function delete($id)
     {
         $this->estimateInfo->deleteEstimate($id);
-        return redirect()->route('manager_estimate')->with('status', 'Data successfully hidden!');
+        return redirect()->route('manager_estimate')->with('status', config('message.delete_complete'));
     }
 
     public function admin_index(Request $request)
@@ -111,7 +111,7 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
         $this->admin->createAdmin($validated);
-        return redirect()->route('manager_menu')->with('success', '管理者が登録されました。');
+        return redirect()->route('manager_menu')->with('success', config('message.regist_complete'));
     }
 
     public function edit($id)
@@ -128,7 +128,7 @@ class ManagerController extends Controller
 
         $this->admin->updateAdmin($id, $validated);
 
-        return redirect()->route('admins.index')->with('success', '管理者が更新されました。');
+        return redirect()->route('admins.index')->with('success', config('message.update_complete'));
     }
 
 
