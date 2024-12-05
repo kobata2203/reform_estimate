@@ -84,7 +84,7 @@ class ManagerController extends Controller
             'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
             'keyword' => $keyword,
             'departments' => $this->department->getDepartmentList(),
-            'construction_list' => $this->constructionList->findConnectionLists($estimate_info),
+            'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
         ]);
     }
 
@@ -159,6 +159,8 @@ class ManagerController extends Controller
     {
         // Fetch the estimate record or use null if not found
         $estimate_info = $this->estimateInfo->getById($id);
+
+        //calling the construction_name from the ConstructionList
         $construction_list = $this->constructionList->getById($id);
 
         // Fetch breakdown related to estimate or use an empty collection if no estimate is found

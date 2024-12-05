@@ -3,8 +3,6 @@ body {
     margin: 0;
     padding: 0;
     font-size: 14px;
-    /* width:1366px;  */
-
 }
 .container {
     width: 80%;
@@ -47,8 +45,6 @@ h2
     width: 100%;             /* Full width of the page */
     box-sizing: border-box;
     background-color: rgb(186, 182, 182);
-    font-size: 28px;
-    font-weight:bold;
 }
 
 
@@ -151,10 +147,9 @@ input[type="text"] {
 }
 
 .contact-info {
-    width: 30%;
-    padding-left: 80%;
-    font-size: 14px;
-
+    width: 30%;                  /* Set width for the contact info */
+    padding-left: 80%;          /* Optional padding for separation */
+    font-size: 14px;             /* Adjust font size */
 }
 
 
@@ -424,7 +419,54 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 .print-button {
     margin: 10px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 16px;/* Prevent the page from resizing based on the window size */
+    body, html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-size: 16px; /* Ensure consistent text size */
+    }
+
+    /* Set a fixed width for the container */
+    .container {
+        width: 1000px; /* Or set it to any desired pixel value */
+        margin: 0 auto; /* Center the content */
+    }
+
+    /* Ensure the table doesn't scale with the browser */
+    .details table {
+        width: 100%;
+        table-layout: fixed; /* Fix the table layout */
+        border-collapse: collapse;
+    }
+
+    /* Set the size of individual elements */
+    h2 {
+        font-size: 24px;
+    }
+
+    .input-container input {
+        width: 300px; /* Fixed width for inputs */
+    }
+
+    .input-suffix input {
+        width: 200px; /* Fixed width for this input */
+    }
+
+    .input-underline input {
+        width: 300px;
+    }
+
+    /* Additional responsiveness adjustments for small screen sizes */
+    @media (max-width: 768px) {
+        .input-container input,
+        .input-suffix input {
+            width: 100%; /* Allow the inputs to take full width on smaller screens */
+        }
+    }
+
     background-color: #007BFF;
     color: white;
     border: none;
@@ -451,12 +493,4 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 }
 
 
-/* 20241204 */
-
-
-
-
-
-
-
-
+/* Testing */

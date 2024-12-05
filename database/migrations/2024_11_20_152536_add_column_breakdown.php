@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('item')->nullable(false)->comment('項目名')->after('construction_list_id');
         });
         Schema::table('breakdown', function (Blueprint $table) {
-            $table->string('maker')->nullable()->comment('メーカー名')->after('construction_name');
+            $table->string('maker')->nullable()->comment('メーカー名')->after('item');
         });
         Schema::table('breakdown', function (Blueprint $table) {
             $table->string('series_name')->nullable()->comment('シリーズ名（商品名）')->after('maker');

@@ -6,26 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to update byte count for any given input field
+        function updateByteCount(inputField, byteCountElement) {
+            var charCount = $(inputField).val().length;
+            $(byteCountElement).text(charCount + ' 字');
+        }
+
+        // Update byte count for customer name input
+        $('#customer-name').on('input', function() {
+            updateByteCount(this, '#customer-name-byte-count');
+        });
+
+        // Update byte count for estimate amount input
+        $('#estimate-amount').on('input', function() {
+            updateByteCount(this, '#estimate-amount-byte-count');
+        });
+    });
+</script>
+
 </head>
 
 <body>
-    <div class="stimate-detail">
+    <div>
         <div>
-            <h2>御　見　積　書</h2>
+            <h2>御 見 積 書111</h2>
         </div>
-
-        {{-- <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
-            <div style="text-align: right;">
-                <p>{{ $estimate_info->creation_date}}</p>
-            </div>
-        </div> --}}
 
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
             <div style="text-align: right;">
                 <p>{{ $estimate_info->creation_date }}</p>
             </div>
         </div>
-
 
         <div class="input-container" id="customer">
             <label for="customer-name">お客様名 :</label>
@@ -34,29 +48,29 @@
                     value="{{ old('customer_name', $estimate_info->customer_name) }}">
                 <span class="suffix">様</span>
             </div>
+            <span id="customer-name-byte-count"></span>
         </div>
 
         <div>
-            {{-- <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p> --}}
             <p style="display: inline; font-size: 9px; margin: 0; padding-left: 60px;">下記の通りお見積り申し上げます。</p>
         </div>
 
-        <div class="input-suffix-wrapper">
+        <div class="input-suffix-wrapper" id="grandtotal">
             <div class="input-suffix">
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}">
-
-                       <span class="suffix">（税込）</span>
+                    value="{{ number_format($grandTotal) }}">
+                <span class="suffix">（税込）</span>
             </div>
+            <span id="estimate-amount-byte-count"></span>
         </div>
+
 
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
                     <tr>
-
                         <td>件名</td>
                         <td>{{ $estimate_info->subject_name }}</td>
                     </tr>
@@ -92,14 +106,11 @@
                 担当：{{ $estimate_info->charger_name }}</p>
         </div>
         <div class="action2">
-
             <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
         </div>
     </div>
+
 </body>
 
 </html>
-
-
-

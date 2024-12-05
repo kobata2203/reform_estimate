@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>内訳明細書</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/brekdown.js') }}"></script>
 </head>
 
 <body class="estimate-detail">
@@ -19,9 +21,7 @@
 
     <div class="construction-name">
         <label for="construction-name">工事名</label>
-        {{-- <input type="text" id="construction-name" name="construction_name"
-            value="{{ $estimate_info->construction_name ?? '' }}"
-            placeholder="工事名を入力してください"> --}}
+
         <input type="text" id="construction-name" name="construction_name"
             value="{{ $construction_list->name ?? '' }}" placeholder="工事名を入力してください">
 
@@ -78,7 +78,7 @@
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">小計（税抜）</td>
                     <td class="currency"><span> ¥　</span>{{ number_format($subtotal) }}</td>
-                    <!-- Use calculated $subtotal -->
+
 
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">合計（税込）</td>
                     <td class="currency"><span> ¥　</span>{{ number_format($grandTotal) }}</td>
-                    <!-- Use calculated $grandTotal -->
+
                 </tr>
             </table>
             <div class="actions-2">

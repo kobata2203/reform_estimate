@@ -86,7 +86,7 @@ class EstimateInfo extends Model
 
         $estimate_info = $this->create($data);
 
-        if (!$estimate_info) {
+        if(!$estimate_info) {
             return false;
         }
 
@@ -112,7 +112,7 @@ class EstimateInfo extends Model
 
         $result_update = $estimate_info->fill($data)->save();
 
-        if (!$result_update) {
+        if(!$result_update) {
             return false;
         }
 
@@ -129,9 +129,9 @@ class EstimateInfo extends Model
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                    //->orWhere('construction_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-                // ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+                    //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
@@ -149,7 +149,7 @@ class EstimateInfo extends Model
         // Save the changes to the database
         $result = $estimate->save();
 
-        if ($result === true) {
+        if($result === true) {
             return $this->breakdown->deleteBreakdownByEstimateId($id);
         } else {
             return false;

@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ManagerSeeder::class);
         $this->call(ConstructionNameSeeder::class);
-        //$this->call(ConstructionItemSeeder::class);
-        $this->call(BreakdownSeeder::class);
+        $this->call(ConstructionItemSeeder::class);
+        // $this->call(BreakdownSeeder::class);
         $this->call(DepartmentsSeeder::class);
         $this->call(PaymentsSeeder::class);
-       
+
     }
 }
