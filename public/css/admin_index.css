@@ -126,4 +126,6 @@ td .btn-primary:hover {
     background-color: #0069d9;   /* Darker blue on hover */
 }
 
-
+button:disabled {
+    background-color: gray;
+}

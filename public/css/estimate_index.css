@@ -138,3 +138,7 @@ td .btn-primary:hover {
     text-align: right;
     margin-top: 10px;
 }
+
+button:disabled {
+    background-color: gray;
+}

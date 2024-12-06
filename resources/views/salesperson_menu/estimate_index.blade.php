@@ -8,12 +8,12 @@
     <div>
         <h3>見積書一覧画面<br>（営業者用）</h3>
     </div>
-    @if(session('message'))
-        <div>
+    <div class="search-salesperson">
+        @if(session('message'))
+        <div class="message">
             {{ session('message') }}
         </div>
-    @endif
-    <div class="search-salesperson">
+        @endif
         <h6>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h6>
         <div>
             <form action="{{ route('estimate.index') }}" method="GET">
@@ -48,7 +48,7 @@
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
                             <td>
-                                <a href="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border">閲覧</a><br/>
+                                <button data-url="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border" disabled>閲覧</button><br/>
                             </td>
                             <td>
                                 <button class="btn btn-danger"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
