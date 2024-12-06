@@ -68,6 +68,31 @@ class PdfService
         return $this->pdfConfig($html, 'reform_estimate_breakdown.pdf');
     }
 
+    // public function generateCover($id)
+    // {
+    //     $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
+    //     $breakdown = $this->breakdown->fetchingBreakdownsByEstimateId($id);
+    //     $totalAmount = $breakdown->sum('amount');
+
+    //     $estimateCalculate = $this->estimateCalculate->fetchEstimateCalculateByEstimateId($id);
+    //     $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
+    //     $inputDiscount = request()->input('discount', $discount);
+
+    //     $subtotal = $totalAmount - $inputDiscount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
+
+    //     $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
+    //     $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
+    //     $pdfView = view('tcpdf.pdf.cover', compact(
+    //         'estimate_info',
+    //         'grandTotal',
+    //         'breakdown',
+    //         'construction_list'
+    //     ))->render();
+
+    //     return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');
+    // }
     public function generateCover($id)
     {
         $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
@@ -82,11 +107,17 @@ class PdfService
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
-        $pdfView = view('tcpdf.pdf.cover', compact(
-            'estimate_info',
-            'grandTotal',
-            'breakdown'
-        ))->render();
+        // Ensure construction_list is properly indexed and available
+        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
+        $filtered_construction_list = $construction_list[$estimate_info->id] ?? [];
+
+        // Pass variables to the view
+        $pdfView = view('tcpdf.pdf.cover', [
+            'estimate_info' => $estimate_info,
+            'grandTotal' => $grandTotal,
+            'breakdown' => $breakdown,
+            'construction_list' => $filtered_construction_list,
+        ])->render();
 
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');
     }

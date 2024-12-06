@@ -14,6 +14,7 @@ use App\Models\EstimateCalculate;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
+use App\Models\ConstructionList;
 
 class SalespersonController extends Controller
 {
@@ -33,6 +34,7 @@ class SalespersonController extends Controller
     protected $estimate;
     protected $estimateCalculate;
     protected $user;
+    protected $constructionList;
 
     public function __construct(
 
@@ -43,7 +45,8 @@ class SalespersonController extends Controller
         Breakdown $breakdown,
         Estimate $estimate,
         EstimateCalculate $estimateCalculate,
-        User $user
+        User $user,
+        ConstructionList $constructionList,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -53,6 +56,7 @@ class SalespersonController extends Controller
         $this->estimate = $estimate;
         $this->estimateCalculate = $estimateCalculate;
         $this->user = $user;
+        $this->constructionList = $constructionList;
     }
 
     public function add()
@@ -124,6 +128,8 @@ class SalespersonController extends Controller
         // Fetch the estimate record or use null if not found
         $estimate_info = $this->estimateInfo->getById($id);
 
+        //calling the construction_name from the ConstructionList
+        $construction_list = $this->constructionList->getById($id);
         // Fetch breakdown related to estimate or use an empty collection if no estimate is found
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
 
@@ -151,7 +157,7 @@ class SalespersonController extends Controller
         }
 
 
-        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
+        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
     public function showestimate($id)
@@ -164,11 +170,17 @@ class SalespersonController extends Controller
         $subtotal = $totalAmount - $inputDiscount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
+
+        // Fetch related construction names for this estimate
+        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
+        //forpayment
+        $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
         // Pass the estimate_info, breakdown, and grandTotal to the view
         return view('salesperson_menu.view_estimate', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount
+            'discount' => $inputDiscount,
+            'construction_list' => $construction_list[$estimate_info->id] ?? []
         ]);
     }
 }

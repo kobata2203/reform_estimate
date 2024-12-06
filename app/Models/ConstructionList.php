@@ -42,7 +42,7 @@ class ConstructionList extends Model
      */
     public function registEstimateInfoId($construction_name, $id)
     {
-        if(count($construction_name) < 0) {
+        if (count($construction_name) < 0) {
             return true;
         }
 
@@ -58,10 +58,12 @@ class ConstructionList extends Model
         return $this->insert($datas);
     }
 
-    public function getConnectionLists($estimate_info) {
+    public function getConnectionLists($estimate_info)
+    {
         $datas = [];
         foreach ($estimate_info as $item) {
-            $connection_list = $this->select($this->fillable)->where('estimate_info_id', $item->id)->get();
+            $connection_list = $this->select($this->fillable)
+                ->where('estimate_info_id', $item->id)->get();
 
             $datas[$item->id] = $connection_list;
         }
@@ -74,4 +76,21 @@ class ConstructionList extends Model
     {
         return self::find($id);
     }
+
+    //20241206
+    // public function getConnectionLists1($estimate_info)
+    // {
+    //     $datas = [];
+
+    //     foreach ($estimate_info as $item) {
+    //         $connection_list = $this->select($this->fillable)  // Ensure 'name' and 'estimate_info_id' are selected
+    //             ->where('estimate_info_id', $item->id)
+    //             ->get();
+
+    //         $datas[$item->id] = $connection_list;
+    //     }
+
+    //     return $datas;
+    // }
+
 }

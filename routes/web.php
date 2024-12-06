@@ -83,7 +83,7 @@ Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class
 
 
 //20241114
-Route::get('estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
+Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
 Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 

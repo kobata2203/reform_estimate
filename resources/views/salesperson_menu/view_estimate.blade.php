@@ -46,19 +46,23 @@
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}">
+                    value="{{ number_format($grandTotal) }}">
 
-                       <span class="suffix">（税込）</span>
+                <span class="suffix">（税込）</span>
             </div>
         </div>
 
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-                    <tr>
 
+                    <tr>
                         <td>件名</td>
-                        <td>{{ $estimate_info->subject_name }}</td>
+                        <td>
+                            @foreach ($construction_list as $item)
+                                <p>{{ $item->name }}</p> <!-- Display each construction name -->
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td>納入場所</td>
@@ -70,7 +74,7 @@
                     </tr>
                     <tr>
                         <td>支払方法</td>
-                        <td>{{ $estimate_info->payment_type }}</td>
+                        <td>{{ $estimate_info->payment->name }}</td>
                     </tr>
                     <tr>
                         <td>有効期限</td>
@@ -100,6 +104,3 @@
 </body>
 
 </html>
-
-
-

@@ -77,10 +77,19 @@
     </div>
 
     <table>
-        <tr>
+        {{-- <tr>
             <th>件名</th>
             <td>{{ $estimate_info->subject_name }}</td>
+        </tr> --}}
+        <tr>
+            <td>件名</td>
+            <td>
+                @foreach($construction_list as $item)
+                    <p>{{ $item->name }}</p>
+                @endforeach
+            </td>
         </tr>
+
         <tr>
             <th>納入場所</th>
             <td>{{ $estimate_info->delivery_place }}</td>

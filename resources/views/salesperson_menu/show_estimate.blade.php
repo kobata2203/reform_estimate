@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>内訳明細書</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/brekdown.js') }}"></script>
 </head>
 <body class="estimate-detail">
     <div>
@@ -19,7 +21,7 @@
     <div class="construction-name">
         <label for="construction-name">工事名</label>
         <input type="text" id="construction-name" name="construction_name"
-            value="{{ $estimate_info->construction_name ?? '' }}"
+            value="{{ $construction_list->name ?? '' }}"
             placeholder="工事名を入力してください">
     </div>
 

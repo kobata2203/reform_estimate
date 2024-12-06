@@ -58,6 +58,22 @@ li {
     font-size: 16px;
 }
 
+.btn-primary:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.btn:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.js-delete-btn:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.btn-add:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
 .js-delete-btn {
     margin-top: 10px;
     margin-bottom: 10px;

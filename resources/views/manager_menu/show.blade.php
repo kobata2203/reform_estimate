@@ -7,32 +7,46 @@
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Function to update byte count for any given input field
-        function updateByteCount(inputField, byteCountElement) {
-            var charCount = $(inputField).val().length;
-            $(byteCountElement).text(charCount + ' 字');
-        }
+    <script>
+        $(function() {
+            function adjustTextSize() {
+                let windowWidth = $(window).width();
 
-        // Update byte count for customer name input
-        $('#customer-name').on('input', function() {
-            updateByteCount(this, '#customer-name-byte-count');
+                // Adjust header text size
+                if (windowWidth < 600) {
+                    $('h2').css('font-size', '18px'); // Small screen
+                } else if (windowWidth < 900) {
+                    $('h2').css('font-size', '24px'); // Medium screen
+                } else {
+                    $('h2').css('font-size', '32px'); // Large screen
+                }
+
+                // Adjust table text size
+                if (windowWidth < 600) {
+                    $('#div1 td').css('font-size', '12px');
+                } else if (windowWidth < 900) {
+                    $('#div1 td').css('font-size', '14px');
+                } else {
+                    $('#div1 td').css('font-size', '16px');
+                }
+
+            }
+
+            // Run on page load
+            adjustTextSize();
+
+            // Run on window resize
+            $(window).resize(function() {
+                adjustTextSize();
+            });
         });
-
-        // Update byte count for estimate amount input
-        $('#estimate-amount').on('input', function() {
-            updateByteCount(this, '#estimate-amount-byte-count');
-        });
-    });
-</script>
-
+    </script>
 </head>
 
 <body>
     <div>
         <div>
-            <h2>御 見 積 書111</h2>
+            <h2>御 見 積 書</h2>
         </div>
 
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
@@ -72,7 +86,11 @@
                 <table>
                     <tr>
                         <td>件名</td>
-                        <td>{{ $estimate_info->subject_name }}</td>
+                        <td>
+                            @foreach ($construction_list as $item)
+                                <p>{{ $item->name }}</p> <!-- Display each construction name -->
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td>納入場所</td>
@@ -82,10 +100,12 @@
                         <td>工期</td>
                         <td>{{ $estimate_info->construction_period }}</td>
                     </tr>
+
                     <tr>
                         <td>支払方法</td>
-                        <td>{{ $estimate_info->payment_type }}</td>
+                        <td>{{ $estimate_info->payment->name }}</td>
                     </tr>
+
                     <tr>
                         <td>有効期限</td>
                         <td>{{ $estimate_info->expiration_date }}</td>
