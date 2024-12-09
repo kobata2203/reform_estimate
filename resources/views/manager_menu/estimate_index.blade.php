@@ -45,7 +45,7 @@
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
-                            <td><a href="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary">閲覧</a></td>
+                            <td><button data-url="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary" disabled>閲覧</button></td>
                             <td><a href="{{ route('manager.delete', $estimate->id) }}" class="btn btn-danger">削除</a></td>
                         </tr>
                     </div>
