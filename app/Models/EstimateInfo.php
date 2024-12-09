@@ -140,13 +140,10 @@ class EstimateInfo extends Model
 
     public function deleteEstimate($id)
     {
-        // Find the estimate record by ID
         $estimate = $this->findOrFail($id);
 
-        // Update the delete_flag to true
         $estimate->delete_flag = true;
 
-        // Save the changes to the database
         $result = $estimate->save();
 
         if ($result === true) {

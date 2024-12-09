@@ -9,9 +9,6 @@ use App\Models\EstimateInfo;
 use App\Utilities\MpdfService;
 use App\Models\EstimateCalculate;
 
-
-
-
 class PdfService
 {
     protected $estimateInfo;

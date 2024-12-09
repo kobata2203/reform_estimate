@@ -67,11 +67,11 @@
                         </div>
                     </td>
                     @php
-                        // Calculate subtotal after discount
+                        // 割引後の小計を計算
                         $subtotal = $totalAmount - $discount;
-                        // Calculate tax (10%)
+                        //小計の税金（10%）を計算
                         $tax = $subtotal * 0.1;
-                        // Calculate grand total
+                        //合計金額を計算
                         $grandTotal = $subtotal + $tax;
                     @endphp
                 <tr>
@@ -81,7 +81,7 @@
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">消費税（10%）</td>
-                    <td class="currency"><span> ¥　</span>{{ number_format($tax) }}<!-- Use calculated $tax -->
+                    <td class="currency"><span> ¥　</span>{{ number_format($tax) }}
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">合計（税込）</td>
