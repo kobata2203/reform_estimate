@@ -77,19 +77,14 @@
     </div>
 
     <table>
-        {{-- <tr>
-            <th>件名</th>
-            <td>{{ $estimate_info->subject_name }}</td>
-        </tr> --}}
         <tr>
             <td>件名</td>
             <td>
-                @foreach ($construction_list as $index => $item)
-                    <p>{{ $item->name }}@if ($index < count($construction_list) - 1)　/ @endif</p>
+                @foreach($construction_list as $item)
+                    <p>{{ $item->name }}</p>
                 @endforeach
             </td>
         </tr>
-
 
         <tr>
             <th>納入場所</th>
@@ -101,7 +96,7 @@
         </tr>
         <tr>
             <th>支払方法</th>
-            <td>{{ $estimate_info->payment->name  }}</td>
+            <td>{{ $estimate_info->payment_type }}</td>
         </tr>
         <tr>
             <th>有効期限</th>

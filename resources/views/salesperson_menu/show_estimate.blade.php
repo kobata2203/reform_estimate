@@ -75,21 +75,20 @@
             @endphp
             <tr>
                 <td colspan="5" class="custom-width" style="text-align: right;">小計（税抜）</td>
-                <td class="currency"><span> ¥　</span>{{ number_format($subtotal) }}</td> <!-- Use calculated $subtotal -->
-
+                <td class="currency"><span> ¥　</span>{{ number_format($subtotal) }}</td> 
             </tr>
             <tr>
                 <td colspan="5" class="custom-width" style="text-align: right;">消費税（10%）</td>
-                <td class="currency"><span> ¥　</span>{{ number_format($tax) }}<!-- Use calculated $tax -->
+                <td class="currency"><span> ¥　</span>{{ number_format($tax) }}
             </tr>
             <tr>
                 <td colspan="5" class="custom-width" style="text-align: right;">合計（税込）</td>
-                <td class="currency"><span> ¥　</span>{{ number_format($grandTotal) }}</td> <!-- Use calculated $grandTotal -->
+                <td class="currency"><span> ¥　</span>{{ number_format($grandTotal) }}</td>
             </tr>
         </table>
         <div class="actions-2">
             <div class="action2">
-                <button type="submit" class="btn btn-primary">計算する</button> <!-- Update button -->
+                <button type="submit" class="btn btn-primary">計算する</button>
             </div>
         </div>
     </form>
@@ -98,15 +97,8 @@
     <div class="actions-2">
         <div class="action2">
             <a href="{{ route('showestimate', ['id' => $id]) }}" class="btn btn-primary no-print">御見積書</a>
-            {{-- <button class="btn btn-primary no-print" style="margin: 10px;" onclick="printPage()">Print PDF</button> --}}
             <a href="{{ route('generatebreakdown', ['id' => $id]) }}" class="btn btn-primary no-print">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
-            {{-- <div class="btn-menu">
-                <form action="{{ route('salesperson_menu') }}" method="GET">
-                    @csrf
-                    <button class="btn btn-primary">戻る</button>
-                </form>
-            </div> --}}
         </div>
     </div>
 

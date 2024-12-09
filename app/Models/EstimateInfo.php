@@ -197,8 +197,6 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-
-    //show method on the ManagerController p2
     public static function getEstimateByIde($id)
     {
         return self::findOrFail($id);
