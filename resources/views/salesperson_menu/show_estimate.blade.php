@@ -101,6 +101,12 @@
             {{-- <button class="btn btn-primary no-print" style="margin: 10px;" onclick="printPage()">Print PDF</button> --}}
             <a href="{{ route('generatebreakdown', ['id' => $id]) }}" class="btn btn-primary no-print">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
+            {{-- <div class="btn-menu">
+                <form action="{{ route('salesperson_menu') }}" method="GET">
+                    @csrf
+                    <button class="btn btn-primary">戻る</button>
+                </form>
+            </div> --}}
         </div>
     </div>
 

@@ -18,14 +18,6 @@ use App\Models\ConstructionList;
 
 class SalespersonController extends Controller
 {
-    // protected $user;
-
-    // public function __construct(
-    //     User $user
-    // ) {
-    //     $this->user = $user;
-    // }
-
     protected $manager;
     protected $managerInfo;
     protected $estimateInfo;
@@ -35,9 +27,7 @@ class SalespersonController extends Controller
     protected $estimateCalculate;
     protected $user;
     protected $constructionList;
-
     public function __construct(
-
         Manager $manager,
         Managerinfo $managerInfo,
         EstimateInfo $estimateInfo,
@@ -99,9 +89,6 @@ class SalespersonController extends Controller
         return view('salespersons.list', compact('salespersons'));
     }
 
-
-
-
     public function update(SalespersonRequest $request, $id)
     {
 
@@ -109,7 +96,6 @@ class SalespersonController extends Controller
         $this->user->updateUser($id, $validated);
         return redirect()->route('manager_menu.index')->with('success', config('message.update_complete'));
     }
-
 
     public function show($id)
     {
@@ -155,7 +141,6 @@ class SalespersonController extends Controller
             // Handle any save errors
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
-
 
         return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }

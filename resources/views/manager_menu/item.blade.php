@@ -21,7 +21,6 @@
 
     <div class="construction-name">
         <label for="construction-name">工事名</label>
-
         <input type="text" id="construction-name" name="construction_name"
             value="{{ $construction_list->name ?? '' }}" placeholder="工事名を入力してください">
 
@@ -79,7 +78,6 @@
                     <td colspan="5" class="custom-width" style="text-align: right;">小計（税抜）</td>
                     <td class="currency"><span> ¥　</span>{{ number_format($subtotal) }}</td>
 
-
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">消費税（10%）</td>
@@ -93,7 +91,7 @@
             </table>
             <div class="actions-2">
                 <div class="action2">
-                    <button type="submit" class="btn btn-primary">計算する</button> <!-- Update button -->
+                    <button type="submit" class="btn btn-primary">計算する</button>
                 </div>
             </div>
         </form>
@@ -102,17 +100,11 @@
     <div class="actions-2">
         <div class="action2">
             <a href="{{ route('managers.show', ['id' => $id]) }}" class="btn btn-primary no-print">御見積書</a>
-            {{-- <button class="btn btn-primary no-print" style="margin: 10px;" onclick="printPage()">Print PDF</button> --}}
             <a href="{{ route('generatebreakdown', ['id' => $id]) }}" class="btn btn-primary no-print">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
         </div>
     </div>
 
-    {{-- <script>
-        function printPage() {
-            window.print();
-        }
-    </script> --}}
 </body>
 
 </html>

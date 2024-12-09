@@ -20,7 +20,6 @@ use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
 use App\Services\PdfService;
 
-
 class ManagerController extends Controller
 {
     protected $manager;
@@ -97,7 +96,6 @@ class ManagerController extends Controller
         return view('admins.index', compact('manager_info'));
     }
 
-
     public function create()
     {
         return view('manager_index.create');
@@ -127,8 +125,6 @@ class ManagerController extends Controller
         return redirect()->route('admins.index')->with('success', config('message.update_complete'));
     }
 
-
-
     public function show($id)
     {
         $estimate_info = $this->estimateInfo::getEstimateByIde($id);
@@ -153,7 +149,6 @@ class ManagerController extends Controller
             'construction_list' => $construction_list[$estimate_info->id] ?? []
         ]);
     }
-
 
     //for displaying the data from the breakdown tbl in the estimate_info tbl section
     public function itemView($id)

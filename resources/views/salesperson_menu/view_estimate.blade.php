@@ -11,14 +11,8 @@
 <body>
     <div class="stimate-detail">
         <div>
-            <h2>御　見　積　書</br>営業者</h2>
+            <h2>御　見　積　書</h2>
         </div>
-
-        {{-- <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
-            <div style="text-align: right;">
-                <p>{{ $estimate_info->creation_date}}</p>
-            </div>
-        </div> --}}
 
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
             <div style="text-align: right;">
@@ -37,7 +31,6 @@
         </div>
 
         <div>
-            {{-- <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p> --}}
             <p style="display: inline; font-size: 9px; margin: 0; padding-left: 60px;">下記の通りお見積り申し上げます。</p>
         </div>
 
@@ -55,12 +48,11 @@
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-
                     <tr>
                         <td>件名</td>
                         <td>
-                            @foreach ($construction_list as $item)
-                                <p>{{ $item->name }}</p> <!-- Display each construction name -->
+                            @foreach ($construction_list as $index => $item)
+                                <p>{{ $item->name }}@if ($index < count($construction_list) - 1)　/ @endif</p>
                             @endforeach
                         </td>
                     </tr>
