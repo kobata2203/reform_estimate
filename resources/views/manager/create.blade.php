@@ -26,7 +26,7 @@
     @endif
 
     <div class="form-container">
-        <form action="{{ route('admin.store') }}" method="POST">
+        <form action="{{ route('manager.store') }}" method="POST">
             @csrf
             <label for="name">氏名</label>
             <input type="text" id="name" name="name" value="{{ old('name') }}" required>

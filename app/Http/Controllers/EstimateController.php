@@ -49,12 +49,25 @@ class EstimateController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function salesperson_index(Request $request)
     {
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
 
-        return view('salesperson_menu.estimate_index')->with([
+        return view('estimate.salesperson.estimate_index')->with([
+                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
+                    'keyword' => $keyword,
+                    'departments' => $this->department->getDepartmentList(),
+                    'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
+                ]);
+    }
+    
+    public function manager_index(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
+        
+        return view('estimate.manager.estimate_index')->with([
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
@@ -62,14 +75,13 @@ class EstimateController extends Controller
                 ]);
     }
 
-
     public function create()
     {
         $departments = $this->department::all();
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.index',compact('construction_name'))->with([
+        return view('cover.salesperson.index',compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -112,7 +124,7 @@ class EstimateController extends Controller
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.index')->with([
+        return view('cover.salesperson.index')->with([
             'action' => route('estimate.update', ['id'=>$id]),
             'construction_name' => $construction_name,
             'construction_count' => $this->estimateInitCount,
@@ -144,6 +156,87 @@ class EstimateController extends Controller
         ]);
     }
 
+    public function manager_create()
+    {
+        $departments = $this->department::all();
+        $payments = $this->payment::all();
+        $construction_name = $this->constructionName->get_target_construction_name();
+
+        return view('cover.manager.index',compact('construction_name'))->with([
+            'construction_count' => $this->estimateInitCount,
+            'departments' => $departments,
+            'payments' => $payments,
+            'estimate_info' => $this->estimateInfo,
+            'construction_list' => $this->constructionList,
+            'registered_construction_list' => array(),
+            'action' => route('estimate.store'),
+        ]);
+    }
+    /**
+     * 登録処理
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function manager_store(EstimateInfoRequest $request)
+    {
+        $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
+
+        if ($regist_estimate_info === true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
+
+        return redirect('manager_estimate')->with('message', $message);
+    }
+
+    /**
+     * 更新画面
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function manager_edit($id)
+    {
+        // 登録内容の取得
+        $estimate_info = $this->estimateInfo::find($id);
+        $construction_list = $this->constructionList->getEstimateInfoId($id);
+
+        $departments = $this->department::all();
+        $payments = $this->payment::all();
+        $construction_name = $this->constructionName->get_target_construction_name();
+
+        return view('cover.manager.index')->with([
+            'action' => route('estimate.update', ['id'=>$id]),
+            'construction_name' => $construction_name,
+            'construction_count' => $this->estimateInitCount,
+            'departments' => $departments,
+            'payments' => $payments,
+            'estimate_info' => $estimate_info,
+            'registered_construction_list' => $construction_list,
+        ]);
+    }
+
+    /**
+     * 更新処理
+     * @param EstimateInfo $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function manager_update(EstimateInfoRequest $request, $id)
+    {
+        // 更新処理
+        $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
+
+        if($update_estimate_info === true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
+
+        return redirect('manager_estimate')->with([
+            'message' => $message,
+        ]);
+    }
+
     /**
      * 削除処理
      * @param $id
@@ -161,6 +254,22 @@ class EstimateController extends Controller
         }
 
         return redirect('estimate/index')->with([
+            'message' => $message,
+        ]);
+    }
+
+    public function manager_delete($id)
+    {
+        // 削除処理
+        $delete_estimate_info = $this->estimateInfo->deleteEstimate($id);
+
+        if($delete_estimate_info === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
+
+        return redirect('manager_estimate')->with([
             'message' => $message,
         ]);
     }

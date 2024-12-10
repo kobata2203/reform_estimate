@@ -7,7 +7,7 @@
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
-        <h2>見積書一覧画面<br>（管理者用）</h2>
+        <h2>見積書一覧画面</h2>
     </div>
     <div class="search-manager">
         <h5>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h5>
@@ -36,17 +36,17 @@
                 @foreach ($estimate_info as $estimate)
                     <div>
                         <tr>
-                            <td><a href="{{ route('estimate.edit', $estimate->id) }}">{{ $estimate->creation_date }}</a></td>
+                            <td><a href="{{ route('manager_estimate.edit', $estimate->id) }}">{{ $estimate->creation_date }}</a></td>
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                    <a href="{{ route('breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                    <a href="{{ route('manager_breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
                             <td><button data-url="{{ route('manager.item', $estimate->id) }}" class="btn btn-primary" disabled>閲覧</button></td>
-                            <td><a href="{{ route('manager.delete', $estimate->id) }}" class="btn btn-danger">削除</a></td>
+                            <td><a href="{{ route('manager_estimate.delete', $estimate->id) }}" class="btn btn-danger">削除</a></td>
                         </tr>
                     </div>
                 @endforeach

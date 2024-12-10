@@ -18,7 +18,7 @@
     <!-- Form to register salesperson -->
 
     <div class="form-container">
-        <form action="{{ route('salesperson.create') }}" method="POST">
+        <form action="{{ route('salesperson.store') }}" method="POST">
 
             @csrf
             <label for="name">氏名</label>

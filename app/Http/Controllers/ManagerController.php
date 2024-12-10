@@ -71,53 +71,30 @@ class ManagerController extends Controller
         $this->payment = $payment;
     }
 
-
-
     public function index(Request $request)
-    {
-        $keyword = $request->input('keyword');
-        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        
-        return view('manager_menu.estimate_index')->with([
-                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
-                    'keyword' => $keyword,
-                    'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
-                ]);
-    }
-
-
-
-    public function delete($id)
-    {
-        $this->estimateInfo->deleteEstimate($id);
-        return redirect()->route('manager_estimate')->with('status', config('message.delete_complete'));
-    }
-
-    public function admin_index(Request $request)
     {
         $keyword = $request->input('search');
         $manager_info = $this->admin->searchAdmin($keyword);
-        return view('admins.index', compact('manager_info'));
+        return view('manager.index', compact('manager_info'));
     }
 
 
     public function create()
     {
-        return view('manager_index.create');
+        return view('manager.create');
     }
 
     public function store(CreateAdminRequest $request)
     {
         $validated = $request->validated();
         $this->admin->createAdmin($validated);
-        return redirect()->route('manager_menu')->with('success', config('message.regist_complete'));
+        return redirect()->route('manager.index')->with('success', config('message.regist_complete'));
     }
 
     public function edit($id)
     {
         $admin = $this->admin->findAdminById($id);
-        return view('admins.edit', [
+        return view('manager.edit', [
             'admin' => $admin
         ]);
     }
@@ -128,10 +105,24 @@ class ManagerController extends Controller
 
         $this->admin->updateAdmin($id, $validated);
 
-        return redirect()->route('admins.index')->with('success', config('message.update_complete'));
+        return redirect()->route('manager.index')->with('success', config('message.update_complete'));
     }
 
+    public function delete($id)
+    {
+        // 削除処理
+        $delete_admin = $this->admin->deleteAdmin($id);
 
+        if($delete_admin === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
+
+        return redirect('/manager')->with([
+            'message' => $message,
+        ]);
+    }
 
     public function show($id)
     {

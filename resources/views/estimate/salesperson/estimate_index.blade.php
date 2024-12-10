@@ -6,7 +6,7 @@
 @endsection
 @section('content')
     <div>
-        <h3>見積書一覧画面<br>（営業者用）</h3>
+        <h3>見積書一覧画面</h3>
     </div>
     <div class="search-salesperson">
         @if(session('message'))

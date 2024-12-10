@@ -73,7 +73,7 @@ class BreakdownController extends Controller
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         //dd($breakdown_items);
-        return view('breakdown.create')->with([
+        return view('breakdown.salesperson.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,
             'construction_name' => $construction_name,
@@ -110,5 +110,67 @@ class BreakdownController extends Controller
             'prevurl' => $prevurl,
         ]);
     }
-}
 
+
+    public function manager_create($id, Request $request)
+    {
+        $construction_list = $this->constructionList::find($id);
+        $estimate_info = $this->estimateInfo::find($construction_list->estimate_info_id);
+        $construction_name = $this->constructionName::find($construction_list->estimate_info_id);
+        $prevurl = url()->previous(); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+
+        /**
+         * SQLはモデルに記載する
+         */
+        $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
+        $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
+        
+        if(count($breakdown_items) == 0) {
+            if(empty($construction_id)) {
+                $breakdown_items = $this->breakdown->setDummyData();
+            } else {
+                $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
+                //dd($breakdown_items);
+            }
+        } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
+            $breakdown_items = $this->breakdown->setDummyData($request->old());
+        }
+        //dd($breakdown_items);
+        return view('breakdown.manager.create')->with([
+            'id' => $id,
+            'estimate_info' => $estimate_info,
+            'construction_name' => $construction_name,
+            'breakdown_items' => $breakdown_items,
+            'prevurl' => $prevurl,
+            'construction_id' => $construction_id
+        ]);
+    }
+
+    /**
+     * 登録処理
+     * @param BreakdownRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function manager_store(BreakdownRequest $request)
+    {
+        $prevurl = $request->prevurl;
+
+        //直前のページURLが一覧画面（パラメータ有）ではない場合
+        if(false === strpos($prevurl, 'estimate_info?')){
+            $prevurl = url('utill.prevurl_manager_breakdown_store');	//一覧画面のURLを直接指定
+        }
+
+        $regist_breakdown = $this->breakdown->registBreakdown($request);
+
+        if($regist_breakdown === true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
+
+        return redirect('manager_estimate')->with([
+            'message' => $message,
+            'prevurl' => $prevurl,
+        ]);
+    }
+}
