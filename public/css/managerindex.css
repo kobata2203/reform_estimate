@@ -39,13 +39,23 @@ td {
     margin-bottom: 10px; /* Space between button rows */
 }
 
-.btn, .btn-primary, .btn-dark, .btn-danger {
+.btn, .btn-primary, .btn-dark {
     text-align: center;
     background-color: #007bff;
     color: white;
     border-radius: 4px;
     padding: 10px 20px;
     font-size: 16px;
+}
+
+/* Specific Color for '削除' Button */
+td .btn-danger {
+    background-color: #dc3545;   /* Red background */
+    border: none;
+}
+
+td .btn-danger:hover {
+    background-color: #c82333;   /* Darker red on hover */
 }
 
 .margin-left-300 {

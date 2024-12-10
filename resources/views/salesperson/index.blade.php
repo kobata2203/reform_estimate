@@ -39,7 +39,7 @@
                         <td>{{ $user->department_name }}</td>
                         <td>
                             <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark custom-border">編集</a>
-                            <a href="{{ route('salesperson.delete', $user->id) }}" class="btn btn-dark custom-border">削除</a>
+                            <a href="{{ route('salesperson.delete', $user->id) }}" class="btn btn-danger custom-border btn_delete">削除</a>
                         </td>
                     </tr>
                 @endforeach

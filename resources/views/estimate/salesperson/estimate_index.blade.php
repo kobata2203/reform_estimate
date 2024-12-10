@@ -51,7 +51,7 @@
                                 <button data-url="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border" disabled>閲覧</button><br/>
                             </td>
                             <td>
-                                <button class="btn btn-danger"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
+                                <button class="btn btn-danger btn_delete"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
                             </td>
                         </tr>
                     </div>
