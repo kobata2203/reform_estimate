@@ -48,10 +48,10 @@
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
                             <td>
-                                <button data-url="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border" disabled>閲覧</button><br/>
+                                <button data-url="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border" @if($pdf_show_flags[$estimate->id] != true) disabled @endif>閲覧</button><br/>
                             </td>
                             <td>
-                                <button class="btn btn-danger"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
+                                <button class="btn btn-danger btn_delete"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
                             </td>
                         </tr>
                     </div>
