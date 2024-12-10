@@ -2,11 +2,11 @@
 @section('title', '見積書一覧画面（営業者用）')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/estimate_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estimate/estimate_index.css') }}">
 @endsection
 @section('content')
     <div>
-        <h3>見積書一覧画面<br>（営業者用）</h3>
+        <h3>見積書一覧画面</h3>
     </div>
     <div class="search-salesperson">
         @if(session('message'))

@@ -2,13 +2,18 @@
 @section('title', '営業者一覧画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/managerindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/managerindex.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
     <div>
         <h2>営業者一覧画面</h2>
     </div>
+    @if(session('message'))
+        <div class="message">
+            {{ session('message') }}
+        </div>
+    @endif
     <form action="{{ route('salesperson.index') }}" method="GET" class="form-inline">
         <div class="form-group d-flex align-items-center">
             <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい"
@@ -34,6 +39,7 @@
                         <td>{{ $user->department_name }}</td>
                         <td>
                             <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark custom-border">編集</a>
+                            <a href="{{ route('salesperson.delete', $user->id) }}" class="btn btn-danger custom-border btn_delete">削除</a>
                         </td>
                     </tr>
                 @endforeach

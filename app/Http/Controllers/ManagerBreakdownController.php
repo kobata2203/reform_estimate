@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BreakdownRequest;
 use App\Http\Requests\EstimateInfoRequest;
 
-class AdminBreakdownController extends Controller
+class ManagerBreakdownController extends Controller
 {
     protected $estimate;
     protected $construction;
@@ -73,7 +73,7 @@ class AdminBreakdownController extends Controller
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         //dd($breakdown_items);
-        return view('breakdown.create')->with([
+        return view('breakdown.manager.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,
             'construction_name' => $construction_name,
@@ -94,7 +94,7 @@ class AdminBreakdownController extends Controller
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
         if(false === strpos($prevurl, 'estimate_info?')){
-            $prevurl = url('utill.prevurl_adminbreakdown_store');	//一覧画面のURLを直接指定
+            $prevurl = url('utill.prevurl_manager_breakdown_store');	//一覧画面のURLを直接指定
         }
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
@@ -105,7 +105,7 @@ class AdminBreakdownController extends Controller
             $message = config('message.regist_fail');
         }
 
-        return redirect('estimate/index')->with([
+        return redirect('manager_estimate')->with([
             'message' => $message,
             'prevurl' => $prevurl,
         ]);

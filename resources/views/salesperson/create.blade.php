@@ -2,7 +2,7 @@
 @section('title', '営業者登録画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/register.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
@@ -18,7 +18,7 @@
     <!-- Form to register salesperson -->
 
     <div class="form-container">
-        <form action="{{ route('salesperson.create') }}" method="POST">
+        <form action="{{ route('salesperson.store') }}" method="POST">
 
             @csrf
             <label for="name">氏名</label>

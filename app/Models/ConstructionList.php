@@ -74,7 +74,7 @@ class ConstructionList extends Model
     public static function getById($id)
     {
         return self::find($id);
-
+    }
     /**
      * 内訳明細一覧画面の閲覧ボタン活性化判定
      *

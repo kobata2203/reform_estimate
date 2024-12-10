@@ -62,8 +62,12 @@ class User extends Authenticatable
         return $user;
     }
 
-
-
+    public function deleteUser($id)
+    {
+        $user = $this->findOrFail($id);
+        $user->delete($id);
+        return $user;
+    }
 
     public function findUserWithId($id)
     {

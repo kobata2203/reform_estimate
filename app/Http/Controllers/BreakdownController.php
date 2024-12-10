@@ -73,7 +73,7 @@ class BreakdownController extends Controller
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         //dd($breakdown_items);
-        return view('breakdown.create')->with([
+        return view('breakdown.salesperson.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,
             'construction_name' => $construction_name,
@@ -111,4 +111,3 @@ class BreakdownController extends Controller
         ]);
     }
 }
-

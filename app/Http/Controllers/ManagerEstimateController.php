@@ -13,7 +13,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EstimateInfoRequest;
 
-class EstimateController extends Controller
+class ManagerEstimateController extends Controller
 {
     protected $estimate;
     protected $construction;
@@ -23,7 +23,6 @@ class EstimateController extends Controller
     protected $payment;
     protected $constructionName;
     protected $constructionList;
-    protected $estimateInfo;
 
     protected $estimateInitCount = 1; // 工事名の初期表示数
     /**
@@ -47,21 +46,18 @@ class EstimateController extends Controller
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
- 		$this->estimateInfo = $estimateInfo;	
     }
-
-
+    
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
-
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
 
         $keys = array_keys($construction_list);
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
-
-        return view('estimate.salesperson.estimate_index')->with([
+        
+        return view('estimate.manager.estimate_index')->with([
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
@@ -76,7 +72,7 @@ class EstimateController extends Controller
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.salesperson.index',compact('construction_name'))->with([
+        return view('cover.manager.index',compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -101,7 +97,7 @@ class EstimateController extends Controller
             $message = config('message.regist_fail');
         }
 
-        return redirect('estimate/index')->with('message', $message);
+        return redirect('manager_estimate')->with('message', $message);
     }
 
     /**
@@ -119,7 +115,7 @@ class EstimateController extends Controller
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
-        return view('cover.salesperson.index')->with([
+        return view('cover.manager.index')->with([
             'action' => route('estimate.update', ['id'=>$id]),
             'construction_name' => $construction_name,
             'construction_count' => $this->estimateInitCount,
@@ -146,7 +142,7 @@ class EstimateController extends Controller
             $message = config('message.update_fail');
         }
 
-        return redirect('estimate/index')->with([
+        return redirect('manager_estimate')->with([
             'message' => $message,
         ]);
     }
@@ -156,6 +152,7 @@ class EstimateController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+
     public function delete($id)
     {
         // 削除処理
@@ -167,16 +164,8 @@ class EstimateController extends Controller
             $message = config('message.delete_fail');
         }
 
-        return redirect('estimate/index')->with([
+        return redirect('manager_estimate')->with([
             'message' => $message,
         ]);
     }
-
-    public function indexView()
-    {
-        $estimates = EstimateInfo::with('breakdowns')->get();
-        return view('estimate.index', compact('estimates'));
-    }
-
 }
-

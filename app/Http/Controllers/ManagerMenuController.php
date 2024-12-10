@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ManagerMenuController extends Controller
 {
-    public function manager_menu()
+    public function index()
     {
         return view('manager_menu/index');
     }

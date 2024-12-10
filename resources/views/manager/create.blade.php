@@ -2,7 +2,7 @@
 @section('title', '管理者登録画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/register.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
@@ -26,7 +26,7 @@
     @endif
 
     <div class="form-container">
-        <form action="{{ route('admin.store') }}" method="POST">
+        <form action="{{ route('manager.store') }}" method="POST">
             @csrf
             <label for="name">氏名</label>
             <input type="text" id="name" name="name" value="{{ old('name') }}" required>

@@ -5,6 +5,12 @@ body {
     padding: 0; /* Remove default padding */
 }
 
+.message {
+    color: #0069d9;
+    font-size: larger;
+    font-weight: bold;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -96,13 +102,6 @@ td {
     margin: 10px; /* Example of custom margin, adjust as needed */
 }
 
-
-.estimate {
-    background-color: rgb(135,197,48);
-    margin: 5px;          /* Adds 20px margin on all sides */
-    padding: 5px;
-}
-
 /* Button Styles */
 td .btn {
     display: inline-block;
@@ -118,7 +117,6 @@ td .btn {
 /* Specific Color for '削除' Button */
 td .btn-danger {
     background-color: #dc3545;   /* Red background */
-    border: none;
 }
 
 td .btn-danger:hover {
@@ -132,11 +130,6 @@ td .btn-primary {
 
 td .btn-primary:hover {
     background-color: #0069d9;   /* Darker blue on hover */
-}
-
-.btn-menu {
-    text-align: right;
-    margin-top: 10px;
 }
 
 button:disabled {

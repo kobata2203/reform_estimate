@@ -51,19 +51,19 @@ class SalespersonController extends Controller
         $this->constructionList = $constructionList;
     }
 
-    public function add()
+    public function create()
     {
-        return view('salesperson_add.index');
+        return view('salesperson.create');
     }
 
-    public function create(SalespersonRequest $request)
+    public function store(SalespersonRequest $request)
     {
         $validated = $request->validated();
 
         \Log::info('Validated Data: ', $validated);
         if ($this->user->createUser($validated)) {
             \Log::info('User saved successfully: ', [$validated]);
-            return redirect('manager_menu')->with('success', config('message.regist_complete'));
+            return redirect('/salesperson')->with('success', config('message.regist_complete'));
         } else {
             \Log::error('Failed to save user: ', [$validated]);
             return back()->withErrors(config('message.regist_fail'));
@@ -73,14 +73,14 @@ class SalespersonController extends Controller
     public function edit($id)
     {
         $user = $this->user->fetchUserById($id);
-        return view('manager_index.edit', compact('user'));
+        return view('salesperson.edit', compact('user'));
     }
 
     public function index(Request $request)
     {
         $keyword = $request->input('search');
         $users = $this->user->searchUsers($keyword);
-        return view('manager_index.index', compact('users'));
+        return view('salesperson.index', compact('users'));
     }
 
     public function list(Request $request)
@@ -93,18 +93,29 @@ class SalespersonController extends Controller
     {
         $validated = $request->validated();
         $this->user->updateUser($id, $validated);
-        return redirect()->route('manager_menu.index')->with('success', config('message.update_complete'));
+        return redirect()->route('salesperson.index')->with('success', config('message.update_complete'));
+    }
+
+    public function delete($id)
+    {
+        // 削除処理
+        $delete_user = $this->user->deleteUser($id);
+
+        if($delete_user === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
+
+        return redirect('/salesperson')->with([
+            'message' => $message,
+        ]);
     }
 
     public function show($id)
     {
         $user = $this->user->findUserWithId($id);
         return view('salesperson.show', compact('user'));
-    }
-
-    public function manager_menu()
-    {
-        return view('manager_menu.index');
     }
 
     //20241114
