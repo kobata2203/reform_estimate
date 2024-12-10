@@ -54,13 +54,19 @@ class EstimateController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
+
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
+        $construction_list = $this->constructionList->getConnectionLists($estimate_info);
+
+        $keys = array_keys($construction_list);
+        $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
         return view('salesperson_menu.estimate_index')->with([
-                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),  // Use the new model method
+                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
+                    'construction_list' => $construction_list,
+                    'pdf_show_flags' => $pdf_show_flags,
                 ]);
     }
 
