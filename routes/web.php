@@ -44,7 +44,7 @@ Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController:
 Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 
 // Estimate Routes
-Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'salesperson_index'])->name('estimate.index');
+Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate.index');
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
 Route::get('/estimate/edit/{id}', [App\Http\Controllers\EstimateController::class, 'edit'])->name('estimate.edit');
@@ -60,12 +60,12 @@ Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])
 
 
 //管理者用見積書一覧画面
-Route::get('/manager_estimate', [App\Http\Controllers\EstimateController::class, 'manager_index'])->name('manager_estimate');
-Route::get('/manager_estimate/create', [App\Http\Controllers\EstimateController::class, 'manager_create'])->name('manager_estimate.create');
-Route::post('/manager_estimate/store', [App\Http\Controllers\EstimateController::class, 'manager_store'])->name('manager_estimate.store');
-Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\EstimateController::class, 'manager_edit'])->name('manager_estimate.edit');
-Route::post('/manager_estimate/update/{id}', [App\Http\Controllers\EstimateController::class, 'manager_update'])->name('manager_estimate.update');
-Route::get('/manager_estimate/delete/{id}', [App\Http\Controllers\EstimateController::class, 'manager_delete'])->name('manager_estimate.delete');
+Route::get('/manager_estimate', [App\Http\Controllers\ManagerEstimateController::class, 'index'])->name('manager_estimate');
+Route::get('/manager_estimate/create', [App\Http\Controllers\ManagerEstimateController::class, 'create'])->name('manager_estimate.create');
+Route::post('/manager_estimate/store', [App\Http\Controllers\ManagerEstimateController::class, 'store'])->name('manager_estimate.store');
+Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'edit'])->name('manager_estimate.edit');
+Route::post('/manager_estimate/update/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'update'])->name('manager_estimate.update');
+Route::get('/manager_estimate/delete/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'delete'])->name('manager_estimate.delete');
 Route::get('/manager_breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'manager_create'])->name('manager_breakdown.create');
 Route::post('/manager_breakdown/store', [App\Http\Controllers\BreakdownController::class, 'manager_store'])->name('manager_breakdown.store');
 
@@ -112,7 +112,7 @@ Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class,
 
 
 // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
+Route::get('/manager/show/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
 Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');

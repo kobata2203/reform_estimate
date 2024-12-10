@@ -135,7 +135,7 @@ class ManagerController extends Controller
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
         // Pass the estimate_info, breakdown, and grandTotal to the view
-        return view('manager_menu.show', [
+        return view('estimate.manager.show', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'discount' => $inputDiscount
@@ -176,7 +176,7 @@ class ManagerController extends Controller
         }
 
 
-        return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
+        return view('estimate.manager.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal'));
     }
 
 

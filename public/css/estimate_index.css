@@ -5,6 +5,12 @@ body {
     padding: 0; /* Remove default padding */
 }
 
+.message {
+    color: #0069d9;
+    font-size: larger;
+    font-weight: bold;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
