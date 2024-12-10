@@ -70,13 +70,13 @@ class Breakdown extends Model
      * 内訳明細の初期処理用ダミーデータをセット
      * @return array
      */
-    public function setDummyData($old=null)
+    public function setDummyData($old = null)
     {
         $item = [];
-        if(is_array($old)){
+        if (is_array($old)) {
             foreach ($old as $key => $old_item) {
-                if(in_array($key, $this->fillable)) {
-                    if(is_array($old_item)) {
+                if (in_array($key, $this->fillable)) {
+                    if (is_array($old_item)) {
                         foreach ($old_item as $old_item_key => $value) {
                             $item[$old_item_key][$key] = $value;
                         }
@@ -199,5 +199,9 @@ class Breakdown extends Model
     {
         return self::where('estimate_id', $estimateId)->get();
     }
-
+    //pdf method on the ManagerController
+    public function getBreakdownsByEstimateId($estimateId)
+    {
+        return $this->where('estimate_id', $estimateId)->get();
+    }
 }

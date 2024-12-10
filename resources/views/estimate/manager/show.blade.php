@@ -6,26 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            function adjustTextSize() {
+                let windowWidth = $(window).width();
+
+                // Adjust header text size
+                if (windowWidth < 600) {
+                    $('h2').css('font-size', '18px'); // Small screen
+                } else if (windowWidth < 900) {
+                    $('h2').css('font-size', '24px'); // Medium screen
+                } else {
+                    $('h2').css('font-size', '32px'); // Large screen
+                }
+
+                //text size
+                if (windowWidth < 600) {
+                    $('#div1 td').css('font-size', '12px');
+                } else if (windowWidth < 900) {
+                    $('#div1 td').css('font-size', '14px');
+                } else {
+                    $('#div1 td').css('font-size', '16px');
+                }
+
+            }
+
+            //page load
+            adjustTextSize();
+
+            //resize
+            $(window).resize(function() {
+                adjustTextSize();
+            });
+        });
+    </script>
 </head>
 
 <body>
-    <div class="stimate-detail">
+    <div>
         <div>
-            <h2>御　見　積　書</h2>
+            <h2>御 見 積 書</h2>
         </div>
-
-        {{-- <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
-            <div style="text-align: right;">
-                <p>{{ $estimate_info->creation_date}}</p>
-            </div>
-        </div> --}}
 
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
             <div style="text-align: right;">
                 <p>{{ $estimate_info->creation_date }}</p>
             </div>
         </div>
-
 
         <div class="input-container" id="customer">
             <label for="customer-name">お客様名 :</label>
@@ -34,31 +62,35 @@
                     value="{{ old('customer_name', $estimate_info->customer_name) }}">
                 <span class="suffix">様</span>
             </div>
+            <span id="customer-name-byte-count"></span>
         </div>
 
         <div>
-            {{-- <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p> --}}
             <p style="display: inline; font-size: 9px; margin: 0; padding-left: 60px;">下記の通りお見積り申し上げます。</p>
         </div>
 
-        <div class="input-suffix-wrapper">
+        <div class="input-suffix-wrapper" id="grandtotal">
             <div class="input-suffix">
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}">
-
-                       <span class="suffix">（税込）</span>
+                    value="{{ number_format($grandTotal) }}">
+                <span class="suffix">（税込）</span>
             </div>
+            <span id="estimate-amount-byte-count"></span>
         </div>
+
 
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
                     <tr>
-
                         <td>件名</td>
-                        <td>{{ $estimate_info->subject_name }}</td>
+                        <td>
+                            @foreach ($construction_list as $item)
+                                <p>{{ $item->name }}</p>
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td>納入場所</td>
@@ -68,10 +100,12 @@
                         <td>工期</td>
                         <td>{{ $estimate_info->construction_period }}</td>
                     </tr>
+
                     <tr>
                         <td>支払方法</td>
-                        <td>{{ $estimate_info->payment_type }}</td>
+                        <td>{{ $estimate_info->payment->name }}</td>
                     </tr>
+
                     <tr>
                         <td>有効期限</td>
                         <td>{{ $estimate_info->expiration_date }}</td>
@@ -92,14 +126,11 @@
                 担当：{{ $estimate_info->charger_name }}</p>
         </div>
         <div class="action2">
-
-            <a href="{{ route('managers.pdfshow', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
+            <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
         </div>
     </div>
+
 </body>
 
 </html>
-
-
-

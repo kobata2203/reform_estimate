@@ -42,7 +42,7 @@ class ConstructionList extends Model
      */
     public function registEstimateInfoId($construction_name, $id)
     {
-        if(count($construction_name) < 0) {
+        if (count($construction_name) < 0) {
             return true;
         }
 
@@ -51,17 +51,18 @@ class ConstructionList extends Model
             $data = [];
             $data['name'] = $value;
             $data['estimate_info_id'] = $id;
-
             $datas[] = $data;
         }
 
         return $this->insert($datas);
     }
 
-    public function getConnectionLists($estimate_info) {
+    public function getConnectionLists($estimate_info)
+    {
         $datas = [];
         foreach ($estimate_info as $item) {
-            $connection_list = $this->select($this->fillable)->where('estimate_info_id', $item->id)->get();
+            $connection_list = $this->select($this->fillable)
+                ->where('estimate_info_id', $item->id)->get();
 
             $datas[$item->id] = $connection_list;
         }
@@ -69,6 +70,11 @@ class ConstructionList extends Model
         return $datas;
     }
 
+    //2024123
+    public static function getById($id)
+    {
+        return self::find($id);
+    }
     /**
      * 内訳明細一覧画面の閲覧ボタン活性化判定
      *

@@ -23,8 +23,6 @@ class EstimateInfo extends Model
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
-
-
     protected $fillable = [
         'customer_name',
         'creation_date',
@@ -61,13 +59,10 @@ class EstimateInfo extends Model
         return $this->hasMany(Breakdown::class, 'estimate_id');
     }
 
-
-
     public function constructionName()
     {
         return $this->belongsTo('App\Models\ConstructionName', 'construction_id', 'id');
     }
-
 
     public function registEstimateInfo($request)
     {
@@ -86,7 +81,7 @@ class EstimateInfo extends Model
 
         $estimate_info = $this->create($data);
 
-        if(!$estimate_info) {
+        if (!$estimate_info) {
             return false;
         }
 
@@ -112,7 +107,7 @@ class EstimateInfo extends Model
 
         $result_update = $estimate_info->fill($data)->save();
 
-        if(!$result_update) {
+        if (!$result_update) {
             return false;
         }
 
@@ -129,9 +124,7 @@ class EstimateInfo extends Model
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                    //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
                     ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-                    //->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
@@ -140,29 +133,24 @@ class EstimateInfo extends Model
 
     public function deleteEstimate($id)
     {
-        // Find the estimate record by ID
         $estimate = $this->findOrFail($id);
 
-        // Update the delete_flag to true
         $estimate->delete_flag = true;
 
-        // Save the changes to the database
         $result = $estimate->save();
 
-        if($result === true) {
+        if ($result === true) {
             return $this->breakdown->deleteBreakdownByEstimateId($id);
         } else {
             return false;
         }
     }
 
-    // EstimateInfo.php
     public function getEstimateWithDetails($id)
     {
-        // Fetch the estimate info by ID
+
         $estimate_info = $this->findOrFail($id);
 
-        // Fetch related breakdown data
         $breakdown = $estimate_info->breakdown;
         return [$estimate_info, $breakdown];
     }
@@ -173,13 +161,12 @@ class EstimateInfo extends Model
         return $this->find($id);
     }
 
-    //pdf method on the ManagerController
+
     public function fetchEstimateInfoById($id)
     {
         return $this->findOrFail($id);
     }
 
-    //PDFshow on ManagerController
     public function fetchingEstimateInfoById($id)
     {
         return $this->findOrFail($id);
@@ -197,10 +184,14 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-
-    //show method on the ManagerController p2
     public static function getEstimateByIde($id)
     {
         return self::findOrFail($id);
+
     }
+    public function payment()
+    {
+        return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
+    }
+
 }

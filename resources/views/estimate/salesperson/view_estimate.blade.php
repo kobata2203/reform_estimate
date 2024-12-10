@@ -13,19 +13,11 @@
         <div>
             <h2>御　見　積　書</br>営業者</h2>
         </div>
-
-        {{-- <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-start;">
-            <div style="text-align: right;">
-                <p>{{ $estimate_info->creation_date}}</p>
-            </div>
-        </div> --}}
-
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
             <div style="text-align: right;">
                 <p>{{ $estimate_info->creation_date }}</p>
             </div>
         </div>
-
 
         <div class="input-container" id="customer">
             <label for="customer-name">お客様名 :</label>
@@ -37,7 +29,6 @@
         </div>
 
         <div>
-            {{-- <p style="padding-left: 60px; font-size: 9px;">下記の通りお見積り申し上げます。</p> --}}
             <p style="display: inline; font-size: 9px; margin: 0; padding-left: 60px;">下記の通りお見積り申し上げます。</p>
         </div>
 
@@ -46,19 +37,23 @@
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
                 <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                       value="{{ number_format($grandTotal) }}">
+                    value="{{ number_format($grandTotal) }}">
 
-                       <span class="suffix">（税込）</span>
+                <span class="suffix">（税込）</span>
             </div>
         </div>
 
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-                    <tr>
 
+                    <tr>
                         <td>件名</td>
-                        <td>{{ $estimate_info->subject_name }}</td>
+                        <td>
+                            @foreach ($construction_list as $item)
+                                <p>{{ $item->name }}</p>
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td>納入場所</td>
@@ -70,7 +65,7 @@
                     </tr>
                     <tr>
                         <td>支払方法</td>
-                        <td>{{ $estimate_info->payment_type }}</td>
+                        <td>{{ $estimate_info->payment->name }}</td>
                     </tr>
                     <tr>
                         <td>有効期限</td>
@@ -93,13 +88,10 @@
         </div>
         <div class="action2">
 
-            <a href="{{ route('managers.pdfshow', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
+            <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
         </div>
     </div>
 </body>
 
 </html>
-
-
-

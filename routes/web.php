@@ -38,7 +38,6 @@ Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
 
-
 //営業者用メニュー画面
 Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
@@ -53,9 +52,8 @@ Route::get('/estimate/delete/{id}', [App\Http\Controllers\EstimateController::cl
 Route::get('/breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'create'])->name('breakdown.create');
 Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
-
 //20241114
-Route::get('estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
+Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
 Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 
@@ -116,22 +114,11 @@ Route::get('/manager/show/{id}', [ManagerController::class, 'show'])->name('mana
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
 Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
-//togenerate pdf
 
-#to view pdf
-// Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
 
 #to print pdf
-// Route::get('/print-pdf', [ManagerController::class, 'printPDF'])->name('pdf.print');
-// Route::get('/manager/pdf', [ManagerController::class, 'getpdf'])->name('pdf.print1');
-// Route::get('/manager_menu/pdftrail/{id}', [ManagerController::class, 'pdfget'])->name('Pdftrail');
-Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'pdf'])->name('showPdftrail');
-//Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
+Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
+Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
-Route::get('/managers/pdf/{id}', [ManagerController::class, 'PDFshow'])->name('managers.pdfshow');
-
-
-
-// Generate PDF route
-Route::get('/estimate/pdf/{id}', [ManagerController::class, 'generatefpdi'])->name('generatefpdi');
+Route::get('/managers/pdf/{id}', [ManagerController::class, 'generateCover'])->name('generatecover');
 
