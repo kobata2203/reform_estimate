@@ -150,10 +150,9 @@ class EstimateInfo extends Model
 
     public function getEstimateWithDetails($id)
     {
-        // Fetch the estimate info by ID
+
         $estimate_info = $this->findOrFail($id);
 
-        // Fetch related breakdown data
         $breakdown = $estimate_info->breakdown;
         return [$estimate_info, $breakdown];
     }
@@ -164,13 +163,12 @@ class EstimateInfo extends Model
         return $this->find($id);
     }
 
-    //pdf method on the ManagerController
+   
     public function fetchEstimateInfoById($id)
     {
         return $this->findOrFail($id);
     }
 
-    //PDFshow on ManagerController
     public function fetchingEstimateInfoById($id)
     {
         return $this->findOrFail($id);

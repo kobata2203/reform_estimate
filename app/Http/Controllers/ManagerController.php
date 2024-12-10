@@ -97,7 +97,6 @@ class ManagerController extends Controller
         return view('admins.index', compact('manager_info'));
     }
 
-
     public function create()
     {
         return view('manager_index.create');
@@ -126,8 +125,6 @@ class ManagerController extends Controller
 
         return redirect()->route('admins.index')->with('success', config('message.update_complete'));
     }
-
-
 
     public function show($id)
     {
