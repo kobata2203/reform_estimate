@@ -17,6 +17,8 @@ class PdfService
     protected $mpdf;
     protected $constructionList;
 
+
+
     public function __construct(
         EstimateInfo $estimateInfo,
         Breakdown $breakdown,
@@ -42,6 +44,7 @@ class PdfService
 
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
+        //
         $totalAmount = $breakdown->sum('amount');
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;

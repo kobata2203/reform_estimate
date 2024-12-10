@@ -129,6 +129,7 @@ class SalespersonController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
+
         return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
