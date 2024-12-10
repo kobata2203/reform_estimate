@@ -21,7 +21,6 @@
 
         }
 
-
         table {
             width: 65%;
             border-collapse: collapse;
@@ -49,8 +48,8 @@
             width: 30%;
             font-size: 14px;
             position: absolute;
-            bottom: 50px;
-            right: -50px;
+            bottom: 375px;
+            right: 15px;
             margin-bottom: 300px;
 
         }
@@ -78,9 +77,14 @@
 
     <table>
         <tr>
-            <th>件名</th>
-            <td>{{ $estimate_info->subject_name }}</td>
+            <td>件名</td>
+            <td>
+                @foreach($construction_list as $item)
+                    <p>{{ $item->name }}</p>
+                @endforeach
+            </td>
         </tr>
+
         <tr>
             <th>納入場所</th>
             <td>{{ $estimate_info->delivery_place }}</td>
