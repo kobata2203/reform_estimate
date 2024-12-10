@@ -68,34 +68,4 @@ class ConstructionList extends Model
 
         return $datas;
     }
-
-    /**
-     * 内訳明細一覧画面の閲覧ボタン活性化判定
-     * 
-     * @param $construction_list_keys　工事IDリスト
-     * @return array
-     */
-    public function getPdfShowFlag($construction_list_ids)
-    {
-        $join_table = 'breakdown';
-        $datas = [];
-
-        foreach ($construction_list_ids as $item) {
-            $breakdown_count_list = $this->selectRaw('count(' . $join_table . '.id) as breakdown_count')
-                ->leftJoin($join_table, $this->table . '.id', '=', $join_table . '.construction_list_id')
-                ->where($this->table . '.estimate_info_id', $item)
-                ->groupBy($this->table . '.id')
-                ->get();
-
-            $datas[$item] = false;
-            foreach ($breakdown_count_list as $breakdown_count_item) {
-                if (!empty($breakdown_count_item->breakdown_count) && $breakdown_count_item->breakdown_count > 0) {
-                    $datas[$item] = true;
-                }
-            }
-        }
-
-        return $datas;
-    }
-
 }
