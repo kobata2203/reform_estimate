@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            function adjustTextSize() {
+                let windowWidth = $(window).width();
+
+                // Adjust header text size
+                if (windowWidth < 600) {
+                    $('h2').css('font-size', '18px'); // Small screen
+                } else if (windowWidth < 900) {
+                    $('h2').css('font-size', '24px'); // Medium screen
+                } else {
+                    $('h2').css('font-size', '32px'); // Large screen
+                }
+
+                //text size
+                if (windowWidth < 600) {
+                    $('#div1 td').css('font-size', '12px');
+                } else if (windowWidth < 900) {
+                    $('#div1 td').css('font-size', '14px');
+                } else {
+                    $('#div1 td').css('font-size', '16px');
+                }
+
+            }
+
+            //page load
+            adjustTextSize();
+
+            //resize
+            $(window).resize(function() {
+                adjustTextSize();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -45,27 +80,22 @@
             <span id="estimate-amount-byte-count"></span>
         </div>
 
+
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-
                     <tr>
                         <td>件名</td>
-                        <td id="construction-items">
-                            @foreach ($construction_list as $index => $item)
-                                <p>{{ $item->name }}@if ($index < count($construction_list) - 1)
-                                        /
-                                    @endif
-                                </p>
+                        <td>
+                            @foreach ($construction_list as $item)
+                                <p>{{ $item->name }}</p>
                             @endforeach
                         </td>
                     </tr>
-
                     <tr>
                         <td>納入場所</td>
                         <td>{{ $estimate_info->delivery_place }}</td>
                     </tr>
-
                     <tr>
                         <td>工期</td>
                         <td>{{ $estimate_info->construction_period }}</td>

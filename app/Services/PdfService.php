@@ -23,6 +23,7 @@ class PdfService
         EstimateCalculate $estimateCalculate,
         Mpdf $mpdf,
         ConstructionList $constructionList,
+
     ) {
         $this->estimateInfo = $estimateInfo;
         $this->breakdown = $breakdown;
@@ -41,13 +42,11 @@ class PdfService
 
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
-        // Calculate totals
         $totalAmount = $breakdown->sum('amount');
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
-        // Render the Blade view to HTML
+        //合計金額を計算
         $html = view('tcpdf.pdf.breakdown', compact(
             'estimate_info',
             'breakdown',
@@ -78,8 +77,6 @@ class PdfService
 
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
         $filtered_construction_list = $construction_list[$estimate_info->id] ?? [];
-
-        // Pass variables to the view
         $pdfView = view('tcpdf.pdf.cover', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
@@ -90,7 +87,8 @@ class PdfService
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');
     }
 
-    //calling from the utilities
+
+    //App/utilitiesから呼び出し
     private function pdfConfig($html, $filename)
     {
         $mpdf = MpdfService::create();
@@ -99,4 +97,5 @@ class PdfService
 
         return $mpdf->Output($filename, 'I');
     }
+
 }

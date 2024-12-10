@@ -51,7 +51,6 @@ class ConstructionList extends Model
             $data = [];
             $data['name'] = $value;
             $data['estimate_info_id'] = $id;
-
             $datas[] = $data;
         }
 
@@ -76,21 +75,5 @@ class ConstructionList extends Model
     {
         return self::find($id);
     }
-
-    //20241206
-    // public function getConnectionLists1($estimate_info)
-    // {
-    //     $datas = [];
-
-    //     foreach ($estimate_info as $item) {
-    //         $connection_list = $this->select($this->fillable)  // Ensure 'name' and 'estimate_info_id' are selected
-    //             ->where('estimate_info_id', $item->id)
-    //             ->get();
-
-    //         $datas[$item->id] = $connection_list;
-    //     }
-
-    //     return $datas;
-    // }
 
 }

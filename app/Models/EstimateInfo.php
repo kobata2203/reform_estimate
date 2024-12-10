@@ -23,8 +23,6 @@ class EstimateInfo extends Model
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
-
-
     protected $fillable = [
         'customer_name',
         'creation_date',
@@ -61,13 +59,10 @@ class EstimateInfo extends Model
         return $this->hasMany(Breakdown::class, 'estimate_id');
     }
 
-
-
     public function constructionName()
     {
         return $this->belongsTo('App\Models\ConstructionName', 'construction_id', 'id');
     }
-
 
     public function registEstimateInfo($request)
     {
@@ -140,13 +135,10 @@ class EstimateInfo extends Model
 
     public function deleteEstimate($id)
     {
-        // Find the estimate record by ID
         $estimate = $this->findOrFail($id);
 
-        // Update the delete_flag to true
         $estimate->delete_flag = true;
 
-        // Save the changes to the database
         $result = $estimate->save();
 
         if ($result === true) {
@@ -156,7 +148,6 @@ class EstimateInfo extends Model
         }
     }
 
-    // EstimateInfo.php
     public function getEstimateWithDetails($id)
     {
         // Fetch the estimate info by ID
@@ -197,8 +188,6 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-
-    //show method on the ManagerController p2
     public static function getEstimateByIde($id)
     {
         return self::findOrFail($id);
@@ -208,6 +197,5 @@ class EstimateInfo extends Model
     {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
     }
-
 
 }
