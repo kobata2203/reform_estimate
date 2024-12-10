@@ -124,9 +124,7 @@ class EstimateInfo extends Model
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                    //   ->orWhere('construction_name', 'LIKE', "%{$keyword}%")
                     ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-                //->orWhere('department_name', 'LIKE', "%{$keyword}%");
             });
         }
 
@@ -163,7 +161,7 @@ class EstimateInfo extends Model
         return $this->find($id);
     }
 
-   
+
     public function fetchEstimateInfoById($id)
     {
         return $this->findOrFail($id);
