@@ -3,7 +3,7 @@
 @section('title', '見積書作成画面(内訳明細書)')
 
 @section('headder')
-    <link rel="stylesheet" href="{{ asset('css/breakdown_create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/breakdown/breakdown_create.css') }}">
     <script src="{{ asset('/js/estimate/breakdown_create.js') }}"></script>
 @endsection
 

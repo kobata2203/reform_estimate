@@ -2,7 +2,7 @@
 @section('title', '管理者メニュー画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/menuindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/menu/menuindex.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->

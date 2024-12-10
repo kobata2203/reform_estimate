@@ -2,7 +2,7 @@
 @section('title', '管理者登録画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/edit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/edit.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->

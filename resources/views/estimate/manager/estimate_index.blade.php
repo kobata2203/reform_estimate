@@ -2,7 +2,7 @@
 @section('title', '見積書一覧画面（管理者用）')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/admin_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estimate/admin_index.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->

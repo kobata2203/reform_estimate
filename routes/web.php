@@ -66,8 +66,8 @@ Route::post('/manager_estimate/store', [App\Http\Controllers\ManagerEstimateCont
 Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'edit'])->name('manager_estimate.edit');
 Route::post('/manager_estimate/update/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'update'])->name('manager_estimate.update');
 Route::get('/manager_estimate/delete/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'delete'])->name('manager_estimate.delete');
-Route::get('/manager_breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'manager_create'])->name('manager_breakdown.create');
-Route::post('/manager_breakdown/store', [App\Http\Controllers\BreakdownController::class, 'manager_store'])->name('manager_breakdown.store');
+Route::get('/manager_breakdown/create/{id}', [App\Http\Controllers\ManagerBreakdownController::class, 'create'])->name('manager_breakdown.create');
+Route::post('/manager_breakdown/store', [App\Http\Controllers\ManagerBreakdownController::class, 'store'])->name('manager_breakdown.store');
 
 //管理者用内訳明細書作成
 //Route::get('/adminbreakdown/create/{id}', [App\Http\Controllers\AdminBreakdownController::class, 'create'])->name('adminbreakdown.create');

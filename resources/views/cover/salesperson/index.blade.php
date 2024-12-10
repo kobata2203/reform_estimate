@@ -3,7 +3,7 @@
 @section('title', '見積書作成画面')
 
 @section('headder')
-    <link rel="stylesheet" href="{{ asset('css/cover_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cover/cover_index.css') }}">
     <script src="{{ asset('/js/cover/index.js') }}"></script>
 @endsection
 
