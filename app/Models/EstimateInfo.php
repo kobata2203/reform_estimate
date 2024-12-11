@@ -128,6 +128,9 @@ class EstimateInfo extends Model
             });
         }
 
+        $query->orderBy('created_at', 'desc')
+            ->take(20);
+
         return $query->get();
     }
 
