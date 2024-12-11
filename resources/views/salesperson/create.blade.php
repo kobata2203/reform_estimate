@@ -31,13 +31,11 @@
             <label for="department">部署名</label>
             <select id="department" name="department_name"required>
                 <option value="本部">本部</option>
-                <option value="営業１課１係">営業１課１係</option>
-                <option value="営業１課２係">営業１課２係</option>
+                <option value=" 契約管理課"> 契約管理課</option>
+                <option value="営業１課">営業１課</option>
                 <option value="営業１課３係">営業１課３係</option>
                 <option value="営業２課１係">営業２課１係</option>
-                <option value="営業２課２係">営業２課２係</option>
                 <option value="営業３課">営業３課</option>
-                <option value=" 契約管理課"> 契約管理課</option>
             </select>
             @if ($errors->has('department_name'))
             <div class="invalid-feedback" role="alert">

@@ -172,11 +172,11 @@ class EstimateController extends Controller
         ]);
     }
 
-    public function indexView()
-    {
-        $estimates = EstimateInfo::with('breakdowns')->get();
-        return view('estimate.index', compact('estimates'));
-    }
+    //public function indexView()
+    //{
+        //$estimates = EstimateInfo::with('breakdowns')->get();
+        //return view('estimate.index', compact('estimates'));
+    //}
 
 }
 
