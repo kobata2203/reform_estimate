@@ -3,6 +3,10 @@ body {
     align-items: center;
 }
 
+.table-container {
+    padding-left: 40px;
+}
+
 /* table02 */
 #table02 th, #table02 td {
     text-align: center;

@@ -9,6 +9,8 @@ body {
     color: #0069d9;
     font-size: larger;
     font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 20px;
 }
 
 table {
