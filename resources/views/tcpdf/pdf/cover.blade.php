@@ -78,7 +78,7 @@
     <table>
         <tr>
             <th>件名</th>
-            <td id="construction-items" style="font-size: {{ $font_size }}px;">
+            <td id="construction-items" style="font-size: {{ $font_size }}px;">　//$font_sizeはPdfServiceから呼び出し
                 @foreach ($construction_list as $index => $item)
                     {{ $item->name }}
                     @if ($index < count($construction_list) - 1)
