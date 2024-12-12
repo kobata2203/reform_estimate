@@ -30,9 +30,9 @@ th {
 
 
 .table-large {
-    width: 85%; /* Set the width to 85% */
-    margin: 0 auto; /* Center the table */
-    margin-top: 10px; /* Keep the top margin if needed */
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 10px;
     border-collapse: collapse;
 }
 
@@ -41,10 +41,10 @@ th {
 h2
 {
     text-align: center;
-    border: 2px solid #160202; /* Border color and width */
-    padding: 20px;            /* Space inside the border */
-    margin: 2px;               /* Remove default margin */
-    width: 100%;             /* Full width of the page */
+    border: 2px solid #160202;
+    padding: 20px;
+    margin: 2px;
+    width: 100%;
     box-sizing: border-box;
     background-color: rgb(186, 182, 182);
     font-size: 28px;
@@ -54,100 +54,100 @@ h2
 
 
 .input-container {
-    display: flex;              /* Use flexbox for horizontal alignment */
-    align-items:start;        /* Center items vertically */
-    max-width: 600px;          /* Set a maximum width for the container */
+    display: flex;
+    align-items:start;
+    max-width: 600px;
     margin: 0 auto;
     margin-top: 10px;
 }
 
 .input-container label {
-    margin-right: 10px;         /* Space between label and input */
+    margin-right: 10px;
 }
 
 .input-underline {
-    position: relative;         /* Position for absolute child elements */
-    flex-grow: 1;               /* Allow the underline to take available space */
-    display: flex;              /* Use flexbox for positioning */
-    align-items: center;        /* Center items vertically */
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 .input-underline input {
-    border: none;               /* Remove default border */
-    border-bottom: 2px solid black; /* Add a bottom border */
-    outline: none;              /* Remove outline on focus */
-    padding: 5px 0;            /* Padding for the input */
-    width: 100%;                /* Make the input field full width */
+    border: none;
+    border-bottom: 2px solid black;
+    outline: none;
+    padding: 5px 0;
+    width: 100%;
 }
 
 .suffix {
-    margin-left: 5px;          /* Space between input and "様" */
+    margin-left: 5px;
 }
 
 .input-container-estimate {
     display: flex;
-    justify-content: flex-end; /* Aligns everything to the right */
-    align-items: center; /* Vertically centers the items */
-    margin-bottom: 10px; /* Space below the container */
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .input-suffix {
-    display: flex;                   /* Use flexbox for layout */
-    align-items: center;            /* Vertically center the items */
-    justify-content: flex-start;    /* Align items to the start (left) */
-    margin: 10px 0;                 /* Optional: Add space around the container */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px 0;
 }
 
 .input-suffix label {
-    margin-right: 5px;              /* Space between label and input */
-    display: flex;                  /* Ensure label is treated as flex */
-    align-items: center;            /* Center label vertically */
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .input-suffix input {
-    border: none;                   /* Remove default border */
-    border-bottom: 1px solid black; /* Add a bottom border */
-    padding: 5px;                  /* Padding for the input */
-    width: 150px;                  /* Set width for the input */
-    margin-right: 5px;             /* Space between input and suffix */
-    height: 30px;                  /* Ensure consistent height */
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    width: 150px;
+    margin-right: 5px;
+    height: 30px;
 }
 
 .suffix {
-    font-size: 14px;               /* Font size for the suffix */
-    display: flex;                 /* Ensure suffix is treated as flex */
-    align-items: center;           /* Center suffix vertically */
+    font-size: 14px;
+    display: flex;
+    align-items: center;
 }
 
 .input-suffix-wrapper {
-    display: flex;                /* Use flexbox for alignment */
-    justify-content: center;  /* Align to the left */
-    width: 100%;                 /* Ensure full width */
-    margin-bottom: 10px;        /* Space below the container */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 input[type="text"] {
     border: none;
-    border-bottom: 1px solid black; /* Adds an underline */
-    padding: 5px; /* Padding inside the input */
-    width: 150px; /* Width of the input */
-    margin-right: 5px; /* Space between input and suffix */
+    border-bottom: 1px solid black;
+    padding: 5px;
+    width: 150px;
+    margin-right: 5px;
 }
 
 .suffix {
-    font-size: 14px; /* Font size for the suffix */
+    font-size: 14px;
 }
 
 
 .details-container {
-    display: flex;               /* Flexbox layout */
-    justify-content: space-between; /* Space between table and contact info */
-    align-items:flex-end;     /* Align the items at the top */
-    margin-bottom: 20px;         /* Optional margin for spacing */
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-end;
+    margin-bottom: 20px;
 }
 
 .details {
-    width: 90%;                  /* Set width for the table section */
+    width: 90%;
 }
 
 .contact-info {
@@ -160,38 +160,36 @@ input[type="text"] {
 
 .actions{
     display: flex;
-    justify-content:center; /* Aligns the content to the right */
-    margin-top: 20px;          /* Optional margin for spacing above */
+    justify-content:center;
+    margin-top: 20px;
 }
 
 .actions-2{
     display: flex;
-    justify-content:end; /* Aligns the content to the right */
+    justify-content:end;
     margin-top: 20px;
     margin-right: 20px;
 
 }
 
- /* Example styles for different column widths */
+
  .wide-column {
-    width: 200px; /* Adjust width as needed */
+    width: 200px;
 }
 .narrow-column {
-    width: 100px; /* Adjust width as needed */
+    width: 100px;
 }
 .tall-row {
-    height: 60px; /* Adjust height as needed */
+    height: 60px;
 }
 .short-row {
-    height: 30px; /* Adjust height as needed */
+    height: 30px;
 }
 
 .construction-name
 {
     margin-left: 20px;
 }
-
-
 
 table tr:not(:nth-last-child(-n+0)) td:first-child {
     font-weight: bold;
@@ -207,19 +205,15 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     background-color: rgb(186, 182, 182);
 }
 
-/* Adjust other styles similarly */
 .show-page h2 {
     text-align: center;
-    border: 2px solid #160202; /* Border color and width */
-    padding: 20px;            /* Space inside the border */
-    margin: 2px;               /* Remove default margin */
-    width: 100%;             /* Full width of the page */
+    border: 2px solid #160202;
+    padding: 20px;
+    margin: 2px;
+    width: 100%;
     box-sizing: border-box;
     background-color: rgb(186, 182, 182);
 }
-
-/* this is for the servantop address on the right */
-
 
 #div2
  {
@@ -230,10 +224,8 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
  }
  #customer {
-    margin-left: 20px; /* Adjust the value to move the div left */
+    margin-left: 20px;
 }
-
-/* Scope the styles to .estimate-detail container */
 
 .estimate-detail body {
     font-family: 'Arial', sans-serif;
@@ -249,11 +241,11 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-/* Being used for the 内訳明細書 */
+
 .estimate-detail table {
-    width: 89%; /* Adjust width as needed */
-    border-collapse: collapse; /* Collapse borders */
-    margin: 20px auto; /* Centers the table with equal left and right margins */
+    width: 89%;
+    border-collapse: collapse;
+    margin: 20px auto;
 }
 
 .estimate-detail th,
@@ -262,8 +254,6 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     padding: 8px;
     text-align: center;
 }
-
-/* Scope all other styles like this */
 
 .estimate-detail .h2 {
     text-align: center;
@@ -275,16 +265,13 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     background-color: rgb(186, 182, 182);
 }
 
-/* Continue adding .estimate-detail prefix to all relevant CSS rules */
-/* Remove the styles for the item table */
 .item-table tr:not(:nth-last-child(-n+0)) td:first-child {
-    font-weight: normal; /* Reset to normal font weight */
-    padding-right: 0;   /* Reset padding */
-    color: inherit;     /* Reset color */
-    background-color: transparent; /* Reset background color */
+    font-weight: normal;
+    padding-right: 0;
+    color: inherit;
+    background-color: transparent;
 }
 
-/* Retain the styles for the other tables */
 .show-page table tr:not(:nth-last-child(-n+0)) td:first-child {
     font-weight: bold;
     padding-right: 10px;
@@ -294,63 +281,53 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 
 .details table {
-    width: %; /* Make table take full width */
-    table-layout: fixed; /* Fixes the layout */
+    width: %;
+    table-layout: fixed;
 }
 
 .details th, .details td {
-    width: 50%; /* Set each column to 50% */
-    word-wrap: break-word; /* Wrap text if it's too long */
+    width: 50%;
+    word-wrap: break-word;
 }
 
-
-/* toremove borders */
-/* Remove borders for rows with the 'no-border' class */
 .no-border {
-
-    border: none ; /* Remove borders for the whole row */
+    border: none ;
 }
-
-
 
 .estimate-detail {
-    padding: 20px; /* Adjust overall padding */
+    padding: 20px;
 }
 
-/* New styles specific to the estimate-item-table */
 .estimate-item-table {
-    width: 100%; /* Set the width of the table */
-    border-collapse: collapse; /* Collapse borders */
-    margin-top: 20px; /* Add margin above the table */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .estimate-item-table th,
 .estimate-item-table td {
-    border: 1px solid black; /* Keep border for this table */
-    padding: 10px; /* Increase padding for better readability */
-    text-align: center; /* Center align text */
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
 }
 
-/* Specific styles for header */
 .estimate-item-table th {
-    background-color: #b0b4ba; /* Light blue for header */
-    font-weight: bold; /* Bold text for header */
+    background-color: #b0b4ba;
+    font-weight: bold;
 }
 
-/* Optional: You can customize other styles as needed */
 .estimate-item-table tr:hover {
-    background-color: #7f7a7a; /* Highlight row on hover */
+    background-color: #7f7a7a;
 }
-/* for 内訳明細書 buttons */
 
 .button-container {
-    text-align: start; /* Aligns text to the start */
-    margin: 0; /* No margin */
-    border: 1px solid #ccc; /* Border around the div */
-    padding: 10px; /* Padding inside the div */
-    background-color: #007bff; /* Background color */
-    display: flex; /* Allows flexibility for aligning child elements */
-    justify-content: flex-start; /* Aligns content to the start */
+    text-align: start;
+    margin: 0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #007bff;
+    display: flex;
+    justify-content: flex-start;
     border-radius: 10%;
     margin-right: 40px;
 
@@ -358,16 +335,16 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 
 
 .button-container .btn {
-    padding: 1px 1px; /* Padding inside the button */
-    margin: 10px; /* Margin around the button */
-    color: black; /* Text color of the button */
+    padding: 1px 1px;
+    margin: 10px;
+    color: black;
 }
 
 .custom-width {
-    width: 1px;  /* Adjust the width as needed */
-    overflow: hidden; /* Optional: Hide any overflow text */
+    width: 1px;
+    overflow: hidden;
     white-space: nowrap;
-    text-align: center; /* Optional: Prevent text from wrapping */
+    text-align: center;
 }
 
 .construction-name input {
@@ -376,51 +353,49 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     margin-left: 10px;
     border-bottom: 1px solid #000;
 }
-#for 見積書詳細画面
 
+#for 見積書詳細画面
 .action2 {
-    display: flex;                /* Use flexbox for alignment */
-    flex-direction: column;       /* Stack buttons vertically */
-    align-items: center;          /* Center align buttons horizontally */
-    margin-top: 20px;            /* Space above the button container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .action2 a {
-    display: block;               /* Make buttons block elements */
-    padding: 10px 15px;          /* Add padding for better appearance */
-    margin: 10px 0;              /* Vertical margin for space between buttons */
-    color: white;                 /* Text color */
-    text-decoration: none;        /* Remove underline */
-    border-radius: 5px;          /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth background color transition */
-    width: 70px;                 /* Set a fixed width for the buttons */
-    text-align: center;           /* Center text inside the buttons */
+    display: block;
+    padding: 10px 15px;
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 70px;
+    text-align: center;
     margin-left: 59%;
     margin-top: 20px;
 }
 
 .btn-warning {
-    background-color: #007bff;   /* Warning button color */
+    background-color: #007bff;
 }
 
 .btn-primary {
-    background-color: #007bff;   /* Primary button color */
+    background-color: #007bff;
 }
 
 .action2 button {
-    padding: 10px 15px;          /* Add padding for better appearance */
-    margin: 10px 0;              /* Vertical margin for space between buttons */
-    color: white;                 /* Text color */
-    text-decoration: none;        /* Remove underline */
-    border-radius: 5px;          /* Rounded corners */
-    width: 70px;                 /* Set a fixed width for the buttons */
-    text-align:left;           /* Center text inside the buttons */
+    padding: 10px 15px;
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 70px;
+    text-align:left;
     margin-left: 700px;
-    margin-top: 20px;                   /* Remove vertical margin */
+    margin-top: 20px;
 }
 
-
-/* for the print */
 .print-button {
     margin: 10px;
     padding: 10px 20px;
@@ -432,26 +407,27 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     cursor: pointer;
 }
 
-
-/* this if he says put in vertically */
 .actions-2 .action2 {
-    display:grid; /* Align buttons in a row */
-    align-items: center; /* Vertically center the buttons */
+    display:grid;
+    align-items: center;
 }
 
 .actions-2 .btn {
-    margin: 10px; /* Add margin around all buttons */
+    margin: 10px;
 }
 
-/* to not print few contents */
 @media print {
     .no-print {
-        display: none !important; /* Hide buttons with the no-print class */
+        display: none !important;
     }
 }
 
 
-/* 20241204 */
+
+
+
+
+
 
 
 

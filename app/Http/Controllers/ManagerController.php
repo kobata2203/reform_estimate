@@ -131,17 +131,14 @@ class ManagerController extends Controller
         $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
         $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
         $inputDiscount = request()->input('discount', $discount);
-        // Calculate subtotal, tax, and grand total
+        //小計、税金、合計金額を計算
         $subtotal = $totalAmount - $inputDiscount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
-        // Fetch related construction names for this estimate
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
         //forpayment
         $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
 
-        // Pass the estimate_info, breakdown, and grandTotal to the view
         return view('manager_menu.show', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
@@ -150,38 +147,28 @@ class ManagerController extends Controller
         ]);
     }
 
-    //for displaying the data from the breakdown tbl in the estimate_info tbl section
     public function itemView($id)
     {
-        // Fetch the estimate record or use null if not found
         $estimate_info = $this->estimateInfo->getById($id);
 
-        //calling the construction_name from the ConstructionList
         $construction_list = $this->constructionList->getById($id);
 
-        // Fetch breakdown related to estimate or use an empty collection if no estimate is found
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
 
-        // Calculate total amount from breakdown
         $totalAmount = $breakdown->sum('amount') ?? 0;
 
-        // Fetch or create an estimate_calculate record related to this estimate
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateId($id);
 
-        // Set discount to 0 if null, handle calculations even if no data is found
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
-        // Save or update the estimate_calculate record with the new values
         $estimate_calculate->estimate_id = $id;
         $estimate_calculate->special_discount = $discount;
 
         try {
             $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
         } catch (\Illuminate\Database\QueryException $e) {
-            // Handle any save errors
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
@@ -193,33 +180,25 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
 
-        // Fetch the estimate
         $estimate_info = $this->estimate->getEstimateById($id);
 
         if (!$estimate_info) {
-            // Set default values or handle logic when the estimate is not found
             $estimate_info = new \stdClass();
 
         }
-        // Fetch related breakdown data
         $breakdown = $this->breakdown->breakdownByEstimateId($id);
 
-        // Calculate the total amount from the breakdown
-        $totalAmount = $breakdown->sum('amount'); // Sum amounts directly
+        $totalAmount = $breakdown->sum('amount');
 
-        // Fetch the estimate_calculate record or create a new one
         $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id);
 
-        // Update the discount from the form input
         $estimate_calculate->special_discount = $validated['special_discount'];
 
-        // Recalculate subtotal, tax, and total
         $subtotal = $totalAmount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
         try {
-            // Update the estimate_calculate record with the new values
             $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
 
             return redirect()->back()->with('success', 'Discount updated successfully');
@@ -227,7 +206,6 @@ class ManagerController extends Controller
             return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
         }
     }
-
 
     public function generateBreakdown($id)
     {

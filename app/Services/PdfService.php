@@ -41,13 +41,12 @@ class PdfService
 
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
-        // Calculate totals
+        //合計金額の計算
         $totalAmount = $breakdown->sum('amount');
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
-        // Render the Blade view to HTML
         $html = view('tcpdf.pdf.breakdown', compact(
             'estimate_info',
             'breakdown',
@@ -79,18 +78,39 @@ class PdfService
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
         $filtered_construction_list = $construction_list[$estimate_info->id] ?? [];
 
-        // Pass variables to the view
+        // 件名の長さ
+        $construction_text = implode($filtered_construction_list->pluck('name')->toArray());
+
+        //件名の長さによって計算
+        $font_size = $this->calculateFontSize($construction_text);
+
+
         $pdfView = view('tcpdf.pdf.cover', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'breakdown' => $breakdown,
             'construction_list' => $filtered_construction_list,
+            'font_size' => $font_size, //件名の変数
         ])->render();
 
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');
     }
 
-    //calling from the utilities
+    // 御見積書の件名の長さ
+    private function calculateFontSize($text)
+    {
+        $length = strlen($text);
+        if ($length < 50) {
+            return 14;
+        } elseif ($length < 100) {
+            return 12;
+        } else {
+            return 5;
+        }
+    }
+
+
+    //　App/utilitiesから呼び出し
     private function pdfConfig($html, $filename)
     {
         $mpdf = MpdfService::create();

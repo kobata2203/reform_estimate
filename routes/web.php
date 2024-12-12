@@ -51,8 +51,9 @@ Route::get('/estimate/delete/{id}', [App\Http\Controllers\EstimateController::cl
 Route::get('/breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'create'])->name('breakdown.create');
 Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
-//20241114
+//20241114(営業者用の内訳明細書)
 Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
+//(営業者用の御見積書)
 Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 //This route is for the manager_index/view page

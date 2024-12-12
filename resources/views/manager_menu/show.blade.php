@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ asset('js/cover.js') }}"></script>
 </head>
 
 <body>
@@ -48,15 +50,14 @@
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-
                     <tr>
                         <td>件名</td>
                         <td id="construction-items">
                             @foreach ($construction_list as $index => $item)
-                                <p>{{ $item->name }}@if ($index < count($construction_list) - 1)
-                                        /
-                                    @endif
-                                </p>
+                                {{ $item->name }}
+                                @if ($index < count($construction_list) - 1)
+                                    /
+                                @endif
                             @endforeach
                         </td>
                     </tr>

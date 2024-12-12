@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>御見積書</title>
+
     <style>
         body {
             font-family: 'DejaVu Sans', sans-serif;
@@ -69,27 +70,23 @@
         <p style="display: inline; text-decoration: underline; margin: 0; padding: 0;"><strong>お客様名 :</strong>
             {{ $estimate_info->customer_name }} 様</p>
         <p style="display: inline; font-size: 8px; margin: 0; padding: 0;">下記の通りお見積り申し上げます。</p>
-
         <p style="text-align: center; margin-left: 150px; display: inline; text-decoration: underline;">
             <strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）
         </p>
-
     </div>
 
     <table>
-        {{-- <tr>
-            <th>件名</th>
-            <td>{{ $estimate_info->subject_name }}</td>
-        </tr> --}}
         <tr>
-            <td>件名</td>
-            <td>
+            <th>件名</th>
+            <td id="construction-items" style="font-size: {{ $font_size }}px;">
                 @foreach ($construction_list as $index => $item)
-                    <p>{{ $item->name }}@if ($index < count($construction_list) - 1)　/ @endif</p>
+                    {{ $item->name }}
+                    @if ($index < count($construction_list) - 1)
+                        /
+                    @endif
                 @endforeach
             </td>
         </tr>
-
 
         <tr>
             <th>納入場所</th>
@@ -101,7 +98,7 @@
         </tr>
         <tr>
             <th>支払方法</th>
-            <td>{{ $estimate_info->payment->name  }}</td>
+            <td>{{ $estimate_info->payment->name }}</td>
         </tr>
         <tr>
             <th>有効期限</th>

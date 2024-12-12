@@ -47,7 +47,7 @@ class EstimateController extends Controller
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
- 		$this->estimateInfo = $estimateInfo;	
+ 		$this->estimateInfo = $estimateInfo;
     }
 
 
