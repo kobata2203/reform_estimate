@@ -1,0 +1,136 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.message {
+    color: #0069d9;
+    font-size: larger;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(135,197,48);
+}
+
+td {
+    background-color: white;
+}
+
+
+.row-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.btn + .btn {
+    margin-left: 10px;
+}
+
+.margin-left-300 {
+    margin-left: 300px;
+}
+
+.custom-border {
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: white;
+    background-color: #007bff;
+    display: inline-block;
+    text-decoration: none;
+    border: none;
+}
+
+
+.form-inline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    width: 20%;
+    float: left;
+    margin-right: 1rem;
+    text-align: right;
+}
+
+.form-group input {
+    width: 75%;
+}
+
+.form-control {
+    width: 300px;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+.form-control:focus {
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
+}
+
+
+.margin-top-example {
+    margin-top: 10px;
+}
+
+.custom-margin {
+    margin: 10px;
+}
+
+td .btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+
+td .btn-danger {
+    background-color: #dc3545;
+}
+
+td .btn-danger:hover {
+    background-color: #c82333;
+}
+
+
+td .btn-primary {
+    background-color: #007bff;
+}
+
+td .btn-primary:hover {
+    background-color: #0069d9;
+}
+
+button:disabled {
+    background-color: gray;
+}

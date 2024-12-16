@@ -17,12 +17,15 @@ class PdfService
     protected $mpdf;
     protected $constructionList;
 
+
+
     public function __construct(
         EstimateInfo $estimateInfo,
         Breakdown $breakdown,
         EstimateCalculate $estimateCalculate,
         Mpdf $mpdf,
         ConstructionList $constructionList,
+
     ) {
         $this->estimateInfo = $estimateInfo;
         $this->breakdown = $breakdown;
@@ -40,6 +43,7 @@ class PdfService
         $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
 
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
+
 
         //合計金額の計算
         $totalAmount = $breakdown->sum('amount');
@@ -84,7 +88,6 @@ class PdfService
         //件名の長さによって計算
         $font_size = $this->calculateFontSize($construction_text);
 
-
         $pdfView = view('tcpdf.pdf.cover', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
@@ -100,14 +103,12 @@ class PdfService
     private function calculateFontSize($text)
     {
         $length = strlen($text);
-        if ($length < 50) {
-            return 14;
-        } elseif ($length < 100) {
-            return 12;
-        } else {
-            return 5;
-        }
+        $baseFontSize = 14;
+        $fontSize = $baseFontSize - floor($length / 10);
+        $fontSize = max($fontSize, 5);
+        return $fontSize;
     }
+
 
 
     //　App/utilitiesから呼び出し
@@ -119,4 +120,5 @@ class PdfService
 
         return $mpdf->Output($filename, 'I');
     }
+
 }

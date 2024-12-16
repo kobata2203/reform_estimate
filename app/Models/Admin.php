@@ -55,6 +55,13 @@ class Admin extends User
         ]);
     }
 
+    public function deleteAdmin($id)
+    {
+        $admin = $this->findOrFail($id);
+        $admin->delete($id);
+        return $admin;
+    }
+
     // 編集機能
     public static function findAdminById($id)
     {

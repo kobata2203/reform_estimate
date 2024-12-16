@@ -20,6 +20,7 @@ use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
 use App\Services\PdfService;
 
+
 class ManagerController extends Controller
 {
     protected $manager;
@@ -72,46 +73,28 @@ class ManagerController extends Controller
 
     public function index(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-
-        return view('manager_menu.estimate_index')->with([
-            'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
-            'keyword' => $keyword,
-            'departments' => $this->department->getDepartmentList(),
-            'construction_list' => $this->constructionList->getConnectionLists($estimate_info),
-        ]);
-    }
-
-    public function delete($id)
-    {
-        $this->estimateInfo->deleteEstimate($id);
-        return redirect()->route('manager_estimate')->with('status', config('message.delete_complete'));
-    }
-
-    public function admin_index(Request $request)
-    {
         $keyword = $request->input('search');
         $manager_info = $this->admin->searchAdmin($keyword);
-        return view('admins.index', compact('manager_info'));
+        return view('manager.index', compact('manager_info'));
     }
+
 
     public function create()
     {
-        return view('manager_index.create');
+        return view('manager.create');
     }
 
     public function store(CreateAdminRequest $request)
     {
         $validated = $request->validated();
         $this->admin->createAdmin($validated);
-        return redirect()->route('manager_menu')->with('success', config('message.regist_complete'));
+        return redirect()->route('manager.index')->with('success', config('message.regist_complete'));
     }
 
     public function edit($id)
     {
         $admin = $this->admin->findAdminById($id);
-        return view('admins.edit', [
+        return view('manager.edit', [
             'admin' => $admin
         ]);
     }
@@ -122,7 +105,23 @@ class ManagerController extends Controller
 
         $this->admin->updateAdmin($id, $validated);
 
-        return redirect()->route('admins.index')->with('success', config('message.update_complete'));
+        return redirect()->route('manager.index')->with('success', config('message.update_complete'));
+    }
+
+    public function delete($id)
+    {
+        // 削除処理
+        $delete_admin = $this->admin->deleteAdmin($id);
+
+        if($delete_admin === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
+
+        return redirect('/manager')->with([
+            'message' => $message,
+        ]);
     }
 
     public function show($id)
@@ -136,10 +135,9 @@ class ManagerController extends Controller
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
-        //forpayment
         $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
 
-        return view('manager_menu.show', [
+        return view('estimate.manager.show', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'discount' => $inputDiscount,
@@ -151,7 +149,8 @@ class ManagerController extends Controller
     {
         $estimate_info = $this->estimateInfo->getById($id);
 
-        $construction_list = $this->constructionList->getById($id);
+        // $construction_list = $this->constructionList->getById($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
 
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
 
@@ -172,20 +171,22 @@ class ManagerController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
-
-        return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        return view('estimate.manager.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
     public function updateDiscount(UpdateEstimateRequest $request, $id)
     {
         $validated = $request->validated();
 
+
         $estimate_info = $this->estimate->getEstimateById($id);
 
         if (!$estimate_info) {
+
             $estimate_info = new \stdClass();
 
         }
+
         $breakdown = $this->breakdown->breakdownByEstimateId($id);
 
         $totalAmount = $breakdown->sum('amount');
@@ -217,8 +218,5 @@ class ManagerController extends Controller
         return $this->pdfService->generateCover($id);
     }
 }
-
-
-
 
 

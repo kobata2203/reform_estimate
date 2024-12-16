@@ -5,7 +5,7 @@ $(function(){
         var text = $container.text().replace(/\s+/g, '\u0020').trim(); //　\u0020使て半角スペース
         var containerWidth = $container.width();
         var minFontSize = 7;
-        var maxFontSize = 14;
+        var maxFontSize = 12;
         var fontSize = maxFontSize;
 
         var $tempSpan = $('<span>').text(text).css({

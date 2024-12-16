@@ -23,8 +23,6 @@ class EstimateInfo extends Model
     // テーブルに関連付ける主キー
     protected $primaryKey = 'id';
 
-
-
     protected $fillable = [
         'customer_name',
         'creation_date',
@@ -60,8 +58,6 @@ class EstimateInfo extends Model
     {
         return $this->hasMany(Breakdown::class, 'estimate_id');
     }
-
-
 
     public function constructionName()
     {
@@ -127,11 +123,12 @@ class EstimateInfo extends Model
             $query->where(function ($query) use ($keyword) {
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                    // ->orWhere('constructions', 'LIKE', "%{$keyword}%")
                     ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-                // ->orWhere('department', 'LIKE', "%{$keyword}%");
             });
         }
+
+        $query->orderBy('created_at', 'desc')
+            ->take(20);
 
         return $query->get();
     }
@@ -165,13 +162,12 @@ class EstimateInfo extends Model
         return $this->find($id);
     }
 
-    //pdf method on the ManagerController
+
     public function fetchEstimateInfoById($id)
     {
         return $this->findOrFail($id);
     }
 
-    //PDFshow on ManagerController
     public function fetchingEstimateInfoById($id)
     {
         return $this->findOrFail($id);

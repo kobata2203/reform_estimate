@@ -27,7 +27,9 @@ class SalespersonController extends Controller
     protected $estimateCalculate;
     protected $user;
     protected $constructionList;
+
     public function __construct(
+
         Manager $manager,
         Managerinfo $managerInfo,
         EstimateInfo $estimateInfo,
@@ -49,20 +51,19 @@ class SalespersonController extends Controller
         $this->constructionList = $constructionList;
     }
 
-    public function add()
+    public function create()
     {
-        return view('salesperson_add.index');
+        return view('salesperson.create');
     }
 
-    public function create(SalespersonRequest $request)
+    public function store(SalespersonRequest $request)
     {
-        // Data is already validated at this point
         $validated = $request->validated();
 
         \Log::info('Validated Data: ', $validated);
         if ($this->user->createUser($validated)) {
             \Log::info('User saved successfully: ', [$validated]);
-            return redirect('manager_menu')->with('success', config('message.regist_complete'));
+            return redirect('/salesperson')->with('success', config('message.regist_complete'));
         } else {
             \Log::error('Failed to save user: ', [$validated]);
             return back()->withErrors(config('message.regist_fail'));
@@ -72,14 +73,14 @@ class SalespersonController extends Controller
     public function edit($id)
     {
         $user = $this->user->fetchUserById($id);
-        return view('manager_index.edit', compact('user'));
+        return view('salesperson.edit', compact('user'));
     }
 
     public function index(Request $request)
     {
         $keyword = $request->input('search');
         $users = $this->user->searchUsers($keyword);
-        return view('manager_index.index', compact('users'));
+        return view('salesperson.index', compact('users'));
     }
 
     public function list(Request $request)
@@ -90,21 +91,31 @@ class SalespersonController extends Controller
 
     public function update(SalespersonRequest $request, $id)
     {
-
         $validated = $request->validated();
         $this->user->updateUser($id, $validated);
-        return redirect()->route('manager_menu.index')->with('success', config('message.update_complete'));
+        return redirect()->route('salesperson.index')->with('success', config('message.update_complete'));
+    }
+
+    public function delete($id)
+    {
+        // 削除処理
+        $delete_user = $this->user->deleteUser($id);
+
+        if($delete_user === true) {
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
+
+        return redirect('/salesperson')->with([
+            'message' => $message,
+        ]);
     }
 
     public function show($id)
     {
         $user = $this->user->findUserWithId($id);
         return view('salesperson.show', compact('user'));
-    }
-
-    public function manager_menu()
-    {
-        return view('manager_menu.index');
     }
 
     //20241114
@@ -128,7 +139,6 @@ class SalespersonController extends Controller
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
         $estimate_calculate->estimate_id = $id;
         $estimate_calculate->special_discount = $discount;
 
@@ -138,7 +148,8 @@ class SalespersonController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
-        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+
+        return view('estimate.salesperson.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
     public function showestimate($id)
@@ -156,7 +167,7 @@ class SalespersonController extends Controller
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
         //お支払い方法
         $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
-        return view('salesperson_menu.view_estimate', [
+        return view('estimate.salesperson.view_estimate', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'discount' => $inputDiscount,
