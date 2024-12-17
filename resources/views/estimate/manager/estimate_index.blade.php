@@ -46,8 +46,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach ($construction_list[$estimate->id] as $item)
-                                    <a
-                                        href="{{ route('manager_breakdown.create', ['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                    <a href="{{ route('manager_breakdown.create', ['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>

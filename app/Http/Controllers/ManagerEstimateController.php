@@ -58,8 +58,6 @@ class ManagerEstimateController extends Controller
         $keys = array_keys($construction_list);
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
-        // dd($pdf_show_flags);
-
         return view('estimate.manager.estimate_index')->with([
                     'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
                     'keyword' => $keyword,
