@@ -37,7 +37,6 @@ class PdfService
     public function generateBreakdown($id)
     {
         $construction_list = $this->constructionList->getById($id);
-        $construction_list = $this->constructionList->getById($id);
         $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
         $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
         $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
