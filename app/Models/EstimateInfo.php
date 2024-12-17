@@ -124,7 +124,8 @@ class EstimateInfo extends Model
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
                     ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-            });
+
+        });
         }
 
         $query->orderBy('created_at', 'desc')

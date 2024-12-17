@@ -75,6 +75,12 @@ class ConstructionList extends Model
     {
         return self::find($id);
     }
+
+    //工事名をestimate_info_idで呼び出し
+    public static function getEstimateInfoById($estimate_info_id)
+    {
+        return self::where('estimate_info_id', $estimate_info_id)->first();
+    }
      //内訳明細書の工事名をestimate_info_idで呼び出し
     public static function getByEstimateInfoId($estimate_info_id)
     {
