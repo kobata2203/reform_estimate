@@ -121,12 +121,20 @@ class SalespersonController extends Controller
     //20241114
     public function itemView($id)
     {
+        //estimate record
         $estimate_info = $this->estimateInfo->getById($id);
 
+        //ConstructionListからconstruction_nameを呼び出す
         $construction_list = $this->constructionList->getById($id);
+        //見積に関連する内訳を取得する
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
+
+        //内訳から合計金額を計算
         $totalAmount = $breakdown->sum('amount') ?? 0;
+
+        //この見積に関連する estimate_calculate レコードを取得
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateId($id);
+
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -141,7 +149,7 @@ class SalespersonController extends Controller
         }
 
 
-        return view('salesperson_menu.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        return view('estimate.salesperson.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
     public function showestimate($id)
@@ -150,12 +158,16 @@ class SalespersonController extends Controller
         $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
         $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
         $inputDiscount = request()->input('discount', $discount);
+        // 小計、税額、合計金額を計算
         $subtotal = $totalAmount - $inputDiscount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
+
+        //見積もりに関連する工事名を取得
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
+        //お支払い方法
         $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
-        return view('salesperson_menu.view_estimate', [
+        return view('estimate.salesperson.view_estimate', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'discount' => $inputDiscount,

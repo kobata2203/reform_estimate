@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ asset('js/cover.js') }}"></script>
 </head>
 
 <body>
     <div class="stimate-detail">
         <div>
-            <h2>御　見　積　書</br>営業者</h2>
+            <h2>御　見　積　書</h2>
         </div>
         <div style="display: flex; justify-content: flex-end; width: 100%; align-items: flex-start;">
             <div style="text-align: right;">
@@ -46,12 +48,14 @@
         <div class="details" id="div1">
             <div class="show-page">
                 <table>
-
                     <tr>
                         <td>件名</td>
-                        <td>
-                            @foreach ($construction_list as $item)
-                                <p>{{ $item->name }}</p>
+                        <td id="construction-items">
+                            @foreach ($construction_list as $index => $item)
+                                {{ $item->name }}
+                                @if ($index < count($construction_list) - 1)
+                                    /
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -89,7 +93,8 @@
         <div class="action2">
 
             <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
-            <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
+            <a href="{{ route('estimate.index') }}" class="btn btn-primary">戻る</a>
+
         </div>
     </div>
 </body>

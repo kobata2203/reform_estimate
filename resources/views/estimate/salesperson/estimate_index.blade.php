@@ -3,6 +3,8 @@
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/estimate/estimate_index.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ asset('js\estimate\manager\index.js') }}"></script>
 @endsection
 @section('content')
     <div>
@@ -48,7 +50,7 @@
                             <td>{{ $estimate->charger_name }}</td>
                             <td>{{ $departments[$estimate->department_id] }}</td>
                             <td>
-                                <button data-url="{{ route('managers.show', $estimate->id) }}" class="btn btn-primary custom-border" @if($pdf_show_flags[$estimate->id] != true) disabled @endif>閲覧</button><br/>
+                                <button data-url="{{ route('salesperson.show', $estimate->id) }}" class="btn btn-primary custom-border" @if($pdf_show_flags[$estimate->id] != true) disabled @endif>閲覧</button><br/>
                             </td>
                             <td>
                                 <button class="btn btn-danger btn_delete"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>

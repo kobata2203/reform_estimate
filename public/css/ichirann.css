@@ -189,8 +189,6 @@ input[type="text"] {
     margin-left: 20px;
 }
 
-
-
 table tr:not(:nth-last-child(-n+0)) td:first-child {
     font-weight: bold;
     padding-right: 10px;
@@ -204,7 +202,6 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     color: #333;
     background-color: rgb(186, 182, 182);
 }
-
 
 .show-page h2 {
     text-align: center;
