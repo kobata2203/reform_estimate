@@ -114,7 +114,7 @@ class EstimateInfo extends Model
         return $this->constructionList->registEstimateInfoId($request->construction_name, $id);
     }
 
-    // 新しい見積書作成登録保存についてメソッドを追加
+    // 新しい見積書作成登録保存についてメソッドを追加 current
     public static function getEstimateInfo($keyword = null)
     {
         $query = self::where('delete_flag', false);
@@ -124,6 +124,7 @@ class EstimateInfo extends Model
                 $query->where('creation_date', 'LIKE', "%{$keyword}%")
                     ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
                     ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
+
             });
         }
 
@@ -174,7 +175,7 @@ class EstimateInfo extends Model
     }
 
     //breakdown_create メソッド　EstimateController
-    public static function getById($id): array|Collection|EstimateInfo|Model|null
+    public static function getById($id)
     {
         return self::find($id);
     }
@@ -193,15 +194,5 @@ class EstimateInfo extends Model
     {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
     }
-
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
-    public function constructions()
-    {
-        return $this->hasMany(ConstructionList::class);
-    }
-
-
+    
 }

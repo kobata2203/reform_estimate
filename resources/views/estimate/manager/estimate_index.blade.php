@@ -3,8 +3,7 @@
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/estimate/admin_index.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{{ asset('js\estimate\manager\index.js') }}"></script>
+    <script src="{{ asset('js\estimate\manager\manager_index.js') }}"></script>
 
 @endsection
 @section('content')
@@ -47,8 +46,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach ($construction_list[$estimate->id] as $item)
-                                    <a
-                                        href="{{ route('manager_breakdown.create', ['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                    <a href="{{ route('manager_breakdown.create', ['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
