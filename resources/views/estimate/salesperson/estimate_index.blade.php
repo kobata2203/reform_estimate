@@ -14,7 +14,7 @@
             {{ session('message') }}
         </div>
         @endif
-        <h6>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h6>
+        <h6>見積書発行日, お客様名, 工事名, 営業担当, 営業部署で検索してください。</h6>
         <div>
             <form action="{{ route('estimate.index') }}" method="GET">
                 @csrf

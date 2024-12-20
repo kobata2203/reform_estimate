@@ -10,7 +10,7 @@
         <h2>見積書一覧画面</h2>
     </div>
     <div class="search-manager">
-        <h5>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h5>
+        <h5>見積書発行日, お客様名, 工事名, 営業担当, 営業部署で検索してください。</h5>
         <div>
             <form action="{{ route('manager_estimate') }}" method="GET">
             @csrf

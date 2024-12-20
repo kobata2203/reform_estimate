@@ -58,7 +58,7 @@ class ManagerEstimateController extends Controller
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
         
         return view('estimate.manager.estimate_index')->with([
-                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
+                    'estimate_info' => $estimate_info,
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
                     'construction_list' => $construction_list,
