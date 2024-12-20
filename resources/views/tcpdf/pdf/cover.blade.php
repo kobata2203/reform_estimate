@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>御見積書</title>
+
     <style>
         body {
             font-family: 'DejaVu Sans', sans-serif;
@@ -68,42 +69,43 @@
         <p style="display: inline; text-decoration: underline; margin: 0; padding: 0;"><strong>お客様名 :</strong>
             {{ $estimate_info->customer_name }} 様</p>
         <p style="display: inline; font-size: 8px; margin: 0; padding: 0;">下記の通りお見積り申し上げます。</p>
-
         <p style="text-align: center; margin-left: 150px; display: inline; text-decoration: underline;">
             <strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）
         </p>
-
     </div>
 
     <table>
         <tr>
-            <td>件名</td>
-            <td>
-                @foreach($construction_list as $item)
-                    <p>{{ $item->name }}</p>
+            <th>件名</th>
+            <td id="construction-items" style="font-size: {{ $font_size }}px; text-align: center;">
+                @foreach ($construction_list as $index => $item)
+                    {{ $item->name }}
+                    @if ($index < count($construction_list) - 1)
+                        /
+                    @endif
                 @endforeach
             </td>
         </tr>
 
         <tr>
             <th>納入場所</th>
-            <td>{{ $estimate_info->delivery_place }}</td>
+            <td style="text-align: center""text-align: center">{{ $estimate_info->delivery_place }}</td>
         </tr>
         <tr>
             <th>工期</th>
-            <td>{{ $estimate_info->construction_period }}</td>
+            <td style="text-align: center">{{ $estimate_info->construction_period }}</td>
         </tr>
         <tr>
             <th>支払方法</th>
-            <td>{{ $estimate_info->payment_type }}</td>
+            <td style="text-align: center">{{ $estimate_info->payment->name }}</td>
         </tr>
         <tr>
             <th>有効期限</th>
-            <td>{{ $estimate_info->expiration_date }}</td>
+            <td style="text-align: center">{{ $estimate_info->expiration_date }}</td>
         </tr>
         <tr>
             <th>備考</th>
-            <td>{{ $estimate_info->remarks }}</td>
+            <td style="text-align: center">{{ $estimate_info->remarks }}</td>
         </tr>
     </table>
 

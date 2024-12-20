@@ -52,8 +52,9 @@ Route::get('/estimate/delete/{id}', [App\Http\Controllers\EstimateController::cl
 Route::get('/breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'create'])->name('breakdown.create');
 Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
-//20241114
-Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('estimatesales');
+//20241114(営業者用の内訳明細書)
+Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('salesperson.show');
+//(営業者用の御見積書)
 Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 
@@ -102,7 +103,7 @@ Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class,
 
 
 // //for viewing 御　見　積　書
-// Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
+Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // // Define route for displaying the 'item' view
 // Route::get('/manager/item', [ManagerController::class, 'itemView'])->name('manager.item');
@@ -118,7 +119,7 @@ Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'
 
 #to print pdf
 Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
-//Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
+// Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
 Route::get('/managers/pdf/{id}', [ManagerController::class, 'generateCover'])->name('generatecover');
 

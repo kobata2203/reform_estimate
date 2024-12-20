@@ -130,14 +130,14 @@ class ManagerController extends Controller
         $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
         $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
         $inputDiscount = request()->input('discount', $discount);
+        //小計、税金、合計金額を計算
         $subtotal = $totalAmount - $inputDiscount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
         $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
         $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
 
-        return view('manager_menu.show', [
+        return view('estimate.manager.show', [
             'estimate_info' => $estimate_info,
             'grandTotal' => $grandTotal,
             'discount' => $inputDiscount,
@@ -149,7 +149,8 @@ class ManagerController extends Controller
     {
         $estimate_info = $this->estimateInfo->getById($id);
 
-        $construction_list = $this->constructionList->getById($id);
+        // $construction_list = $this->constructionList->getById($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
 
         $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
 
@@ -161,7 +162,6 @@ class ManagerController extends Controller
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-
         $estimate_calculate->estimate_id = $id;
         $estimate_calculate->special_discount = $discount;
 
@@ -171,7 +171,7 @@ class ManagerController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
-        return view('manager_menu.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        return view('estimate.manager.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
     }
 
     public function updateDiscount(UpdateEstimateRequest $request, $id)

@@ -25,6 +25,7 @@ class ManagerEstimateController extends Controller
     protected $constructionList;
 
     protected $estimateInitCount = 1; // 工事名の初期表示数
+    protected $estimateInfo;
     /**
      * 初期処理
      * 使用するクラスのインスタンス化
@@ -47,7 +48,7 @@ class ManagerEstimateController extends Controller
         $this->department = $department;
         $this->payment = $payment;
     }
-    
+
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -56,7 +57,7 @@ class ManagerEstimateController extends Controller
 
         $keys = array_keys($construction_list);
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
-        
+
         return view('estimate.manager.estimate_index')->with([
                     'estimate_info' => $estimate_info,
                     'keyword' => $keyword,

@@ -112,7 +112,7 @@ class EstimateInfo extends Model
             return false;
         }
 
-        return $this->constructionList->regist_estimate_info_id($request->construction_name, $id);
+        return $this->constructionList->registEstimateInfoId($request->construction_name, $id);
     }
 
 
@@ -146,7 +146,7 @@ class EstimateInfo extends Model
             $query = $this->select($columns);
 
             $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
-            ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
+                ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
 
             $query->where($ei_table_join . 'delete_flag', false);
             
@@ -164,12 +164,10 @@ class EstimateInfo extends Model
             $d_table_join . 'name',
         ];
         $query = $this->select($columns);
-
         if (!empty($keyword)) {
-        $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
-            ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
+            $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
+                ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
         }
-
         $query->where($ei_table_join . 'delete_flag', false);
         
         if (!empty($keyword)) {
@@ -207,7 +205,6 @@ class EstimateInfo extends Model
 
     public function getEstimateWithDetails($id)
     {
-
         $estimate_info = $this->findOrFail($id);
 
         $breakdown = $estimate_info->breakdown;
@@ -237,7 +234,6 @@ class EstimateInfo extends Model
         return self::find($id);
     }
 
-
     public static function idGet($id)
     {
         return self::find($id);
@@ -252,5 +248,5 @@ class EstimateInfo extends Model
     {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
     }
-
+    
 }
