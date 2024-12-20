@@ -182,9 +182,6 @@ class Breakdown extends Model
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-
-    //show method on ManagerController p2
-    // Breakdown.php
     public static function getTotalAmountByEstimateId($estimateId)
     {
         $breakdown = self::where('estimate_id', $estimateId)->get();
@@ -192,16 +189,21 @@ class Breakdown extends Model
         return $totalAmount;
     }
 
-
-    //itemView on ManagerCOntroller
-    // In Breakdown.php model
     public static function getByEstimateId($estimateId)
     {
         return self::where('estimate_id', $estimateId)->get();
     }
+
+
     //pdf method on the ManagerController
     public function getBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
+//20241219
+    public function constructionList()
+    {
+        return $this->belongsTo(ConstructionList::class, 'construction_list_id');
+    }
+
 }

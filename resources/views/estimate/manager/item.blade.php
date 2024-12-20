@@ -19,12 +19,18 @@
         <p>株式会社サーバントップ</p>
     </div>
 
-    <div class="construction-name">
-        <label for="construction-name">工事名</label>
-        <input type="text" id="construction-name" name="construction_name"
-            value="{{ $construction_list->name ?? '' }}">
-
-    </div>
+    <form method="GET" action="{{ route('manager.item', ['id' => $id]) }}">
+        <div class="construction-name">
+            <label for="construction-name">工事名</label>
+            <select id="construction-name" name="construction_name" onchange="this.form.submit()">
+                @foreach ($constructionNames as $construction)
+                    <option value="{{ $construction->id }}"
+                        {{ isset($construction_list) && $construction_list->id == $construction->id ? 'selected' : '' }}>
+                        {{ $construction->name }}
+                    </option>
+                @endforeach
+            </select>
+            <div id="underline" style="margin-top: 5px; height: 2px; background-color: #000;"></div>
 
     <div>
         <form action="{{ route('updateDiscount', ['id' => $id]) }}" method="POST">
@@ -47,8 +53,8 @@
                         $totalAmount += $item->amount;
                     @endphp
                     <tr>
-                        <td>{{ $item->construction_item }}</td>
-                        <td>{{ $item->specification }}</td>
+                        <td>{{ $item->item }}</td>
+                        <td>{{ $item->maker }}&ensp;{{ $item->series_name }}&ensp;{{ $item->item_number }}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>{{ $item->unit }}</td>
                         <td>{{ number_format($item->unit_price) }}</td>

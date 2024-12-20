@@ -26,4 +26,10 @@ $(document).ready(function() {
     });
 
     updateTotals();
+    
+//内訳明細書のアンダーバー
+    $(document).ready(function() {
+        var selectWidth = $('#construction-name').outerWidth();
+        $('#underline').css('width', selectWidth + 60);
+    });
 });

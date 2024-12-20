@@ -20,7 +20,6 @@ use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
 use App\Services\PdfService;
 
-
 class ManagerController extends Controller
 {
     protected $manager;
@@ -78,7 +77,6 @@ class ManagerController extends Controller
         return view('manager.index', compact('manager_info'));
     }
 
-
     public function create()
     {
         return view('manager.create');
@@ -113,7 +111,7 @@ class ManagerController extends Controller
         // 削除処理
         $delete_admin = $this->admin->deleteAdmin($id);
 
-        if($delete_admin === true) {
+        if ($delete_admin === true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
@@ -145,19 +143,17 @@ class ManagerController extends Controller
         ]);
     }
 
-    public function itemView($id)
+    public function itemView(Request $request, $id)
     {
         $estimate_info = $this->estimateInfo->getById($id);
-
-        // $construction_list = $this->constructionList->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
-
-        $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
+        $selectedConstructionId = $construction_list->id ?? null;
+        $breakdown = $selectedConstructionId
+            ? $this->breakdown->where('construction_list_id', $selectedConstructionId)->get()
+            : collect([]);
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
-
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateId($id);
-
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -171,7 +167,26 @@ class ManagerController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
-        return view('estimate.manager.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        $constructionNames = $this->constructionList
+            ->select('construction_list.*')
+            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
+            ->where('construction_list.estimate_info_id', $id)
+            ->whereNotNull('breakdown.id')
+            ->groupBy('construction_list.id')
+            ->get();
+
+        return view('estimate.manager.item', compact(
+            'breakdown',
+            'estimate_info',
+            'id',
+            'subtotal',
+            'discount',
+            'tax',
+            'grandTotal',
+            'construction_list',
+            'constructionNames',
+            'selectedConstructionId'
+        ));
     }
 
     public function updateDiscount(UpdateEstimateRequest $request, $id)

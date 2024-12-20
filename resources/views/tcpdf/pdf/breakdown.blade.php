@@ -81,7 +81,7 @@
         <thead>
             <tr>
                 <th>項目</th>
-                <th>仕様・摘要</th>
+                <th style="font-size: {{ $font_size }}px; text-align: center;">メーカー名・シリーズ名（商品名）・品番</th>
                 <th>数量</th>
                 <th>単位</th>
                 <th>単価</th>
@@ -92,8 +92,10 @@
         <tbody>
             @foreach ($breakdown as $item)
                 <tr>
-                    <td>{{ $item->construction_item }}</td>
-                    <td>{{ $item->specification }}</td>
+                    <td>{{ $item->item }}</td>
+                    <td style="font-size: {{ $font_size }}px; text-align: center;">
+                        {{ $item->maker }}&ensp;{{ $item->series_name }}&ensp;{{ $item->item_number }}
+                    </td>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ $item->unit }}</td>
                     <td>{{ number_format($item->unit_price) }}</td>

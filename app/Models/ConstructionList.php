@@ -71,13 +71,13 @@ class ConstructionList extends Model
     }
 
     //内訳明細書の工事名をidで呼び出し
-    public static function getById($id)
+    public function getById($id)
     {
         return self::find($id);
     }
 
-     //内訳明細書の工事名をestimate_info_idで呼び出し
-    public static function getByEstimateInfoId($estimate_info_id)
+    //内訳明細書の工事名をestimate_info_idで呼び出し
+    public function getByEstimateInfoId($estimate_info_id)
     {
         return self::where('estimate_info_id', $estimate_info_id)->first();
     }
@@ -111,5 +111,14 @@ class ConstructionList extends Model
         return $datas;
 
     }
+    //20241219
+
+
+        public function breakdowns()
+        {
+            return $this->hasMany(Breakdown::class, 'construction_list_id'); 
+        }
+
+
 
 }

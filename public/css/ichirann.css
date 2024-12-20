@@ -1,9 +1,8 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
     font-size: 14px;
-
 }
 .container {
     width: 80%;
@@ -18,7 +17,8 @@ table {
     border-collapse: collapse;
     margin-left: 20px;
 }
-th, td {
+th,
+td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -27,7 +27,6 @@ th {
     background-color: #f2f2f2;
 }
 
-
 .table-large {
     width: 85%;
     margin: 0 auto;
@@ -35,8 +34,7 @@ th {
     border-collapse: collapse;
 }
 
-h2
-{
+h2 {
     text-align: center;
     border: 2px solid #160202;
     padding: 20px;
@@ -45,14 +43,12 @@ h2
     box-sizing: border-box;
     background-color: rgb(186, 182, 182);
     font-size: 28px;
-    font-weight:bold;
+    font-weight: bold;
 }
-
-
 
 .input-container {
     display: flex;
-    align-items:start;
+    align-items: start;
     max-width: 600px;
     margin: 0 auto;
     margin-top: 10px;
@@ -135,11 +131,10 @@ input[type="text"] {
     font-size: 14px;
 }
 
-
 .details-container {
     display: flex;
     justify-content: space-between;
-    align-items:flex-end;
+    align-items: flex-end;
     margin-bottom: 20px;
 }
 
@@ -151,26 +146,22 @@ input[type="text"] {
     width: 30%;
     padding-left: 80%;
     font-size: 14px;
-
 }
 
-
-.actions{
+.actions {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.actions-2{
+.actions-2 {
     display: flex;
-    justify-content:end;
+    justify-content: end;
     margin-top: 20px;
     margin-right: 20px;
-
 }
 
-
- .wide-column {
+.wide-column {
     width: 200px;
 }
 .narrow-column {
@@ -183,19 +174,18 @@ input[type="text"] {
     height: 30px;
 }
 
-.construction-name
-{
+.construction-name {
     margin-left: 20px;
 }
 
-table tr:not(:nth-last-child(-n+0)) td:first-child {
+table tr:not(:nth-last-child(-n + 0)) td:first-child {
     font-weight: bold;
     padding-right: 10px;
     color: #333;
     background-color: rgb(186, 182, 182);
 }
 
-.show-page table tr:not(:nth-last-child(-n+0)) td:first-child {
+.show-page table tr:not(:nth-last-child(-n + 0)) td:first-child {
     font-weight: bold;
     padding-right: 10px;
     color: #333;
@@ -212,20 +202,18 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     background-color: rgb(186, 182, 182);
 }
 
-#div2
- {
+#div2 {
     width: 41%;
     float: right;
     height: 100px;
     margin-top: -110px;
-
- }
- #customer {
+}
+#customer {
     margin-left: 20px;
 }
 
 .estimate-detail body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     margin: 0;
     padding: 0;
     font-size: 14px;
@@ -262,33 +250,33 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     background-color: rgb(186, 182, 182);
 }
 
-.item-table tr:not(:nth-last-child(-n+0)) td:first-child {
+.item-table tr:not(:nth-last-child(-n + 0)) td:first-child {
     font-weight: normal;
     padding-right: 0;
     color: inherit;
     background-color: transparent;
 }
 
-.show-page table tr:not(:nth-last-child(-n+0)) td:first-child {
+.show-page table tr:not(:nth-last-child(-n + 0)) td:first-child {
     font-weight: bold;
     padding-right: 10px;
     color: #333;
     background-color: rgb(186, 182, 182);
 }
 
-
 .details table {
     width: %;
     table-layout: fixed;
 }
 
-.details th, .details td {
+.details th,
+.details td {
     width: 50%;
     word-wrap: break-word;
 }
 
 .no-border {
-    border: none ;
+    border: none;
 }
 
 .estimate-detail {
@@ -327,9 +315,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     justify-content: flex-start;
     border-radius: 10%;
     margin-right: 40px;
-
 }
-
 
 .button-container .btn {
     padding: 1px 1px;
@@ -351,8 +337,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     border-bottom: 1px solid #000;
 }
 
-#for 見積書詳細画面
-.action2 {
+#for 見積書詳細画面 .action2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -388,7 +373,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     text-decoration: none;
     border-radius: 5px;
     width: 70px;
-    text-align:left;
+    text-align: left;
     margin-left: 700px;
     margin-top: 20px;
 }
@@ -397,7 +382,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
     margin: 10px;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #007BFF;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -405,7 +390,7 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
 }
 
 .actions-2 .action2 {
-    display:grid;
+    display: grid;
     align-items: center;
 }
 
@@ -418,13 +403,6 @@ table tr:not(:nth-last-child(-n+0)) td:first-child {
         display: none !important;
     }
 }
-
-
-
-
-
-
-
 
 
 

@@ -26,19 +26,30 @@ class PdfService
         Mpdf $mpdf,
         ConstructionList $constructionList,
 
+
     ) {
         $this->estimateInfo = $estimateInfo;
         $this->breakdown = $breakdown;
         $this->estimateCalculate = $estimateCalculate;
         $this->mpdf = $mpdf;
         $this->constructionList = $constructionList;
-    }
 
+    }
+    //breakdownテーブルのPDFの文字サイズ
+    public function calculateFontSizeInController($text)
+    {
+        $length = strlen($text);
+        $baseFontSize = 14;
+        $fontSize = $baseFontSize - floor($length / 10);
+        $fontSize = max($fontSize, 5);
+        return $fontSize;
+    }
     public function generateBreakdown($id)
     {
-
+        //breakdownテーブルのPDFの文字サイズ
+        $font_size = $this->calculateFontSizeInController("メーカー名・シリーズ名（商品名）・品番");
         //工事名をestimate_info_idで呼び出し
-        $construction_list = $this->constructionList->getEstimateInfoById($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
         $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
         $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
@@ -60,11 +71,13 @@ class PdfService
             'subtotal',
             'tax',
             'grandTotal',
-            'construction_list'
+            'construction_list',
+            'font_size'
         ))->render();
 
         return $this->pdfConfig($html, 'reform_estimate_breakdown.pdf');
     }
+
 
     public function generateCover($id)
     {
