@@ -131,7 +131,6 @@ class EstimateInfo extends Model
             $ei_table_join . 'id',
             $ei_table_join . 'creation_date',
             $ei_table_join . 'customer_name',
-            $cl_table_join . 'name',
             $ei_table_join . 'charger_name',
             $ei_table_join . 'department_id',
             $d_table_join . 'name',
@@ -152,11 +151,11 @@ class EstimateInfo extends Model
                     ->orWhere($ei_table_join . 'charger_name', 'LIKE', "%{$keyword}%")
                     ->orWhere($d_table_join . 'name', 'LIKE', "%{$keyword}%");
             });
-            $columns[]=$cl_table_join.'name';
-            $query->groupBy($columns,'construction_list' . '.name');
         }
-        $query->orderBy($ei_table_join . 'created_at', 'desc')
-        ->take(20);
+
+        $query->groupBy($columns , 'estimate_info.id')
+            ->orderBy($ei_table_join . 'created_at', 'desc')
+            ->take(20);
     
         return $query->get();
         
