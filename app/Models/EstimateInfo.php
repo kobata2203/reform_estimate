@@ -120,40 +120,13 @@ class EstimateInfo extends Model
     public function getEstimateInfo($keyword = null)
     {
         $table = $this->table;
-        if (!empty($keyword)) {
-            $cl_table = 'construction_list';
-            $d_table = 'departments';
-            $ei_table = 'estimate_info';
-            $cl_table_join = $cl_table. '.';
-            $d_table_join = $d_table. '.';
-            $ei_table_join =$ei_table. '.';
-        }else{
-            $cl_table = 'construction_list';
-            $d_table = 'departments';
-            $ei_table = 'estimate_info';
-            $cl_table_join = $cl_table. '.';
-            $d_table_join = $d_table. '.';
-            $ei_table_join =$ei_table. '.';
-            $columns = [
-                $ei_table_join . 'id',
-                $ei_table_join . 'creation_date',
-                $ei_table_join . 'customer_name',
-                $cl_table_join . 'name',
-                $ei_table_join . 'charger_name',
-                $ei_table_join . 'department_id',
-                $d_table_join . 'name',
-            ];
-            $query = $this->select($columns);
+        $cl_table = 'construction_list';
+        $d_table = 'departments';
+        $ei_table = 'estimate_info';
+        $cl_table_join = $cl_table. '.';
+        $d_table_join = $d_table. '.';
+        $ei_table_join =$ei_table. '.';
 
-            $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
-                ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
-
-            $query->where($ei_table_join . 'delete_flag', false);
-            
-            $query->orderBy($ei_table_join . 'created_at', 'desc')
-            ->take(20);
-            return $query->get();
-        }
         $columns = [
             $ei_table_join . 'id',
             $ei_table_join . 'creation_date',
@@ -163,13 +136,14 @@ class EstimateInfo extends Model
             $ei_table_join . 'department_id',
             $d_table_join . 'name',
         ];
+
         $query = $this->select($columns);
-        if (!empty($keyword)) {
-            $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
-                ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
-        }
+
+        $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
+            ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
+
         $query->where($ei_table_join . 'delete_flag', false);
-        
+
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword, $ei_table_join, $cl_table_join, $d_table_join) {
                 $query->where($ei_table_join . 'creation_date', 'LIKE', "%{$keyword}%")
