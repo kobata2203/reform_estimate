@@ -80,7 +80,6 @@ h3 {
 h6 {
     font-size: larger;
     font-weight: bold;
-    padding-top: 10px;
 }
 
 h4 {
@@ -94,16 +93,18 @@ h4 {
 
 .search-salesperson {
     background-color: rgba(135,197,48,0.8);
-    margin-right: 65%;
-    margin-left: 3%;
+    margin-right: 55%;
+    margin-left: 1%;
+    padding-top: 10px;
     padding-left: 15px;
     border-radius: 5px;
 }
 
 .search-manager {
     background-color: rgba(135,197,48,0.8);
-    margin-right: 65%;
-    margin-left: 3%;
+    margin-right: 55%;
+    margin-left: 1%;
+    padding-top: 10px;
     padding-left: 15px;
     border-radius: 5px;
 }

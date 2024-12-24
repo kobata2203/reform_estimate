@@ -9,6 +9,7 @@ use App\Htpp\Controllers\ManagerController;
 use Illuminate\Http\Request;
 use App\Models\ConstructionList;
 use App\Models\Breakdown;
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 
 class EstimateInfo extends Model
@@ -114,24 +115,50 @@ class EstimateInfo extends Model
         return $this->constructionList->registEstimateInfoId($request->construction_name, $id);
     }
 
-    // 新しい見積書作成登録保存についてメソッドを追加 current
-    public static function getEstimateInfo($keyword = null)
+
+    // 新しい見積書作成登録保存についてメソッドを追加
+    public function getEstimateInfo($keyword = null)
     {
-        $query = self::where('delete_flag', false);
+        $table = $this->table;
+        $cl_table = 'construction_list';
+        $d_table = 'departments';
+        $ei_table = 'estimate_info';
+        $cl_table_join = $cl_table. '.';
+        $d_table_join = $d_table. '.';
+        $ei_table_join =$ei_table. '.';
+
+        $columns = [
+            $ei_table_join . 'id',
+            $ei_table_join . 'creation_date',
+            $ei_table_join . 'customer_name',
+            $ei_table_join . 'charger_name',
+            $ei_table_join . 'department_id',
+            $d_table_join . 'name',
+        ];
+
+        $query = $this->select($columns);
+
+        $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
+            ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
+
+        $query->where($ei_table_join . 'delete_flag', false);
 
         if (!empty($keyword)) {
-            $query->where(function ($query) use ($keyword) {
-                $query->where('creation_date', 'LIKE', "%{$keyword}%")
-                    ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
-
+            $query->where(function ($query) use ($keyword, $ei_table_join, $cl_table_join, $d_table_join) {
+                $query->where($ei_table_join . 'creation_date', 'LIKE', "%{$keyword}%")
+                    ->orWhere($ei_table_join . 'customer_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere($cl_table_join . 'name', 'LIKE', "%{$keyword}%")
+                    ->orWhere($ei_table_join . 'charger_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere($d_table_join . 'name', 'LIKE', "%{$keyword}%");
             });
         }
 
-        $query->orderBy('created_at', 'desc')
+        $query->groupBy($columns , 'estimate_info.id')
+            ->orderBy($ei_table_join . 'created_at', 'desc')
             ->take(20);
-
+    
         return $query->get();
+        
     }
 
     public function deleteEstimate($id)
