@@ -138,8 +138,8 @@ class EstimateInfo extends Model
 
         $query = $this->select($columns);
 
-        $query->leftJoin($cl_table, 'estimate_info' . '.id', '=', $cl_table_join . 'estimate_info_id')
-            ->leftJoin($d_table, 'estimate_info' . '.department_id', '=', $d_table_join . 'id');
+        $query->leftJoin($cl_table, $ei_table_join . 'id', '=', $cl_table_join . 'estimate_info_id')
+            ->leftJoin($d_table, $ei_table_join . 'department_id', '=', $d_table_join . 'id');
 
         $query->where($ei_table_join . 'delete_flag', false);
 
@@ -153,7 +153,7 @@ class EstimateInfo extends Model
             });
         }
 
-        $query->groupBy($columns , 'estimate_info.id')
+        $query->groupBy($columns)
             ->orderBy($ei_table_join . 'created_at', 'desc')
             ->take(20);
     
