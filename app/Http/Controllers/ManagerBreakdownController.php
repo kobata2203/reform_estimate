@@ -55,7 +55,7 @@ class ManagerBreakdownController extends Controller
         $estimate_info = $this->estimateInfo::find($construction_list->estimate_info_id);
         $construction_name = $this->constructionName::find($construction_list->estimate_info_id);
         $prevurl = url('manager_estimate'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
-        $breakdown_store_url = route('manager_breakdown.store');
+        $breakdown_store_routing = route('manager_breakdown.store');
         /**
          * SQLはモデルに記載する
          */
@@ -78,7 +78,7 @@ class ManagerBreakdownController extends Controller
             'breakdown_items' => $breakdown_items,
             'prevurl' => $prevurl,
             'construction_id' => $construction_id,
-            'breakdown_store_url' => $breakdown_store_url,
+            'breakdown_store_routing' => $breakdown_store_routing,
         ]);
     }
 

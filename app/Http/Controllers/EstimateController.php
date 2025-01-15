@@ -58,7 +58,7 @@ class EstimateController extends Controller
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
         $prevurl = url('salesperson_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
-        $breakdown_create_url = 'breakdown.create';
+        $breakdown_create_routing = 'breakdown.create';
         $keys = array_keys($construction_list);
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
@@ -69,7 +69,7 @@ class EstimateController extends Controller
                     'construction_list' => $construction_list,
                     'pdf_show_flags' => $pdf_show_flags,
                     'prevurl' => $prevurl,
-                    'breakdown_create_url' => $breakdown_create_url,
+                    'breakdown_create_routing' => $breakdown_create_routing,
                 ]);
     }
 

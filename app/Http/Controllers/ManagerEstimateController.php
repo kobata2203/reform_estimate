@@ -56,7 +56,7 @@ class ManagerEstimateController extends Controller
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
         $prevurl = url('manager_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
         $keys = array_keys($construction_list);
-        $breakdown_create_url = 'manager_breakdown.create';
+        $breakdown_create_routing = 'manager_breakdown.create';
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
         return view('estimate.estimate_index')->with([
@@ -66,7 +66,7 @@ class ManagerEstimateController extends Controller
                     'construction_list' => $construction_list,
                     'pdf_show_flags' => $pdf_show_flags,
                     'prevurl' => $prevurl,
-                    'breakdown_create_url' => $breakdown_create_url,
+                    'breakdown_create_routing' => $breakdown_create_routing,
                 ]);
     }
 
