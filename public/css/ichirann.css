@@ -404,5 +404,31 @@ table tr:not(:nth-last-child(-n + 0)) td:first-child {
     }
 }
 
+/* 20250108 内訳明細書のテーブルの幅のため */
+table.estimate-item-table {
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
 
+table.estimate-item-table th,
+table.estimate-item-table td {
+    width: 14%;
+    padding: 5px;
+    text-align: center;
+    word-wrap: break-word;
+}
 
+table.estimate-item-table td {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table.estimate-item-table td {
+    word-wrap: break-word;
+}
+
+table.estimate-item-table {
+    max-width: 100%;
+}

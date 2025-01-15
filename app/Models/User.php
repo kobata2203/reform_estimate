@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'users'; // Specify the table name if different
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'department_name',
@@ -31,10 +31,10 @@ class User extends Authenticatable
 
     public function createUser($data)
     {
-        $user = new self(); // Create a new instance of User
+        $user = new self(); 
         $user->fill($data);
-        $user->password = Hash::make($data['password']); // Hash the password
-        return $user->save(); // Return true/false based on save success
+        $user->password = Hash::make($data['password']);
+        return $user->save();
     }
 
     public function fetchUserById($id)

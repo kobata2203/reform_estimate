@@ -14,6 +14,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BreakdownRequest;
 use App\Http\Requests\EstimateInfoRequest;
+use App\Models\EstimateCalculate;
 
 class BreakdownController extends Controller
 {
@@ -25,6 +26,8 @@ class BreakdownController extends Controller
     protected $payment;
     protected $constructionName;
     protected $constructionList;
+    protected $estimateInfo;
+    protected $estimateCalculate;
 
     /**
      * 初期処理
@@ -38,8 +41,8 @@ class BreakdownController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+        EstimateCalculate $estimateCalculate
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -47,6 +50,7 @@ class BreakdownController extends Controller
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
+        $this->estimateCalculate = $estimateCalculate;
     }
 
     public function create($id, Request $request)
@@ -61,15 +65,15 @@ class BreakdownController extends Controller
          */
         $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
-        
-        if(count($breakdown_items) == 0) {
-            if(empty($construction_id)) {
+
+        if (count($breakdown_items) == 0) {
+            if (empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
                 //dd($breakdown_items);
             }
-        } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
+        } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         //dd($breakdown_items);
@@ -93,13 +97,13 @@ class BreakdownController extends Controller
         $prevurl = $request->prevurl;
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if(false === strpos($prevurl, 'estimate_info?')){
+        if (false === strpos($prevurl, 'estimate_info?')) {
             $prevurl = url('utill.prevurl_breakdown_store');	//一覧画面のURLを直接指定
         }
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 
-        if($regist_breakdown === true) {
+        if ($regist_breakdown === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -110,4 +114,5 @@ class BreakdownController extends Controller
             'prevurl' => $prevurl,
         ]);
     }
+
 }

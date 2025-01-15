@@ -104,22 +104,30 @@ Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class,
 
 // //for viewing 御　見　積　書
 Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-// // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-// // Define route for displaying the 'item' view
-// Route::get('/manager/item', [ManagerController::class, 'itemView'])->name('manager.item');
-
 
 
 // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 Route::get('/manager/show/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
-Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
+Route::post('/update-discount/{id}/{construction_id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 
+#pdfを表示
+Route::get('/manager_menu/pdftrail1/{id}/{construction_list_id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
 
-#to print pdf
-Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
+//営業用編集必要です。
+Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdowns');
 // Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
 Route::get('/managers/pdf/{id}', [ManagerController::class, 'generateCover'])->name('generatecover');
+
+
+
+
+
+
+
+
+
+
 

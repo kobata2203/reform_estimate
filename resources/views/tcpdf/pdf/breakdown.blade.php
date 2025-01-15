@@ -74,14 +74,17 @@
     <h2>内訳明細書</h2>
     <p style="text-align: right;">株式会社サーバントップ</p>
 
-    <p><strong>工事名:</strong> {{ $construction_list->name }}</p>
-
+    <p>
+        <strong style="border-bottom: 1px solid black; padding-bottom: 10px;">
+            工事名:</strong><span id="construction-name-text"
+            style="border-bottom: 1px solid black;">{{ $construction_list->name }}</span>
+    </p>
 
     <table>
         <thead>
             <tr>
                 <th>項目</th>
-                <th style="font-size: {{ $font_size }}px; text-align: center;">メーカー名・シリーズ名（商品名）・品番</th>
+                <th>仕様・摘要</th>
                 <th>数量</th>
                 <th>単位</th>
                 <th>単価</th>
@@ -119,7 +122,6 @@
                         <span>{{ number_format($discount) }}</span>
                     </div>
                 </td>
-
             </tr>
             <tr>
                 <td colspan="5" class="custom-width">小計（税抜）</td>

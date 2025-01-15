@@ -19,7 +19,6 @@
             padding: 20px;
             margin: 2px;
             background-color: rgb(186, 182, 182);
-
         }
 
         table {
@@ -52,7 +51,6 @@
             bottom: 375px;
             right: 15px;
             margin-bottom: 300px;
-
         }
     </style>
 </head>
@@ -70,7 +68,7 @@
             {{ $estimate_info->customer_name }} 様</p>
         <p style="display: inline; font-size: 8px; margin: 0; padding: 0;">下記の通りお見積り申し上げます。</p>
         <p style="text-align: center; margin-left: 150px; display: inline; text-decoration: underline;">
-            <strong>お見積り金額 : ¥ </strong> {{ number_format($grandTotal) }}（税込）
+            <strong>お見積り金額 : ¥ </strong> {{ number_format($totalGrandTotal) }}（税込）
         </p>
     </div>
 
@@ -89,7 +87,7 @@
 
         <tr>
             <th>納入場所</th>
-            <td style="text-align: center""text-align: center">{{ $estimate_info->delivery_place }}</td>
+            <td style="text-align: center">{{ $estimate_info->delivery_place }}</td>
         </tr>
         <tr>
             <th>工期</th>

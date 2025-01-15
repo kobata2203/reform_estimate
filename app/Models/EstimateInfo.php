@@ -115,101 +115,25 @@ class EstimateInfo extends Model
         return $this->constructionList->registEstimateInfoId($request->construction_name, $id);
     }
 
-    //新しい見積書作成登録保存についてメソッドを追加
-    // public function getEstimateInfo($keyword = null)
-    // {
-    //     $query = self::where('delete_flag', false);
-
-    //     if (!empty($keyword)) {
-    //         $query->where(function ($query) use ($keyword) {
-    //             $query->where('creation_date', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhereHas('department', function ($dpt) use ($keyword) {
-    //                     $dpt->where('name', 'LIKE', "%{$keyword}%");
-    //                 })
-    //                 ->orWhereHas('constructions', function ($con) use ($keyword) {
-    //                     $con->where('name', 'LIKE', "%{$keyword}%");
-    //                 });
-    //         });
-    //     }
-
-    //     return $query->orderBy('created_at', 'desc')
-    //         ->take(20)
-    //         ->get();
-    // }
-
-    // public function getEstimateInfo($keyword = null)
-    // {
-    //     // Define table names for joins
-    //     $join_table = 'construction_list';
-    //     $join_table2 = 'departments';
-
-    //     // Start the query with where condition for delete_flag
-    //     $query = self::where('delete_flag', false);
-
-    //     // Add keyword-based filtering
-    //     if (!empty($keyword)) {
-    //         $query->where(function ($query) use ($keyword, $join_table, $join_table2) {
-    //             $query->where('creation_date', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhere('charger_name', 'LIKE', "%{$keyword}%")
-    //                 ->orWhereHas('department', function ($dpt) use ($keyword) {
-    //                     $dpt->where('name', 'LIKE', "%{$keyword}%");
-    //                 })
-    //                 ->orWhereHas('constructions', function ($con) use ($keyword) {
-    //                     $con->where('name', 'LIKE', "%{$keyword}%");
-    //                 })
-    //                 ->orWhere("{$join_table}.name", 'LIKE', "%{$keyword}%")
-    //                 ->orWhere("{$join_table2}.name", 'LIKE', "%{$keyword}%");
-    //         });
-    //     }
-
-    //     // Add left joins for the related tables
-    //     $query->leftJoin($join_table, 'estimate_info.id', '=', "{$join_table}.estimate_info_id")
-    //         ->leftJoin($join_table2, 'estimate_info.department_id', '=', "{$join_table2}.id");
-
-    //     // Apply ordering and limit results
-    //     return $query
-    //     // ->orderBy('created_at', 'desc')
-    //     //     ->take(20)
-    //         ->get();
-    // }
-
-
-    public function getEstimateInfo($keyword = null)
+    // 新しい見積書作成登録保存についてメソッドを追加 current
+    public static function getEstimateInfo($keyword = null)
     {
         $query = self::where('delete_flag', false);
-        $join_table = 'construction_list';
-        $join_table2 = 'departments';
 
         if (!empty($keyword)) {
-            $query = self::select(
-                'estimate_info.id',
-                'estimate_info.creation_date',
-                'estimate_info.customer_name',
-                'estimate_info.construction_id',
-                'estimate_info.charger_name',
-                'estimate_info.department_id'
-            );
-            $query->where('estimate_info.creation_date', 'LIKE', "%{$keyword}%")
-                ->orWhere('estimate_info.customer_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('estimate_info.construction_id', 'LIKE', "%{$keyword}%")
-                ->orWhere('estimate_info.charger_name', 'LIKE', "%{$keyword}%")
-                ->orWhere('departments.name', 'LIKE', "%{$keyword}%")
-                ->leftJoin($join_table, $this->table . '.id', '=', $join_table . '.estimate_info_id')
-                ->leftJoin($join_table2, $this->table . '.department_id', '=', $join_table2 . '.id')
-                ->groupBy($this->table . '.id');
+            $query->where(function ($query) use ($keyword) {
+                $query->where('creation_date', 'LIKE', "%{$keyword}%")
+                    ->orWhere('customer_name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('charger_name', 'LIKE', "%{$keyword}%");
 
+            });
         }
 
-        $query
-            ->orderBy('creation_date', 'desc')
+        $query->orderBy('created_at', 'desc')
             ->take(20);
 
         return $query->get();
     }
-
 
     public function deleteEstimate($id)
     {
@@ -280,6 +204,15 @@ class EstimateInfo extends Model
     {
         return $this->hasMany(ConstructionList::class, 'estimate_info_id');
     }
+    //見積書の合計のため20250108
+    public function constructionLists()
+    {
+        return $this->hasMany(ConstructionList::class);
+    }
 
+    public function estimateCalculates()
+    {
+        return $this->hasMany(EstimateCalculate::class);
+    }
 
 }

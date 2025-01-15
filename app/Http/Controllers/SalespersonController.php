@@ -119,28 +119,27 @@ class SalespersonController extends Controller
     }
 
     //20241114
-    public function itemView($id)
+   
+    public function itemView(Request $request, $id)
     {
-        //estimate record
         $estimate_info = $this->estimateInfo->getById($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
+        $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
 
-        //ConstructionListからconstruction_nameを呼び出す
-        $construction_list = $this->constructionList->getById($id);
-        //見積に関連する内訳を取得する
-        $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
+        $breakdown = $selectedConstructionId
+            ? $this->breakdown
+                ->byConstructionAndEstimate($selectedConstructionId, $id)
+                ->get()
+            : collect([]);
 
-        //内訳から合計金額を計算
         $totalAmount = $breakdown->sum('amount') ?? 0;
-
-        //この見積に関連する estimate_calculate レコードを取得
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateId($id);
+        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
 
         $discount = $estimate_calculate->special_discount ?? 0;
+
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-        $estimate_calculate->estimate_id = $id;
-        $estimate_calculate->special_discount = $discount;
 
         try {
             $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
@@ -148,8 +147,27 @@ class SalespersonController extends Controller
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
 
+        $constructionNames = $this->constructionList
+            ->select('construction_list.*')
+            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
+            ->where('construction_list.estimate_info_id', $id)
+            ->whereNotNull('breakdown.id')
+            ->groupBy('construction_list.id')
+            ->get();
+        // dd( $estimate_calculate );
+        return view('estimate.salesperson.show_estimate', compact(
+            'breakdown',
+            'estimate_info',
+            'id',
+            'subtotal',
+            'discount',
+            'tax',
+            'grandTotal',
+            'construction_list',
+            'constructionNames',
+            'selectedConstructionId',
 
-        return view('estimate.salesperson.show_estimate', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        ));
     }
 
     public function showestimate($id)
