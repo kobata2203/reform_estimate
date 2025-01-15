@@ -86,9 +86,17 @@ class ManagerController extends Controller
 
     public function store(CreateAdminRequest $request)
     {
-        $validated = $request->validated();
-        $this->admin->createAdmin($validated);
-        return redirect()->route('manager.index')->with('success', config('message.regist_complete'));
+        $create_admin = $this->admin->createAdmin($request);
+
+        if ($create_admin === true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
+
+        return redirect()->route('manager.index')->with([
+            'message' => $message,
+        ]);
     }
 
     public function edit($id)

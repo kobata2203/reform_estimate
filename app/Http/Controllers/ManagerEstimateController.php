@@ -95,16 +95,7 @@ class ManagerEstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
-        //$prevurl = $request->prevurl;
-        //if ($prevurl && url()->previous() == $prevurl) {
-            //return redirect()->route('utill.prevurl_manager_store'); // 戻るボタンの場合は別のページにリダイレクト
-        //}
-        //$request->session()->put('prevurl', url()->current());
-
-        //直前のページURLが一覧画面（パラメータ有）ではない場合
-        //if(false === strpos($prevurl, 'estimate_info?')){
         $prevurl = url('manager_estimate');	//一覧画面のURLを直接指定
-        //}
 
         $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
 

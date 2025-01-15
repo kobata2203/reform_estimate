@@ -31,10 +31,12 @@ class User extends Authenticatable
 
     public function createUser($data)
     {
-        $user = new self(); // Create a new instance of User
-        $user->fill($data);
-        $user->password = Hash::make($data['password']); // Hash the password
-        return $user->save(); // Return true/false based on save success
+        return self::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'department_name' => $data['department_name'],
+        ]);
     }
 
     public function fetchUserById($id)

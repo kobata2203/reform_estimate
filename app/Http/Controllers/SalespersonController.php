@@ -58,16 +58,17 @@ class SalespersonController extends Controller
 
     public function store(SalespersonRequest $request)
     {
-        $validated = $request->validated();
+        $create_user = $this->user->createUser($request);
 
-        \Log::info('Validated Data: ', $validated);
-        if ($this->user->createUser($validated)) {
-            \Log::info('User saved successfully: ', [$validated]);
-            return redirect('/salesperson')->with('success', config('message.regist_complete'));
+        if ($create_user === true) {
+            $message = config('message.regist_complete');
         } else {
-            \Log::error('Failed to save user: ', [$validated]);
-            return back()->withErrors(config('message.regist_fail'));
+            $message = config('message.regist_fail');
         }
+
+        return redirect()->route('salesperson.index')->with([
+            'message' => $message,
+        ]);
     }
 
     public function edit($id)

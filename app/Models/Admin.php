@@ -45,7 +45,7 @@ class Admin extends User
     }
 
     // Method to create a new admin
-    public static function createAdmin($data)
+    public function createAdmin($data)
     {
         return self::create([
             'name' => $data['name'],
