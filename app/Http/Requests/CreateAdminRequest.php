@@ -28,7 +28,7 @@ class CreateAdminRequest extends FormRequest
             'name' => 'required|string|max:20',
             'department_name' => 'required|string|max:20',
             'email' => 'required|string|email|max:30|unique:users,email,' . $this->route('id'),
-            'password' => 'required|string|min:6|max:12',
+            'password' => 'required|string|min:8',
         ];
     }
     }
