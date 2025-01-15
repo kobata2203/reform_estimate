@@ -20,9 +20,23 @@
         <p>株式会社サーバントップ</p>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="GET" action="{{ route('manager.item', ['id' => $id]) }}">
-
-
         <div class="construction-name">
             <label for="construction-name">工事名</label>
             <select id="construction-name" name="construction_name" onchange="this.form.submit()">
@@ -43,12 +57,7 @@
             method="POST">
 
             @csrf
-
-
-
             @csrf
-
-
             <table class="table-large item-table estimate-item-table">
                 <tr class="iro">
                     <th>項目</th>
@@ -76,6 +85,7 @@
                         <td>{{ $item->remarks }}</td>
                     </tr>
                 @endforeach
+
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">特別お値引き</td>
                     <td>
@@ -83,9 +93,10 @@
                             <span class="yen-symbol">¥</span>
                             <input type="hidden" name="construction_name" value="{{ $selectedConstructionId }}">
 
-                            <input type="number" id="special_discount" name="special_discount"
+                            <input type="text" id="special_discount" name="special_discount"
                                 value="{{ $discount }}" placeholder="お値引き金額を入力してください"
-                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px;">
+                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
+                                maxlength="10" ">
                         </div>
                     </td>
                 </tr>
@@ -124,14 +135,8 @@
     <div class="actions-2">
         <div class="action2">
             <a href="{{ route('managers.show', ['id' => $id]) }}" class="btn btn-primary no-print">御見積書</a>
-
-            {{-- <a href="{{ route('generatebreakdown', ['id' => $id, 'estimate_info_id' => $selectedConstructionId]) }}"
-                class="btn btn-primary no-print">View PDF</a> --}}
             <a href="{{ route('generatebreakdown', ['id' => $id, 'construction_list_id' => $selectedConstructionId]) }}"
                 class="btn btn-primary no-print">View PDF</a>
-
-
-
             <a href="{{ route('manager_estimate') }}" class="btn btn-primary no-print">戻る</a>
         </div>
     </div>

@@ -121,31 +121,25 @@ class ConstructionList extends Model
         return $datas;
 
     }
-    //20241219
-
 
     public function breakdowns()
     {
         return $this->hasMany(Breakdown::class, 'construction_list_id');
     }
 
-
-    // 20250110
     public function estimateInfo()
     {
         return $this->belongsTo(EstimateInfo::class);
     }
-    //20250114
 
     public function constructionList()
     {
         return $this->belongsTo(ConstructionList::class, 'construction_list_id', 'id');
     }
+
     public function estimateCalculates()
     {
         return $this->hasMany(EstimateCalculate::class, 'construction_list_id', 'id');
     }
-
-
 
 }

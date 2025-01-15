@@ -26,11 +26,15 @@ class UpdateEstimateRequest extends FormRequest
     public function rules()
     {
         return [
-            'special_discount' => 'required|numeric|min:0', 
+            'special_discount' => 'required|numeric|min:0',
+
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'special_discount.required' => config('message.validation.special_discount_required'),
         ];
     }
 
-
-
 }
-

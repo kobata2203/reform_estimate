@@ -24,7 +24,7 @@ class EstimateCalculate extends Model
     {
         return $this->belongsTo(Estimate::class, 'id', 'id');
     }
-    //added forchanging foreignid  from estimate to breakdown
+
     public function breakdown()
     {
         return $this->belongsTo(Breakdown::class, 'estimate_id', 'id');
@@ -40,7 +40,7 @@ class EstimateCalculate extends Model
     {
         return self::where('estimate_id', $estimateId)->first();
     }
-//後で消してもいい
+    //後で消してもいい
     public function getDiscountByEstimateIds($id)
     {
         return $this->where('estimate_id', $id)->first()->special_discount ?? 0;
@@ -109,13 +109,12 @@ class EstimateCalculate extends Model
             ->where('construction_list_id', $construction_list_id)
             ->first();
     }
-    //20250110
+
     public function constructionList()
     {
         return $this->belongsTo(ConstructionList::class, 'construction_list_id');
     }
 
-    //20250113
     public function construction()
     {
         return $this->belongsTo(ConstructionList::class, 'construction_list_id');

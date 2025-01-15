@@ -163,13 +163,11 @@ class Breakdown extends Model
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-    //pdf method on the ManagerController
     public function fetchBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-    //PDFshow on ManagerController
     public function fetchingBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
@@ -182,34 +180,27 @@ class Breakdown extends Model
         return $totalAmount;
     }
 
-
-
-
     public static function getByEstimateId($id)
     {
         return self::where('estimate_id', $id)->get();
     }
 
-
-    //pdf method on the ManagerController
     public function getBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
-    //20241219
+
     public function constructionList()
     {
         return $this->belongsTo(ConstructionList::class, 'construction_list_id');
     }
 
-    //20250107
     public function getBreakdownsByConstructionId($construction_list_id)
     {
         return $this->where('construction_list_id', $construction_list_id)->get();
     }
 
     //estimate_idとconstruction_list_idで分けてbreakdownのデータを表示
-
     public function scopeByConstructionAndEstimate($query, $constructionId, $estimateId)
     {
         return $query->where('construction_list_id', $constructionId)
@@ -218,7 +209,6 @@ class Breakdown extends Model
                 $query->where('estimate_info_id', $estimateId);
             });
     }
-
 
     public function breakdownByEstimateIdAndConstructionId($estimate_id, $construction_list_id)
     {

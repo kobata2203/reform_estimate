@@ -123,7 +123,7 @@ class ManagerController extends Controller
         ]);
     }
 
- 
+
 
     public function show($id)
     {
@@ -165,6 +165,7 @@ class ManagerController extends Controller
 
     public function itemView(Request $request, $id)
     {
+
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
@@ -197,7 +198,7 @@ class ManagerController extends Controller
             ->whereNotNull('breakdown.id')
             ->groupBy('construction_list.id')
             ->get();
-        // dd( $estimate_calculate );
+       
         return view('estimate.manager.item', compact(
             'breakdown',
             'estimate_info',
@@ -216,6 +217,7 @@ class ManagerController extends Controller
     public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
     {
         $validated = $request->validated();
+
 
         $estimate_info = $this->estimate->getEstimateById($id);
 
@@ -237,9 +239,9 @@ class ManagerController extends Controller
         try {
             $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
 
-            return redirect()->back()->with('success', 'Discount updated successfully');
+            return redirect()->back()->with('success', config('message.register_discount'));
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error', config('message.register_discount_fail') . $e->getMessage()]);
         }
     }
 

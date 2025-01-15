@@ -118,8 +118,6 @@ class SalespersonController extends Controller
         return view('salesperson.show', compact('user'));
     }
 
-    //20241114
-   
     public function itemView(Request $request, $id)
     {
         $estimate_info = $this->estimateInfo->getById($id);
