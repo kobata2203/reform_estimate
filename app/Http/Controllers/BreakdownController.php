@@ -91,12 +91,7 @@ class BreakdownController extends Controller
      */
     public function store(BreakdownRequest $request)
     {
-        //$prevurl = $request->prevurl;
-
-        //直前のページURLが一覧画面（パラメータ有）ではない場合
-        //if(false === strpos($prevurl, 'estimate_info?')){
         $prevurl = url('estimate.index');	//一覧画面のURLを直接指定
-        //}
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 

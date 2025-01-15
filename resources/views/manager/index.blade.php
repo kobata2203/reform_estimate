@@ -9,18 +9,19 @@
     <div>
         <h2>管理者一覧画面</h2>
     </div>
+    <div class="search-salesperson">
     @if(session('message'))
         <div class="message">
             {{ session('message') }}
         </div>
     @endif
-    <form action="{{ route('manager.index') }}" method="GET" class="form-inline">
-        <div class="form-group d-flex align-items-center">
-            <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい" value="{{ request()->input('search') }}">
-            <button type="submit" class="btn btn-primary custom-margin">検索</button>
-        </div>
-    </form>
-
+        <form action="{{ route('manager.index') }}" method="GET" class="form-inline">
+            <div class="form-group d-flex align-items-center">
+                <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい" value="{{ request()->input('search') }}">
+                <button type="submit" class="btn btn-primary custom-margin">検索</button>
+            </div>
+        </form>
+    </div>
     <div>
         <table>
             <thead>

@@ -5,6 +5,14 @@ table {
     margin-top: 20px; /* Add some space above the table */
 }
 
+.message {
+    color: #0069d9;
+    font-size: larger;
+    font-weight: bold;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
 th, td {
     border: 1px solid black;
     padding: 8px;
@@ -12,7 +20,7 @@ th, td {
 }
 
 th {
-    background-color: orange;
+    background-color: rgb(135,197,48);
 }
 
 td {
