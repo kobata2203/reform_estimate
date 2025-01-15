@@ -54,16 +54,19 @@ class ManagerEstimateController extends Controller
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
-
+        $prevurl = url('manager_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
         $keys = array_keys($construction_list);
+        $url = 'manager_breakdown.create';
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
-        return view('estimate.manager.estimate_index')->with([
+        return view('estimate.estimate_index')->with([
                     'estimate_info' => $estimate_info,
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
                     'construction_list' => $construction_list,
                     'pdf_show_flags' => $pdf_show_flags,
+                    'prevurl' => $prevurl,
+                    'url' => $url,
                 ]);
     }
 
@@ -72,8 +75,9 @@ class ManagerEstimateController extends Controller
         $departments = $this->department::all();
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
-
-        return view('cover.manager.index',compact('construction_name'))->with([
+        $prevurl = url('manager_estimate'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        //dd($prevurl);
+        return view('cover.index',compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -81,6 +85,7 @@ class ManagerEstimateController extends Controller
             'construction_list' => $this->constructionList,
             'registered_construction_list' => array(),
             'action' => route('estimate.store'),
+            'prevurl' => $prevurl,
         ]);
     }
     /**
@@ -90,6 +95,17 @@ class ManagerEstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
+        //$prevurl = $request->prevurl;
+        //if ($prevurl && url()->previous() == $prevurl) {
+            //return redirect()->route('utill.prevurl_manager_store'); // 戻るボタンの場合は別のページにリダイレクト
+        //}
+        //$request->session()->put('prevurl', url()->current());
+
+        //直前のページURLが一覧画面（パラメータ有）ではない場合
+        //if(false === strpos($prevurl, 'estimate_info?')){
+        $prevurl = url('manager_estimate');	//一覧画面のURLを直接指定
+        //}
+
         $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
 
         if ($regist_estimate_info === true) {
@@ -98,7 +114,10 @@ class ManagerEstimateController extends Controller
             $message = config('message.regist_fail');
         }
 
-        return redirect('manager_estimate')->with('message', $message);
+        return redirect('manager_estimate')->with([
+            'message' => $message,
+            'prevurl' => $prevurl,
+        ]);
     }
 
     /**

@@ -57,16 +57,19 @@ class EstimateController extends Controller
 
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
-
+        $prevurl = url('salesperson_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        $url = 'breakdown.create';
         $keys = array_keys($construction_list);
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
-        return view('estimate.salesperson.estimate_index')->with([
+        return view('estimate.estimate_index')->with([
                     'estimate_info' => $estimate_info,
                     'keyword' => $keyword,
                     'departments' => $this->department->getDepartmentList(),
                     'construction_list' => $construction_list,
                     'pdf_show_flags' => $pdf_show_flags,
+                    'prevurl' => $prevurl,
+                    'url' => $url,
                 ]);
     }
 
@@ -75,8 +78,9 @@ class EstimateController extends Controller
         $departments = $this->department::all();
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
+        $prevurl = url('estimate.index'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
-        return view('cover.salesperson.index',compact('construction_name'))->with([
+        return view('cover.index',compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -84,6 +88,7 @@ class EstimateController extends Controller
             'construction_list' => $this->constructionList,
             'registered_construction_list' => array(),
             'action' => route('estimate.store'),
+            'prevurl' => $prevurl,
         ]);
     }
     /**
@@ -93,6 +98,13 @@ class EstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
+        //$prevurl = $request->prevurl;
+
+        //直前のページURLが一覧画面（パラメータ有）ではない場合
+        //if(false === strpos($prevurl, 'estimate_info?')){
+        $prevurl = url('estimate.index');	//一覧画面のURLを直接指定
+        //}
+
         $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
 
         if ($regist_estimate_info === true) {
@@ -101,7 +113,10 @@ class EstimateController extends Controller
             $message = config('message.regist_fail');
         }
 
-        return redirect('estimate/index')->with('message', $message);
+        return redirect('estimate/index')->with([
+            'message' => $message,
+            'prevurl' => $prevurl,
+        ]);
     }
 
     /**

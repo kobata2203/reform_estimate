@@ -43,7 +43,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                    <a href="{{ route('breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                     <a href="{{ route($url,['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
@@ -61,9 +61,6 @@
         </table>
     </div>
     <div class="btn-menu">
-        <form action="{{ route('salesperson_menu') }}" method="GET">
-            @csrf
-            <button class="btn btn-primary custom-border">戻る</button>
-        </form>
+        <button class="btn btn-primary" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>
     </div>
 @endsection

@@ -12,7 +12,7 @@
         <h4>見積書作成画面<br>（内訳明細書）</h4>
     </div>
     <div class="table-container">
-        <form action="{{ route('breakdown.store') }}" method="post">
+        <form action="{{ $breakdown_url }}" method="post">
             @csrf
             <table>
             <input type="hidden" name="estimate_id" value="{{ $estimate_info->id}}">

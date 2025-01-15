@@ -131,6 +131,18 @@ td .btn-primary:hover {
     background-color: #0069d9;
 }
 
+.btn-link {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+
+}
+
 button:disabled {
     background-color: gray;
 }

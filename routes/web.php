@@ -59,7 +59,7 @@ Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])
 
 
 //管理者用見積書一覧画面
-Route::get('/manager_estimate', [App\Http\Controllers\ManagerEstimateController::class, 'index'])->name('manager_estimate');
+Route::get('/manager_estimate/index', [App\Http\Controllers\ManagerEstimateController::class, 'index'])->name('manager_estimate.index');
 Route::get('/manager_estimate/create', [App\Http\Controllers\ManagerEstimateController::class, 'create'])->name('manager_estimate.create');
 Route::post('/manager_estimate/store', [App\Http\Controllers\ManagerEstimateController::class, 'store'])->name('manager_estimate.store');
 Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'edit'])->name('manager_estimate.edit');
