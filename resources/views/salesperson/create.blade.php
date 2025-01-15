@@ -50,7 +50,7 @@
                 </div>
             @endif
             <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" maxlength="32" required>
             @if ($errors->has('password'))
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('password') }}
