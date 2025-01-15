@@ -8,16 +8,6 @@ form {
     align-items: center;
 }
 
-body {
-    height: 100%;
-    width: 100%;
-    background-image: url(../image/back.png)!important;  
-    background-position: center center; 
-    background-repeat: no-repeat;  
-    background-attachment: fixed; 
-    background-size: cover;
-}
-
 h1 {
     text-align: center;
 }

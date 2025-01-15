@@ -22,193 +22,88 @@ use Barryvdh\DomPDF\Facade as PDF;
 |
 */
 
-//Route::get('/', function () {
-    //return view('welcome');
-//});
-Route::get('/salesperson/add', 'App\Http\Controllers\SalespersonController@add')->name('salesperson_add');
-Route::post('/salesperson/add', 'App\Http\Controllers\SalespersonController@create')->name('salesperson_create');
-Route::get('/salesperson/edit', 'App\Http\Controllers\SalespersonController@edit')->name('salesperson_edit');
-
 //最初はここに飛ぶ(名前をaction_indexからgetLoginに)
-//Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-//Route::get('/login', function () {
-    //return view('login');
-//});
 //POSTされたときはこっち
 Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth_login');
 
 // Authentication Routes
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\Auth\LoginController::class, 'index'])->name('home');
 
-
-// Admin Routes
-//Route::view('/admin/login', 'admin/login')->name('login');
+//管理者用ログイン
 Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('admin_login');
 Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('admin_login');
 Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
-//Route::view('/admin/home', 'admin/home')->middleware('auth:admin');
 
-//Route::get('/', function () {
-    // ウェブサイトのホームページ（'/'のURL）にアクセスした場合のルートです
-    //if (Auth::check()) {
-        // ログイン状態ならば
-        //return redirect()->route('login');
-        // 見積書一覧ページ（EstimateControllerのindexメソッドが処理）へリダイレクトします
-    //} else {
-        // ログイン状態でなければ
-        //return redirect()->route('login');
-        //　ログイン画面へリダイレクトします
-    //}
-//});
-
-
+//営業者用メニュー画面
 Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
 
 // Estimate Routes
-//Route::get('estimate_info', 'App\Http\Controllers\EstimateController@index')->name('estimate_info.index');
 Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate.index');
 Route::get('/estimate/create', [App\Http\Controllers\EstimateController::class, 'create'])->name('estimate.create');
 Route::post('/estimate/store', [App\Http\Controllers\EstimateController::class, 'store'])->name('estimate.store');
-Route::get('/estimate/breakdown_create/{id}', [App\Http\Controllers\EstimateController::class, 'breakdown_create'])->name('estimate.breakdown_create');
-Route::post('/estimate/breakdown_store', [App\Http\Controllers\EstimateController::class, 'breakdown_store'])->name('estimate.breakdown_store');
+Route::get('/estimate/edit/{id}', [App\Http\Controllers\EstimateController::class, 'edit'])->name('estimate.edit');
+Route::post('/estimate/update/{id}', [App\Http\Controllers\EstimateController::class, 'update'])->name('estimate.update');
+Route::get('/estimate/delete/{id}', [App\Http\Controllers\EstimateController::class, 'delete'])->name('estimate.delete');
+Route::get('/breakdown/create/{id}', [App\Http\Controllers\BreakdownController::class, 'create'])->name('breakdown.create');
+Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
-//salesperson Menu
-//Route::view('/salesperson_menu', '/salesperson_menu')->name('salesperson_menu');
-
-
-
-
-
-//THis route is fot the manager_index/view page
-Route::get('/manager_estimate', [App\Http\Controllers\ManagerController::class, 'index'])->name('manager_estimate');
-Route::resource('managers', ManagerController::class);
-
-Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salespersons.index');
+//20241114(営業者用の内訳明細書)
+Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('salesperson.show');
+//(営業者用の御見積書)
+Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
 
+//管理者用見積書一覧画面
+Route::get('/manager_estimate/index', [App\Http\Controllers\ManagerEstimateController::class, 'index'])->name('manager_estimate.index');
+Route::get('/manager_estimate/create', [App\Http\Controllers\ManagerEstimateController::class, 'create'])->name('manager_estimate.create');
+Route::post('/manager_estimate/store', [App\Http\Controllers\ManagerEstimateController::class, 'store'])->name('manager_estimate.store');
+Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'edit'])->name('manager_estimate.edit');
+Route::post('/manager_estimate/update/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'update'])->name('manager_estimate.update');
+Route::get('/manager_estimate/delete/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'delete'])->name('manager_estimate.delete');
+Route::get('/manager_breakdown/create/{id}', [App\Http\Controllers\ManagerBreakdownController::class, 'create'])->name('manager_breakdown.create');
+Route::post('/manager_breakdown/store', [App\Http\Controllers\ManagerBreakdownController::class, 'store'])->name('manager_breakdown.store');
 
-
-
-//for the ichiran menu 画面へ [ Admin Resource Routes]
-
-//Route::resource('admins', AdminController::class);
-
-//Route::get('/manager-menu', function () {
-//return view('manager_menu.index');
-//})->name('manager_menu.index');
-
-//for the 営業者登録画面
-Route::view('/salesperson/add', 'salesperson_add/index')->name('salesperson_add.index');
-Route::view('/manager/add', 'manager_add/index')->name('manager_add.index');
-
-Route::get('/salespersons/list', [SalespersonController::class, 'list'])->name('salespersons.list');
-
-//additional
-// For the first case (admin list and search functionality)
-//Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
-//Route::get('/admins/create', [AdminController::class, 'create'])->name('admin.create');
-//Route::post('/admins', [AdminController::class, 'store'])->name('admin.store');
-
-
-
-
-
-
-
-// Define routes for the admin management
-//Route::get('/estimate/admins', [AdminController1::class, 'index'])->name('estimate.index');
-//Route::get('/estimate/admins/create', [AdminController1::class, 'create'])->name('estimate.create');
-//Route::post('/estimate/admins', [AdminController1::class, 'store'])->name('estimate.store');
-//Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
-
-//Route::get('estimate/pdf/{id}', [AdminController1::class, 'pdf'])->name('estimate.pdf');
-
-
-// // Show details with view functionality
-// Route::get('/estimate/admins/{id}', [AdminController1::class, 'show'])->name('estimate.show');
-
-// // PDF-specific route
-// Route::get('estimate/admins/{id}/pdf', [AdminController1::class, 'pdf'])->name('estimate.pdf');
+//管理者用内訳明細書作成
+//Route::get('/adminbreakdown/create/{id}', [App\Http\Controllers\AdminBreakdownController::class, 'create'])->name('adminbreakdown.create');
+//Route::post('/breakdown/store', [App\Http\Controllers\AdminBreakdownController::class, 'store'])->name('breakdown.store');
 
 
 Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
     return $request->user()->downloadInvoice($invoiceId);
 });
 
+//営業者一覧
+Route::get('/salesperson', [SalespersonController::class, 'index'])->name('salesperson.index');
+Route::get('/salesperson/edit/{id}', [SalespersonController::class, 'edit'])->name('salesperson.edit');
+Route::put('/salesperson/update/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
+Route::get('/salesperson/delete/{id}', [SalespersonController::class, 'delete'])->name('salesperson.delete');
 
-//added now 20240920
-Route::get('/salesperson/add', [SalespersonController::class, 'add'])->name('salesperson.add');
-Route::post('/salesperson/create', [SalespersonController::class, 'create'])->name('salesperson.create');
+//営業者登録処理
+Route::get('/salesperson/create', [SalespersonController::class, 'create'])->name('salesperson.create');
+Route::post('/salesperson/store', [SalespersonController::class, 'store'])->name('salesperson.store');
 
+//管理者一覧
+Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
+Route::get('/manager/edit/{id}', [ManagerController::class, 'edit'])->name('manager.edit');
+Route::put('/manager/update/{id}', [ManagerController::class, 'update'])->name('manager.update');
+Route::get('/manager/delete/{id}', [ManagerController::class, 'delete'])->name('manager.delete');
 
+//管理者登録処理
+Route::get('/manager/create', [ManagerController::class, 'create'])->name('manager.create');
+Route::post('/manager/store', [ManagerController::class, 'store'])->name('manager.store');
 
+//管理者用メニュー画面
+Route::get('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'index'])->name('manager_menu');
+Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'index'])->name('manager_menu');
 
-// Admin registration routes
-Route::get('/admin/register', [ManagerController::class, 'create'])->name('admin.register');
-Route::post('/admin/store', [ManagerController::class, 'store'])->name('admin.store');
-
-//for 営業者一覧へ
-Route::get('/salespersons/show', [SalespersonController::class, 'index'])->name('manager_index.index');
-
-
-
-
-
-Route::get('/admins', [ManagerController::class, 'admin_index'])->name('admins.index');
-route::get('/managers', [ManagerController::class, 'index'])->name('manager_index.index');
-route::resource('salespersons', SalespersonController::class);
-// route::resource('admins', ManagerController::class);
-route::resource('managers', ManagerController::class);
-
-
-
-
-Route::get('/salespersons/show', [SalespersonController::class, 'edit'])->name('manager_index.index');
-
-
-Route::get('/managers', [ManagerController::class, 'index'])->name('managers.index');
-Route::get('/admin/{id}/edit', 'App\Http\Controllers\ManagerController@edit')->name('admins.edit');
-Route::put('/admin/{admin}', 'App\Http\Controllers\ManagerController@update')->name('admin.update');
-
-//route::resource('salespersons', SalespersonController::class);
-
-
-
-//営業一覧画面
-Route::put('/manage/{manage}', 'App\Http\Controllers\SalespersonController@update')->name('user.update');
-
-
-
-//Salesperson Routes
-Route::get('edit/{id}', 'SalespersonController@edit');
-Route::get('/salesperson/edit/{id}', [SalespersonController::class, 'edit']);
-
-
-// Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salesperson.index');
-// Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'edit'])->name('salesperson.edit');
-// Route::put('/salespersons/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
-// Route::delete('/salespersons/{id}', [SalespersonController::class, 'destroy'])->name('salesperson.destroy');
-
-//Routes for the 管理者メニュー画面
-Route::get('/salespersons', [SalespersonController::class, 'index'])->name('salesperson.index');
-Route::get('/salespersons/{id}/edit', [SalespersonController::class, 'edit'])->name('salesperson.edit');
-Route::put('/salespersons/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
-Route::delete('/salespersons/{id}', [SalespersonController::class, 'destroy'])->name('salesperson.destroy');
-Route::get('/manager_menu2', [SalespersonController::class, 'index'])->name('manager_menu.index');
-
-
-Route::get('/manager_menu', [App\Http\Controllers\SalespersonController::class, 'manager_menu'])->name('manager_menu');
-Route::post('/manager_menu', [App\Http\Controllers\SalespersonController::class, 'manager_menu'])->name('manager_menu');
-Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('salesperson.show');
 
 // //for viewing 御　見　積　書
-// Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
+Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // // Define route for displaying the 'item' view
 // Route::get('/manager/item', [ManagerController::class, 'itemView'])->name('manager.item');
@@ -216,26 +111,15 @@ Route::get('/salesperson/{id}', [SalespersonController::class, 'show'])->name('s
 
 
 // Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
+Route::get('/manager/show/{id}', [ManagerController::class, 'show'])->name('managers.show');
 // Define route for displaying the 'item' view
 Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
+Route::post('/update_discount/{id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
 
-//togenerate pdf
-
-#to view pdf
-// Route::get('manager-estimate/pdf', [ManagerController::class, 'generatePDF'])->name('generate_pdf');
 
 #to print pdf
-// Route::get('/print-pdf', [ManagerController::class, 'printPDF'])->name('pdf.print');
-// Route::get('/manager/pdf', [ManagerController::class, 'getpdf'])->name('pdf.print1');
-// Route::get('/manager_menu/pdftrail/{id}', [ManagerController::class, 'pdfget'])->name('Pdftrail');
-Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'pdf'])->name('showPdftrail');
-Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
+Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
+// Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
 Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
-Route::get('/managers/pdf/{id}', [ManagerController::class, 'PDFshow'])->name('managers.pdfshow');
-
-
-
-// Generate PDF route
-Route::get('/estimate/pdf/{id}', [ManagerController::class, 'generatefpdi'])->name('generatefpdi');
+Route::get('/managers/pdf/{id}', [ManagerController::class, 'generateCover'])->name('generatecover');
 

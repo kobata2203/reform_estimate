@@ -17,24 +17,25 @@ class LoginController extends Controller
      *
      * @var string
      */
-    //public function __construct()
-    //{
-        //$this->admin = new Admin();
-    //}
-    
-    protected function redirectPath()
-    {
-        return '/manager_menu'; // ログイン後にリダイレクトする URL を指定
-    }
+    protected $admin;
+
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        Admin $admin,
+    )
     {
+        $this->admin = $admin;
         $this->middleware('guest')->except('logout');
+    }
+    
+    protected function redirectPath()
+    {
+        return '/manager_menu'; // ログイン後にリダイレクトする URL を指定
     }
 
     /**
@@ -61,7 +62,7 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectPath());
         }
         return back()->withErrors([
-            'email' => 'ログイン処理に失敗しました。メールアドレス・パスワードを確認ください。',
+            'email' => config('message.login_fail'), // 定数を取得して使用
         ]);
     }
 

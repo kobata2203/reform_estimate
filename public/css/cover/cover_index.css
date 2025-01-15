@@ -1,0 +1,100 @@
+/* index.css */
+.container {
+    /* 子要素を水平方向の中央に配置する */
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    align-items: left;
+    text-align: left;
+    width: 270px;
+}
+
+textarea {
+    align-items: left;
+    text-align: left;
+    width: 270px;
+}
+
+select {
+    align-items: left;
+    text-align: left;
+}
+
+table {
+    align-items: center;
+}
+
+th {
+    background-color: rgba(135,197,48,0.7);
+}
+
+td {
+    background-color: #ccc;
+    align-items: left;
+    text-align: left;
+}
+
+.list {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+}
+  
+li {
+    list-style: none;
+    margin-right: 1rem;
+}
+
+.btn, .btn-primary, .btn-dark, .btn-danger,.js-delete-btn,.btn-add {
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.btn:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.js-delete-btn:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.btn-add:hover {
+    background-color: #0069d9;   /* Darker blue on hover */
+}
+
+.js-delete-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.add {
+    border-top: 1px solid black;
+}
+
+.btn-add {
+    margin-top: 10px;
+    translate: 70% 0;
+}
+
+.btn-submit {
+    margin-top: 10px;
+    translate: 80% 0;
+}
+
+.btn-back {
+    /* 子要素を水平方向の中央に配置する */
+    display: flex;
+    justify-content: center;
+}

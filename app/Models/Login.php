@@ -1,9 +1,15 @@
 <?php
 namespace App\Models;
 
-use App\Http\Controllers\Auth\LoginController;
 
-class Login extends Eloquent
+
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Validator;
+
+
+
+class Login extends Model
 {
     protected $fillable = ['email', 'password'];
     protected $errors;
@@ -11,8 +17,8 @@ class Login extends Eloquent
     public function validate(array $params)
     {
         $validator = Validator::make($params, [
-            'email' => array('required','email'),
-            'password'  => 'required',
+            'email' => array('required', 'email'),
+            'password' => 'required',
         ]);
 
         if ($validator->passes()) {

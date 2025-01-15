@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class LoginController extends Controller
-{   
+{
     /*|--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |*/
-    
+
 
     use AuthenticatesUsers;
 
@@ -50,7 +50,7 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
-    
+
     protected function credentials(LoginRequest $request)
     {
         return $request->only($this->email(), 'password');
@@ -73,10 +73,10 @@ class LoginController extends Controller
             $msg = 'ログインしました。';
 
             return view('salesperson_menu.index');
-            
+
         } else {
             $msg = 'メールアドレスもしくはパスワードが間違っています。';
-            
+
             return view('/');
         }
     }

@@ -27,6 +27,7 @@ class SpecificationRequired implements Rule
      */
     public function passes($attribute, $value)
     {
+        dd($this->input_data);
         // 入力値の取得
         $splits = explode('.', $attribute);
         $loop_no = $splits[1];
