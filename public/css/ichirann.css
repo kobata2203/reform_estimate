@@ -434,7 +434,7 @@ table.estimate-item-table {
 }
 
 /* 登録と失敗した時に表示 */
-.alert-success {
+.alert {
     display: inline-block;
     border: 2px solid #4caf50;
     background-color: #dff0d8;
@@ -462,4 +462,10 @@ table.estimate-item-table {
 
 .alert-danger li {
     margin-bottom: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }

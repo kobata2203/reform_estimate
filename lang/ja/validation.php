@@ -170,9 +170,7 @@ return [
         'terms' => [
             'required' => '登録には規約への同意が必須となります。',
         ],
-        'special_discount' => [
-            'numeric' => '更新処理に失敗しました。管理者にご連絡ください。',
-        ],
+
     ],
 
     /*
@@ -279,6 +277,8 @@ return [
         'remarks.*' => config('column_names.remarks'),
         'remarks' => config('column_names.remarks'),
         'construction_name.*' => config('column_names.construction_name'),
+        'special_discount' => config('column_names.special_discount'),
+
     ],
 
 ];

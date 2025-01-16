@@ -20,21 +20,18 @@
         <p>株式会社サーバントップ</p>
     </div>
 
-    @if (session('success'))
+    @if (session('updated'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            {{ session('updated') }}
         </div>
     @endif
 
-    @if ($errors->any())
+    @error('special_discount')
         <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+            {{ $message }}
         </div>
-    @endif
+    @enderror
+
 
     <form method="GET" action="{{ route('manager.item', ['id' => $id]) }}">
         <div class="construction-name">
@@ -92,11 +89,10 @@
                         <div class="amount-container">
                             <span class="yen-symbol">¥</span>
                             <input type="hidden" name="construction_name" value="{{ $selectedConstructionId }}">
-
                             <input type="text" id="special_discount" name="special_discount"
-                                value="{{ $discount }}" placeholder="お値引き金額を入力してください"
+                                value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
                                 style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
-                                maxlength="10"　max="1000000">
+                                maxlength="10"　max="9999999">
                         </div>
                     </td>
                 </tr>

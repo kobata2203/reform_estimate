@@ -123,8 +123,6 @@ class ManagerController extends Controller
         ]);
     }
 
-
-
     public function show($id)
     {
         $estimate_info = $this->estimateInfo::getEstimateByIde($id);
@@ -225,28 +223,26 @@ class ManagerController extends Controller
         }
 
         $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $construction_id);
-
         $totalAmount = $breakdown->sum('amount');
-
         $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id, $construction_id);
         $estimate_calculate->special_discount = $validated['special_discount'];
-
         $subtotal = $totalAmount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
         try {
             $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
-
-            return redirect()->back()->with('success', config('message.regist_complete'));
+            session()->flash('updated', __(
+                ':attribute ' . config('message.update_complete'),
+                ['attribute' => config('column_names.special_discount')]
+            ));
+            return redirect()->back();
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->back()->withErrors([
                 'error',
                 config('message.update_fail') .
                 $e->getMessage()
             ]);
-
-
         }
     }
 
