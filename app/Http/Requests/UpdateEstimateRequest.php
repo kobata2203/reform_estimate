@@ -22,19 +22,21 @@ class UpdateEstimateRequest extends FormRequest
      * @return array
      */
 
-    //ManagerController updateDiscount
+
     public function rules()
     {
         return [
-            'special_discount' => 'required|numeric|min:0',
-
+            'special_discount' => 'nullable|numeric|max:1000000',
         ];
     }
     public function messages()
     {
         return [
-            'special_discount.required' => config('message.validation.special_discount_required'),
+            'special_discount.required' => config('message.regist_complete'),
+            'special_discount.numeric' => config('message.update_fail'),
+            'special_discount.max' => 'お値引き金額は1,000,000円を超えることはできません。',
         ];
     }
+
 
 }

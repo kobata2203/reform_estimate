@@ -198,7 +198,7 @@ class ManagerController extends Controller
             ->whereNotNull('breakdown.id')
             ->groupBy('construction_list.id')
             ->get();
-       
+
         return view('estimate.manager.item', compact(
             'breakdown',
             'estimate_info',
@@ -217,7 +217,6 @@ class ManagerController extends Controller
     public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
     {
         $validated = $request->validated();
-
 
         $estimate_info = $this->estimate->getEstimateById($id);
 
@@ -239,9 +238,15 @@ class ManagerController extends Controller
         try {
             $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
 
-            return redirect()->back()->with('success', config('message.register_discount'));
+            return redirect()->back()->with('success', config('message.regist_complete'));
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->back()->withErrors(['error', config('message.register_discount_fail') . $e->getMessage()]);
+            return redirect()->back()->withErrors([
+                'error',
+                config('message.update_fail') .
+                $e->getMessage()
+            ]);
+
+
         }
     }
 

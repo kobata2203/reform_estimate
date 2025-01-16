@@ -84,10 +84,8 @@ return [
     ],
     'mac_address' => ':attributeには、有効なMACアドレスを指定してください。',
     'max' => [
-        //        'numeric' => ':attributeには、:max以下の数字を指定してください。',
         'numeric' => ':attributeには、:max以下の数字で入力してください。',
         'file' => ':attributeには、:max kb以下のファイルを指定してください。',
-        //        'string' => ':attributeは、:max文字以下で指定してください。',
         'string' => ':attributeは、:max文字以下で入力してください。',
         'array' => ':attributeは:max個以下指定してください。',
     ],
@@ -95,10 +93,8 @@ return [
     'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'mimetypes' => ':attributeには:valuesタイプのファイルを指定してください。',
     'min' => [
-        //        'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'numeric' => ':attributeには、:min以上の数字で入力してください。',
         'file' => ':attributeには、:min kb以上のファイルを指定してください。',
-        //        'string' => ':attributeは、:min文字以上で指定してください。',
         'string' => ':attributeは、:min文字以上で入力してください。',
         'array' => ':attributeは:min個以上指定してください。',
     ],
@@ -111,7 +107,6 @@ return [
     'multiple_of' => ':attributeには、:valueの倍数を指定してください。',
     'not_in' => '選択された:attributeは正しくありません。',
     'not_regex' => ':attributeの形式が正しくありません。',
-    //    'numeric' => ':attributeには、数字を指定してください。',
     'numeric' => ':attributeには、数字を入力してください。',
     'password' => [
         'letters' => ':attributeは、最低1文字以上の文字を含めてください。',
@@ -130,7 +125,6 @@ return [
     'prohibited_unless' => ':otherが:valueでない場合、:attributeは入力禁止です。',
     'prohibits' => 'attributeは:otherの入力を禁じています。',
     'regex' => ':attributeに正しい形式を指定してください。',
-    //    'required' => ':attributeは必ず指定してください。',
     'required' => ':attributeは必須入力です。',
     'required_array_keys' => ':attributeは、:valuesの項目を含めてください。',
     'required_if' => ':otherが:valueの場合、:attributeも指定してください。',
@@ -176,12 +170,10 @@ return [
         'terms' => [
             'required' => '登録には規約への同意が必須となります。',
         ],
-
         'special_discount' => [
-            'numeric' => '特別お値引きの登録に失敗しました。数字を入力してください。',
+            'numeric' => '更新処理に失敗しました。管理者にご連絡ください。',
         ],
     ],
-
 
     /*
     |--------------------------------------------------------------------------

@@ -96,7 +96,7 @@
                             <input type="text" id="special_discount" name="special_discount"
                                 value="{{ $discount }}" placeholder="お値引き金額を入力してください"
                                 style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
-                                maxlength="10" ">
+                                maxlength="10"　max="1000000">
                         </div>
                     </td>
                 </tr>

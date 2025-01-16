@@ -40,11 +40,6 @@ class EstimateCalculate extends Model
     {
         return self::where('estimate_id', $estimateId)->first();
     }
-    //後で消してもいい
-    public function getDiscountByEstimateIds($id)
-    {
-        return $this->where('estimate_id', $id)->first()->special_discount ?? 0;
-    }
 
     //内訳明細書
     public function getOrCreateEstimateCalculate($id)
