@@ -60,7 +60,7 @@ class SalespersonController extends Controller
     {
         $create_user = $this->user->createUser($request);
 
-        if ($create_user === true) {
+        if ($create_user == true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -102,7 +102,7 @@ class SalespersonController extends Controller
         // 削除処理
         $delete_user = $this->user->deleteUser($id);
 
-        if($delete_user === true) {
+        if($delete_user == true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
