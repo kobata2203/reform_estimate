@@ -88,7 +88,7 @@ class ManagerController extends Controller
     {
         $create_admin = $this->admin->createAdmin($request);
 
-        if ($create_admin === true) {
+        if ($create_admin == true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -121,7 +121,7 @@ class ManagerController extends Controller
         // 削除処理
         $delete_admin = $this->admin->deleteAdmin($id);
 
-        if($delete_admin === true) {
+        if($delete_admin == true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
