@@ -186,7 +186,7 @@ class ManagerController extends Controller
         try {
             $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
         } catch (\Illuminate\Database\QueryException $e) {
-            session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
+            $errorMessage = 'Error saving estimate calculations: ' . $e->getMessage();
         }
 
         $constructionNames = $this->constructionList
@@ -215,7 +215,6 @@ class ManagerController extends Controller
     public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
     {
         $validated = $request->validated();
-
         $estimate_info = $this->estimate->getEstimateById($id);
 
         if (!$estimate_info) {
@@ -232,16 +231,16 @@ class ManagerController extends Controller
 
         try {
             $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
-            session()->flash('updated', __(
-                ':attribute ' . config('message.update_complete'),
-                ['attribute' => config('column_names.special_discount')]
-            ));
-            return redirect()->back();
+            $successMessage = __(':attribute ' . config('message.update_complete'), [
+                'attribute' => config('column_names.special_discount')
+            ]);
+
+            return redirect()->back()->with('success', $successMessage);
         } catch (\Illuminate\Database\QueryException $e) {
+            $errorMessage = config('message.update_fail') . $e->getMessage();
+
             return redirect()->back()->withErrors([
-                'error',
-                config('message.update_fail') .
-                $e->getMessage()
+                'error' => $errorMessage
             ]);
         }
     }
@@ -255,8 +254,6 @@ class ManagerController extends Controller
     {
         return $this->pdfService->generateCover($id);
     }
-
-
 
 }
 

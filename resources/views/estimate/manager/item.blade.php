@@ -20,9 +20,9 @@
         <p>株式会社サーバントップ</p>
     </div>
 
-    @if (session('updated'))
+    @if (session('success'))
         <div class="alert alert-success">
-            {{ session('updated') }}
+            {{ session('success') }}
         </div>
     @endif
 
