@@ -235,7 +235,6 @@ class ManagerController extends Controller
 
         if ($update_estimate === true) {
             $message = config('message.update_complete');
-
         } else {
             $message = config('message.update_fail');
         }
@@ -243,7 +242,6 @@ class ManagerController extends Controller
         return redirect(url('/manager/item/' . $id))->with([
             'message' => $message,
         ]);
-
     }
 
     public function generateBreakdown($id, $construction_list_id)
