@@ -20,7 +20,7 @@
         <p>株式会社サーバントップ</p>
     </div>
 
-    <form method="GET" action="{{ route('manager.item', ['id' => $id]) }}">
+    <form method="GET" action="{{ route('salesperson.show', ['id' => $id]) }}">
 
 
         <div class="construction-name">
