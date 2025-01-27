@@ -26,12 +26,11 @@
         </div>
     @endif
 
-    @error('special_discount')
-        <div class="alert alert-danger">
-            {{ $message }}
-        </div>
-    @enderror
-
+    @if ($errors->has('special_discount'))
+         <div class="alert alert-danger">
+             {{ $errors->first("special_discount") }}
+         </div>
+    @endif
 
     <form method="GET" action="{{ route('manager.item', ['id' => $id]) }}">
         <div class="construction-name">
@@ -54,7 +53,8 @@
             method="POST">
 
             @csrf
-            @csrf
+           
+
             <table class="table-large item-table estimate-item-table">
                 <tr class="iro">
                     <th>項目</th>
@@ -93,6 +93,7 @@
                                 value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
                                 style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
                                 maxlength="10"　max="9999999">
+
                         </div>
                     </td>
                 </tr>

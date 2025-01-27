@@ -16,7 +16,6 @@ use App\Models\ConstructionItem;
 use App\Models\ConstructionList;
 use App\Models\ConstructionName;
 use App\Models\EstimateCalculate;
-use Ramsey\Collection\Collection;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
@@ -176,9 +175,7 @@ class ManagerController extends Controller
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
-
         $discount = $estimate_calculate->special_discount ?? 0;
-
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
@@ -229,20 +226,23 @@ class ManagerController extends Controller
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
-        try {
-            $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
-            $successMessage = __(':attribute ' . config('message.update_complete'), [
-                'attribute' => config('column_names.special_discount')
-            ]);
+        $update_estimate = $this->estimateCalculate->estimateCalculateUpdate(
+            $estimate_calculate,
+            $subtotal,
+            $tax,
+            $grandTotal
+        );
 
-            return redirect()->back()->with('success', $successMessage);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $errorMessage = config('message.update_fail') . $e->getMessage();
-
-            return redirect()->back()->withErrors([
-                'error' => $errorMessage
-            ]);
+        if ($update_estimate === true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
         }
+
+        return redirect(url('/manager/item/' . $id))->with([
+            'success' => $message,
+        ]);
+
     }
 
     public function generateBreakdown($id, $construction_list_id)

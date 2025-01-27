@@ -26,7 +26,7 @@ class UpdateEstimateRequest extends FormRequest
     public function rules()
     {
         return [
-            'special_discount' => 'required|integer|max:9999999|min:0',
+            'special_discount' => 'required|numeric|max:9999999|min:0',
         ];
     }
 
