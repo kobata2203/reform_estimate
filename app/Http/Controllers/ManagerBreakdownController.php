@@ -25,6 +25,7 @@ class ManagerBreakdownController extends Controller
     protected $payment;
     protected $constructionName;
     protected $constructionList;
+    protected $estimateInfo;
 
     /**
      * 初期処理
@@ -38,8 +39,7 @@ class ManagerBreakdownController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -61,18 +61,18 @@ class ManagerBreakdownController extends Controller
          */
         $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
-        
-        if(count($breakdown_items) == 0) {
-            if(empty($construction_id)) {
+
+        if (count($breakdown_items) == 0) {
+            if (empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
-                //dd($breakdown_items);
+
             }
-        } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
+        } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
-        //dd($breakdown_items);
+
         return view('breakdown.manager.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,
@@ -93,13 +93,13 @@ class ManagerBreakdownController extends Controller
         $prevurl = $request->prevurl;
 
         //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if(false === strpos($prevurl, 'estimate_info?')){
+        if (false === strpos($prevurl, 'estimate_info?')) {
             $prevurl = url('utill.prevurl_manager_breakdown_store');	//一覧画面のURLを直接指定
         }
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 
-        if($regist_breakdown === true) {
+        if ($regist_breakdown === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');

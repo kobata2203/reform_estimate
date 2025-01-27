@@ -235,12 +235,13 @@ class ManagerController extends Controller
 
         if ($update_estimate === true) {
             $message = config('message.update_complete');
+
         } else {
             $message = config('message.update_fail');
         }
 
         return redirect(url('/manager/item/' . $id))->with([
-            'success' => $message,
+            'message' => $message,
         ]);
 
     }

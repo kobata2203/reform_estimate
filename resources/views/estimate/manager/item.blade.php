@@ -20,9 +20,9 @@
         <p>株式会社サーバントップ</p>
     </div>
 
-    @if (session('success'))
+    @if (session('message'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            {{ session('message') }}
         </div>
     @endif
 
@@ -53,7 +53,7 @@
             method="POST">
 
             @csrf
-           
+
 
             <table class="table-large item-table estimate-item-table">
                 <tr class="iro">
