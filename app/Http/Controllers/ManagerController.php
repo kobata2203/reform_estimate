@@ -81,7 +81,10 @@ class ManagerController extends Controller
 
     public function create()
     {
-        return view('manager.create');
+        $departments = $this->department::all();
+        return view('manager.create')->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function store(CreateAdminRequest $request)
@@ -102,8 +105,9 @@ class ManagerController extends Controller
     public function edit($id)
     {
         $admin = $this->admin->findAdminById($id);
-        return view('manager.edit', [
-            'admin' => $admin
+        $departments = $this->department::all();
+        return view('manager.edit', compact('admin'))->with([
+            'departments' => $departments,
         ]);
     }
 

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
 use App\Models\ConstructionList;
+use App\Models\Department;
 
 class SalespersonController extends Controller
 {
@@ -39,6 +40,7 @@ class SalespersonController extends Controller
         EstimateCalculate $estimateCalculate,
         User $user,
         ConstructionList $constructionList,
+        Department $department,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -49,11 +51,15 @@ class SalespersonController extends Controller
         $this->estimateCalculate = $estimateCalculate;
         $this->user = $user;
         $this->constructionList = $constructionList;
+        $this->department = $department;
     }
 
     public function create()
     {
-        return view('salesperson.create');
+        $departments = $this->department::all();
+        return view('salesperson.create')->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function store(SalespersonRequest $request)
@@ -74,7 +80,10 @@ class SalespersonController extends Controller
     public function edit($id)
     {
         $user = $this->user->fetchUserById($id);
-        return view('salesperson.edit', compact('user'));
+        $departments = $this->department::all();
+        return view('salesperson.edit', compact('user'))->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function index(Request $request)
