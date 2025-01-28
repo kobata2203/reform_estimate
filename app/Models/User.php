@@ -15,7 +15,7 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'name',
-        'department_name',
+        'department_id',
         'email',
         'password',
     ];
@@ -34,8 +34,8 @@ class User extends Authenticatable
         return self::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'department_id' => $data['department_id'],
             'password' => Hash::make($data['password']),
-            'department_name' => $data['department_name'],
         ]);
     }
 
@@ -44,15 +44,34 @@ class User extends Authenticatable
         return $this->findOrFail($id);
     }
 
-    public static function searchUsers($keyword)
+    public function searchUsers($keyword)
     {
-        $query = self::query();
+        $us_table = $this->table;
+        $d_table = 'departments';
+        $us_table_join = $us_table. '.';
+        $d_table_join = $d_table. '.';
+
+        $columns = [
+            $us_table_join . 'id',
+            $us_table_join . 'name',
+            $us_table_join . 'department_id',
+            $us_table_join . 'email',
+        ];
+
+        $query = $this->select($columns);
+
+        $query->leftJoin($d_table, $us_table . '.department_id', '=', $d_table_join . 'id');
 
         if (!empty($keyword)) {
-            $query->where('name', 'LIKE', "%{$keyword}%")
-                ->orWhere('email', 'LIKE', "%{$keyword}%")
-                ->orWhere('department_name', 'LIKE', "%{$keyword}%");
+            $query->where(function ($query) use ($keyword, $us_table_join, $d_table_join) {
+                $query->orWhere($us_table_join . 'name', 'LIKE', "%{$keyword}%")
+                    ->orWhere($us_table_join . 'email', 'LIKE', "%{$keyword}%")
+                    ->orWhere($d_table_join . 'name', 'LIKE', "%{$keyword}%");
+            });
         }
+
+        $query->groupBy($columns)
+            ->orderBy($us_table_join . 'created_at', 'asc');
 
         return $query->get();
     }

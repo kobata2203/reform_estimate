@@ -58,6 +58,8 @@ class SalespersonController extends Controller
     {
         $departments = $this->department::all();
         return view('salesperson.create')->with([
+            'action' => route('salesperson.store'),
+            'user' => $this->user,
             'departments' => $departments,
         ]);
     }
@@ -81,8 +83,26 @@ class SalespersonController extends Controller
     {
         $user = $this->user->fetchUserById($id);
         $departments = $this->department::all();
-        return view('salesperson.edit', compact('user'))->with([
+        return view('salesperson.create')->with([
+            'action' => route('salesperson.update', $user->id),
+            'user' => $user,
             'departments' => $departments,
+        ]);
+    }
+
+    public function update(SalespersonRequest $request, $id)
+    {
+        $validated = $request->validated();
+        $update_user = $this->user->updateUser($id, $validated);
+
+        if ($update_user == true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
+
+        return redirect()->route('salesperson.index')->with([
+            'message' => $message,
         ]);
     }
 
@@ -90,20 +110,16 @@ class SalespersonController extends Controller
     {
         $keyword = $request->input('search');
         $users = $this->user->searchUsers($keyword);
-        return view('salesperson.index', compact('users'));
+        return view('salesperson.index')->with([
+            'users' => $users,
+            'departments' => $this->department->getDepartmentList(),
+        ]);
     }
 
     public function list(Request $request)
     {
         $salespersons = $this->user->searchWithDepartment($request->input('search'));
         return view('salespersons.list', compact('salespersons'));
-    }
-
-    public function update(SalespersonRequest $request, $id)
-    {
-        $validated = $request->validated();
-        $this->user->updateUser($id, $validated);
-        return redirect()->route('salesperson.index')->with('success', config('message.update_complete'));
     }
 
     public function delete($id)

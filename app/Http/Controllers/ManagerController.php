@@ -74,13 +74,18 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('search');
         $manager_info = $this->admin->searchAdmin($keyword);
-        return view('manager.index', compact('manager_info'));
+        return view('manager.index')->with([
+            'manager_info' => $manager_info,
+            'departments' => $this->department->getDepartmentList(),
+        ]);
     }
 
     public function create()
     {
         $departments = $this->department::all();
         return view('manager.create')->with([
+            'action' => route('manager.store'),
+            'admin' => $this->admin,
             'departments' => $departments,
         ]);
     }
@@ -104,7 +109,9 @@ class ManagerController extends Controller
     {
         $admin = $this->admin->findAdminById($id);
         $departments = $this->department::all();
-        return view('manager.edit', compact('admin'))->with([
+        return view('manager.create')->with([
+            'action' => route('manager.update', $admin->id),
+            'admin' => $admin,
             'departments' => $departments,
         ]);
     }
@@ -113,9 +120,17 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
 
-        $this->admin->updateAdmin($id, $validated);
+        $update_admin = $this->admin->updateAdmin($id, $validated);
 
-        return redirect()->route('manager.index')->with('success', config('message.update_complete'));
+        if ($update_admin == true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
+
+        return redirect()->route('manager.index')->with([
+            'message' => $message,
+        ]);
     }
 
     public function delete($id)

@@ -2,7 +2,7 @@
 @section('title', '管理者一覧画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/managerindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/salesperson/index.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
@@ -37,7 +37,7 @@
                 <tr>
                     <td>{{ $manager->name }}</td>
                     <td>{{ $manager->email }}</td>
-                    <td>{{ $manager->department_name }}</td>
+                    <td>{{ $departments[$manager->department_id] }}</td>
                     <td>
                         <a href="{{ route('manager.edit', $manager->id) }}" class="btn btn-primary custom-border">編集</a>
                         <a href="{{ route('manager.delete', $manager->id) }}" class="btn btn-danger custom-border btn_delete">削除</a>
