@@ -29,13 +29,10 @@
             </div>
             @endif
             <label for="department">部署名</label>
-            <select id="department" name="department_name"required>
-                <option value="本部">本部</option>
-                <option value=" 契約管理課"> 契約管理課</option>
-                <option value="営業１課">営業１課</option>
-                <option value="営業１課３係">営業１課３係</option>
-                <option value="営業２課１係">営業２課１係</option>
-                <option value="営業３課">営業３課</option>
+            <select id="department_name" name="department_id"  class="department_id">
+                    @foreach($departments as $department)
+                        <option value={{ $department->id }}>{{ old('department_name', $department->name) }}</option>
+                    @endforeach
             </select>
             @if ($errors->has('department_name'))
             <div class="invalid-feedback" role="alert">
@@ -50,7 +47,7 @@
                 </div>
             @endif
             <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" maxlength="32" required>
             @if ($errors->has('password'))
             <div class="invalid-feedback" role="alert">
                 {{ $errors->first('password') }}
@@ -59,7 +56,7 @@
             <!-- Place button container inside the form-container -->
             <div class="button-container">
                 <button type="submit">登録</button>
-                <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">管理者<br>メニュー</button>
+                <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">戻る</button>
             </div>
         </form>
 

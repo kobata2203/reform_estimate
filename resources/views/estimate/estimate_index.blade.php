@@ -15,7 +15,7 @@
             {{ session('message') }}
         </div>
         @endif
-        <h6>見積書発行日, お客様名, 工事名, 営業担当, 営業部署</br>で検索してください。</h6>
+        <h6>見積書発行日, お客様名, 工事名, 営業担当, 営業部署で検索してください。</h6>
         <div>
             <form action="{{ route('estimate.index') }}" method="GET">
                 @csrf
@@ -43,7 +43,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                    <a href="{{ route('breakdown.create',['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                     <a href="{{ route($breakdown_create_routing,['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
@@ -61,9 +61,6 @@
         </table>
     </div>
     <div class="btn-menu">
-        <form action="{{ route('salesperson_menu') }}" method="GET">
-            @csrf
-            <button class="btn btn-primary custom-border">戻る</button>
-        </form>
+        <button class="btn btn-primary" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>
     </div>
 @endsection

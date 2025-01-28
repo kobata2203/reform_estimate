@@ -14,11 +14,23 @@
 
 <body class="estimate-detail">
     <div>
-        <h2>内訳明細書<BR>(営業者用)</h2>
+        <h2>内訳明細書</h2>
     </div>
     <div class="contact-info">
         <p>株式会社サーバントップ</p>
     </div>
+
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+         </div>
+    @endif
+
+    @if ($errors->has('special_discount'))
+     <div class="alert alert-danger">
+         {{ $errors->first("special_discount") }}
+     </div>
+    @endif
 
     <form method="GET" action="{{ route('salesperson.show', ['id' => $id]) }}">
 
@@ -70,6 +82,7 @@
                         <td>{{ $item->remarks }}</td>
                     </tr>
                 @endforeach
+
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">特別お値引き</td>
                     <td>
@@ -77,9 +90,11 @@
                             <span class="yen-symbol">¥</span>
                             <input type="hidden" name="construction_name" value="{{ $selectedConstructionId }}">
 
-                            <input type="number" id="special_discount" name="special_discount"
-                                value="{{ $discount }}" placeholder="お値引き金額を入力してください"
-                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px;">
+                            <input type="text" id="special_discount" name="special_discount"
+                                value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
+                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
+                                maxlength="10"　max="9999999">
+
                         </div>
                     </td>
                 </tr>
@@ -121,10 +136,11 @@
 
             <a href="{{ route('generatebreakdown', ['id' => $id, 'construction_list_id' => $selectedConstructionId]) }}"
                 class="btn btn-primary no-print">View PDF</a>
+                
+                <div class="btn-menu">
+                    <button class="btn btn-primary" id="btn_back" onclick="window.location='{{ $prevurl }}'">戻る</button>
+                </div>
 
-
-
-            <a href="{{ route('estimate.index') }}" class="btn btn-primary no-print">戻る</a>
         </div>
     </div>
 

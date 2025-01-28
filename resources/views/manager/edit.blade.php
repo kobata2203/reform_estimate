@@ -21,7 +21,11 @@
 
             <div class="form-group">
                 <label for="department_name">部署名:</label>
-                <input type="text" name="department_name" id="department_name" class="form-control" value="{{ old('department_name', $admin->department_name) }}" required>
+                <select id="department_name" name="department_id"  class="department_id">
+                        @foreach($departments as $department)
+                            <option value={{ $department->id }}>{{ $department->name }}</option>
+                        @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -42,7 +46,7 @@
             <div class="bottom">
                 <button type="button"
                         onclick="window.location.href='{{ route('manager_menu') }}'"
-                        class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー
+                        class="btn btn-primary custom-margin custom-border mb-3">戻る
                 </button>
             </div>
         </form>

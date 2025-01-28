@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
 use App\Models\ConstructionList;
+use App\Models\Department;
 
 class SalespersonController extends Controller
 {
@@ -39,6 +40,7 @@ class SalespersonController extends Controller
         EstimateCalculate $estimateCalculate,
         User $user,
         ConstructionList $constructionList,
+        Department $department,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -49,31 +51,39 @@ class SalespersonController extends Controller
         $this->estimateCalculate = $estimateCalculate;
         $this->user = $user;
         $this->constructionList = $constructionList;
+        $this->department = $department;
     }
 
     public function create()
     {
-        return view('salesperson.create');
+        $departments = $this->department::all();
+        return view('salesperson.create')->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function store(SalespersonRequest $request)
     {
-        $validated = $request->validated();
+        $create_user = $this->user->createUser($request);
 
-        \Log::info('Validated Data: ', $validated);
-        if ($this->user->createUser($validated)) {
-            \Log::info('User saved successfully: ', [$validated]);
-            return redirect('/salesperson')->with('success', config('message.regist_complete'));
+        if ($create_user == true) {
+            $message = config('message.regist_complete');
         } else {
-            \Log::error('Failed to save user: ', [$validated]);
-            return back()->withErrors(config('message.regist_fail'));
+            $message = config('message.regist_fail');
         }
+
+        return redirect()->route('salesperson.index')->with([
+            'message' => $message,
+        ]);
     }
 
     public function edit($id)
     {
         $user = $this->user->fetchUserById($id);
-        return view('salesperson.edit', compact('user'));
+        $departments = $this->department::all();
+        return view('salesperson.edit', compact('user'))->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function index(Request $request)
@@ -101,7 +111,7 @@ class SalespersonController extends Controller
         // 削除処理
         $delete_user = $this->user->deleteUser($id);
 
-        if($delete_user === true) {
+        if ($delete_user == true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
@@ -120,6 +130,10 @@ class SalespersonController extends Controller
 
     public function itemView(Request $request, $id)
     {
+        $referrer = session('referrer', 'manager'); // 各内訳明細よりもどるため
+        $prevurl = $referrer == 'salesperson'
+            ? route('estimate.index')
+            : route('manager_estimate.index');
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
@@ -152,8 +166,8 @@ class SalespersonController extends Controller
             ->whereNotNull('breakdown.id')
             ->groupBy('construction_list.id')
             ->get();
-        // dd( $estimate_calculate );
-        return view('estimate.salesperson.show_estimate', compact(
+
+        return view('estimate.show_estimate', compact(
             'breakdown',
             'estimate_info',
             'id',
@@ -164,30 +178,31 @@ class SalespersonController extends Controller
             'construction_list',
             'constructionNames',
             'selectedConstructionId',
+            'prevurl'
 
         ));
     }
 
-    public function showestimate($id)
-    {
-        $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
-        $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
-        $inputDiscount = request()->input('discount', $discount);
-        // 小計、税額、合計金額を計算
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
+    // public function showestimate($id)
+    // {
+    //     $estimate_info = $this->estimateInfo::getEstimateByIde($id);
+    //     $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
+    //     $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
+    //     $inputDiscount = request()->input('discount', $discount);
+    //     // 小計、税額、合計金額を計算
+    //     $subtotal = $totalAmount - $inputDiscount;
+    //     $tax = $subtotal * 0.1;
+    //     $grandTotal = $subtotal + $tax;
 
-        //見積もりに関連する工事名を取得
-        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
-        //お支払い方法
-        $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
-        return view('estimate.salesperson.view_estimate', [
-            'estimate_info' => $estimate_info,
-            'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount,
-            'construction_list' => $construction_list[$estimate_info->id] ?? []
-        ]);
-    }
+    //     //見積もりに関連する工事名を取得
+    //     $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
+    //     //お支払い方法
+    //     $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
+    //     return view('estimate.salesperson.view_estimate', [
+    //         'estimate_info' => $estimate_info,
+    //         'grandTotal' => $grandTotal,
+    //         'discount' => $inputDiscount,
+    //         'construction_list' => $construction_list[$estimate_info->id] ?? []
+    //     ]);
+    // }
 }

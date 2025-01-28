@@ -147,6 +147,18 @@ td .btn-primary:hover {
     margin-top: 10px;
 }
 
+.btn {
+    background-color: #007bff;   /* Blue background */
+    display: inline-block;
+    padding: 8px 12px;           /* Padding for a comfortable button size */
+    font-size: 14px;             /* Font size for readability */
+    color: #fff;                 /* White text for contrast */
+    border-radius: 4px;          /* Rounded corners for a smoother look */
+    text-decoration: none;       /* Remove underline from links */
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
 button:disabled {
     background-color: gray;
 }

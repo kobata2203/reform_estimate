@@ -51,7 +51,7 @@ class AdminSeeder extends Seeder
             //'id' => 6,
             'name' => '小笹　真貴',
             'department_name' => '契約管理課',
-            'email' => 'xxxx@gmail.com',
+            'email' => 'ozasa.servan01@gmail.com',
             'password' => bcrypt('servan01'),
         ],[
             //'id' => 7,

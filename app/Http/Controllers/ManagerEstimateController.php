@@ -38,8 +38,7 @@ class ManagerEstimateController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -51,20 +50,25 @@ class ManagerEstimateController extends Controller
 
     public function index(Request $request)
     {
+        session(['referrer' => 'manager']);//各内訳明細よりもどるボタン
         $keyword = $request->input('keyword');
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
-
+        $prevurl = url('manager_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
         $keys = array_keys($construction_list);
+        $breakdown_create_routing = 'manager_breakdown.create';
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
-        return view('estimate.manager.estimate_index')->with([
-                    'estimate_info' => $this->estimateInfo->getEstimateInfo($keyword),
-                    'keyword' => $keyword,
-                    'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $construction_list,
-                    'pdf_show_flags' => $pdf_show_flags,
-                ]);
+        return view('estimate.estimate_index')->with([
+            'estimate_info' => $estimate_info,
+            'keyword' => $keyword,
+            'departments' => $this->department->getDepartmentList(),
+            'construction_list' => $construction_list,
+            'pdf_show_flags' => $pdf_show_flags,
+            'prevurl' => $prevurl,
+            'breakdown_create_routing' => $breakdown_create_routing,
+        ]);
+
     }
 
     public function create()
@@ -72,8 +76,9 @@ class ManagerEstimateController extends Controller
         $departments = $this->department::all();
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
-
-        return view('cover.manager.index',compact('construction_name'))->with([
+        $prevurl = url('manager_estimate'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+       
+        return view('cover.index', compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -81,6 +86,7 @@ class ManagerEstimateController extends Controller
             'construction_list' => $this->constructionList,
             'registered_construction_list' => array(),
             'action' => route('estimate.store'),
+            'prevurl' => $prevurl,
         ]);
     }
     /**
@@ -90,6 +96,8 @@ class ManagerEstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
+        $prevurl = url('manager_estimate');	//一覧画面のURLを直接指定
+
         $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
 
         if ($regist_estimate_info === true) {
@@ -98,7 +106,10 @@ class ManagerEstimateController extends Controller
             $message = config('message.regist_fail');
         }
 
-        return redirect('manager_estimate')->with('message', $message);
+        return redirect('manager_estimate')->with([
+            'message' => $message,
+            'prevurl' => $prevurl,
+        ]);
     }
 
     /**
@@ -117,7 +128,7 @@ class ManagerEstimateController extends Controller
         $construction_name = $this->constructionName->get_target_construction_name();
 
         return view('cover.manager.index')->with([
-            'action' => route('estimate.update', ['id'=>$id]),
+            'action' => route('estimate.update', ['id' => $id]),
             'construction_name' => $construction_name,
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
@@ -137,7 +148,7 @@ class ManagerEstimateController extends Controller
         // 更新処理
         $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
 
-        if($update_estimate_info === true) {
+        if ($update_estimate_info === true) {
             $message = config('message.update_complete');
         } else {
             $message = config('message.update_fail');
@@ -159,7 +170,7 @@ class ManagerEstimateController extends Controller
         // 削除処理
         $delete_estimate_info = $this->estimateInfo->deleteEstimate($id);
 
-        if($delete_estimate_info === true) {
+        if ($delete_estimate_info === true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');

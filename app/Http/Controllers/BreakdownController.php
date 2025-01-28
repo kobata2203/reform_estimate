@@ -58,8 +58,8 @@ class BreakdownController extends Controller
         $construction_list = $this->constructionList::find($id);
         $estimate_info = $this->estimateInfo::find($construction_list->estimate_info_id);
         $construction_name = $this->constructionName::find($construction_list->estimate_info_id);
-        $prevurl = url()->previous(); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
-
+        $prevurl = url('estimate.index'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
+        $breakdown_store_routing = route('breakdown.store');
         /**
          * SQLはモデルに記載する
          */
@@ -71,19 +71,18 @@ class BreakdownController extends Controller
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
-                //dd($breakdown_items);
             }
         } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
-        //dd($breakdown_items);
-        return view('breakdown.salesperson.create')->with([
+        return view('breakdown.create')->with([
             'id' => $id,
             'estimate_info' => $estimate_info,
             'construction_name' => $construction_name,
             'breakdown_items' => $breakdown_items,
             'prevurl' => $prevurl,
-            'construction_id' => $construction_id
+            'construction_id' => $construction_id,
+            'breakdown_store_routing' => $breakdown_store_routing,
         ]);
     }
 
@@ -94,12 +93,7 @@ class BreakdownController extends Controller
      */
     public function store(BreakdownRequest $request)
     {
-        $prevurl = $request->prevurl;
-
-        //直前のページURLが一覧画面（パラメータ有）ではない場合
-        if (false === strpos($prevurl, 'estimate_info?')) {
-            $prevurl = url('utill.prevurl_breakdown_store');	//一覧画面のURLを直接指定
-        }
+        $prevurl = url('estimate.index');	//一覧画面のURLを直接指定
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 

@@ -24,10 +24,10 @@ class SalespersonRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'department_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $this->route('id'),
-            'password' => 'required|string|min:6',
+            'name' => 'required|string|max:20',
+            'department_name' => 'required|string|max:20',
+            'email' => 'required|string|email|max:30|unique:users,email,' . $this->route('id'),
+            'password' => 'required|string|min:8',
         ];
     }
 }

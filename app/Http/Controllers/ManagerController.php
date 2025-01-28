@@ -79,21 +79,33 @@ class ManagerController extends Controller
 
     public function create()
     {
-        return view('manager.create');
+        $departments = $this->department::all();
+        return view('manager.create')->with([
+            'departments' => $departments,
+        ]);
     }
 
     public function store(CreateAdminRequest $request)
     {
-        $validated = $request->validated();
-        $this->admin->createAdmin($validated);
-        return redirect()->route('manager.index')->with('success', config('message.regist_complete'));
+        $create_admin = $this->admin->createAdmin($request);
+
+        if ($create_admin == true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
+
+        return redirect()->route('manager.index')->with([
+            'message' => $message,
+        ]);
     }
 
     public function edit($id)
     {
         $admin = $this->admin->findAdminById($id);
-        return view('manager.edit', [
-            'admin' => $admin
+        $departments = $this->department::all();
+        return view('manager.edit', compact('admin'))->with([
+            'departments' => $departments,
         ]);
     }
 
@@ -111,7 +123,7 @@ class ManagerController extends Controller
         // 削除処理
         $delete_admin = $this->admin->deleteAdmin($id);
 
-        if ($delete_admin === true) {
+        if ($delete_admin == true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
@@ -148,7 +160,7 @@ class ManagerController extends Controller
             $totalGrandTotal += $grandTotal;
         }
 
-        return view('estimate.manager.show', [
+        return view('estimate.show', [
             'estimate_info' => $estimate_info,
             'totalAmount' => $totalAmount,
             'totalDiscount' => $totalDiscount,
@@ -156,13 +168,17 @@ class ManagerController extends Controller
             'totalTax' => $totalTax,
             'totalGrandTotal' => $totalGrandTotal,
             'construction_list' => $construction_list,
+            'id' => $id,
         ]);
     }
 
 
     public function itemView(Request $request, $id)
     {
-
+        $referrer = session('referrer', 'manager'); // 各内訳明細よりもどるため
+        $prevurl = $referrer == 'salesperson'
+            ? route('estimate.index')
+            : route('manager_estimate.index');
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
@@ -194,7 +210,7 @@ class ManagerController extends Controller
             ->groupBy('construction_list.id')
             ->get();
 
-        return view('estimate.manager.item', compact(
+        return view('estimate.show_estimate', compact(
             'breakdown',
             'estimate_info',
             'id',
@@ -205,7 +221,7 @@ class ManagerController extends Controller
             'construction_list',
             'constructionNames',
             'selectedConstructionId',
-
+            'prevurl'
         ));
     }
 

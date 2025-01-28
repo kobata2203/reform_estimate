@@ -98,7 +98,7 @@
         </div>
         <div class="action2">
             <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
-            <a href="{{ route('manager_estimate') }}" class="btn btn-primary">戻る</a>
+            <a href="{{ route('manager.item',['id'=>$id]) }}" class="btn btn-primary">戻る</a>
         </div>
     </div>
 </body>

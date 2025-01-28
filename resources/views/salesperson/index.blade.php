@@ -9,18 +9,20 @@
     <div>
         <h2>営業者一覧画面</h2>
     </div>
+    <div class="search-salesperson">
     @if(session('message'))
         <div class="message">
             {{ session('message') }}
         </div>
     @endif
-    <form action="{{ route('salesperson.index') }}" method="GET" class="form-inline">
-        <div class="form-group d-flex align-items-center">
-            <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい"
-                value="{{ request()->input('search') }}">
-            <button type="submit" class="btn btn-primary custom-margin">検索</button>
-        </div>
-    </form>
+        <form action="{{ route('salesperson.index') }}" method="GET" class="form-inline">
+            <div class="form-group d-flex align-items-center">
+                <input type="search" name="search" class="form-control search-box-margin me-2" placeholder="検索して下さい"
+                    value="{{ request()->input('search') }}">
+                <button type="submit" class="btn btn-primary custom-margin">検索</button>
+            </div>
+        </form>
+    </div>
     <div>
         <table>
             <thead>
@@ -47,7 +49,7 @@
         </table>
 
         <div class="col-3 custom-margin-bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
-            <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">管理者メニュー</button>
+            <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">戻る</button>
         </div>
     </div>
 @endsection
