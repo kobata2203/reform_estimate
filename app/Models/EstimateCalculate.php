@@ -2,33 +2,34 @@
 
 namespace App\Models;
 
+use App\Models\Breakdown;
 use Illuminate\Database\Eloquent\Model;
 
 class EstimateCalculate extends Model
 {
-    // Define the table associated with the model
+
     protected $table = 'estimate_calculate';
 
-    // Define the fillable fields
     protected $fillable = [
         'estimate_id',
         'subtotal_price',
         'special_discount',
         'consumption_tax',
         'total_price',
+        'construction_list_id'
     ];
 
-    // Relationship with Estimate
+
     public function estimate()
     {
         return $this->belongsTo(Estimate::class, 'id', 'id');
     }
-    //added forchanging foreignid  from estimate to breakdown
+
     public function breakdown()
     {
         return $this->belongsTo(Breakdown::class, 'estimate_id', 'id');
-    }
 
+    }
 
     public function estimate2()
     {
@@ -40,14 +41,7 @@ class EstimateCalculate extends Model
         return self::where('estimate_id', $estimateId)->first();
     }
 
-    // EstimateCalculate.php
-    public function getDiscountByEstimateIds($id)
-    {
-        return $this->where('estimate_id', $id)->first()->special_discount ?? 0;
-    }
-
     //内訳明細書
-    // EstimateCalculate.php
     public function getOrCreateEstimateCalculate($id)
     {
         return $this->firstOrNew(['estimate_id' => $id]);
@@ -61,14 +55,14 @@ class EstimateCalculate extends Model
         return $estimateCalculate->save();
     }
 
-    // updateDiscount on ManagerController
-    public function createOrGetEstimateCalculate($id)
+    public function createOrgetEstimateCalculate($estimate_id, $construction_id)
     {
-        return $this->firstOrNew(['estimate_id' => $id]);
+        return $this->firstOrNew(['estimate_id' => $estimate_id, 'construction_list_id' => $construction_id]);
     }
 
     public function estimateCalculateUpdate($estimateCalculate, $subtotal, $tax, $grandTotal)
     {
+
         $estimateCalculate->subtotal_price = $subtotal;
         $estimateCalculate->consumption_tax = $tax;
         $estimateCalculate->total_price = $grandTotal;
@@ -76,24 +70,24 @@ class EstimateCalculate extends Model
         return $estimateCalculate->save();
     }
 
-
-    //PDFshow on the ManagerController
     public function fetchEstimateCalculateByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->first();
     }
 
-    //show method on the ManagerCOntroller
+
     public static function getDiscountByEstimateId($estimateId)
     {
         $estimateCalculate = self::where('estimate_id', $estimateId)->first();
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
     }
 
-    // In EstimateCalculate.php model
-    public static function getOrCreateByEstimateId($estimateId)
+    public static function getOrCreateByEstimateAndConstructionId($estimateId, $constructionListId)
     {
-        return self::firstOrNew(['estimate_id' => $estimateId]);
+        return self::firstOrNew([
+            'estimate_id' => $estimateId,
+            'construction_list_id' => $constructionListId,
+        ]);
     }
 
     public function updateCalculations($subtotal, $tax, $total)
@@ -103,10 +97,34 @@ class EstimateCalculate extends Model
         $this->total_price = $total;
         $this->save();
     }
-    //managercontroller pdf method for showing into pdf
-    public static function fetchCalculationByEstimateId($estimate_id)
+
+    public static function fetchCalculationByEstimateIdAndConstructionId($estimate_id, $construction_list_id)
     {
-        return self::where('estimate_id', $estimate_id)->first();
+        return self::where('estimate_id', $estimate_id)
+            ->where('construction_list_id', $construction_list_id)
+            ->first();
+    }
+
+    public function constructionList()
+    {
+        return $this->belongsTo(ConstructionList::class, 'construction_list_id');
+    }
+
+    public function construction()
+    {
+        return $this->belongsTo(ConstructionList::class, 'construction_list_id');
+    }
+
+    public function getByConstructionListId($construction_list_id)
+    {
+        return self::where('construction_list_id', $construction_list_id)->get();
+    }
+    public static function getDiscountByEstimateIdAndConstructionId($estimateId, $constructionListId)
+    {
+        $estimateCalculate = self::where('estimate_id', $estimateId)
+            ->where('construction_list_id', $constructionListId)
+            ->first();
+        return $estimateCalculate ? $estimateCalculate->special_discount : 0;
     }
 
 

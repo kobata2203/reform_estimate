@@ -74,8 +74,11 @@
     <h2>内訳明細書</h2>
     <p style="text-align: right;">株式会社サーバントップ</p>
 
-    <p><strong>工事名:</strong> {{ $construction_list->name }}</p>
-
+    <p>
+        <strong style="border-bottom: 1px solid black; padding-bottom: 10px;">
+            工事名:</strong><span id="construction-name-text"
+            style="border-bottom: 1px solid black;">{{ $construction_list->name }}</span>
+    </p>
 
     <table>
         <thead>
@@ -92,8 +95,10 @@
         <tbody>
             @foreach ($breakdown as $item)
                 <tr>
-                    <td>{{ $item->construction_item }}</td>
-                    <td>{{ $item->specification }}</td>
+                    <td>{{ $item->item }}</td>
+                    <td style="font-size: {{ $font_size }}px; text-align: center;">
+                        {{ $item->maker }}&ensp;{{ $item->series_name }}&ensp;{{ $item->item_number }}
+                    </td>
                     <td>{{ $item->quantity }}</td>
                     <td>{{ $item->unit }}</td>
                     <td>{{ number_format($item->unit_price) }}</td>
@@ -117,7 +122,6 @@
                         <span>{{ number_format($discount) }}</span>
                     </div>
                 </td>
-
             </tr>
             <tr>
                 <td colspan="5" class="custom-width">小計（税抜）</td>

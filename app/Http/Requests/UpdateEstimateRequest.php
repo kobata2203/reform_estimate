@@ -22,13 +22,14 @@ class UpdateEstimateRequest extends FormRequest
      * @return array
      */
 
-     //ManagerController updateDiscount
+
     public function rules()
     {
         return [
-            'special_discount' => 'required|numeric|min:0', // Ensure it's a valid number
+            'special_discount' => 'required|numeric|max:9999999|min:0',
         ];
     }
 
-}
 
+
+}

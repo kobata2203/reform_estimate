@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable(); // Add this line
+            $table->timestamp('email_verified_at')->nullable(); 
             $table->string('password');
             $table->string('department_name');
-            $table->string('construction_name')->nullable(); // Add this column
-            $table->string('customer_name')->nullable(); // Add this column
+            $table->string('construction_name')->nullable();
+            $table->string('customer_name')->nullable();
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BreakdownRequest;
 use App\Http\Requests\EstimateInfoRequest;
+use App\Models\EstimateCalculate;
 
 class BreakdownController extends Controller
 {
@@ -25,6 +26,8 @@ class BreakdownController extends Controller
     protected $payment;
     protected $constructionName;
     protected $constructionList;
+    protected $estimateInfo;
+    protected $estimateCalculate;
 
     /**
      * 初期処理
@@ -38,8 +41,8 @@ class BreakdownController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+        EstimateCalculate $estimateCalculate
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -47,6 +50,7 @@ class BreakdownController extends Controller
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
+        $this->estimateCalculate = $estimateCalculate;
     }
 
     public function create($id, Request $request)
@@ -61,14 +65,14 @@ class BreakdownController extends Controller
          */
         $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
-        
-        if(count($breakdown_items) == 0) {
-            if(empty($construction_id)) {
+
+        if (count($breakdown_items) == 0) {
+            if (empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
             }
-        } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
+        } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         return view('breakdown.create')->with([
@@ -93,7 +97,7 @@ class BreakdownController extends Controller
 
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 
-        if($regist_breakdown === true) {
+        if ($regist_breakdown === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');
@@ -104,4 +108,5 @@ class BreakdownController extends Controller
             'prevurl' => $prevurl,
         ]);
     }
+
 }

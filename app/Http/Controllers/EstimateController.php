@@ -38,8 +38,7 @@ class EstimateController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -47,14 +46,14 @@ class EstimateController extends Controller
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
- 		$this->estimateInfo = $estimateInfo;
+        $this->estimateInfo = $estimateInfo;
     }
 
 
     public function index(Request $request)
     {
+        session(['referrer' => 'salesperson']);
         $keyword = $request->input('keyword');
-
         $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
         $construction_list = $this->constructionList->getConnectionLists($estimate_info);
         $prevurl = url('salesperson_menu'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
@@ -63,14 +62,14 @@ class EstimateController extends Controller
         $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
 
         return view('estimate.estimate_index')->with([
-                    'estimate_info' => $estimate_info,
-                    'keyword' => $keyword,
-                    'departments' => $this->department->getDepartmentList(),
-                    'construction_list' => $construction_list,
-                    'pdf_show_flags' => $pdf_show_flags,
-                    'prevurl' => $prevurl,
-                    'breakdown_create_routing' => $breakdown_create_routing,
-                ]);
+            'estimate_info' => $estimate_info,
+            'keyword' => $keyword,
+            'departments' => $this->department->getDepartmentList(),
+            'construction_list' => $construction_list,
+            'pdf_show_flags' => $pdf_show_flags,
+            'prevurl' => $prevurl,
+            'breakdown_create_routing' => $breakdown_create_routing,
+        ]);
     }
 
     public function create()
@@ -80,7 +79,7 @@ class EstimateController extends Controller
         $construction_name = $this->constructionName->get_target_construction_name();
         $prevurl = url('estimate.index'); // 直前のページURLを取得、取得できない場合はデフォルト値を設定
 
-        return view('cover.index',compact('construction_name'))->with([
+        return view('cover.index', compact('construction_name'))->with([
             'construction_count' => $this->estimateInitCount,
             'departments' => $departments,
             'payments' => $payments,
@@ -129,6 +128,9 @@ class EstimateController extends Controller
         $payments = $this->payment::all();
         $construction_name = $this->constructionName->get_target_construction_name();
 
+
+      
+            
         return view('cover.index')->with([
             'action' => route('estimate.update', ['id'=>$id]),
             'construction_name' => $construction_name,
@@ -150,7 +152,7 @@ class EstimateController extends Controller
         // 更新処理
         $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
 
-        if($update_estimate_info === true) {
+        if ($update_estimate_info === true) {
             $message = config('message.update_complete');
         } else {
             $message = config('message.update_fail');
@@ -171,7 +173,7 @@ class EstimateController extends Controller
         // 削除処理
         $delete_estimate_info = $this->estimateInfo->deleteEstimate($id);
 
-        if($delete_estimate_info === true) {
+        if ($delete_estimate_info === true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');

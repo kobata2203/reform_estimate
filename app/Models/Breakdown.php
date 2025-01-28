@@ -30,6 +30,12 @@ class Breakdown extends Model
         'remarks',
     ];
 
+    public function estimateInfo()
+    {
+        return $this->belongsTo(EstimateInfo::class, 'estimate_id');
+    }
+
+
     public function estimate_info()
     {
         return $this->belongsTo(EstimateInfo::class, 'estimate_info_id');
@@ -39,6 +45,7 @@ class Breakdown extends Model
     public function estimateCalculate()
     {
         return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
+        // return $this->hasMany(EstimateCalculate::class, 'construction_list_id', 'id');
     }
 
 
@@ -151,57 +158,65 @@ class Breakdown extends Model
         }
     }
 
-    // public static function getBreakdownsByEstimateId($estimateId)
-    // {
-    //     return self::where('estimate_id', $estimateId)->get();
-    // }
-
-    //内訳明細書
-    // Breakdown.php
-    // public function getBreakdownByEstimateId($estimateId)
-    // {
-    //     return $this->where('estimate_id', $estimateId)->get();
-    // }
-
-    // for updateDiscount method on ManagerController
-    // Breakdown.php
     public function breakdownByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-    //pdf method on the ManagerController
     public function fetchBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-    //PDFshow on ManagerController
     public function fetchingBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
 
-
-    //show method on ManagerController p2
-    // Breakdown.php
     public static function getTotalAmountByEstimateId($estimateId)
     {
         $breakdown = self::where('estimate_id', $estimateId)->get();
-        $totalAmount = $breakdown->sum('amount'); // Summing up directly in the query
+        $totalAmount = $breakdown->sum('amount');
         return $totalAmount;
     }
 
-
-    //itemView on ManagerCOntroller
-    // In Breakdown.php model
-    public static function getByEstimateId($estimateId)
+    public static function getByEstimateId($id)
     {
-        return self::where('estimate_id', $estimateId)->get();
+        return self::where('estimate_id', $id)->get();
     }
-    //pdf method on the ManagerController
+
     public function getBreakdownsByEstimateId($estimateId)
     {
         return $this->where('estimate_id', $estimateId)->get();
     }
+
+    public function constructionList()
+    {
+        return $this->belongsTo(ConstructionList::class, 'construction_list_id');
+    }
+
+    public function getBreakdownsByConstructionId($construction_list_id)
+    {
+        return $this->where('construction_list_id', $construction_list_id)->get();
+    }
+
+    //estimate_idとconstruction_list_idで分けてbreakdownのデータを表示
+    public function scopeByConstructionAndEstimate($query, $constructionId, $estimateId)
+    {
+        return $query->where('construction_list_id', $constructionId)
+            ->where('estimate_id', $estimateId)
+            ->whereHas('constructionList', function ($query) use ($estimateId) {
+                $query->where('estimate_info_id', $estimateId);
+            });
+    }
+
+    public function breakdownByEstimateIdAndConstructionId($estimate_id, $construction_list_id)
+    {
+        return $this->where('estimate_id', $estimate_id)
+            ->where('construction_list_id', $construction_list_id)
+            ->get();
+    }
+
+
+
 }

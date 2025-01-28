@@ -25,6 +25,7 @@ class ManagerBreakdownController extends Controller
     protected $payment;
     protected $constructionName;
     protected $constructionList;
+    protected $estimateInfo;
 
     /**
      * 初期処理
@@ -38,8 +39,7 @@ class ManagerBreakdownController extends Controller
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-    )
-    {
+    ) {
         $this->estimateInfo = $estimateInfo;
         $this->constructionList = $constructionList;
         $this->constructionName = $constructionName;
@@ -61,14 +61,14 @@ class ManagerBreakdownController extends Controller
          */
         $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
-        
-        if(count($breakdown_items) == 0) {
-            if(empty($construction_id)) {
+
+        if (count($breakdown_items) == 0) {
+            if (empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
                 $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
             }
-        } elseif(!empty($request->old('estimate_id'))) { // セッションの存在確認
+        } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());
         }
         return view('breakdown.create')->with([
@@ -90,10 +90,10 @@ class ManagerBreakdownController extends Controller
     public function store(BreakdownRequest $request)
     {
         $prevurl = url('manager_estimate');	//一覧画面のURLを直接指定
-        
+
         $regist_breakdown = $this->breakdown->registBreakdown($request);
 
-        if($regist_breakdown === true) {
+        if ($regist_breakdown === true) {
             $message = config('message.regist_complete');
         } else {
             $message = config('message.regist_fail');

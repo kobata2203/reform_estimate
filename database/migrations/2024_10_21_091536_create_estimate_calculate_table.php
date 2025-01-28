@@ -21,15 +21,7 @@ return new class extends Migration {
             $table->integer('total_price');
             $table->timestamps();
 
-            // $table->foreign('estimate_id')
-            //       ->references('id')
-            //       ->on('estimates')
-            //       ->onDelete('cascade');
-
-            // $table->foreign('estimate_id')
-            // ->references('id')
-            // ->on('breakdown')
-            // ->onDelete('cascade');
+           
         });
     }
 

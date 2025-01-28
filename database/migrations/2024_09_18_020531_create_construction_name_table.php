@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->integer('loop_count');
             $table->timestamps();
 
-            //$table->foreign('construction_id')->references('construction_id')->on('estimate_info');
-            //$table->foreign('construction_name')->references('construction_name')->on('estimate_info');
         });
     }
 

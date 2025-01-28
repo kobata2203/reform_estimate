@@ -26,27 +26,39 @@ class PdfService
         Mpdf $mpdf,
         ConstructionList $constructionList,
 
+
     ) {
         $this->estimateInfo = $estimateInfo;
         $this->breakdown = $breakdown;
         $this->estimateCalculate = $estimateCalculate;
         $this->mpdf = $mpdf;
         $this->constructionList = $constructionList;
+
+    }
+    //breakdownテーブルのPDFの文字サイズ
+    public function calculateFontSizeInController($text)
+    {
+        $length = strlen($text);
+        $baseFontSize = 14;
+        $fontSize = $baseFontSize - floor($length / 10);
+        $fontSize = max($fontSize, 5);
+        return $fontSize;
     }
 
-    public function generateBreakdown($id)
+    public function generateBreakdown($id, $construction_list_id)
     {
+        // breakdownテーブルのPDFの文字サイズ
+        $font_size = $this->calculateFontSizeInController("メーカー名・シリーズ名（商品名）・品番");
 
-        //工事名をestimate_info_idで呼び出し
-        $construction_list = $this->constructionList->getEstimateInfoById($id);
-        $estimate_info = $this->estimateInfo->fetchEstimateInfoById($id);
-        $breakdown = $this->breakdown->getBreakdownsByEstimateId($id);
-        $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateId($id);
+        // 工事名をestimate_info_idで呼び出し
+        $construction_list = $this->constructionList->getByEstimateAndConstructionId($id, $construction_list_id);
+        $estimate_info = $this->estimateInfo->fetchEstimateInfoById($construction_list->estimate_info_id);
+        $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction_list_id);
 
+        $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateIdAndConstructionId($id, $construction_list_id);
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
-
-        //合計金額の計算
+        // Calculate totals
         $totalAmount = $breakdown->sum('amount');
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -60,7 +72,8 @@ class PdfService
             'subtotal',
             'tax',
             'grandTotal',
-            'construction_list'
+            'construction_list',
+            'font_size'
         ))->render();
 
         return $this->pdfConfig($html, 'reform_estimate_breakdown.pdf');
@@ -69,32 +82,40 @@ class PdfService
     public function generateCover($id)
     {
         $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
-        $breakdown = $this->breakdown->fetchingBreakdownsByEstimateId($id);
-        $totalAmount = $breakdown->sum('amount');
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
 
-        $estimateCalculate = $this->estimateCalculate->fetchEstimateCalculateByEstimateId($id);
-        $discount = $estimateCalculate ? $estimateCalculate->special_discount : 0;
-        $inputDiscount = request()->input('discount', $discount);
+        $totalAmount = 0;
+        $totalDiscount = 0;
+        $totalSubtotal = 0;
+        $totalTax = 0;
+        $totalGrandTotal = 0;
 
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
+        foreach ($construction_list as $construction) {
+            $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
+            $amount = $breakdown->sum('amount');
+            $discount = $this->estimateCalculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+            $subtotal = $amount - $discount;
+            $tax = $subtotal * 0.1;
+            $grandTotal = $subtotal + $tax;
 
-        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
-        $filtered_construction_list = $construction_list[$estimate_info->id] ?? [];
+            $totalAmount += $amount;
+            $totalDiscount += $discount;
+            $totalSubtotal += $subtotal;
+            $totalTax += $tax;
+            $totalGrandTotal += $grandTotal;
+        }
 
         // 件名の長さ
-        $construction_text = implode($filtered_construction_list->pluck('name')->toArray());
+        $construction_text = implode($construction_list->pluck('name')->toArray());
 
-        //件名の長さによって計算
+        // 件名の長さによって計算
         $font_size = $this->calculateFontSize($construction_text);
 
         $pdfView = view('tcpdf.pdf.cover', [
             'estimate_info' => $estimate_info,
-            'grandTotal' => $grandTotal,
-            'breakdown' => $breakdown,
-            'construction_list' => $filtered_construction_list,
-            'font_size' => $font_size, //件名の変数
+            'totalGrandTotal' => $totalGrandTotal,
+            'construction_list' => $construction_list,
+            'font_size' => $font_size, // 件名の変数
         ])->render();
 
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');
@@ -109,8 +130,6 @@ class PdfService
         $fontSize = max($fontSize, 5);
         return $fontSize;
     }
-
-
 
     //　App/utilitiesから呼び出し
     private function pdfConfig($html, $filename)

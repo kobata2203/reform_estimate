@@ -11,6 +11,7 @@ use App\Models\ConstructionList;
 use App\Models\Breakdown;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class EstimateInfo extends Model
 {
@@ -221,5 +222,24 @@ class EstimateInfo extends Model
     {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
     }
-    
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+    public function constructions()
+    {
+        return $this->hasMany(ConstructionList::class, 'estimate_info_id');
+    }
+    //見積書の合計のため20250108
+    public function constructionLists()
+    {
+        return $this->hasMany(ConstructionList::class);
+    }
+
+    public function estimateCalculates()
+    {
+        return $this->hasMany(EstimateCalculate::class);
+    }
+
 }

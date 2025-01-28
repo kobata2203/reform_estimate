@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Manager;
+use App\Models\Payment;
 use App\Models\Estimate;
 use App\Models\Breakdown;
+use App\Models\Department;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
+use App\Services\PdfService;
+use Illuminate\Http\Request;
+use App\Models\ConstructionItem;
 use App\Models\ConstructionList;
 use App\Models\ConstructionName;
-use App\Models\ConstructionItem;
-use App\Models\Department;
-use App\Models\Payment;
 use App\Models\EstimateCalculate;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Requests\UpdateEstimateRequest;
-use App\Services\PdfService;
-
 
 class ManagerController extends Controller
 {
@@ -78,7 +77,6 @@ class ManagerController extends Controller
         return view('manager.index', compact('manager_info'));
     }
 
-
     public function create()
     {
         $departments = $this->department::all();
@@ -125,7 +123,7 @@ class ManagerController extends Controller
         // 削除処理
         $delete_admin = $this->admin->deleteAdmin($id);
 
-        if($delete_admin == true) {
+        if ($delete_admin == true) {
             $message = config('message.delete_complete');
         } else {
             $message = config('message.delete_fail');
@@ -139,96 +137,139 @@ class ManagerController extends Controller
     public function show($id)
     {
         $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
-        $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
-        $inputDiscount = request()->input('discount', $discount);
-        //小計、税金、合計金額を計算
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
-        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
-        $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
 
-        return view('estimate.manager.show', [
+        $totalAmount = 0;
+        $totalDiscount = 0;
+        $totalSubtotal = 0;
+        $totalTax = 0;
+        $totalGrandTotal = 0;
+
+        foreach ($construction_list as $construction) {
+            $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
+            $amount = $breakdown->sum('amount');
+            $discount = $this->estimateCalculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+            $subtotal = $amount - $discount;
+            $tax = $subtotal * 0.1;
+            $grandTotal = $subtotal + $tax;
+
+            $totalAmount += $amount;
+            $totalDiscount += $discount;
+            $totalSubtotal += $subtotal;
+            $totalTax += $tax;
+            $totalGrandTotal += $grandTotal;
+        }
+
+        return view('estimate.show', [
             'estimate_info' => $estimate_info,
-            'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount,
-            'construction_list' => $construction_list[$estimate_info->id] ?? []
+            'totalAmount' => $totalAmount,
+            'totalDiscount' => $totalDiscount,
+            'totalSubtotal' => $totalSubtotal,
+            'totalTax' => $totalTax,
+            'totalGrandTotal' => $totalGrandTotal,
+            'construction_list' => $construction_list,
+            'id' => $id,
         ]);
     }
 
-    public function itemView($id)
+
+    public function itemView(Request $request, $id)
     {
+        $referrer = session('referrer', 'manager'); // 各内訳明細よりもどるため
+        $prevurl = $referrer == 'salesperson'
+            ? route('estimate.index')
+            : route('manager_estimate.index');
         $estimate_info = $this->estimateInfo->getById($id);
-
-        // $construction_list = $this->constructionList->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
+        $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
 
-        $breakdown = $estimate_info ? $this->breakdown->getByEstimateId($id) : collect([]);
+        $breakdown = $selectedConstructionId
+            ? $this->breakdown
+                ->byConstructionAndEstimate($selectedConstructionId, $id)
+                ->get()
+            : collect([]);
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
-
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateId($id);
-
+        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
-        $estimate_calculate->estimate_id = $id;
-        $estimate_calculate->special_discount = $discount;
 
         try {
             $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
         } catch (\Illuminate\Database\QueryException $e) {
-            session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
+            $errorMessage = 'Error saving estimate calculations: ' . $e->getMessage();
         }
 
-        return view('estimate.manager.item', compact('breakdown', 'estimate_info', 'id', 'subtotal', 'discount', 'tax', 'grandTotal', 'construction_list'));
+        $constructionNames = $this->constructionList
+            ->select('construction_list.*')
+            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
+            ->where('construction_list.estimate_info_id', $id)
+            ->whereNotNull('breakdown.id')
+            ->groupBy('construction_list.id')
+            ->get();
+
+        return view('estimate.show_estimate', compact(
+            'breakdown',
+            'estimate_info',
+            'id',
+            'subtotal',
+            'discount',
+            'tax',
+            'grandTotal',
+            'construction_list',
+            'constructionNames',
+            'selectedConstructionId',
+            'prevurl'
+        ));
     }
 
-    public function updateDiscount(UpdateEstimateRequest $request, $id)
+    public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
     {
         $validated = $request->validated();
-
-
         $estimate_info = $this->estimate->getEstimateById($id);
 
         if (!$estimate_info) {
-
             $estimate_info = new \stdClass();
-
         }
 
-        $breakdown = $this->breakdown->breakdownByEstimateId($id);
-
+        $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $construction_id);
         $totalAmount = $breakdown->sum('amount');
-
-        $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id);
-
+        $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id, $construction_id);
         $estimate_calculate->special_discount = $validated['special_discount'];
-
         $subtotal = $totalAmount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
 
-        try {
-            $this->estimateCalculate->estimateCalculateUpdate($estimate_calculate, $subtotal, $tax, $grandTotal);
+        $update_estimate = $this->estimateCalculate->estimateCalculateUpdate(
+            $estimate_calculate,
+            $subtotal,
+            $tax,
+            $grandTotal
+        );
 
-            return redirect()->back()->with('success', 'Discount updated successfully');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->back()->withErrors(['error' => 'Error saving discount: ' . $e->getMessage()]);
+        if ($update_estimate === true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
         }
+
+        return redirect(url('/manager/item/' . $id))->with([
+            'message' => $message,
+        ]);
     }
 
-    public function generateBreakdown($id)
+    public function generateBreakdown($id, $construction_list_id)
     {
-        return $this->pdfService->generateBreakdown($id);
+        return $this->pdfService->generateBreakdown($id, $construction_list_id);
     }
 
     public function generateCover($id)
     {
         return $this->pdfService->generateCover($id);
     }
+
 }
 
 

@@ -7,6 +7,8 @@ use App\Models\ConstructionItem;
 
 class SpecificationRequired implements Rule
 {
+
+ 
     /**
      * Create a new rule instance.
      *

@@ -71,16 +71,26 @@ class ConstructionList extends Model
     }
 
     //内訳明細書の工事名をidで呼び出し
-    public static function getById($id)
+    public function getById($id)
     {
         return self::find($id);
     }
 
-     //内訳明細書の工事名をestimate_info_idで呼び出し
-    public static function getByEstimateInfoId($estimate_info_id)
+    //内訳明細書の工事名をestimate_info_idで呼び出し
+    public function getByEstimateInfoId($estimate_info_id)
     {
-        return self::where('estimate_info_id', $estimate_info_id)->first();
+        return self::where('estimate_info_id', $estimate_info_id)->get();
+
     }
+
+    //20250108
+    public function getByEstimateAndConstructionId($estimate_info_id, $construction_list_id)
+    {
+        return $this->where('estimate_info_id', $estimate_info_id)
+            ->where('id', $construction_list_id)
+            ->first();
+    }
+
     /**
      * 内訳明細一覧画面の閲覧ボタン活性化判定
      *
@@ -110,6 +120,26 @@ class ConstructionList extends Model
 
         return $datas;
 
+    }
+
+    public function breakdowns()
+    {
+        return $this->hasMany(Breakdown::class, 'construction_list_id');
+    }
+
+    public function estimateInfo()
+    {
+        return $this->belongsTo(EstimateInfo::class);
+    }
+
+    public function constructionList()
+    {
+        return $this->belongsTo(ConstructionList::class, 'construction_list_id', 'id');
+    }
+
+    public function estimateCalculates()
+    {
+        return $this->hasMany(EstimateCalculate::class, 'construction_list_id', 'id');
     }
 
 }

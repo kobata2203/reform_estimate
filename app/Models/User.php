@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'users'; // Specify the table name if different
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'department_id',
