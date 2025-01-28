@@ -27,6 +27,8 @@ class DepartmentsSeeder extends Seeder
             ],[
                 'name' => '営業2課1係',
             ],[
+                'name' => '営業2課2係',
+            ],[
                 'name' => '営業3課',
             ]]);
     }

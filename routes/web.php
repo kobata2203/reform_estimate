@@ -80,7 +80,7 @@ Route::get('/user/invoice/{invoice}', function (Request $request, string $invoic
 //営業者一覧
 Route::get('/salesperson', [SalespersonController::class, 'index'])->name('salesperson.index');
 Route::get('/salesperson/edit/{id}', [SalespersonController::class, 'edit'])->name('salesperson.edit');
-Route::put('/salesperson/update/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
+Route::post('/salesperson/update/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
 Route::get('/salesperson/delete/{id}', [SalespersonController::class, 'delete'])->name('salesperson.delete');
 
 //営業者登録処理
@@ -90,7 +90,7 @@ Route::post('/salesperson/store', [SalespersonController::class, 'store'])->name
 //管理者一覧
 Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
 Route::get('/manager/edit/{id}', [ManagerController::class, 'edit'])->name('manager.edit');
-Route::put('/manager/update/{id}', [ManagerController::class, 'update'])->name('manager.update');
+Route::post('/manager/update/{id}', [ManagerController::class, 'update'])->name('manager.update');
 Route::get('/manager/delete/{id}', [ManagerController::class, 'delete'])->name('manager.delete');
 
 //管理者登録処理

@@ -2,7 +2,7 @@
 @section('title', '営業者一覧画面')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/manager_salesperson/managerindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/salesperson/index.css') }}">
 @endsection
 @section('content')
     <!-- bobyタグ内の処理を記述 -->
@@ -38,7 +38,7 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->department_name }}</td>
+                        <td>{{ $departments[$user->department_id] }}</td>
                         <td>
                             <a href="{{ route('salesperson.edit', $user->id) }}" class="btn btn-dark custom-border">編集</a>
                             <a href="{{ route('salesperson.delete', $user->id) }}" class="btn btn-danger custom-border btn_delete">削除</a>
