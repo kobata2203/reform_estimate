@@ -25,7 +25,7 @@ class SalespersonRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:20',
-            'department_name' => 'required|string|max:20',
+            'department_id' => 'required',
             'email' => 'required|string|email|max:30|unique:users,email,' . $this->route('id'),
             'password' => 'required|string|min:8',
         ];
