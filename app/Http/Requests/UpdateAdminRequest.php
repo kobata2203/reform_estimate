@@ -25,9 +25,9 @@ class UpdateAdminRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:admins,email,' . $this->route('admin'), // Allow existing email to stay
-            'password' => 'nullable|string|min:6',
-            'department_name' => 'required|string|max:255',
+            'department_id' => 'required',
+            'email' => 'required|email|unique:admins,email,' . $this->route('id'), // Allow existing email to stay
+            'password' => 'nullable|string|min:8',
         ];
     }
 
