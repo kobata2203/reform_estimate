@@ -1,0 +1,111 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.custom-width {
+    text-align: right;
+    padding: 4px 8px;
+}
+
+.amount-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.amount-container .yen-symbol {
+    margin-right: 5px;
+}
+
+input[type="number"] {
+    text-align: center;
+    width: 120px;
+    padding: 5px;
+    font-size: 15px;
+}
+
+h2 {
+    text-align: center;
+    border: 2px solid #160202;
+    padding: 20px;
+    margin: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgb(186, 182, 182);
+}
+
+.adjust-font {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+@media print {
+    .adjust-font {
+        font-size: 8px;
+    }
+}
+
+td.item-column {
+    width: 15%;
+}
+
+td.description-column {
+    width: 35%;
+}
+
+td.quantity-column,
+td.unit-column,
+td.unit-price-column,
+td.amount-column,
+td.remarks-column {
+    width: 10%;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.border-bottom {
+    border-bottom: 1px solid black;
+    padding-bottom: 10px;
+}
+
+.border-bottom-text {
+    border-bottom: 1px solid black;
+}
+

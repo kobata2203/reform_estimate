@@ -74,7 +74,10 @@
                     @endphp
                     <tr>
                         <td>{{ $item->item }}</td>
-                        <td>{{ $item->maker }}&ensp;{{ $item->series_name }}&ensp;{{ $item->item_number }}</td>
+                        <td class="adjust-font">
+                            {{ $item->maker }}&ensp;{{ $item->series_name }}&ensp;{{ $item->item_number }}
+                        </td>
+
                         <td>{{ $item->quantity }}</td>
                         <td>{{ $item->unit }}</td>
                         <td>{{ number_format($item->unit_price) }}</td>
@@ -136,7 +139,7 @@
 
             <a href="{{ route('generatebreakdown', ['id' => $id, 'construction_list_id' => $selectedConstructionId]) }}"
                 class="btn btn-primary no-print">View PDF</a>
-                
+
                 <div class="btn-menu">
                     <button class="btn btn-primary" id="btn_back" onclick="window.location='{{ $prevurl }}'">戻る</button>
                 </div>

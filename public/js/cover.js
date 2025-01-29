@@ -1,7 +1,7 @@
 $(function(){
     function adjustFontSize() {
 
-        var $container = $('#construction-items');//Target the ID "件名"
+        var $container = $('#construction-items');
         var text = $container.text().replace(/\s+/g, '\u0020').trim(); //　\u0020使て半角スペース
         var containerWidth = $container.width();
         var minFontSize = 7;

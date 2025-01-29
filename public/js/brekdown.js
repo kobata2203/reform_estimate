@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var totalAmount = 0;
+
     $('.estimate-item-table tr').each(function() {
         var amountText = $(this).find('td:nth-child(6)').text();
         if (amountText) {
@@ -26,10 +27,42 @@ $(document).ready(function() {
     });
 
     updateTotals();
-    
-//内訳明細書のアンダーバー
-    $(document).ready(function() {
-        var selectWidth = $('#construction-name').outerWidth();
-        $('#underline').css('width', selectWidth + 60);
+
+    var selectWidth = $('#construction-name').outerWidth();
+    $('#underline').css('width', selectWidth + 60);
+
+    function adjustFontSize() {
+        $('.adjust-font').each(function() {
+            var $container = $(this);
+            var text = $container.text().replace(/\s+/g, '\u0020').trim(); // Normalize spaces
+            var containerWidth = $container.width();
+            var minFontSize = 7;
+            var maxFontSize = 12;
+            var fontSize = maxFontSize;
+
+            var $tempSpan = $('<span>').text(text).css({
+                'font-size': fontSize + 'px',
+                'white-space': 'nowrap',
+                'visibility': 'hidden',
+                'position': 'absolute'
+            }).appendTo('body');
+
+            while ($tempSpan.width() > containerWidth && fontSize > minFontSize) {
+                fontSize--;
+                $tempSpan.css('font-size', fontSize + 'px');
+            }
+
+            $tempSpan.remove();
+
+            $container.css('font-size', fontSize + 'px');
+        });
+    }
+
+    adjustFontSize();
+
+    $(window).resize(function () {
+        adjustFontSize();
     });
+
+ 
 });

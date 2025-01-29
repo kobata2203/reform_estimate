@@ -14,9 +14,6 @@
     @endif
     <h2>営業者登録画面</h2>
 
-
-    <!-- Form to register salesperson -->
-
     <div class="form-container">
         <form action="{{ $action }}" method="POST">
 
@@ -53,7 +50,7 @@
                 {{ $errors->first('password') }}
             </div>
             @endif
-            <!-- Place button container inside the form-container -->
+
             <div class="button-container">
                 <button type="submit">登録</button>
                 <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">戻る</button>
