@@ -26,13 +26,13 @@ class LoginController extends Controller
      */
     public function __construct(
         User $user,
-        
+
     )
     {
         $this->user = $user;
         $this->middleware('guest')->except('logout');
     }
-    
+
     protected function redirectPath()
     {
         return '/salesperson_menu'; // ログイン後にリダイレクトする URL を指定
@@ -80,7 +80,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('login');
     }
 
     // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド

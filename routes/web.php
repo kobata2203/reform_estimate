@@ -26,6 +26,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 //POSTされたときはこっち
 Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth_login');
+Route::get('/auth/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('auth_logout');
 
 // Authentication Routes
 Auth::routes();
@@ -34,7 +35,7 @@ Auth::routes();
 //管理者用ログイン
 Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('admin_login');
 Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('admin_login');
-Route::post('admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout']);
+Route::get('/admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout'])->name('admin_logout');
 Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
 

@@ -32,7 +32,7 @@ class LoginController extends Controller
         $this->admin = $admin;
         $this->middleware('guest')->except('logout');
     }
-    
+
     protected function redirectPath()
     {
         return '/manager_menu'; // ログイン後にリダイレクトする URL を指定
@@ -56,7 +56,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
 
             return redirect()->intended($this->redirectPath());
@@ -80,7 +80,7 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('admin/login');
     }
 
     // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド
