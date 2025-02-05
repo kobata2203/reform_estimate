@@ -3,7 +3,7 @@
 @section('title', '見積書作成画面')
 
 @section('headder')
-    <link rel="stylesheet" href="{{ asset('css/cover/cover_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cover/index.css') }}">
     <script src="{{ asset('/js/cover/index.js') }}"></script>
 @endsection
 
@@ -164,7 +164,7 @@
         </form>
     </div>
     <div id="btn2" class="btn-back">
-        <form action="{{ route('salesperson_menu') }}" method="GET">
+        <form action="{{ $prev_url }}" method="GET">
             @csrf
             <button class="btn" id="btn">戻る</button>
         </form>

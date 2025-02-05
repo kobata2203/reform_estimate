@@ -40,8 +40,8 @@ Route::view('/admin/register', 'admin/register')->name('admin/register');
 Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
 
 //営業者用メニュー画面
-Route::get('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
-Route::post('/salesperson_menu', [App\Http\Controllers\SalespersonMenuController::class, 'salesperson_menu'])->name('salesperson_menu');
+Route::get('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
+Route::post('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
 
 // Estimate Routes
 Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate.index');
@@ -57,17 +57,6 @@ Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class
 Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('salesperson.show');
 //(営業者用の御見積書)
 Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
-
-
-//管理者用見積書一覧画面
-Route::get('/manager_estimate/index', [App\Http\Controllers\ManagerEstimateController::class, 'index'])->name('manager_estimate.index');
-Route::get('/manager_estimate/create', [App\Http\Controllers\ManagerEstimateController::class, 'create'])->name('manager_estimate.create');
-Route::post('/manager_estimate/store', [App\Http\Controllers\ManagerEstimateController::class, 'store'])->name('manager_estimate.store');
-Route::get('/manager_estimate/edit/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'edit'])->name('manager_estimate.edit');
-Route::post('/manager_estimate/update/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'update'])->name('manager_estimate.update');
-Route::get('/manager_estimate/delete/{id}', [App\Http\Controllers\ManagerEstimateController::class, 'delete'])->name('manager_estimate.delete');
-Route::get('/manager_breakdown/create/{id}', [App\Http\Controllers\ManagerBreakdownController::class, 'create'])->name('manager_breakdown.create');
-Route::post('/manager_breakdown/store', [App\Http\Controllers\ManagerBreakdownController::class, 'store'])->name('manager_breakdown.store');
 
 //管理者用内訳明細書作成
 //Route::get('/adminbreakdown/create/{id}', [App\Http\Controllers\AdminBreakdownController::class, 'create'])->name('adminbreakdown.create');
@@ -97,10 +86,6 @@ Route::get('/manager/delete/{id}', [ManagerController::class, 'delete'])->name('
 //管理者登録処理
 Route::get('/manager/create', [ManagerController::class, 'create'])->name('manager.create');
 Route::post('/manager/store', [ManagerController::class, 'store'])->name('manager.store');
-
-//管理者用メニュー画面
-Route::get('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'index'])->name('manager_menu');
-Route::post('/manager_menu', [App\Http\Controllers\ManagerMenuController::class, 'index'])->name('manager_menu');
 
 
 // //for viewing 御　見　積　書

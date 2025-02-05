@@ -35,7 +35,7 @@ class LoginController extends Controller
 
     protected function redirectPath()
     {
-        return '/salesperson_menu'; // ログイン後にリダイレクトする URL を指定
+        return '/menu'; // ログイン後にリダイレクトする URL を指定
     }
 
     /**
@@ -58,6 +58,10 @@ class LoginController extends Controller
     {
         if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
+
+            // ログインタイプの保存
+            $auth_type = config('auth.guards.user.provider');
+            $request->session()->put('auth_type', $auth_type);
 
             return redirect()->intended($this->redirectPath());
         }
