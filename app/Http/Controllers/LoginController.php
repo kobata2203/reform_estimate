@@ -72,7 +72,7 @@ class LoginController extends Controller
             $_SESSION['name'] = $member['name'];
             $msg = 'ログインしました。';
 
-            return view('salesperson_menu.index');
+            return view('menu.index');
 
         } else {
             $msg = 'メールアドレスもしくはパスワードが間違っています。';

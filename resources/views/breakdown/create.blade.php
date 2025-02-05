@@ -3,7 +3,7 @@
 @section('title', '見積書作成画面(内訳明細書)')
 
 @section('headder')
-    <link rel="stylesheet" href="{{ asset('css/breakdown/breakdown_create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/breakdown/create.css') }}">
     <script src="{{ asset('/js/estimate/breakdown_create.js') }}"></script>
 @endsection
 
@@ -112,7 +112,7 @@
                 <button type="submit" class="btn-primary">登録</button>
 {{--            <input type="hidden" name="regist_flag" value="{{$regist_flag}}">--}}
 {{--            <input type="hidden" name="construction_loop_count" value="{{$construction_loop_count}}">--}}
-            <button type="button" class="btn btn-link" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>
+            <button type="button" class="btn btn-link" id="btn_back" data-url="{{ route('estimate.index') }}">戻る</button>
         </form>
     </div>
 @endsection

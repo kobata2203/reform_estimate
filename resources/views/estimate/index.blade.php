@@ -2,7 +2,7 @@
 @section('title', '見積書一覧画面（営業者用）')
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
-    <link rel="stylesheet" href="{{ asset('css/estimate/estimate_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estimate/index.css') }}">
 @endsection
 @section('content')
     <div>
@@ -60,6 +60,6 @@
         </table>
     </div>
     <div class="btn-menu">
-        <button class="btn btn-primary" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>
+        <button class="btn btn-primary" id="btn_back"  data-url="{{ route('menu') }}">戻る</button>
     </div>
 @endsection

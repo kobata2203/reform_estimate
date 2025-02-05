@@ -48,7 +48,7 @@
         </table>
 
         <div class="col-3 custom-margin-bottom" style="margin-top: 20px; margin-right: 20px; text-align: right;">
-            <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">戻る</button>
+            <button type="button" onclick="window.location.href='{{ route('menu') }}'" class="btn btn-primary custom-margin custom-border mb-3">戻る</button>
         </div>
     </div>
 @endsection

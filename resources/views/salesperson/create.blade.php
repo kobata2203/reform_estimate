@@ -53,7 +53,7 @@
 
             <div class="button-container">
                 <button type="submit">登録</button>
-                <button type="button" onclick="window.location.href='{{ route('manager_menu') }}'">戻る</button>
+                <button type="button" onclick="window.location.href='{{ route('menu') }}'">戻る</button>
             </div>
         </form>
 

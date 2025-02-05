@@ -126,4 +126,9 @@ return [
 
     'password_timeout' => 10800,
 
+    'names' => [
+        'user' => env('AUTH_NAME_USER', '営業者'),
+        'admin' => env('AUTH_NAME_ADMIN', '管理者'),
+    ],
+
 ];
