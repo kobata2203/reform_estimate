@@ -3,7 +3,6 @@
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/estimate/estimate_index.css') }}">
-    <script src="{{ asset('js\estimate\manager\manager_index.js') }}"></script>
 @endsection
 @section('content')
     <div>
@@ -43,7 +42,7 @@
                             <td>{{ $estimate->customer_name }}</td>
                             <td>
                                 @foreach($construction_list[$estimate->id] as $item)
-                                     <a href="{{ route($breakdown_create_routing,['id' => $item['id']]) }}">{{ $item['name'] }}</a></br>
+                                     <a href="{{ route($breakdown_create_routing,['id' => $estimate->id, 'cid' => $item['id']]) }}">{{ $item['name'] }}</a></br>
                                 @endforeach
                             </td>
                             <td>{{ $estimate->charger_name }}</td>
@@ -52,7 +51,7 @@
                                 <button data-url="{{ route('salesperson.show', $estimate->id) }}" class="btn btn-primary custom-border" @if($pdf_show_flags[$estimate->id] != true) disabled @endif>閲覧</button><br/>
                             </td>
                             <td>
-                                <button class="btn btn-danger btn_delete"  data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
+                                <button class="btn btn-danger btn_delete" data-url="{{ route('estimate.delete', $estimate->id) }}">削除</button>
                             </td>
                         </tr>
                     </div>

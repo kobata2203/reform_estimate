@@ -65,9 +65,14 @@ class Breakdown extends Model
         return $this->belongsTo(Estimate::class, 'estimate_id', 'id');
     }
 
-    public function getBreakdownList($estimate_id)
+    public function getBreakdownList($estimate_id, $construction_list_id)
     {
-        $items = $this->select($this->fillable)->where('estimate_id', $estimate_id)->get();
+        $where = [
+            ['estimate_id', '=', $estimate_id],
+            ['construction_list_id', '=', $construction_list_id],
+        ];
+
+        $items = $this->select($this->fillable)->where($where)->get();
 
         return $items;
 
