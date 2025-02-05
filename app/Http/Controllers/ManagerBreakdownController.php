@@ -59,7 +59,7 @@ class ManagerBreakdownController extends Controller
         /**
          * SQLはモデルに記載する
          */
-        $breakdown_items = $this->breakdown->getBreakdownList($construction_list->estimate_info_id);
+        $breakdown_items = $this->breakdown->getBreakdownList($id, $request->cid);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
 
         if (count($breakdown_items) == 0) {

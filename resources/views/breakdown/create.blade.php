@@ -17,7 +17,7 @@
             <table>
             <input type="hidden" name="estimate_id" value="{{ $estimate_info->id}}">
             <input type="hidden" name="construction_id" value="{{ $construction_id }}">
-            <input type="hidden" name="construction_list_id" value="{{ $id }}">
+            <input type="hidden" name="construction_list_id" value="{{ $cid }}">
 
             <table id="breakdown_table" class="breakdown">
                 <thead>
