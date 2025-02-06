@@ -86,6 +86,7 @@ class EstimateController extends Controller
             'registered_construction_list' => array(),
             'action' => route('estimate.store'),
             'prev_url' => route('menu'),
+            'regist_type' => config('util.regist_type_create')
         ]);
     }
     /**
@@ -132,6 +133,7 @@ class EstimateController extends Controller
             'estimate_info' => $estimate_info,
             'registered_construction_list' => $construction_list,
             'prev_url' => route('estimate.index'),
+            'regist_type' => config('util.regist_type_edit')
         ]);
     }
 

@@ -4,6 +4,7 @@
 
 @section('headder')
     <link rel="stylesheet" href="{{ asset('css/cover/index.css') }}">
+    <script src="{{ asset('/js/cover/util.js') }}"></script>
     <script src="{{ asset('/js/cover/index.js') }}"></script>
 @endsection
 
@@ -20,7 +21,7 @@
                 <tr>
                     <th>お客様名</th>
                     <td>
-                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}">
+                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}" required>
                         @if ($errors->has("customer_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("customer_name") }}
@@ -31,7 +32,7 @@
                 <tr>
                     <th>担当者名</th>
                     <td>
-                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}">
+                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}" required>
                         @if ($errors->has("charger_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("charger_name") }}
@@ -42,7 +43,7 @@
                 <tr>
                     <th>件名</th>
                     <td>
-                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}">
+                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" required>
                         @if ($errors->has("subject_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("subject_name") }}
@@ -53,7 +54,7 @@
                 <tr>
                     <th>納入場所</th>
                     <td>
-                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}">
+                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" required>
                         @if ($errors->has("delivery_place"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("delivery_place") }}
@@ -64,7 +65,7 @@
                 <tr>
                     <th>工期</th>
                     <td>
-                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}">
+                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" required>
                         @if ($errors->has("construction_period"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("construction_period") }}
@@ -90,7 +91,7 @@
                 <tr>
                     <th>有効期限</th>
                     <td>
-                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}">
+                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" required>
                         @if ($errors->has("expiration_date"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("expiration_date") }}
@@ -101,7 +102,7 @@
                 <tr>
                     <th>備考</th>
                     <td>
-                        <textarea id="remarks" type="text" name="remarks">{{ old("remarks", $estimate_info->remarks) }}</textarea>
+                        <textarea id="remarks" name="remarks">{{ old("remarks", $estimate_info->remarks) }}</textarea>
                         @if ($errors->has("remarks"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("remarks") }}
@@ -114,7 +115,7 @@
                     <td>
                         <select id="department" name="department_id"  class="department_id">
                             @foreach($departments as $department)
-                                <option value={{ $department->id }}@if($department->id == $estimate_info->department_id) selected @endif>{{ $department->name }}</option>
+                                <option value={{ $department->id }} @if($department->id == $estimate_info->department_id)selected @endif>{{ $department->name }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has("department_id"))
@@ -139,7 +140,7 @@
                                             <option value={{ $construction->construction_name }}@if($construction->construction_name == $construction) selected @endif>{{ $construction->construction_name }}</option>
                                         @endforeach
                                     </select></br>
-                                    <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="{{ old("construction_name.$i") }}">
+                                    <input type="text" name="construction_name[{{ $i }}]" class="construction_name" id="construction_name{{ $i }}" value="{{ old("construction_name.$i") }}"@if($regist_type == config('util.regist_type_create')) required @endif>
                                     @if ($errors->has("construction_name.$i"))
                                         <div class="invalid-feedback" role="alert">
                                             {{ $errors->first("construction_name.$i") }}
@@ -161,13 +162,11 @@
             <div class="btn-submit">
                 <button class="btn" id="btn1" type="submit">登録</button>
             </div>
+            <input type="hidden" name="regist_type" value="{{ $regist_type }}">
         </form>
     </div>
     <div id="btn2" class="btn-back">
-        <form action="{{ $prev_url }}" method="GET">
-            @csrf
-            <button class="btn" id="btn">戻る</button>
-        </form>
+        <button class="btn" id="btn_back" data-url="{{ $prev_url }}">戻る</button>
     </div>
 
 @endsection
