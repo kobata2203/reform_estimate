@@ -27,7 +27,7 @@ class SalespersonRequest extends FormRequest
             'name' => 'required|string|max:20',
             'department_id' => 'required',
             'email' => 'required|string|email|max:30|unique:users,email,' . $this->route('id'),
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|max:36',
         ];
     }
 }

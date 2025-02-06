@@ -263,7 +263,7 @@ class ManagerController extends Controller
             $tax,
             $grandTotal
         );
-        
+
         if ($update_estimate === true) {
             $message = config('message.update_complete');
         } else {

@@ -64,5 +64,15 @@ $(document).ready(function() {
         adjustFontSize();
     });
 
- 
+        $('#special_discount').on('input', function(){
+            var value = $(this).val();
+
+            if (value.length > 8) {
+                $(this).val(value.substring(0, 8));
+            }
+
+            if (parseInt(value) < 0) {
+                $(this).val(0);
+            }
+        });
 });

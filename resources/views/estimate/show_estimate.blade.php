@@ -27,7 +27,8 @@
     @endif
 
     @if ($errors->has('special_discount'))
-     <div class="alert alert-danger">
+
+     <div class="alert alert-danger" >
          {{ $errors->first("special_discount") }}
      </div>
     @endif
@@ -53,7 +54,6 @@
 
         <form action="{{ route('updateDiscount', ['id' => $id, 'construction_id' => $selectedConstructionId]) }}"
             method="POST">
-            @csrf
             @csrf
             <table class="table-large item-table estimate-item-table">
                 <tr class="iro">
@@ -93,10 +93,9 @@
                             <span class="yen-symbol">¥</span>
                             <input type="hidden" name="construction_name" value="{{ $selectedConstructionId }}">
 
-                            <input type="text" id="special_discount" name="special_discount"
+                            <input type="number" id="special_discount" name="special_discount"
                                 value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
-                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
-                                maxlength="10"　max="9999999">
+                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "　max="9999999">
 
                         </div>
                     </td>

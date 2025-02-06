@@ -110,8 +110,6 @@
                 <button type="button" id="add_breakdown" class="btn-primary">追加</button>
 
                 <button type="submit" class="btn-primary">登録</button>
-{{--            <input type="hidden" name="regist_flag" value="{{$regist_flag}}">--}}
-{{--            <input type="hidden" name="construction_loop_count" value="{{$construction_loop_count}}">--}}
             <button type="button" class="btn btn-link" id="btn_back"  data-url="{{ $prevurl }}">戻る</button>
         </form>
     </div>
