@@ -7,7 +7,7 @@
     <title>見積書詳細</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{{ asset('js/cover.js') }}"></script>
+    <script src="{{ asset('js/cover/cover.js') }}"></script>
 </head>
 
 <body>
