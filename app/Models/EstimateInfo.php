@@ -87,7 +87,7 @@ class EstimateInfo extends Model
             return false;
         }
 
-        return $this->constructionList->registEstimateInfoId($request->construction_name, $estimate_info->id);
+        return $this->constructionList->registEstimateInfoId($request->construction_name, $estimate_info->id, $request->regist_type);
     }
 
     public function update_estimate_info($request, $id)
@@ -113,7 +113,7 @@ class EstimateInfo extends Model
             return false;
         }
 
-        return $this->constructionList->registEstimateInfoId($request->construction_name, $id);
+        return $this->constructionList->registEstimateInfoId($request->construction_name, $id, $request->regist_type);
     }
 
 
@@ -157,9 +157,9 @@ class EstimateInfo extends Model
         $query->groupBy($columns , 'estimate_info.id')
             ->orderBy($ei_table_join . 'created_at', 'desc')
             ->take(20);
-    
+
         return $query->get();
-        
+
     }
 
     public function deleteEstimate($id)

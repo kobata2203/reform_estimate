@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\ConstructionNameRequired;
 
 class EstimateInfoRequest extends FormRequest
 {
@@ -35,8 +36,8 @@ class EstimateInfoRequest extends FormRequest
             'payment_id'          => 'required',
             'expiration_date'     => 'required|max:5',
             'department_id'       => 'required',
-            'remarks'             => 'required|max:100',
-            'construction_name.*' => 'required|max:30',
+            'remarks'             => 'max:100',
+            'construction_name.*' => [new ConstructionNameRequired($this->regist_type), 'max:30'],
             'construction_count'  => 'required',
         ];
     }

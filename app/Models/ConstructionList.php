@@ -40,14 +40,21 @@ class ConstructionList extends Model
      * @param $id
      * @return true
      */
-    public function registEstimateInfoId($construction_name, $id)
+    public function registEstimateInfoId($construction_name, $id, $regist_type)
     {
-        if (count($construction_name) < 0) {
-            return true;
+        $regist_names = [];
+        if ($regist_type == config('util.regist_type_edit')) {
+            foreach ($construction_name as $value) {
+                if(!empty($value)){
+                    $regist_names[] = $value;
+                }
+            }
+        } else {
+            $regist_names = $construction_name;
         }
 
         $datas = [];
-        foreach ($construction_name as $value) {
+        foreach ($regist_names as $value) {
             $data = [];
             $data['name'] = $value;
             $data['estimate_info_id'] = $id;
