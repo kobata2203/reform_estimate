@@ -8,7 +8,7 @@
     <title>内訳明細書</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{{ asset('js/brekdown.js') }}"></script>
+    <script src="{{ asset('js/pdf/breakdown.js') }}"></script>
 
 </head>
 
@@ -89,10 +89,11 @@
                         <div class="amount-container">
                             <span class="yen-symbol">¥</span>
                             <input type="hidden" name="construction_name" value="{{ $selectedConstructionId }}">
-                            <input type="text" id="special_discount" name="special_discount"
-                                value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
-                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
-                                maxlength="10"　max="9999999">
+                                <input type="number" id="special_discount" name="special_discount"
+                                value="{{ old('special_discount', $discount) }}"
+                                placeholder="お値引き金額を入力してください"
+                                style="text-align: center; width: 90%; padding: 5px; font-size: 15px; width: 120px;"
+                                min="0" max="9999999" step="1">
 
                         </div>
                     </td>
