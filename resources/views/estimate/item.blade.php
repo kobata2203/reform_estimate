@@ -8,7 +8,7 @@
     <title>内訳明細書</title>
     <link rel="stylesheet" href="{{ asset('css/ichirann.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{{ asset('js/brekdown.js') }}"></script>
+    <script src="{{ asset('js/pdf/brekdown.js') }}"></script>
 
 </head>
 

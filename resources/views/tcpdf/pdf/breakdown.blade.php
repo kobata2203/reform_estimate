@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>内訳明細書</title>
     <style>
-        {!! file_get_contents(public_path('css/cover/cover_pdf.css')) !!}
+        {!! file_get_contents(public_path('css/cover/pdf.css')) !!}
     </style>
 </head>
 
