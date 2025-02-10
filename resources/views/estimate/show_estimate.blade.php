@@ -141,7 +141,7 @@
                 class="btn btn-primary no-print">View PDF</a>
 
                 <div class="btn-menu">
-                    <button class="btn btn-primary" id="btn_back" onclick="window.location='{{ $prevurl }}'">戻る</button>
+                    <a class="btn btn-primary" id="btn_back" href="{{ route('estimate.index') }}">戻る</a>
                 </div>
 
         </div>
