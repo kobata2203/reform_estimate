@@ -202,7 +202,7 @@ class ManagerController extends Controller
             : collect([]);
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
+        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id);
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -233,7 +233,7 @@ class ManagerController extends Controller
             'construction_list',
             'constructionNames',
             'selectedConstructionId',
-           
+
         ));
     }
 
