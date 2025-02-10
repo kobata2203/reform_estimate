@@ -190,10 +190,7 @@ class ManagerController extends Controller
 
     public function itemView(Request $request, $id)
     {
-        $referrer = session('referrer', 'manager'); // 各内訳明細よりもどるため
-        $prevurl = $referrer == 'salesperson'
-            ? route('estimate.index')
-            : route('manager_estimate.index');
+
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
@@ -236,7 +233,7 @@ class ManagerController extends Controller
             'construction_list',
             'constructionNames',
             'selectedConstructionId',
-            'prevurl'
+           
         ));
     }
 
@@ -263,7 +260,7 @@ class ManagerController extends Controller
             $tax,
             $grandTotal
         );
-        
+
         if ($update_estimate === true) {
             $message = config('message.update_complete');
         } else {

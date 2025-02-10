@@ -146,10 +146,7 @@ class SalespersonController extends Controller
 
     public function itemView(Request $request, $id)
     {
-        $referrer = session('referrer', 'manager'); // 各内訳明細よりもどるため
-        $prevurl = $referrer == 'salesperson'
-            ? route('estimate.index')
-            : route('manager_estimate.index');
+
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
@@ -194,7 +191,6 @@ class SalespersonController extends Controller
             'construction_list',
             'constructionNames',
             'selectedConstructionId',
-            'prevurl'
 
         ));
     }
