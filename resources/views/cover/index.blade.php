@@ -115,7 +115,7 @@
                     <td>
                         <select id="department" name="department_id"  class="department_id">
                             @foreach($departments as $department)
-                                <option value={{ $department->id }} @if($department->id == $estimate_info->department_id)selected @endif>{{ $department->name }}</option>
+                                <option value={{ $department->id }} @if($department->id == old("payment_id", $estimate_info->department_id))selected @endif>{{ $department->name }}</option>
                             @endforeach
                         </select>
                         @if ($errors->has("department_id"))
