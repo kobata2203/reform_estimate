@@ -111,7 +111,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>部署名{{$estimate_info->department_id}}</th>
+                    <th>部署名</th>
                     <td>
                         <select id="department" name="department_id"  class="department_id">
                             @foreach($departments as $department)
