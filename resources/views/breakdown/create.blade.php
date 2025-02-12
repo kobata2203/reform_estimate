@@ -4,7 +4,7 @@
 
 @section('headder')
     <link rel="stylesheet" href="{{ asset('css/breakdown/create.css') }}">
-    <script src="{{ asset('/js/estimate/breakdown_create.js') }}"></script>
+    <script src="{{ asset('/js/breakdown/create.js') }}"></script>
 @endsection
 
 @section('content')
@@ -66,7 +66,7 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="quantity_{{$i}}" class="quantity" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}">
+                            <td><input id="quantity_{{$i}}" class="quantity amount_output" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}">
                                 @if ($errors->has("quantity.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("quantity.$i") }}
@@ -80,7 +80,7 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="unit_price_{{$i}}" class="unit_price" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}">
+                            <td><input id="unit_price_{{$i}}" class="unit_price amount_output" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}">
                                 @if ($errors->has("unit_price.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("unit_price.$i") }}
