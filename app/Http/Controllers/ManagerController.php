@@ -202,7 +202,7 @@ class ManagerController extends Controller
             : collect([]);
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id);
+        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -267,9 +267,10 @@ class ManagerController extends Controller
             $message = config('message.update_fail');
         }
 
-        return redirect(url('/manager/item/' . $id))->with([
+        return redirect()->route('salesperson.show', ['id' => $id, 'construction_name' => $construction_id])->with([
             'message' => $message,
         ]);
+
     }
 
     public function generateBreakdown($id, $construction_list_id)

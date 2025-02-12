@@ -158,7 +158,7 @@ class SalespersonController extends Controller
             : collect([]);
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id);
+        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
 
         $discount = $estimate_calculate->special_discount ?? 0;
 
