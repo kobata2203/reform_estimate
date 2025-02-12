@@ -7,10 +7,10 @@ $(function(){
             '                            <td><input id="maker_' + count + '" type="text" name="maker[' + count + ']" value=""></td>\n' +
             '                            <td><input id="series_name_' + count + '" type="text" name="series_name[' + count + ']" value=""></td>\n' +
             '                            <td><input id="item_number_' + count + '" type="text" name="item_number[' + count + ']" value=""></td>\n' +
-            '                            <td><input id="quantity_' + count + '" class="amount_output" data-count="' + count + '" type="number" name="quantity[' + count + ']" value=""></td>\n' +
-            '                            <td><input id="unit_' + count + '" type="text" name="unit[' + count + ']" value=""></td>\n' +
-            '                            <td><input id="unit_price_' + count + '" class="amount_output" data-count="' + count + '" type="number" name="unit_price[' + count + ']" value=""></td>\n' +
-            '                            <td><input id="amount_' + count + '" type="text" name="amount[' + count + ']" value=""></td>\n' +
+            '                            <td><input id="quantity_' + count + '" class="quantity amount_output" data-count="' + count + '" type="number" name="quantity[' + count + ']" value=""></td>\n' +
+            '                            <td><input id="unit_' + count + '" class="unit" type="text" name="unit[' + count + ']" value=""></td>\n' +
+            '                            <td><input id="unit_price_' + count + '" class="unit_price amount_output" data-count="' + count + '" type="number" name="unit_price[' + count + ']" value=""></td>\n' +
+            '                            <td><input id="amount_' + count + '" class="amount" type="text" name="amount[' + count + ']" value=""></td>\n' +
             '                            <td><input id="remarks_' + count + '" type="text" name="remarks[' + count + ']" value=""></td>\n' +
             '                            <td><button type="button" class="delete_breakdown" data-breakdown_no="' + count + '">削除</button></td>\n' +
             '                        </tr>\n'
@@ -38,7 +38,7 @@ $(function(){
     });
 
     // 金額計算
-    $('.amount_output').change(function() {
+    $(document).on('change', '.amount_output',function(event) {
         let loop_count = $(this).data('count');
         let quantity = parseInt($('#quantity_' + loop_count).val());
         let unit_price = parseInt($('#unit_price_' + loop_count).val());
