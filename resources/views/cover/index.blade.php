@@ -21,7 +21,7 @@
                 <tr>
                     <th>お客様名</th>
                     <td>
-                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}" required>
+                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}">
                         @if ($errors->has("customer_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("customer_name") }}
@@ -32,7 +32,7 @@
                 <tr>
                     <th>担当者名</th>
                     <td>
-                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}" required>
+                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}">
                         @if ($errors->has("charger_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("charger_name") }}
@@ -43,7 +43,7 @@
                 <tr>
                     <th>件名</th>
                     <td>
-                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" required>
+                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" >
                         @if ($errors->has("subject_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("subject_name") }}
@@ -54,7 +54,7 @@
                 <tr>
                     <th>納入場所</th>
                     <td>
-                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" required>
+                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" >
                         @if ($errors->has("delivery_place"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("delivery_place") }}
@@ -65,7 +65,7 @@
                 <tr>
                     <th>工期</th>
                     <td>
-                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" required>
+                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" >
                         @if ($errors->has("construction_period"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("construction_period") }}
@@ -91,7 +91,7 @@
                 <tr>
                     <th>有効期限</th>
                     <td>
-                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" required>
+                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" >
                         @if ($errors->has("expiration_date"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("expiration_date") }}
@@ -132,7 +132,7 @@
                             @foreach($registered_construction_list as $registered_construction)
                                 <li class="list__item">{{ $registered_construction->name }}</li>
                             @endforeach
-                            <li class="list__item">
+                            <li class="list__item add_item">
                                 @for ($i = 1; $i <= old("construction_count", $construction_count); $i++)
                                     <select id="select_construction{{ $i }}" name="select_construction{{ $i }}"  class="select_construction" data-no="{{ $i }}">
                                         <option value=""></option>

@@ -22,12 +22,12 @@ $(function(){
 
     // 削除ボタンを押した時
     $('.js-delete-btn').on('click',function() {
-        if($('.list__item').length > 1 ) {//li.list__itemが1つより多い時
+        if($('.add_item').length > 1 ) {//li.list__itemが1つより多い時
             // 削除の確認
             var deleteConfirm = confirm('削除してよろしいでしょうか？');
             if(deleteConfirm == true) {// OKを押したら
                 // 削除ボタンをクリックしたli.list__itemを削除
-                $(this).closest('.list__item').remove();
+                $(this).closest('.add_item').remove();
             }
         } else {
             alert('工事名は一件以上が必要です。');
