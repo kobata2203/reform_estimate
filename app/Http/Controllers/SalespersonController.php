@@ -7,15 +7,17 @@ use App\Models\Admin;
 use App\Models\Manager;
 use App\Models\Estimate;
 use App\Models\Breakdown;
+use App\Models\Department;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
+use App\Services\PdfService;
 use Illuminate\Http\Request;
+use App\Models\ConstructionList;
 use App\Models\EstimateCalculate;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
-use App\Models\ConstructionList;
-use App\Models\Department;
+use App\Http\Requests\UpdateEstimateRequest;
 
 class SalespersonController extends Controller
 {
@@ -28,6 +30,7 @@ class SalespersonController extends Controller
     protected $estimateCalculate;
     protected $user;
     protected $constructionList;
+    protected $pdfService;
 
     public function __construct(
 
@@ -41,6 +44,7 @@ class SalespersonController extends Controller
         User $user,
         ConstructionList $constructionList,
         Department $department,
+        PdfService $pdfService,
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -52,6 +56,7 @@ class SalespersonController extends Controller
         $this->user = $user;
         $this->constructionList = $constructionList;
         $this->department = $department;
+        $this->pdfService = $pdfService;
     }
 
     public function create()
@@ -193,6 +198,90 @@ class SalespersonController extends Controller
             'selectedConstructionId',
 
         ));
+    }
+
+    public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
+    {
+        $validated = $request->validated();
+        $estimate_info = $this->estimate->getEstimateById($id);
+
+        if (!$estimate_info) {
+            $estimate_info = new \stdClass();
+        }
+
+        $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $construction_id);
+        $totalAmount = $breakdown->sum('amount');
+        $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id, $construction_id);
+        $estimate_calculate->special_discount = $validated['special_discount'];
+        $subtotal = $totalAmount - $estimate_calculate->special_discount;
+        $tax = $subtotal * 0.1;
+        $grandTotal = $subtotal + $tax;
+
+        $update_estimate = $this->estimateCalculate->estimateCalculateUpdate(
+            $estimate_calculate,
+            $subtotal,
+            $tax,
+            $grandTotal
+        );
+
+        if ($update_estimate === true) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
+
+        return redirect()->route('salesperson.show', ['id' => $id, 'construction_name' => $construction_id])->with([
+            'message' => $message,
+        ]);
+
+    }
+
+    public function generateBreakdown($id, $construction_list_id)
+    {
+        return $this->pdfService->generateBreakdown($id, $construction_list_id);
+    }
+
+    public function generateCover($id)
+    {
+        return $this->pdfService->generateCover($id);
+    }
+
+    public function showCover($id)
+    {
+        $estimate_info = $this->estimateInfo::getEstimateByIde($id);
+        $construction_list = $this->constructionList->getByEstimateInfoId($id);
+
+        $totalAmount = 0;
+        $totalDiscount = 0;
+        $totalSubtotal = 0;
+        $totalTax = 0;
+        $totalGrandTotal = 0;
+
+        foreach ($construction_list as $construction) {
+            $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
+            $amount = $breakdown->sum('amount');
+            $discount = $this->estimateCalculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+            $subtotal = $amount - $discount;
+            $tax = $subtotal * 0.1;
+            $grandTotal = $subtotal + $tax;
+
+            $totalAmount += $amount;
+            $totalDiscount += $discount;
+            $totalSubtotal += $subtotal;
+            $totalTax += $tax;
+            $totalGrandTotal += $grandTotal;
+        }
+
+        return view('estimate.show', [
+            'estimate_info' => $estimate_info,
+            'totalAmount' => $totalAmount,
+            'totalDiscount' => $totalDiscount,
+            'totalSubtotal' => $totalSubtotal,
+            'totalTax' => $totalTax,
+            'totalGrandTotal' => $totalGrandTotal,
+            'construction_list' => $construction_list,
+            'id' => $id,
+        ]);
     }
 
     public function showestimate($id)

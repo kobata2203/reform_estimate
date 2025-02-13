@@ -82,7 +82,7 @@ class EstimateCalculate extends Model
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
     }
 
-    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId)
+    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId=null)
     {
         return self::firstOrNew([
             'estimate_id' => $estimateId,
