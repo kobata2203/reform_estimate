@@ -88,24 +88,15 @@ Route::get('/manager/create', [ManagerController::class, 'create'])->name('manag
 Route::post('/manager/store', [ManagerController::class, 'store'])->name('manager.store');
 
 
-// //for viewing 御　見　積　書
-Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-
-
-// Route::get('/managers/{id}', [ManagerController::class, 'show'])->name('managers.show');
-Route::get('/manager/show/{id}', [ManagerController::class, 'show'])->name('managers.show');
-// Define route for displaying the 'item' view
-Route::get('/manager/item/{id}', [ManagerController::class, 'itemView'])->name('manager.item');
-Route::post('/update-discount/{id}/{construction_id}', [ManagerController::class, 'updateDiscount'])->name('updateDiscount');
+//御　見　積　書を表示
+Route::get('/manager/show/{id}', [SalespersonController::class, 'showCover'])->name('managers.show');
+Route::post('/update-discount/{id}/{construction_id}', [SalespersonController::class, 'updateDiscount'])->name('updateDiscount');
 
 #pdfを表示
-Route::get('/manager_menu/pdftrail1/{id}/{construction_list_id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdown');
+Route::get('/manager_menu/pdftrail1/{id}/{construction_list_id}', [SalespersonController::class, 'generateBreakdown'])->name('generatebreakdown');
 
 //営業用編集必要です。
-Route::get('/manager_menu/pdftrail1/{id}', [ManagerController::class, 'generateBreakdown'])->name('generatebreakdowns');
-// Route::get('/estimates', [EstimateController::class, 'indexView'])->name('estimate.index');
-Route::get('/estimates2/{estimate_id}', [ManagerController::class, 'generateppdf'])->name('generateppdf');
-Route::get('/managers/pdf/{id}', [ManagerController::class, 'generateCover'])->name('generatecover');
+Route::get('/managers/pdf/{id}', [SalespersonController::class, 'generateCover'])->name('generatecover');
 
 
 
