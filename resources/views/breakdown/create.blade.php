@@ -38,7 +38,7 @@
                             $i = $key++
                         @endphp
                         <tr id="breakdown_no_{{$i}}">
-                            <td><input id="item_{{$i}}" type="text" name="item[{{$i}}]" value="{{ old("item.$i", $item->item) }}">
+                            <td><input id="item_{{$i}}" type="text" name="item[{{$i}}]" value="{{ old("item.$i", $item->item) }}" required>
                                 @if ($errors->has("item.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("item.$i") }}
@@ -66,28 +66,28 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="quantity_{{$i}}" class="quantity amount_output" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}">
+                            <td><input id="quantity_{{$i}}" class="quantity amount_output" data-count="{{$i}}" type="number" name="quantity[{{$i}}]" value="{{ old("quantity.$i", $item->quantity) }}" required>
                                 @if ($errors->has("quantity.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("quantity.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="unit_{{$i}}" class="unit" type="text" name="unit[{{$i}}]" value="{{ old("unit.$i", $item->unit) }}">
+                            <td><input id="unit_{{$i}}" class="unit" type="text" name="unit[{{$i}}]" value="{{ old("unit.$i", $item->unit) }}" required>
                                 @if ($errors->has("unit.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("unit.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="unit_price_{{$i}}" class="unit_price amount_output" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}">
+                            <td><input id="unit_price_{{$i}}" class="unit_price amount_output" data-count="{{$i}}" type="number" name="unit_price[{{$i}}]" value="{{ old("unit_price.$i", $item->unit_price) }}" required>
                                 @if ($errors->has("unit_price.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("unit_price.$i") }}
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="amount_{{$i}}" class="amount" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}">
+                            <td><input id="amount_{{$i}}" class="amount" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}" required>
                                 @if ($errors->has("amount.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("amount.$i") }}
