@@ -53,6 +53,7 @@
                     <tr>
                         <td>件名</td>
                         <td id="construction-items">
+                            {{ $estimate_info->subject_name }}　
                             @foreach ($construction_list as $index => $item)
                                 {{ $item->name }}
                                 @if ($index < count($construction_list) - 1)
