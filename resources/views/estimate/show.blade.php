@@ -52,7 +52,7 @@
                 <table>
                     <tr>
                         <td>件名</td>
-                        <td id="construction-items">
+                        <td class="adjust-font" id="construction-items">
                             {{ $estimate_info->subject_name }}　
                             @foreach ($construction_list as $index => $item)
                                 {{ $item->name }}
@@ -65,7 +65,7 @@
 
                     <tr>
                         <td>納入場所</td>
-                        <td>{{ $estimate_info->delivery_place }}</td>
+                        <td class="adjust-font">{{ $estimate_info->delivery_place }}</td>
                     </tr>
 
                     <tr>
@@ -84,7 +84,7 @@
                     </tr>
                     <tr>
                         <td>備考</td>
-                        <td>{{ $estimate_info->remarks }}</td>
+                        <td class="adjust-font">{{ $estimate_info->remarks }}</td>
                     </tr>
                 </table>
             </div>
