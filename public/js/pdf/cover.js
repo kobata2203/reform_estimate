@@ -4,7 +4,7 @@ $(function(){
         var $container = $('#construction-items');
         var text = $container.text().replace(/\s+/g, '\u0020').trim(); //　\u0020使て半角スペース
         var containerWidth = $container.width();
-        var minFontSize = 7;
+        var minFontSize = 6;
         var maxFontSize = 12;
         var fontSize = maxFontSize;
 
