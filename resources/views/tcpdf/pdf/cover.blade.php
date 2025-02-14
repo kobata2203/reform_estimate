@@ -52,6 +52,7 @@
             right: 15px;
             margin-bottom: 300px;
         }
+
     </style>
 </head>
 
@@ -75,8 +76,8 @@
     <table>
         <tr>
             <th>件名</th>
-            <td id="construction-items" style="font-size: {{ $font_size }}px; text-align: center;">
-                {{ $estimate_info->subject_name }}　
+            <td class="adjust-font" id="construction-items" style="font-size: {{ $font_size }}px; text-align: center;">
+                {{ $estimate_info->subject_name }}
                 @foreach ($construction_list as $index => $item)
                     {{ $item->name }}
                     @if ($index < count($construction_list) - 1)
@@ -88,23 +89,23 @@
 
         <tr>
             <th>納入場所</th>
-            <td style="text-align: center">{{ $estimate_info->delivery_place }}</td>
+            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->delivery_place }}</td>
         </tr>
         <tr>
             <th>工期</th>
-            <td style="text-align: center">{{ $estimate_info->construction_period }}</td>
+            <td class="adjust-font" style="text-align: center">{{ $estimate_info->construction_period }}</td>
         </tr>
         <tr>
             <th>支払方法</th>
-            <td style="text-align: center">{{ $estimate_info->payment->name }}</td>
+            <td class="adjust-font" style="text-align: center">{{ $estimate_info->payment->name }}</td>
         </tr>
         <tr>
             <th>有効期限</th>
-            <td style="text-align: center">{{ $estimate_info->expiration_date }}</td>
+            <td class="adjust-font" style="text-align: center">{{ $estimate_info->expiration_date }}</td>
         </tr>
         <tr>
             <th>備考</th>
-            <td style="text-align: center">{{ $estimate_info->remarks }}</td>
+            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->remarks }}</td>
         </tr>
     </table>
 

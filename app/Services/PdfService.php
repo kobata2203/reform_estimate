@@ -125,9 +125,9 @@ class PdfService
     private function calculateFontSize($text)
     {
         $length = strlen($text);
-        $baseFontSize = 14;
+        $baseFontSize = 12;
         $fontSize = $baseFontSize - floor($length / 10);
-        $fontSize = max($fontSize, 5);
+        $fontSize = max($fontSize, 3);
         return $fontSize;
     }
 
