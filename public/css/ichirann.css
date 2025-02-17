@@ -73,6 +73,28 @@ h2 {
     width: 100%;
 }
 
+.input-suffix {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.input-suffix label,
+.input-suffix span {
+    display: inline-block;
+}
+
+.input-suffix::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 2px solid black;
+    z-index: -1;
+}
+
+
 .suffix {
     margin-left: 5px;
 }
@@ -468,4 +490,27 @@ table.estimate-item-table {
     color: red;
     font-size: 12px;
     margin-top: 5px;
+}
+.input-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.input-underline {
+    display: inline-flex;
+    align-items: center;
+    border-bottom: 2px solid black; 
+}
+
+.input-underline div,
+.input-underline span {
+    display: inline-block;
+    padding: 1px 0;
+    margin: 0 2px;
+}
+
+.suffix {
+    margin-left: 5px;
 }

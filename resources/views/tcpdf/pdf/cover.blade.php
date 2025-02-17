@@ -52,7 +52,6 @@
             right: 15px;
             margin-bottom: 300px;
         }
-
     </style>
 </head>
 
@@ -89,7 +88,8 @@
 
         <tr>
             <th>納入場所</th>
-            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->delivery_place }}</td>
+            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">
+                {{ $estimate_info->delivery_place }}</td>
         </tr>
         <tr>
             <th>工期</th>
@@ -105,7 +105,8 @@
         </tr>
         <tr>
             <th>備考</th>
-            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->remarks }}</td>
+            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">
+                {{ $estimate_info->remarks }}</td>
         </tr>
     </table>
 
