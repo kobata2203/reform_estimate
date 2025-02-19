@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Admin;
 use App\Models\Manager;
 use App\Models\Estimate;
 use App\Models\Breakdown;
@@ -37,7 +36,7 @@ class SalespersonController extends Controller
         Manager $manager,
         Managerinfo $managerInfo,
         EstimateInfo $estimateInfo,
-        Admin $admin,
+        User $admin,
         Breakdown $breakdown,
         Estimate $estimate,
         EstimateCalculate $estimateCalculate,
@@ -49,7 +48,7 @@ class SalespersonController extends Controller
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
         $this->estimateInfo = $estimateInfo;
-        $this->admin = $admin;
+        $this->admin = $admin->where('role', User::ROLE_ADMIN);
         $this->breakdown = $breakdown;
         $this->estimate = $estimate;
         $this->estimateCalculate = $estimateCalculate;

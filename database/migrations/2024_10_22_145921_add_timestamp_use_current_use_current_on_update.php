@@ -12,14 +12,6 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('created_at');
-            $table->dropColumn('updated_at');
-        });
-        Schema::table('admins', function (Blueprint $table) {
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-        });
         Schema::table('breakdown', function (Blueprint $table) {
             $table->dropColumn('created_at');
             $table->dropColumn('updated_at');
@@ -41,14 +33,6 @@ return new class extends Migration {
             $table->dropColumn('updated_at');
         });
         Schema::table('construction_name', function (Blueprint $table) {
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-        });
-        Schema::table('departments', function (Blueprint $table) {
-            $table->dropColumn('created_at');
-            $table->dropColumn('updated_at');
-        });
-        Schema::table('departments', function (Blueprint $table) {
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -101,14 +85,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('created_at');
-            $table->dropColumn('updated_at');
-        });
-        Schema::table('admins', function (Blueprint $table) {
-            $table->timestamp('created_at')->nullable()->change();
-            $table->timestamp('updated_at')->nullable()->change();
-        });
         Schema::table('breakdown', function (Blueprint $table) {
             $table->dropColumn('created_at');
             $table->dropColumn('updated_at');
@@ -130,14 +106,6 @@ return new class extends Migration {
             $table->dropColumn('updated_at');
         });
         Schema::table('construction_name', function (Blueprint $table) {
-            $table->timestamp('created_at')->nullable()->change();
-            $table->timestamp('updated_at')->nullable()->change();
-        });
-        Schema::table('departments', function (Blueprint $table) {
-            $table->dropColumn('created_at');
-            $table->dropColumn('updated_at');
-        });
-        Schema::table('departments', function (Blueprint $table) {
             $table->timestamp('created_at')->nullable()->change();
             $table->timestamp('updated_at')->nullable()->change();
         });

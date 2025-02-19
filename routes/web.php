@@ -7,6 +7,9 @@ use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminController1;
+use App\Http\Controllers\Auth\Admin\AuthAdminController;
+use App\Http\Controllers\Auth\Admin\AuthAdminRegisterController;
+use App\Http\Controllers\Auth\Sales\AuthSaleController;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -23,25 +26,41 @@ use Barryvdh\DomPDF\Facade as PDF;
 */
 
 //最初はここに飛ぶ(名前をaction_indexからgetLoginに)
-Route::get('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-//POSTされたときはこっち
-Route::post('auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth_login');
-Route::get('/auth/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('auth_logout');
+// Route::get('/sales/login', [AuthSaleController::class, 'showLoginForm'])->name('login');
+// //POSTされたときはこっち
+// Route::post('/sales/login', [AuthSaleController::class, 'login'])->name('sales_login');
+// Route::get('/sales/logout', [AuthSaleController::class, 'logout'])->name('sales_logout');
+// Route::post('/sales/logout', [AuthSaleController::class, 'logout']);
+Route::match(['get', 'post'], '/sales/logout', [AuthSaleController::class, 'logout'])->name('sales_logout');
+Route::prefix('sales')->middleware('guest:sales')->group(function () {
+    Route::get('/login', [AuthSaleController::class, 'showLoginForm'])->name('sales_login');
+    Route::post('/login', [AuthSaleController::class, 'login']);
+});
 
 // Authentication Routes
-Auth::routes();
+// Auth::routes();
 
 
 //管理者用ログイン
-Route::get('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'showLoginForm'])->name('admin_login');
-Route::post('/admin/login', [App\Http\Controllers\admin\LoginController::class, 'login'])->name('admin_login');
-Route::get('/admin/logout', [App\Http\Controllers\admin\LoginController::class, 'logout'])->name('admin_logout');
+// Route::get('/admin/login', [AuthAdminController::class, 'showLoginForm'])->name('admin_login');
+// Route::post('/admin/login', [AuthAdminController::class, 'login'])->name('admin_login');
+// Route::get('/admin/logout', [AuthAdminController::class, 'logout'])->name('admin_logout');
+Route::match(['get', 'post'], '/admin/logout', [AuthSaleController::class, 'logout'])->name('admin_logout');
 Route::view('/admin/register', 'admin/register')->name('admin/register');
-Route::post('/admin/register', [App\Http\Controllers\admin\RegisterController::class, 'register']);
+Route::post('/admin/register', [AuthAdminRegisterController::class, 'register'])->name('admin_register');
+Route::prefix('admin')->middleware('guest:admin')->group(function () {
+    Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin_login');
+    Route::post('/login', [AuthAdminController::class, 'login']);
+});
+
 
 //営業者用メニュー画面
-Route::get('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
-Route::post('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
+// Route::get('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
+// Route::post('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
+Route::middleware(['admin_or_sales'])->group(function () {
+    Route::get('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
+    Route::post('/menu', [App\Http\Controllers\MenuController::class, 'menu']);
+});
 
 // Estimate Routes
 Route::get('/estimate/index', [App\Http\Controllers\EstimateController::class, 'index'])->name('estimate.index');

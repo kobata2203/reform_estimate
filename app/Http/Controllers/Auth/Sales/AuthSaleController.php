@@ -1,23 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Auth\Sales;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthSaleRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Admin; // Admin モデルを追加
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LoginRequest;
 
-class LoginController extends Controller
+class AuthSaleController extends Controller
 {
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $admin;
+    protected $role;
 
 
     /**
@@ -25,12 +18,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct(
-        Admin $admin,
-    )
+    public function __construct()
     {
-        $this->admin = $admin;
-        $this->middleware('guest')->except('logout');
+        $this->role = User::ROLE_SALES;
+        $this->middleware('guest:sales')->except('logout');
+        $this->middleware('auth:sales')->only('logout');
     }
 
     protected function redirectPath()
@@ -45,7 +37,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('admin.login');
+        return view('sales.login');
     }
 
     /**
@@ -54,21 +46,18 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
-        if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::guard('sales')->attempt(array_merge($credentials, ['role' => User::ROLE_SALES]))) {
             $request->session()->regenerate();
-
-            // ログインタイプの保存
-            $auth_type = config('auth.guards.admin.provider');
-            $request->session()->put('auth_type', $auth_type);
-
-            return redirect()->intended($this->redirectPath());
+            return redirect()->route('menu');
         }
-        return back()->withErrors([
-            'email' => config('message.login_fail'), // 定数を取得して使用
-        ]);
+    
+        return back()->withErrors(['email' => 'Credenciais incorretas para vendedor.']);
     }
+    
 
     /**
      * Log the user out of the application.
@@ -78,13 +67,12 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('sales')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('admin/login');
+        return redirect()->route('sales_login');
     }
 
     // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド
@@ -97,7 +85,7 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        return $request->only('email', 'password');
+        return $request->only('email', 'password', 'role');
     }
 
     /**
@@ -123,20 +111,9 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                        ?: redirect()->intended($this->redirectPath());
+                        ?: redirect($this->redirectPath());
     }
 
-    /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        // ログイン成功後の追加処理
-    }
 
     /**
      * Get the failed login response instance.
@@ -149,7 +126,7 @@ class LoginController extends Controller
         $request->session()->flash('error', trans('auth.failed'));
 
         return redirect()->back()
-                        ->withInput($request->only($this->username(), 'remember'));
+                         ->withInput($request->only($this->username(), 'remember'));
     }
 
     /**
@@ -159,6 +136,6 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard();
+        return Auth::guard('sales');
     }
 }

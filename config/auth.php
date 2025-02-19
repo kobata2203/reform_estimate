@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'sales',
         'passwords' => 'users',
     ],
 
@@ -36,17 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-        'user' => [
+        'sales' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
         'admin' => [                //追記
             'driver' => 'session',  //追記
-            'provider' => 'admins', //追記
+            'provider' => 'users', //追記
         ],                          //追記
     ],
 
@@ -72,14 +68,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'admins' => [                            //追記
-            'driver' => 'eloquent',              //追記
-            'model' => App\Models\Admin::class,  //追記
-        ],                                       //追記
 
-        // 'users' => [
+
+        // 'sales' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'model' => App\Models\User::class,
         // ],
     ],
 
