@@ -18,20 +18,14 @@
             @if(Auth::user()->role === \App\Models\User::ROLE_SALES)
                 <button onclick="window.location.href='{{ route('estimate.create') }}'">見積書作成へ</button>
                 <button onclick="window.location.href='{{ route('estimate.index') }}'">見積書一覧へ</button>
-                <form method="POST" action="{{ route('sales_logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit">ログアウト</button>
-                </form>
+                <button onclick="window.location.href='{{ route('sales_logout') }}'">ログアウト</button>
             @elseif(Auth::user()->role === \App\Models\User::ROLE_ADMIN)
                 <button onclick="window.location.href='{{ route('estimate.index') }}'">見積書一覧へ</button>
                 <button onclick="window.location.href='{{ route('salesperson.create') }}'">営業者登録へ</button>
                 <button onclick="window.location.href='{{ route('salesperson.index') }}'">営業者一覧へ</button>
                 <button onclick="window.location.href='{{ route('manager.create') }}'">管理者登録へ</button>
                 <button onclick="window.location.href='{{ route('manager.index') }}'">管理者一覧画面へ</button>
-                <form method="POST" action="{{ route('admin_logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit">ログアウト</button>
-                </form>
+                <button onclick="window.location.href='{{ route('admin_logout') }}'">ログアウト</button>
             @endif
         @else
             <p>ログインしてください。</p>

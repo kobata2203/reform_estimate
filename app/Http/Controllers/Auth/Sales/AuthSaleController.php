@@ -37,7 +37,7 @@ class AuthSaleController extends Controller
      */
     public function showLoginForm()
     {
-        return view('sales.login');
+        return view('auth.sales.login');
     }
 
     /**
@@ -68,10 +68,8 @@ class AuthSaleController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('sales')->logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect()->route('sales_login');
     }
 

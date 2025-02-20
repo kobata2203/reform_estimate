@@ -16,34 +16,29 @@ class AuthAdminOrSalesMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Verifica se o usuário está autenticado como 'admin' ou 'sales'
         if (Auth::guard('admin')->check()) {
-            Auth::setDefaultDriver('admin'); // Define o guard admin
+            Auth::setDefaultDriver('admin'); 
             return $next($request);
         } 
         
         if (Auth::guard('sales')->check()) {
-            Auth::setDefaultDriver('sales'); // Define o guard sales
+            Auth::setDefaultDriver('sales'); 
             return $next($request);
         }
 
-        // Redireciona para o login correto com base na URL acessada
         return $this->redirectToCorrectLogin($request);
     }
 
     private function redirectToCorrectLogin(Request $request)
     {
-        // Se a URL contém "admin", redirecionar para admin_login
         if ($request->is('admin/*')) {
-            return redirect()->route('admin_login')->with('error', 'Acesso negado. Faça login como administrador.');
+            return redirect()->route('admin_login')->with('error', 'アクセスが拒否されました。管理者としてログインしてください。');
         }
 
-        // Se a URL contém "sales", redirecionar para sales_login
         if ($request->is('sales/*')) {
-            return redirect()->route('sales_login')->with('error', 'Acesso negado. Faça login como vendedor.');
+            return redirect()->route('sales_login')->with('error', 'アクセスが拒否されました。営業者としてログインしてください。');
         }
 
-        // Padrão: Redireciona para login genérico se não encontrar um caso específico
-        return redirect()->route('sales_login')->with('error', 'Acesso negado. Faça login.');
+        return redirect()->route('sales_login')->with('error', 'アクセスが拒否されました。ログインしてください。');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\AuthAdminRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class AuthAdminController extends Controller
 {
@@ -41,7 +42,7 @@ class AuthAdminController extends Controller
      */
     public function showLoginForm()
     {
-        return view('admin.login');
+        return view('auth.admin.login');
     }
 
     /**
@@ -76,13 +77,17 @@ class AuthAdminController extends Controller
      */
     public function logout(Request $request)
     {
-          
-        Auth::guard('admin')->logout();
-
+        $this->guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin_login');
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->route('admin_login');
     }
 
     // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド

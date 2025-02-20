@@ -68,12 +68,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-
-        // 'sales' => [
-        //     'driver' => 'database',
-        //     'model' => App\Models\User::class,
-        // ],
     ],
 
     /*
@@ -99,7 +93,7 @@ return [
             'throttle' => 60,
         ],
         'admins' => [                           //追記
-            'provider' => 'admins',             //追記
+            'provider' => 'users',             //追記
             'table' => 'password_resets',       //追記
             'expire' => 60,                     //追記
             'throttle' => 60,                   //追記
