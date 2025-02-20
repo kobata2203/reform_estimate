@@ -21,7 +21,7 @@
                 <tr>
                     <th>お客様名</th>
                     <td>
-                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}">
+                        <input id="customer_name" type="text" name="customer_name" value="{{ old("customer_name", $estimate_info->customer_name) }}" required>
                         @if ($errors->has("customer_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("customer_name") }}
@@ -32,7 +32,7 @@
                 <tr>
                     <th>担当者名</th>
                     <td>
-                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}">
+                        <input id="charger_name" type="text" name="charger_name" value="{{ old("charger_name", $estimate_info->charger_name) }}" required>
                         @if ($errors->has("charger_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("charger_name") }}
@@ -43,7 +43,7 @@
                 <tr>
                     <th>件名</th>
                     <td>
-                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" >
+                        <input id="subject_name" type="text" name="subject_name" value="{{ old("subject_name", $estimate_info->subject_name) }}" required>
                         @if ($errors->has("subject_name"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("subject_name") }}
@@ -54,7 +54,7 @@
                 <tr>
                     <th>納入場所</th>
                     <td>
-                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" >
+                        <input id="delivery_place" type="text" name="delivery_place" value="{{ old("delivery_place", $estimate_info->delivery_place) }}" required>
                         @if ($errors->has("delivery_place"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("delivery_place") }}
@@ -65,7 +65,7 @@
                 <tr>
                     <th>工期</th>
                     <td>
-                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" >
+                        <input id="construction_period" type="text" name="construction_period" value="{{ old("construction_period", $estimate_info->construction_period) }}" required>
                         @if ($errors->has("construction_period"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("construction_period") }}
@@ -91,7 +91,7 @@
                 <tr>
                     <th>有効期限</th>
                     <td>
-                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" >
+                        <input id="expiration_date" type="text" name="expiration_date" value="{{ old("expiration_date", $estimate_info->expiration_date) }}" required>
                         @if ($errors->has("expiration_date"))
                             <div class="invalid-feedback" role="alert">
                                 {{ $errors->first("expiration_date") }}
