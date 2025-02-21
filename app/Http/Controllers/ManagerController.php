@@ -10,7 +10,6 @@ use App\Models\Breakdown;
 use App\Models\Department;
 use App\Models\Managerinfo;
 use App\Models\EstimateInfo;
-use App\Services\PdfService;
 use Illuminate\Http\Request;
 use App\Models\ConstructionItem;
 use App\Models\ConstructionList;
@@ -18,7 +17,6 @@ use App\Models\ConstructionName;
 use App\Models\EstimateCalculate;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
-use App\Http\Requests\UpdateEstimateRequest;
 
 class ManagerController extends Controller
 {
@@ -36,11 +34,10 @@ class ManagerController extends Controller
     protected $constructionInfo;
     protected $constructionName;
     protected $constructionList;
-    protected $estimateInitCount = 1; // 工事名の初期表示数
-   
+    protected $estimateInitCount = 1;
+
 
     public function __construct(
-
         Manager $manager,
         Managerinfo $managerInfo,
         EstimateInfo $estimateInfo,
@@ -53,7 +50,6 @@ class ManagerController extends Controller
         ConstructionItem $constructionItem,
         Department $department,
         Payment $payment,
-
     ) {
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
@@ -73,7 +69,6 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('search');
-        // Buscar apenas usuários com a role "admin"
         $manager_info = $this->user->where('role', User::ROLE_ADMIN)
                                    ->where(function ($query) use ($keyword) {
                                        if ($keyword) {
@@ -94,7 +89,7 @@ class ManagerController extends Controller
         $departments = $this->department::all();
         return view('manager.create')->with([
             'action' => route('manager.store'),
-            'user' => new User(), 
+            'user' => new User(),
             'departments' => $departments,
         ]);
     }
@@ -103,9 +98,7 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
         $validated['role'] = User::ROLE_ADMIN;
-
         $create_admin = $this->user->create($validated);
-
         $message = $create_admin ? config('message.regist_complete') : config('message.regist_fail');
 
         return redirect()->route('manager.index')->with([
@@ -129,9 +122,7 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
-
         $update_admin = $admin->update($validated);
-
         $message = $update_admin ? config('message.update_complete') : config('message.update_fail');
 
         return redirect()->route('manager.index')->with([
@@ -143,7 +134,6 @@ class ManagerController extends Controller
     {
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
         $delete_admin = $admin->delete();
-
         $message = $delete_admin ? config('message.delete_complete') : config('message.delete_fail');
 
         return redirect('/manager')->with([
@@ -151,5 +141,3 @@ class ManagerController extends Controller
         ]);
     }
 }
-
-

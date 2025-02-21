@@ -17,27 +17,49 @@ class AutoLogoutMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $lastActivityKey = 'last_activity_' . $user->role; 
-            
-            $lastActivity = session($lastActivityKey);
+        // if (Auth::check()) {
+        //     $user = Auth::user();
+        //     $lastActivityKey = 'last_activity_' . $user->role;
 
-            if ($lastActivity && Carbon::parse($lastActivity)->diffInMinutes(now()) >= 1) {
-                Auth::logout();
+        //     $lastActivity = session($lastActivityKey);
 
-                session()->flush();
+        //     if ($lastActivity && Carbon::parse($lastActivity)->diffInMinutes(now()) >= 1) {
+        //         Auth::logout();
 
-                if ($user->role === 'admin') {
-                    return redirect('/admin/login')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
-                }
+        //         session()->flush();
 
-                return redirect('/sales/login')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
-            }
+        //         if ($user->role === 'admin') {
+        //             return redirect('/admin/login')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        //         }
 
-            session([$lastActivityKey => now()]);
+        //         return redirect('/sales/login')->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        //     }
+
+        //     session([$lastActivityKey => now()]);
+        // }
+        if (Auth::guard('sales')->check()) {
+            return $this->checkSessionTimeout($request, $next, 'sales', '/sales/login');
         }
 
+        if (Auth::guard('admin')->check()) {
+            return $this->checkSessionTimeout($request, $next, 'admin', '/admin/login');
+        }
+        return $next($request);
+    }
+
+    private function checkSessionTimeout(Request $request, Closure $next, string $role, string $redirectPath)
+    {
+        $user = Auth::guard($role)->user();
+        $lastActivityKey = 'last_activity_' . $role;
+        $lastActivity = session($lastActivityKey);
+
+        if ($lastActivity && Carbon::parse($lastActivity)->diffInMinutes(now()) >= 1) {
+            Auth::guard($role)->logout();
+            session()->flush();
+            return redirect($redirectPath)->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+        }
+
+        session([$lastActivityKey => now()]);
         return $next($request);
     }
 }
