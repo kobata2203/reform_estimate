@@ -1,36 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthAdminRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User; // User モデルを追加
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\LoginRequest;
+use Illuminate\Http\JsonResponse;
 
-class LoginController extends Controller
+class AuthAdminController extends Controller
 {
-    /**
+   /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $user;
+    protected $role;
+
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(
-        User $user,
-
-    )
+    public function __construct()
     {
-        $this->user = $user;
-        $this->middleware('guest')->except('logout');
+        $this->role = User::ROLE_ADMIN;
+        $this->middleware('guest:admin')->except('logout');
     }
 
     protected function redirectPath()
@@ -45,7 +42,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('auth.admin.login');
     }
 
     /**
@@ -54,19 +51,21 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $credentials = $request->only('email', 'password');
+        $credentials['role'] = $this->role; 
+
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            // ログインタイプの保存
-            $auth_type = config('auth.guards.user.provider');
-            $request->session()->put('auth_type', $auth_type);
+            $request->session()->put('auth_type', config('auth.guards.admin.provider'));
 
             return redirect()->intended($this->redirectPath());
         }
+
         return back()->withErrors([
-            'email' => config('message.login_fail'), // 定数を取得して使用
+            'email' => config('message.login_fail'),
         ]);
     }
 
@@ -78,13 +77,17 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout();
-
+        $this->guard('admin')->logout();
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('login');
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->route('admin_login');
     }
 
     // 以下は、`AuthenticatesUsers` トレイトからオーバーライドされたメソッド
@@ -97,7 +100,7 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        return $request->only('email', 'password');
+        return $request->only('email', 'password', 'role');
     }
 
     /**
@@ -159,7 +162,6 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard();
+        return Auth::guard('admin');
     }
 }
-

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Manager;
 use App\Models\Payment;
 use App\Models\Estimate;
@@ -25,7 +25,7 @@ class ManagerController extends Controller
     protected $manager;
     protected $managerInfo;
     protected $estimateInfo;
-    protected $admin;
+    protected $user;
     protected $breakdown;
     protected $estimate;
     protected $estimateCalculate;
@@ -44,7 +44,7 @@ class ManagerController extends Controller
         Manager $manager,
         Managerinfo $managerInfo,
         EstimateInfo $estimateInfo,
-        Admin $admin,
+        User $user,
         Breakdown $breakdown,
         Estimate $estimate,
         EstimateCalculate $estimateCalculate,
@@ -58,7 +58,7 @@ class ManagerController extends Controller
         $this->manager = $manager;
         $this->managerInfo = $managerInfo;
         $this->estimateInfo = $estimateInfo;
-        $this->admin = $admin;
+        $this->user = $user;
         $this->breakdown = $breakdown;
         $this->estimate = $estimate;
         $this->estimateCalculate = $estimateCalculate;
@@ -73,7 +73,16 @@ class ManagerController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('search');
-        $manager_info = $this->admin->searchAdmin($keyword);
+        // Buscar apenas usuários com a role "admin"
+        $manager_info = $this->user->where('role', User::ROLE_ADMIN)
+                                   ->where(function ($query) use ($keyword) {
+                                       if ($keyword) {
+                                           $query->where('name', 'like', "%$keyword%")
+                                                 ->orWhere('email', 'like', "%$keyword%");
+                                       }
+                                   })
+                                   ->get();
+
         return view('manager.index')->with([
             'manager_info' => $manager_info,
             'departments' => $this->department->getDepartmentList(),
@@ -85,20 +94,19 @@ class ManagerController extends Controller
         $departments = $this->department::all();
         return view('manager.create')->with([
             'action' => route('manager.store'),
-            'admin' => $this->admin,
+            'user' => new User(), 
             'departments' => $departments,
         ]);
     }
 
     public function store(CreateAdminRequest $request)
     {
-        $create_admin = $this->admin->createAdmin($request);
+        $validated = $request->validated();
+        $validated['role'] = User::ROLE_ADMIN;
 
-        if ($create_admin == true) {
-            $message = config('message.regist_complete');
-        } else {
-            $message = config('message.regist_fail');
-        }
+        $create_admin = $this->user->create($validated);
+
+        $message = $create_admin ? config('message.regist_complete') : config('message.regist_fail');
 
         return redirect()->route('manager.index')->with([
             'message' => $message,
@@ -107,11 +115,12 @@ class ManagerController extends Controller
 
     public function edit($id)
     {
-        $admin = $this->admin->findAdminById($id);
+        $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
         $departments = $this->department::all();
+
         return view('manager.create')->with([
             'action' => route('manager.update', $admin->id),
-            'admin' => $admin,
+            'user' => $admin, // Alterado
             'departments' => $departments,
         ]);
     }
@@ -119,14 +128,11 @@ class ManagerController extends Controller
     public function update(UpdateAdminRequest $request, $id)
     {
         $validated = $request->validated();
+        $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
 
-        $update_admin = $this->admin->updateAdmin($id, $validated);
+        $update_admin = $admin->update($validated);
 
-        if ($update_admin == true) {
-            $message = config('message.update_complete');
-        } else {
-            $message = config('message.update_fail');
-        }
+        $message = $update_admin ? config('message.update_complete') : config('message.update_fail');
 
         return redirect()->route('manager.index')->with([
             'message' => $message,
@@ -135,14 +141,10 @@ class ManagerController extends Controller
 
     public function delete($id)
     {
-        // 削除処理
-        $delete_admin = $this->admin->deleteAdmin($id);
+        $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
+        $delete_admin = $admin->delete();
 
-        if ($delete_admin == true) {
-            $message = config('message.delete_complete');
-        } else {
-            $message = config('message.delete_fail');
-        }
+        $message = $delete_admin ? config('message.delete_complete') : config('message.delete_fail');
 
         return redirect('/manager')->with([
             'message' => $message,

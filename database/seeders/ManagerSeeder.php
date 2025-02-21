@@ -18,31 +18,31 @@ class ManagerSeeder extends Seeder
     public function run() : void
     {
         // Check if the record already exists
-        $existingManager = DB::table('managers')->where('email', 'john.doe@example.com')->first();
+        // $existingManager = DB::table('managers')->where('email', 'john.doe@example.com')->first();
 
-        // Insert only if the record doesn't exist
-        if (!$existingManager) {
-            DB::table('managers')->insert([
-                'name' => 'John Doe',
-                'email' => 'john.doe@example.com',
-               'password' => bcrypt('password'), // Ensure you use appropriate hashing
-                'department_name' => 'Sales',
-            ]);
-        }
+        // // Insert only if the record doesn't exist
+        // if (!$existingManager) {
+        //     DB::table('managers')->insert([
+        //         'name' => 'John Doe',
+        //         'email' => 'john.doe@example.com',
+        //        'password' => bcrypt('password'), // Ensure you use appropriate hashing
+        //         'department_name' => 'Sales',
+        //     ]);
+        // }
 
-        // Create 10 unique Managerinfo records using the factory
-        $faker = Faker::create();
+        // // Create 10 unique Managerinfo records using the factory
+        // $faker = Faker::create();
 
-        foreach (range(1, 10) as $index) {
-            DB::table('managers')->insert([
-                'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail,  // Ensures unique emails
-                'password' => Hash::make('password'),
-                'department_name' => $faker->company,
-            ]);
-        }
+        // foreach (range(1, 10) as $index) {
+        //     DB::table('managers')->insert([
+        //         'name' => $faker->name,
+        //         'email' => $faker->unique()->safeEmail,  // Ensures unique emails
+        //         'password' => Hash::make('password'),
+        //         'department_name' => $faker->company,
+        //     ]);
+        // }
 
         // Create 10 Managerinfo records using the factory
-        Managerinfo::factory(10)->create();
+        // Managerinfo::factory(10)->create();
     }
 }
