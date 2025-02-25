@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAdminRequest extends FormRequest
 {
@@ -24,10 +25,16 @@ class UpdateAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'department_id' => 'required',
-            'email' => 'required|email|unique:admins,email,' . $this->route('id'), // Allow existing email to stay
-            'password' => 'nullable|string|min:8',
+            'name' => 'required|string|max:20',
+            'department_id' => 'required|exists:departments,id',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:30',
+                Rule::unique('users', 'email')->ignore($this->route('id')),
+            ],
+            'password' => 'required|string|min:8',
         ];
     }
 

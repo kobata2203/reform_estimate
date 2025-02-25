@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Manager;
 use Illuminate\Database\Seeder;
 use App\Models\Managerinfo;
 use Illuminate\Support\Facades\DB;
@@ -15,34 +16,27 @@ class ManagerSeeder extends Seeder
      *
      * @return void
      */
-    public function run() : void
+    public function run(): void
     {
-        // Check if the record already exists
-        $existingManager = DB::table('managers')->where('email', 'john.doe@example.com')->first();
-
-        // Insert only if the record doesn't exist
-        if (!$existingManager) {
-            DB::table('managers')->insert([
+        Manager::firstOrCreate(
+            ['email' => 'john.doe@example.com'],
+            [
                 'name' => 'John Doe',
-                'email' => 'john.doe@example.com',
-               'password' => bcrypt('password'), // Ensure you use appropriate hashing
+                'password' => Hash::make('password'),
                 'department_name' => 'Sales',
-            ]);
-        }
+            ]
+        );
 
-        // Create 10 unique Managerinfo records using the factory
         $faker = Faker::create();
-
         foreach (range(1, 10) as $index) {
-            DB::table('managers')->insert([
+            Manager::create([
                 'name' => $faker->name,
-                'email' => $faker->unique()->safeEmail,  // Ensures unique emails
+                'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
                 'department_name' => $faker->company,
             ]);
         }
 
-        // Create 10 Managerinfo records using the factory
         Managerinfo::factory(10)->create();
     }
 }

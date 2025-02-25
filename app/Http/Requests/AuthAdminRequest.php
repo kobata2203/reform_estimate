@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class AuthAdminRequest extends FormRequest
 {
     public function __construct()
     {
@@ -46,10 +46,4 @@ class LoginRequest extends FormRequest
                           ->exists();
     }
 
-    public function isSale(): bool
-    {
-        return $this->user->where('email', $this->input('email'))
-                          ->where('role', User::ROLE_SALES)
-                          ->exists();
-    }
 }

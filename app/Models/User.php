@@ -10,7 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_SALES = 'sales'; 
 
     protected $table = 'users';
     protected $fillable = [
@@ -18,6 +21,7 @@ class User extends Authenticatable
         'department_id',
         'email',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -103,5 +107,62 @@ class User extends Authenticatable
             });
         }
         return $query->with('department');
+    }
+
+    public function searchAdmin($keyword = null)
+    {
+        return self::where('role', self::ROLE_ADMIN)
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where('name', 'LIKE', "%{$keyword}%")
+                      ->orWhere('email', 'LIKE', "%{$keyword}%")
+                      ->orWhereHas('department', function ($q) use ($keyword) {
+                          $q->where('name', 'LIKE', "%{$keyword}%");
+                      });
+            })
+            ->orderBy('created_at', 'asc')
+            ->get();
+    }
+
+    public function createAdmin($data)
+    {
+        return self::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'department_id' => $data['department_id'],
+            'role' => self::ROLE_ADMIN, 
+        ]);
+    }
+
+    public function deleteAdmin($id)
+    {
+        $admin = self::where('role', self::ROLE_ADMIN)->findOrFail($id);
+        return $admin->delete();
+    }
+
+    public static function findAdminById($id)
+    {
+        return self::where('role', self::ROLE_ADMIN)->findOrFail($id);
+    }
+
+    public static function updateAdmin($id, $data)
+    {
+        $admin = self::where('role', self::ROLE_ADMIN)->findOrFail($id);
+
+        $admin->name = $data['name'];
+        $admin->email = $data['email'];
+
+        if (!empty($data['password'])) {
+            $admin->password = Hash::make($data['password']);
+        }
+
+        $admin->department_id = $data['department_id'];
+
+        return $admin->save();
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

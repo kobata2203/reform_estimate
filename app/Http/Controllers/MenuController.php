@@ -10,8 +10,8 @@ class MenuController extends Controller
     public function menu(Request $request)
     {
         $auth_type = $request->session()->get('auth_type');
-        if ($auth_type == config('auth.guards.user.provider')) {
-            $title_name = config('auth.names.user');
+        if ($auth_type == config('auth.guards.sales.provider')) {
+            $title_name = config('auth.names.saler');
         } elseif ($auth_type == config('auth.guards.admin.provider')) {
             $title_name = config('auth.names.admin');
         }
