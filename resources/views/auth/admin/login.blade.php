@@ -8,6 +8,12 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                    @if (session('logout_message'))
+                        <div class="alert alert-warning">
+                            {{ session('logout_message') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('admin_login') }}">
                         @csrf
 

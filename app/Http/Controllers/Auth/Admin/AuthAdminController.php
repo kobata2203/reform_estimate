@@ -15,7 +15,6 @@ class AuthAdminController extends Controller
     {
         $this->role = User::ROLE_ADMIN;
         $this->middleware('guest:admin')->except('logout');
-        $this->middleware('auth:admin')->except('logout');
     }
 
     public function showLoginForm()
@@ -25,7 +24,7 @@ class AuthAdminController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password', 'role');
+        $credentials = $request->only('email', 'password');
         $credentials['role'] = $this->role;
 
         if (Auth::guard('admin')->attempt($credentials)) {

@@ -17,12 +17,12 @@ class AuthAdminOrSalesMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::guard('admin')->check()) {
-            Auth::setDefaultDriver('admin'); 
+            Auth::setDefaultDriver('admin');
             return $next($request);
-        } 
-        
+        }
+
         if (Auth::guard('sales')->check()) {
-            Auth::setDefaultDriver('sales'); 
+            Auth::setDefaultDriver('sales');
             return $next($request);
         }
 
