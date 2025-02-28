@@ -27,11 +27,14 @@ class AutoLogoutMiddleware
         $user = Auth::guard($role)->user();
         $lastActivityKey = 'last_activity_' . $role;
         $lastActivity = session($lastActivityKey);
+        $autoLogoutTime = config('util.auto_logout_time');
 
-        if ($lastActivity && Carbon::parse($lastActivity)->diffInMinutes(now()) >= 120) {
+        if ($lastActivity && Carbon::parse($lastActivity)->diffInMinutes(now()) >= $autoLogoutTime) {
             Auth::guard($role)->logout();
             session()->flush();
-            return redirect($redirectPath)->with('message', 'セッションの有効期限が切れました。再度ログインしてください。');
+            $logoutMessage = config('message.auto_logout');
+
+            return redirect($redirectPath)->with('logout_message', $logoutMessage);
         }
 
         session([$lastActivityKey => now()]);

@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
-    const ROLE_ADMIN = 'admin';
-    const ROLE_SALES = 'sales'; 
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_SALES = 'sales';
 
     protected $table = 'users';
     protected $fillable = [
@@ -130,7 +130,7 @@ class User extends Authenticatable
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'department_id' => $data['department_id'],
-            'role' => self::ROLE_ADMIN, 
+            'role' => self::ROLE_ADMIN,
         ]);
     }
 

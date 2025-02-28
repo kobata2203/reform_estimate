@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use app\Models\User;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -23,7 +23,6 @@ class UserSeeder extends Seeder
             'department_id' => '1',
             'email' => 'osaki@servantop.co.jp',
             'password' => bcrypt('servan01'),
-            'role' => User::ROLE_ADMIN,
             'role' => User::ROLE_ADMIN,
         ]);
 
@@ -124,17 +123,15 @@ class UserSeeder extends Seeder
             'email' => 't.miyata.servan01@gmail.com',
             'password' => bcrypt('servan01'),
             'role' => User::ROLE_ADMIN,
-        ]);        
+        ]);
 
         User::factory(1)->create([
-            //'id' => 12,
             'name' => '宮里　ウェリントン',
             'department_id' => '1',
             'email' => 'admin@admin.com',
             'role' => User::ROLE_ADMIN,
         ]);
         User::factory(1)->create([
-            //'id' => 12,
             'name' => '宮里　アケミ',
             'department_id' => '1',
             'email' => 'user@user.com',
@@ -237,9 +234,9 @@ class UserSeeder extends Seeder
             ]
         ]);
         // SALES --------------------------------
-        
-    
-        
+
+
+
     }
 
 }

@@ -8,24 +8,27 @@ use App\Http\Controllers\Auth\Sales\AuthSaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/sales/logout', function (Request $request) {
-    Auth::guard('sales')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect()->route('sales_login');
-})->name('sales_logout');
-
+Route::middleware('sales')->group(function () {
+    Route::get('/sales/logout', function (Request $request) {
+        Auth::guard('sales')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('sales_login');
+    })->name('sales_logout');
+});
 Route::prefix('sales')->middleware('guest:sales')->group(function () {
     Route::get('/login', [AuthSaleController::class, 'showLoginForm'])->name('sales_login');
     Route::post('/login', [AuthSaleController::class, 'login']);
 });
 
-Route::get('/admin/logout', function (Request $request) {
-    Auth::guard('admin')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect()->route('admin_login');
-})->name('admin_logout');
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/logout', function (Request $request) {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin_login');
+    })->name('admin_logout');
+});
 Route::prefix('admin')->middleware('guest:admin')->group(function () {
     Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin_login');
     Route::post('/login', [AuthAdminController::class, 'login']);
@@ -33,7 +36,7 @@ Route::prefix('admin')->middleware('guest:admin')->group(function () {
 
 Route::middleware('auto-logout')->group(function () {
 
-    Route::middleware(['admin_or_sales'])->group(function () {
+    Route::middleware('admin_or_sales')->group(function () {
         Route::get('/menu', [App\Http\Controllers\MenuController::class, 'menu'])->name('menu');
         Route::post('/menu', [App\Http\Controllers\MenuController::class, 'menu']);
     });

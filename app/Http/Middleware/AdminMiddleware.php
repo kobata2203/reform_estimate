@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->role !== \App\Models\User::ROLE_ADMIN) {
+        if (!Auth::guard('admin')->check()) {
             return redirect()->route('admin_login')->with('error', 'アクセスが拒否されました。このページは管理者のみがアクセスできます。');
         }
         return $next($request);

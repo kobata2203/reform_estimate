@@ -15,7 +15,6 @@ class AuthSaleController extends Controller
     {
         $this->role = User::ROLE_SALES;
         $this->middleware('guest:sales')->except('logout');
-        $this->middleware('auth:sales')->only('logout');
     }
 
     public function showLoginForm()
