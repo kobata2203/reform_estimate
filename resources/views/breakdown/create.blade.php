@@ -87,7 +87,7 @@
                                     </div>
                                 @endif
                             </td>
-                            <td><input id="amount_{{$i}}" class="amount" type="text" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}" required>
+                            <td><input id="amount_{{$i}}" class="amount" type="number" name="amount[{{$i}}]" value="{{ old("amount.$i", $item->amount) }}" required>
                                 @if ($errors->has("amount.$i"))
                                     <div class="invalid-feedback" role="alert">
                                         {{ $errors->first("amount.$i") }}
