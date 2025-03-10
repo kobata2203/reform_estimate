@@ -35,27 +35,10 @@ class CreateAdminRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'name.required' => '名前は必須です。',
-            'name.max' => '名前は20文字以内で入力してください。',
-            'department_id.required' => '部署の選択は必須です。',
-            'department_id.exists' => '選択した部署が存在しません。',
-            'email.required' => 'メールアドレスは必須です。',
-            'email.email' => '有効なメールアドレスを入力してください。',
-            'email.unique' => 'このメールアドレスは既に登録されています。',
-            'email.max' => 'メールアドレスは30文字以内で入力してください。',
-            'password.required' => 'パスワードは必須です。',
-            'password.min' => 'パスワードは8文字以上で入力してください。',
-        ];
-    }
-
     public function prepareForValidation()
     {
         $this->merge([
-            'role' => User::ROLE_ADMIN, 
+            'role' => User::ROLE_ADMIN,
         ]);
     }
 }
-
