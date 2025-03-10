@@ -29,11 +29,7 @@ class AuthSaleRequest extends FormRequest
      */
     public function rules()
     {
-        // デフォルト外のバリデートは独自処理を作成して呼び出す
         return [
-            //'id'         => 'required',
-            //'name.*'     => 'required',
-            //'department_name.*' => 'required',
             'email.*'     => 'required|max:30',
             'password.*'  => 'required|min:8|max:10',
         ];
