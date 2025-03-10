@@ -55,15 +55,15 @@ class BreakdownController extends Controller
 
     public function create($id, Request $request)
     {
-        $construction_list = $this->constructionList::find($id);
+        $construction_list = $this->constructionList::find($request->cid);
         $estimate_info = $this->estimateInfo::find($construction_list->estimate_info_id);
-        $construction_name = $this->constructionName::find($construction_list->estimate_info_id);
+
         $breakdown_store_routing = route('breakdown.store');
 
         /**
          * SQLはモデルに記載する
          */
-        $breakdown_items = $this->breakdown->getBreakdownList($id, $request->cid);
+        $breakdown_items = $this->breakdown->getBreakdownList($request->cid);
         $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
 
         if (count($breakdown_items) == 0) {
@@ -79,7 +79,6 @@ class BreakdownController extends Controller
             'id' => $id,
             'cid' => $request->cid,
             'estimate_info' => $estimate_info,
-            'construction_name' => $construction_name,
             'breakdown_items' => $breakdown_items,
             'construction_id' => $construction_id,
             'breakdown_store_routing' => $breakdown_store_routing,
