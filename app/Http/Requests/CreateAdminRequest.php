@@ -15,20 +15,18 @@ class CreateAdminRequest extends FormRequest
      */
     public function authorize()
     {
-        // Return true to authorize the request
         return true;
     }
 
     public function rules()
     {
         return [
-            'name' => 'required|string|max:20',
+            'name' => 'required|string',
             'department_id' => 'required|exists:departments,id',
             'email' => [
                 'required',
                 'string',
                 'email',
-                'max:30',
                 Rule::unique('users', 'email')->ignore($this->route('id')),
             ],
             'password' => 'required|string|min:8',
