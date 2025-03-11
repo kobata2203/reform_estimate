@@ -17,7 +17,9 @@ class SalesMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('sales')->check()) {
-            return redirect()->route('sales_login')->with('error', 'アクセスが拒否されました。このページは販売者のみがアクセスできます。');
+            $errorMessage = config('message.only_sales_access');
+
+            return redirect()->route('sales_login')->with('error', $errorMessage);
         }
 
         return $next($request);
