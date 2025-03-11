@@ -12,21 +12,11 @@ class AuthSaleRequest extends FormRequest
         $this->user = new User();
     }
 
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
@@ -37,6 +27,7 @@ class AuthSaleRequest extends FormRequest
 
     public function isSale(): bool
     {
+
         return $this->user->where('email', $this->input('email'))
                           ->where('role', User::ROLE_SALES)
                           ->exists();

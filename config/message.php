@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'only_admin_access' => env('ONLY_ADMIN_ACCESS', 'アクセスが拒否されました。このページは管理者のみがアクセスできます。'),
+    'only_sales_access' => env('ONLY_SALES_ACCESS', 'アクセスが拒否されました。このページは営業者のみがアクセスできます。'),
     'login_complete' => env('LOGIN_COMPLETE', 'ログインしました。'),
     'regist_complete' => env('REGIST_COMPLETE', '登録完了しました。'),
     'update_complete' => env('UPDATE_COMPLETE', '更新完了しました。'),

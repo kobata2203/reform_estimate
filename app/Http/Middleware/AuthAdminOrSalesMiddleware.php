@@ -18,11 +18,13 @@ class AuthAdminOrSalesMiddleware
     {
         if (Auth::guard('admin')->check()) {
             Auth::setDefaultDriver('admin');
+
             return $next($request);
         }
 
         if (Auth::guard('sales')->check()) {
             Auth::setDefaultDriver('sales');
+
             return $next($request);
         }
 
@@ -31,14 +33,19 @@ class AuthAdminOrSalesMiddleware
 
     private function redirectToCorrectLogin(Request $request)
     {
+        $errorMessageAdmin = config('message.only_admin_access');
+        $errorMessageSales = config('message.only_sales_access');
+
         if ($request->is('admin/*')) {
-            return redirect()->route('admin_login')->with('error', 'アクセスが拒否されました。管理者としてログインしてください。');
+
+            return redirect()->route('admin_login')->with('error', $errorMessageAdmin);
         }
 
         if ($request->is('sales/*')) {
-            return redirect()->route('sales_login')->with('error', 'アクセスが拒否されました。営業者としてログインしてください。');
+
+            return redirect()->route('sales_login')->with('error', $errorMessageSales);
         }
 
-        return redirect()->route('sales_login')->with('error', 'アクセスが拒否されました。ログインしてください。');
+        return redirect()->route('sales_login')->with('error', $errorMessageSales);
     }
 }
