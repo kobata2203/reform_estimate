@@ -38,6 +38,7 @@ class AutoLogoutMiddleware
         }
 
         session([$lastActivityKey => now()]);
+
         return $next($request);
     }
 }

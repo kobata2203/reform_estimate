@@ -5,6 +5,7 @@
 @section('headder')
     <!-- 個別のCSS・JSなどの読み込み -->
     <link rel="stylesheet" href="{{ asset('css/menu/index.css') }}">
+    <script src="{{ asset('/js/menu.js') }}"></script>
 @endsection
 
 @section('content')

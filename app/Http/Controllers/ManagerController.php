@@ -116,7 +116,7 @@ class ManagerController extends Controller
 
         return view('manager.create')->with([
             'action' => route('manager.update', $admin->id),
-            'user' => $admin, // Alterado
+            'user' => $admin,
             'departments' => $departments,
         ]);
     }

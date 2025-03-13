@@ -17,7 +17,9 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('admin')->check()) {
-            return redirect()->route('admin_login')->with('error', 'アクセスが拒否されました。このページは管理者のみがアクセスできます。');
+            $errorMessage = config('message.only_admin_access');
+
+            return redirect()->route('admin_login')->with('error', $errorMessage);
         }
         return $next($request);
     }
