@@ -25,6 +25,7 @@
             width: 65%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            table-layout: fixed;
         }
 
         table,
@@ -37,11 +38,16 @@
             background-color: grey;
             color: white;
         }
+        td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
         th,
         td {
             padding: 10px;
-            text-align: left;
+            text-align:center;
         }
 
         .contact-info {
@@ -74,38 +80,46 @@
     </div>
 
     <table>
+
         <tr>
-            <th>件名</th>
-            <td class="adjust-font" id="construction-items" style="font-size: {{ $font_size }}px; text-align: center;">
-                {{ $estimate_info->subject_name }}
-                @foreach ($construction_list as $index => $item)
-                    {{ $item->name }}
-                    @if ($index < count($construction_list) - 1)
-                        /
-                    @endif
-                @endforeach
+            <th style="width: 20%; text-align:center;">件名</th>
+            <td class="adjust-font" style="font-size: {{ $font_size_construction }}px;  width: 80%; max-width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <span>{{ $estimate_info->subject_name }}</span>
+                <span style="white-space: nowrap;">
+                    @foreach ($construction_list as $index => $item)
+                        {{ $item->name }}
+                        @if ($index < count($construction_list) - 1)
+                            /
+                        @endif
+                    @endforeach
+                </span>
             </td>
         </tr>
 
         <tr>
-            <th>納入場所</th>
-            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->delivery_place }}</td>
+            <th style="width: 20%; text-align:center;">納入場所</th>
+            <td class="adjust-font" style="font-size: {{ $font_size_delivery }}px; width: 80%; max-width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <span>{{ $estimate_info->delivery_place }}</span>
+            </td>
         </tr>
         <tr>
-            <th>工期</th>
-            <td class="adjust-font" style="text-align: center">{{ $estimate_info->construction_period }}</td>
+            <th style="width: 20%; text-align:center; ">工期</th>
+            <td class="adjust-font">{{ $estimate_info->construction_period }}</td>
         </tr>
         <tr>
-            <th>支払方法</th>
-            <td class="adjust-font" style="text-align: center">{{ $estimate_info->payment->name }}</td>
+            <th style="width: 20%; text-align:center; ">支払方法</th>
+            <td class="adjust-font">{{ $estimate_info->payment->name }}</td>
         </tr>
         <tr>
-            <th>有効期限</th>
-            <td class="adjust-font" style="text-align: center">{{ $estimate_info->expiration_date }}</td>
+            <th style="width: 20%; text-align:center; ">有効期限</th>
+            <td class="adjust-font">{{ $estimate_info->expiration_date }}</td>
         </tr>
+
         <tr>
-            <th>備考</th>
-            <td class="adjust-font" style="font-size: {{ $font_size }}px; text-align: center">{{ $estimate_info->remarks }}</td>
+            <th style="width: 20%; text-align:center;">備考</th>
+            <td class="adjust-font" style="font-size: {{ $font_size_remarks }}px;width: 80%; max-width: 600px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <span>{{ $estimate_info->remarks }}</span>
+            </td>
         </tr>
     </table>
 

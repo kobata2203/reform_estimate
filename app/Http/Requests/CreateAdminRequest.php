@@ -31,7 +31,7 @@ class CreateAdminRequest extends FormRequest
                 'max:30',
                 Rule::unique('users', 'email')->ignore($this->route('id')),
             ],
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8|max:32',
         ];
     }
 
@@ -54,7 +54,7 @@ class CreateAdminRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'role' => User::ROLE_ADMIN, 
+            'role' => User::ROLE_ADMIN,
         ]);
     }
 }

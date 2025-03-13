@@ -70,13 +70,16 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('search');
         $manager_info = $this->user->where('role', User::ROLE_ADMIN)
-                                   ->where(function ($query) use ($keyword) {
-                                       if ($keyword) {
-                                           $query->where('name', 'like', "%$keyword%")
-                                                 ->orWhere('email', 'like', "%$keyword%");
-                                       }
-                                   })
-                                   ->get();
+            ->where(function ($query) use ($keyword) {
+                if ($keyword) {
+                    $query->where('name', 'like', "%$keyword%")
+                        ->orWhere('email', 'like', "%$keyword%")
+                        ->orWhereHas('department', function ($deptQuery) use ($keyword) {
+                            $deptQuery->where('name', 'like', "%$keyword%");
+                        });
+                }
+            })
+            ->get();
 
         return view('manager.index')->with([
             'manager_info' => $manager_info,

@@ -16,7 +16,7 @@
 
     <div class="form-container">
         <form action="{{ $action }}" method="POST">
-
+            {{-- <form action="{{ $action }}" method="POST" novalidate> --}}
             @csrf
             <label for="name">氏名</label>
             <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
