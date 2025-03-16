@@ -24,7 +24,6 @@ class AutoLogoutMiddleware
 
     private function checkSessionTimeout(Request $request, Closure $next, string $role, string $redirectPath)
     {
-        $user = Auth::guard($role)->user();
         $lastActivityKey = 'last_activity_' . $role;
         $lastActivity = session($lastActivityKey);
         $autoLogoutTime = config('util.auto_logout_time');

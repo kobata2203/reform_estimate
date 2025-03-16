@@ -46,6 +46,6 @@ class AuthAdminOrSalesMiddleware
             return redirect()->route('sales_login')->with('error', $errorMessageSales);
         }
 
-        return redirect()->route('sales_login')->with('error', $errorMessageSales);
+        return abort(403, "不正アクセス");
     }
 }

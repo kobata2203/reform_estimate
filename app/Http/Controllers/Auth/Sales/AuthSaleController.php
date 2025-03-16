@@ -24,17 +24,29 @@ class AuthSaleController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password', 'role');
+        $messages = [
+            'email.required' => config('message.email_required'),
+            'email.email' => config('message.email_invalid'),
+            'password.required' => config('message.password_required'),
+        ];
+
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ], $messages);
+
         $credentials['role'] = $this->role;
 
         if (Auth::guard('sales')->attempt($credentials)) {
             $request->session()->regenerate();
-            $request->session()->put('auth_type', config('auth.guards.sales.provider'));
+            $request->session()->put('auth_type', 'sales');
             return redirect()->intended('/menu');
         }
 
         return back()->withErrors([
-            'email' => config('message.login_fail'),
+            'login' => config('message.credentials_invalid'),
+            'email' => config('message.email_invalid'),
+            'password' => config('message.password_invalid'),
         ]);
     }
 }
