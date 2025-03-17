@@ -44,7 +44,7 @@ class AuthAdminController extends Controller
         }
 
         return back()->withErrors([
-            'login' => config('message.credentials_invalid'),
+            'login' => config('message.login_fail'),
             'email' => config('message.email_invalid'),
             'password' => config('message.password_invalid'),
         ]);
