@@ -97,17 +97,40 @@ class ManagerController extends Controller
         ]);
     }
 
+    // public function store(CreateAdminRequest $request)
+    // {
+    //     $validated = $request->validated();
+    //     $validated['role'] = User::ROLE_ADMIN;
+    //     $create_admin = $this->user->create($validated);
+    //     $message = $create_admin ? config('message.regist_complete') : config('message.regist_fail');
+
+    //     return redirect()->route('manager.index')->with([
+    //         'message' => $message,
+    //     ]);
+    // }
+
     public function store(CreateAdminRequest $request)
     {
         $validated = $request->validated();
         $validated['role'] = User::ROLE_ADMIN;
         $create_admin = $this->user->create($validated);
-        $message = $create_admin ? config('message.regist_complete') : config('message.regist_fail');
 
-        return redirect()->route('manager.index')->with([
-            'message' => $message,
-        ]);
+        // 登録失敗のテストのために強制的に失敗させる
+        // $create_admin = false;
+
+        if ($create_admin) {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.regist_complete'),
+                'success' => true
+            ]);
+        } else {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.regist_fail'),
+                'success' => false
+            ]);
+        }
     }
+
 
     public function edit($id)
     {
@@ -121,16 +144,38 @@ class ManagerController extends Controller
         ]);
     }
 
-    public function update(UpdateAdminRequest $request, $id)
+    // public function update(UpdateAdminRequest $request, $id)
+    // {
+    //     $validated = $request->validated();
+    //     $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
+    //     $update_admin = $admin->update($validated);
+    //     $message = $update_admin ? config('message.update_complete') : config('message.update_fail');
+
+    //     return redirect()->route('manager.index')->with([
+    //         'message' => $message,
+    //     ]);
+    // }
+
+     public function update(UpdateAdminRequest $request, $id)
     {
         $validated = $request->validated();
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
         $update_admin = $admin->update($validated);
-        $message = $update_admin ? config('message.update_complete') : config('message.update_fail');
 
-        return redirect()->route('manager.index')->with([
-            'message' => $message,
-        ]);
+        // 更新失敗のテストのために強制的に失敗させる
+        // $update_admin = false;
+        if ($update_admin) {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.update_complete'),
+                'success' => true
+            ]);
+        } else {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.update_fail'),
+                'success' => false
+            ]);
+        }
+
     }
 
     public function delete($id)

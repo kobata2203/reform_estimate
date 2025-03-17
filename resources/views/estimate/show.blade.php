@@ -22,11 +22,10 @@
             </div>
         </div>
 
-        <div class="input-container" id="customer">
+        <div class="input-underline" id="customer">
             <label for="customer-name">お客様名 :</label>
-            <div class="input-underline">
-                <input type="text" id="customer-name" placeholder="Customer name here"
-                    value="{{ old('customer_name', $estimate_info->customer_name) }}">
+            <div>
+                <div id="customer-name">{{ $estimate_info->customer_name }}</div>
                 <span class="suffix">様</span>
             </div>
             <span id="customer-name-byte-count"></span>
@@ -40,8 +39,7 @@
             <div class="input-suffix">
                 <label for="estimate-amount">お見積り金額 :</label>
                 <span> ¥</span>
-                <input type="text" id="estimate-amount" placeholder="金額を入力してください"
-                    value="{{ number_format($totalGrandTotal) }}">
+                <span id="estimate-amount">{{ number_format($totalGrandTotal) }}</span>
                 <span class="suffix">（税込）</span>
             </div>
             <span id="estimate-amount-byte-count"></span>
@@ -53,7 +51,7 @@
                     <tr>
                         <td>件名</td>
                         <td class="adjust-font" id="construction-items">
-                            {{ $estimate_info->subject_name }}　
+                            {{ $estimate_info->subject_name }}
                             @foreach ($construction_list as $index => $item)
                                 {{ $item->name }}
                                 @if ($index < count($construction_list) - 1)
@@ -99,7 +97,7 @@
         </div>
         <div class="action2">
             <a href="{{ route('generatecover', $estimate_info->id) }}" class="btn btn-warning">View PDF</a>
-            <a class="btn btn-primary" id="btn_back" href="{{ route('salesperson.show',['id'=>$id]) }}">戻る</a>
+            <a class="btn btn-primary" id="btn_back" href="{{ route('salesperson.show', ['id' => $id]) }}">戻る</a>
         </div>
     </div>
 </body>
