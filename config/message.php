@@ -12,5 +12,4 @@ return [
     'update_fail' => env('UPDATE_FAIL', '更新処理に失敗しました。管理者にご連絡ください。'),
     'delete_fail' => env('DELETE_FAIL', '削除処理に失敗しました。管理者にご連絡ください。'),
     'auto_logout' => env('AUTO_LOGOUT_MESSAGE', '120分間操作がなかったため、自動ログアウトしました。'),
-    'credentials_invalid' => '入力されたクレデンシャルが無効です。',
 ];
