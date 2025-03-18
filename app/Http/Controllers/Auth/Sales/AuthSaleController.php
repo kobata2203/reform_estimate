@@ -49,4 +49,13 @@ class AuthSaleController extends Controller
             'password' => config('message.password_invalid'),
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('sales')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $request->session()->forget('user_role');
+        return redirect()->route('sales_login');
+    }
 }

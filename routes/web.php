@@ -9,12 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware('sales')->group(function () {
-    Route::get('/sales/logout', function (Request $request) {
-        Auth::guard('sales')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('sales_login');
-    })->name('sales_logout');
+    Route::get('/sales/logout', [AuthSaleController::class, 'logout'])->name('sales_logout');
 });
 Route::prefix('sales')->middleware('guest:sales')->group(function () {
     Route::get('/login', [AuthSaleController::class, 'showLoginForm'])->name('sales_login');
@@ -22,12 +17,7 @@ Route::prefix('sales')->middleware('guest:sales')->group(function () {
 });
 
 Route::middleware('admin')->group(function () {
-    Route::get('/admin/logout', function (Request $request) {
-        Auth::guard('admin')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('admin_login');
-    })->name('admin_logout');
+    Route::get('/admin/logout', [AuthAdminController::class, 'logout'])->name('admin_logout');
 });
 Route::prefix('admin')->middleware('guest:admin')->group(function () {
     Route::get('/login', [AuthAdminController::class, 'showLoginForm'])->name('admin_login');

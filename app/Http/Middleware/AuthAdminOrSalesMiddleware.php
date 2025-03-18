@@ -18,13 +18,13 @@ class AuthAdminOrSalesMiddleware
     {
         if (Auth::guard('admin')->check()) {
             Auth::setDefaultDriver('admin');
-
+            session(['user_role' => 'admin']);
             return $next($request);
         }
 
         if (Auth::guard('sales')->check()) {
             Auth::setDefaultDriver('sales');
-
+            session(['user_role' => 'sales']);
             return $next($request);
         }
 
@@ -36,16 +36,18 @@ class AuthAdminOrSalesMiddleware
         $errorMessageAdmin = config('message.only_admin_access');
         $errorMessageSales = config('message.only_sales_access');
 
-        if ($request->is('admin/*')) {
+        $userRole = session('user_role');
+
+        if ($userRole === 'admin') {
 
             return redirect()->route('admin_login')->with('error', $errorMessageAdmin);
         }
 
-        if ($request->is('sales/*')) {
+        if ($userRole === 'sales') {
 
             return redirect()->route('sales_login')->with('error', $errorMessageSales);
         }
 
-        return abort(403, "不正アクセス");
+        return redirect()->route('sales_login')->with('error', $errorMessageSales);
     }
 }
