@@ -113,12 +113,24 @@ class SalespersonController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('search');
-        $users = $this->user->searchUsers($keyword);
+        $users = $this->user->where('role', User::ROLE_SALES)
+            ->where(function ($query) use ($keyword) {
+                if ($keyword) {
+                    $query->where('name', 'like', "%$keyword%")
+                        ->orWhere('email', 'like', "%$keyword%")
+                        ->orWhereHas('department', function ($deptQuery) use ($keyword) {
+                            $deptQuery->where('name', 'like', "%$keyword%");
+                        });
+                }
+            })
+            ->get();
+
         return view('salesperson.index')->with([
             'users' => $users,
             'departments' => $this->department->getDepartmentList(),
         ]);
     }
+
 
     public function list(Request $request)
     {
