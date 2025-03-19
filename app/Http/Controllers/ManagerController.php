@@ -70,13 +70,16 @@ class ManagerController extends Controller
     {
         $keyword = $request->input('search');
         $manager_info = $this->user->where('role', User::ROLE_ADMIN)
-                                   ->where(function ($query) use ($keyword) {
-                                       if ($keyword) {
-                                           $query->where('name', 'like', "%$keyword%")
-                                                 ->orWhere('email', 'like', "%$keyword%");
-                                       }
-                                   })
-                                   ->get();
+            ->where(function ($query) use ($keyword) {
+                if ($keyword) {
+                    $query->where('name', 'like', "%$keyword%")
+                        ->orWhere('email', 'like', "%$keyword%")
+                        ->orWhereHas('department', function ($deptQuery) use ($keyword) {
+                            $deptQuery->where('name', 'like', "%$keyword%");
+                        });
+                }
+            })
+            ->get();
 
         return view('manager.index')->with([
             'manager_info' => $manager_info,
@@ -99,11 +102,18 @@ class ManagerController extends Controller
         $validated = $request->validated();
         $validated['role'] = User::ROLE_ADMIN;
         $create_admin = $this->user->create($validated);
-        $message = $create_admin ? config('message.regist_complete') : config('message.regist_fail');
 
-        return redirect()->route('manager.index')->with([
-            'message' => $message,
-        ]);
+        if ($create_admin) {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.regist_complete'),
+                'success' => true
+            ]);
+        } else {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.regist_fail'),
+                'success' => false
+            ]);
+        }
     }
 
     public function edit($id)
@@ -118,16 +128,24 @@ class ManagerController extends Controller
         ]);
     }
 
-    public function update(UpdateAdminRequest $request, $id)
+     public function update(UpdateAdminRequest $request, $id)
     {
         $validated = $request->validated();
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
         $update_admin = $admin->update($validated);
-        $message = $update_admin ? config('message.update_complete') : config('message.update_fail');
 
-        return redirect()->route('manager.index')->with([
-            'message' => $message,
-        ]);
+        if ($update_admin) {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.update_complete'),
+                'success' => true
+            ]);
+        } else {
+            return redirect()->route('manager.index')->with([
+                'message' => config('message.update_fail'),
+                'success' => false
+            ]);
+        }
+
     }
 
     public function delete($id)

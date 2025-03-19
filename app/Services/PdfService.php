@@ -83,6 +83,21 @@ class PdfService
     {
         $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
+        $delivery_place = $estimate_info->delivery_place;
+        $remarks = $estimate_info->remarks;
+
+        $construction_text = implode($construction_list->pluck('name')->toArray());
+        $delivery_text = implode([$delivery_place]);
+        $remarks_text = implode([$remarks]);
+
+        $font_size_construction = $this->calculateFontSize($construction_text);
+        $font_size_delivery = $this->calculateFontSize($delivery_text);
+        $font_size_remarks = $this->calculateFontSize($remarks_text);
+
+
+        $font_size_construction = max($font_size_construction, 2);
+        $font_size_delivery = max($font_size_delivery, 6);
+        $font_size_remarks = max($font_size_remarks, 3);
 
         $totalAmount = 0;
         $totalDiscount = 0;
@@ -105,9 +120,6 @@ class PdfService
             $totalGrandTotal += $grandTotal;
         }
 
-        // 件名の長さ
-        $construction_text = implode($construction_list->pluck('name')->toArray());
-
         // 件名の長さによって計算
         $font_size = $this->calculateFontSize($construction_text);
 
@@ -115,7 +127,10 @@ class PdfService
             'estimate_info' => $estimate_info,
             'totalGrandTotal' => $totalGrandTotal,
             'construction_list' => $construction_list,
-            'font_size' => $font_size, // 件名の変数
+            'font_size_construction' => $font_size_construction,
+            'font_size_delivery' => $font_size_delivery,
+            'font_size_remarks' => $font_size_remarks,
+            'font_size' => $font_size, // 件名の変数,
         ])->render();
 
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');

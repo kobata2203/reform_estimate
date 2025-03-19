@@ -19,6 +19,7 @@
 
     <div class="form-container">
         <form action="{{ $action }}" method="POST">
+        {{-- <form action="{{ $action }}" method="POST" novalidate> --}}
             @csrf
 
             <!-- 氏名 -->

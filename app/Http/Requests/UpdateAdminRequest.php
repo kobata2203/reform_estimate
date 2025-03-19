@@ -34,7 +34,7 @@ class UpdateAdminRequest extends FormRequest
                 'max:30',
                 Rule::unique('users', 'email')->ignore($this->route('id')),
             ],
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:6|max:32',
         ];
     }
 

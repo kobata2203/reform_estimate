@@ -16,7 +16,7 @@
 
     <div class="form-container">
         <form action="{{ $action }}" method="POST">
-
+            {{-- <form action="{{ $action }}" method="POST" novalidate> --}}
             @csrf
             <label for="name">氏名</label>
             <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
@@ -31,11 +31,12 @@
                         <option value={{ $department->id }}@if($department->id == old('department_id', $user->department_id)) selected @endif>{{ old('department_name', $department->name) }}</option>
                     @endforeach
             </select>
-            @if ($errors->has('department_name'))
+            @if ($errors->has('department_id'))
             <div class="invalid-feedback" role="alert">
-                {{ $errors->first('department_name') }}
+                {{ $errors->first('department_id') }}
             </div>
             @endif
+
             <label for="email">メールアドレス</label>
             <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>
             @if ($errors->has('email'))
