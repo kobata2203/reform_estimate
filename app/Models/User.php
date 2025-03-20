@@ -40,6 +40,7 @@ class User extends Authenticatable
             'email' => $data['email'],
             'department_id' => $data['department_id'],
             'password' => Hash::make($data['password']),
+            'role' => self::ROLE_SALES,
         ]);
     }
 

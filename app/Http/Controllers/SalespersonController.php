@@ -30,7 +30,7 @@ class SalespersonController extends Controller
     protected $user;
     protected $constructionList;
     protected $pdfService;
-
+    protected $department;
     public function __construct(
 
         Manager $manager,
