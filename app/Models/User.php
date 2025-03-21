@@ -49,12 +49,12 @@ class User extends Authenticatable
         return $this->findOrFail($id);
     }
 
-    public function searchUsers($keyword)
+    public function searchUsers($keyword, $users)
     {
         $us_table = $this->table;
         $d_table = 'departments';
-        $us_table_join = $us_table. '.';
-        $d_table_join = $d_table. '.';
+        $us_table_join = $us_table . '.';
+        $d_table_join = $d_table . '.';
 
         $columns = [
             $us_table_join . 'id',
@@ -66,6 +66,10 @@ class User extends Authenticatable
         $query = $this->select($columns);
 
         $query->leftJoin($d_table, $us_table . '.department_id', '=', $d_table_join . 'id');
+
+        if ($users) {
+            $query->where($us_table . '.role', $users);
+        }
 
         if (!empty($keyword)) {
             $query->where(function ($query) use ($keyword, $us_table_join, $d_table_join) {
@@ -115,10 +119,10 @@ class User extends Authenticatable
         return self::where('role', self::ROLE_ADMIN)
             ->when($keyword, function ($query) use ($keyword) {
                 $query->where('name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('email', 'LIKE', "%{$keyword}%")
-                      ->orWhereHas('department', function ($q) use ($keyword) {
-                          $q->where('name', 'LIKE', "%{$keyword}%");
-                      });
+                    ->orWhere('email', 'LIKE', "%{$keyword}%")
+                    ->orWhereHas('department', function ($q) use ($keyword) {
+                        $q->where('name', 'LIKE', "%{$keyword}%");
+                    });
             })
             ->orderBy('created_at', 'asc')
             ->get();
