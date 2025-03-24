@@ -150,10 +150,22 @@ class SalespersonController extends Controller
 
     public function itemView(Request $request, $id)
     {
-
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
-        $selectedConstructionId = $request->input('construction_name', $construction_list->first()->id ?? null);
+
+        $constructionNames = $this->constructionList
+            ->select('construction_list.*')
+            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
+            ->where('construction_list.estimate_info_id', $id)
+            ->whereNotNull('breakdown.id')
+            ->groupBy('construction_list.id')
+            ->get();
+
+        $selectedConstructionId = $request->input('construction_name');
+
+        if (!$selectedConstructionId) {
+            $selectedConstructionId = $constructionNames->first()->id ?? null;
+        }
 
         $breakdown = $selectedConstructionId
             ? $this->breakdown
@@ -165,7 +177,6 @@ class SalespersonController extends Controller
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
 
         $discount = $estimate_calculate->special_discount ?? 0;
-
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
@@ -175,14 +186,6 @@ class SalespersonController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
         }
-
-        $constructionNames = $this->constructionList
-            ->select('construction_list.*')
-            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
-            ->where('construction_list.estimate_info_id', $id)
-            ->whereNotNull('breakdown.id')
-            ->groupBy('construction_list.id')
-            ->get();
 
         return view('estimate.show_estimate', compact(
             'breakdown',
@@ -194,8 +197,7 @@ class SalespersonController extends Controller
             'grandTotal',
             'construction_list',
             'constructionNames',
-            'selectedConstructionId',
-
+            'selectedConstructionId'
         ));
     }
 
