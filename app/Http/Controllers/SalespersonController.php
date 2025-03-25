@@ -86,7 +86,8 @@ class SalespersonController extends Controller
     public function edit($id)
     {
         $user = $this->user->fetchUserById($id);
-        $departments = $this->department::all();
+        $departments = $this->department->getAllDepartments();
+
         return view('salesperson.create')->with([
             'action' => route('salesperson.update', $user->id),
             'user' => $user,
@@ -152,15 +153,7 @@ class SalespersonController extends Controller
     {
         $estimate_info = $this->estimateInfo->getById($id);
         $construction_list = $this->constructionList->getByEstimateInfoId($id);
-
-        $constructionNames = $this->constructionList
-            ->select('construction_list.*')
-            ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
-            ->where('construction_list.estimate_info_id', $id)
-            ->whereNotNull('breakdown.id')
-            ->groupBy('construction_list.id')
-            ->get();
-
+        $constructionNames = $this->constructionList->getConstructionNamesByEstimateInfoId($id);
         $selectedConstructionId = $request->input('construction_name');
 
         if (!$selectedConstructionId) {
@@ -175,7 +168,6 @@ class SalespersonController extends Controller
 
         $totalAmount = $breakdown->sum('amount') ?? 0;
         $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
-
         $discount = $estimate_calculate->special_discount ?? 0;
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -213,7 +205,7 @@ class SalespersonController extends Controller
         $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $construction_id);
         $totalAmount = $breakdown->sum('amount');
         $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id, $construction_id);
-        $estimate_calculate->special_discount = $validated['special_discount'];
+        $estimate_calculate->updateSpecialDiscount($validated['special_discount']);
         $subtotal = $totalAmount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;

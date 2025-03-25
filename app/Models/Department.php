@@ -34,4 +34,10 @@ class Department extends Model
 
         return $departments;
     }
+
+    public function getAllDepartments()
+    {
+        return $this->all();
+    }
+
 }

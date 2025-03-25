@@ -82,7 +82,7 @@ class EstimateCalculate extends Model
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
     }
 
-    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId=null)
+    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId = null)
     {
         return self::firstOrNew([
             'estimate_id' => $estimateId,
@@ -125,6 +125,12 @@ class EstimateCalculate extends Model
             ->where('construction_list_id', $constructionListId)
             ->first();
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
+    }
+
+    public function updateSpecialDiscount($discount)
+    {
+        $this->special_discount = $discount;
+        return $this->save();
     }
 
 
