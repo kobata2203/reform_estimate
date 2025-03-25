@@ -7,7 +7,7 @@ use App\Models\Manager;
 use App\Models\Estimate;
 use App\Models\Breakdown;
 use App\Models\Department;
-use App\Models\Managerinfo;
+use App\Models\ManagerInfo;
 use App\Models\EstimateInfo;
 use App\Services\PdfService;
 use Illuminate\Http\Request;
@@ -21,47 +21,47 @@ use App\Http\Requests\UpdateEstimateRequest;
 class SalespersonController extends Controller
 {
     protected $manager;
-    protected $managerInfo;
-    protected $estimateInfo;
+    protected $manager_info;
+    protected $estimate_info;
     protected $admin;
     protected $breakdown;
     protected $estimate;
-    protected $estimateCalculate;
+    protected $estimate_calculate;
     protected $user;
-    protected $constructionList;
-    protected $pdfService;
+    protected $construction_list;
+    protected $pdf_service;
     protected $department;
-    public function __construct(
 
+    public function __construct(
         Manager $manager,
-        Managerinfo $managerInfo,
-        EstimateInfo $estimateInfo,
+        ManagerInfo $manager_info,
+        EstimateInfo $estimate_info,
         User $admin,
         Breakdown $breakdown,
         Estimate $estimate,
-        EstimateCalculate $estimateCalculate,
+        EstimateCalculate $estimate_calculate,
         User $user,
-        ConstructionList $constructionList,
+        ConstructionList $construction_list,
         Department $department,
-        PdfService $pdfService,
+        PdfService $pdf_service
     ) {
         $this->manager = $manager;
-        $this->managerInfo = $managerInfo;
-        $this->estimateInfo = $estimateInfo;
+        $this->manager_info = $manager_info;
+        $this->estimate_info = $estimate_info;
         $this->admin = $admin->where('role', User::ROLE_ADMIN);
         $this->breakdown = $breakdown;
         $this->estimate = $estimate;
-        $this->estimateCalculate = $estimateCalculate;
+        $this->estimate_calculate = $estimate_calculate;
         $this->user = $user;
-        $this->constructionList = $constructionList;
+        $this->construction_list = $construction_list;
         $this->department = $department;
-        $this->pdfService = $pdfService;
+        $this->pdf_service = $pdf_service;
     }
 
     public function create()
     {
-        $departments = $this->department::all();
-        return view('salesperson.create')->with([
+        $departments = $this->department->getAllDepartments();
+        return view('salesperson.create', [
             'action' => route('salesperson.store'),
             'user' => $this->user,
             'departments' => $departments,
@@ -70,13 +70,9 @@ class SalespersonController extends Controller
 
     public function store(SalespersonRequest $request)
     {
-        $create_user = $this->user->createUser($request);
+        $create_user = $this->user->registUser($request);
 
-        if ($create_user == true) {
-            $message = config('message.regist_complete');
-        } else {
-            $message = config('message.regist_fail');
-        }
+        $message = $create_user ? config('message.regist_complete') : config('message.regist_fail');
 
         return redirect()->route('salesperson.index')->with([
             'message' => $message,
@@ -85,10 +81,10 @@ class SalespersonController extends Controller
 
     public function edit($id)
     {
-        $user = $this->user->fetchUserById($id);
+        $user = $this->user->getUserById($id);
         $departments = $this->department->getAllDepartments();
 
-        return view('salesperson.create')->with([
+        return view('salesperson.create', [
             'action' => route('salesperson.update', $user->id),
             'user' => $user,
             'departments' => $departments,
@@ -100,11 +96,7 @@ class SalespersonController extends Controller
         $validated = $request->validated();
         $update_user = $this->user->updateUser($id, $validated);
 
-        if ($update_user == true) {
-            $message = config('message.update_complete');
-        } else {
-            $message = config('message.update_fail');
-        }
+        $message = $update_user ? config('message.update_complete') : config('message.update_fail');
 
         return redirect()->route('salesperson.index')->with([
             'message' => $message,
@@ -115,7 +107,8 @@ class SalespersonController extends Controller
     {
         $keyword = $request->input('search');
         $users = $this->user->searchUsers($keyword, User::ROLE_SALES);
-        return view('salesperson.index')->with([
+
+        return view('salesperson.index', [
             'users' => $users,
             'departments' => $this->department->getDepartmentList(),
         ]);
@@ -129,14 +122,9 @@ class SalespersonController extends Controller
 
     public function delete($id)
     {
-        // 削除処理
         $delete_user = $this->user->deleteUser($id);
 
-        if ($delete_user == true) {
-            $message = config('message.delete_complete');
-        } else {
-            $message = config('message.delete_fail');
-        }
+        $message = $delete_user ? config('message.delete_complete') : config('message.delete_fail');
 
         return redirect('/salesperson')->with([
             'message' => $message,
@@ -145,55 +133,34 @@ class SalespersonController extends Controller
 
     public function show($id)
     {
-        $user = $this->user->findUserWithId($id);
+        $user = $this->user->getUserById($id);
         return view('salesperson.show', compact('user'));
     }
 
     public function itemView(Request $request, $id)
     {
-        $estimate_info = $this->estimateInfo->getById($id);
-        $construction_list = $this->constructionList->getByEstimateInfoId($id);
-        $constructionNames = $this->constructionList->getConstructionNamesByEstimateInfoId($id);
-        $selectedConstructionId = $request->input('construction_name');
+        $estimate_info = $this->estimate_info->getById($id);
+        $construction_list = $this->construction_list->getByEstimateInfoId($id);
+        $construction_names = $this->construction_list->getConstructionNamesByEstimateInfoId($id);
+        $selected_construction_id = $request->input('construction_name', $construction_names->first()->id ?? null);
 
-        if (!$selectedConstructionId) {
-            $selectedConstructionId = $constructionNames->first()->id ?? null;
-        }
-
-        $breakdown = $selectedConstructionId
-            ? $this->breakdown
-                ->byConstructionAndEstimate($selectedConstructionId, $id)
-                ->get()
+        $breakdown = $selected_construction_id
+            ? $this->breakdown->byConstructionAndEstimate($selected_construction_id, $id)->get()
             : collect([]);
 
-        $totalAmount = $breakdown->sum('amount') ?? 0;
-        $estimate_calculate = $this->estimateCalculate->getOrCreateByEstimateAndConstructionId($id, $selectedConstructionId);
-        $discount = $estimate_calculate->special_discount ?? 0;
-        $subtotal = $totalAmount - $discount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
+        $calculations = $this->estimate_calculate->calculateAndUpdate($id, $selected_construction_id, $breakdown);
 
-        try {
-            $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
-        } catch (\Illuminate\Database\QueryException $e) {
-            session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
-        }
-
-        return view('estimate.show_estimate', compact(
-            'breakdown',
-            'estimate_info',
-            'id',
-            'subtotal',
-            'discount',
-            'tax',
-            'grandTotal',
-            'construction_list',
-            'constructionNames',
-            'selectedConstructionId'
-        ));
+        return view('estimate.show_estimate', array_merge([
+            'breakdown' => $breakdown,
+            'estimate_info' => $estimate_info,
+            'id' => $id,
+            'construction_list' => $construction_list,
+            'constructionNames' => $construction_names,
+            'selectedConstructionId' => $selected_construction_id,
+        ], $calculations));
     }
 
-    public function updateDiscount(UpdateEstimateRequest $request, $id, $construction_id)
+    public function updateDiscount(UpdateEstimateRequest $request, $id, $constructionId)
     {
         $validated = $request->validated();
         $estimate_info = $this->estimate->getEstimateById($id);
@@ -202,101 +169,64 @@ class SalespersonController extends Controller
             $estimate_info = new \stdClass();
         }
 
-        $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $construction_id);
-        $totalAmount = $breakdown->sum('amount');
-        $estimate_calculate = $this->estimateCalculate->createOrgetEstimateCalculate($id, $construction_id);
+        $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $constructionId);
+        $total_amount = $breakdown->sum('amount');
+        $estimate_calculate = $this->estimate_calculate->createOrGetEstimateCalculate($id, $constructionId);
         $estimate_calculate->updateSpecialDiscount($validated['special_discount']);
-        $subtotal = $totalAmount - $estimate_calculate->special_discount;
+        $subtotal = $total_amount - $estimate_calculate->special_discount;
         $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
+        $grand_total = $subtotal + $tax;
 
-        $update_estimate = $this->estimateCalculate->estimateCalculateUpdate(
+        $update_estimate = $this->estimate_calculate->estimateCalculateUpdate(
             $estimate_calculate,
             $subtotal,
             $tax,
-            $grandTotal
+            $grand_total
         );
 
-        if ($update_estimate === true) {
-            $message = config('message.update_complete');
-        } else {
-            $message = config('message.update_fail');
-        }
+        $message = $update_estimate ? config('message.update_complete') : config('message.update_fail');
 
-        return redirect()->route('salesperson.show', ['id' => $id, 'construction_name' => $construction_id])->with([
+        return redirect()->route('salesperson.show', ['id' => $id, 'construction_name' => $constructionId])->with([
             'message' => $message,
         ]);
-
     }
 
-    public function generateBreakdown($id, $construction_list_id)
+    public function generateBreakdown($id, $constructionListId)
     {
-        return $this->pdfService->generateBreakdown($id, $construction_list_id);
+        return $this->pdf_service->generateBreakdown($id, $constructionListId);
     }
 
     public function generateCover($id)
     {
-        return $this->pdfService->generateCover($id);
+        return $this->pdf_service->generateCover($id);
     }
 
     public function showCover($id)
     {
-        $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $construction_list = $this->constructionList->getByEstimateInfoId($id);
+        $estimate_info = $this->estimate_info->getEstimateById($id);
+        $construction_list = $this->construction_list->getByEstimateInfoId($id);
 
-        $totalAmount = 0;
-        $totalDiscount = 0;
-        $totalSubtotal = 0;
-        $totalTax = 0;
-        $totalGrandTotal = 0;
-
-        foreach ($construction_list as $construction) {
+        $totals = collect($construction_list)->map(function ($construction) use ($id) {
             $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
             $amount = $breakdown->sum('amount');
-            $discount = $this->estimateCalculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+            $discount = $this->estimate_calculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id) ?? 0;
             $subtotal = $amount - $discount;
             $tax = $subtotal * 0.1;
             $grandTotal = $subtotal + $tax;
 
-            $totalAmount += $amount;
-            $totalDiscount += $discount;
-            $totalSubtotal += $subtotal;
-            $totalTax += $tax;
-            $totalGrandTotal += $grandTotal;
-        }
+            return compact('amount', 'discount', 'subtotal', 'tax', 'grandTotal');
+        });
 
         return view('estimate.show', [
             'estimate_info' => $estimate_info,
-            'totalAmount' => $totalAmount,
-            'totalDiscount' => $totalDiscount,
-            'totalSubtotal' => $totalSubtotal,
-            'totalTax' => $totalTax,
-            'totalGrandTotal' => $totalGrandTotal,
+            'totalAmount' => $totals->sum('amount'),
+            'totalDiscount' => $totals->sum('discount'),
+            'totalSubtotal' => $totals->sum('subtotal'),
+            'totalTax' => $totals->sum('tax'),
+            'totalGrandTotal' => $totals->sum('grandTotal'),
             'construction_list' => $construction_list,
             'id' => $id,
         ]);
     }
 
-    public function showestimate($id)
-    {
-        $estimate_info = $this->estimateInfo::getEstimateByIde($id);
-        $totalAmount = $this->breakdown::getTotalAmountByEstimateId($id);
-        $discount = $this->estimateCalculate::getDiscountByEstimateId($id);
-        $inputDiscount = request()->input('discount', $discount);
-        // 小計、税額、合計金額を計算
-        $subtotal = $totalAmount - $inputDiscount;
-        $tax = $subtotal * 0.1;
-        $grandTotal = $subtotal + $tax;
-
-        //見積もりに関連する工事名を取得
-        $construction_list = $this->constructionList->getConnectionLists([$estimate_info]);
-        //お支払い方法
-        $estimate_info = $this->estimateInfo::with('payment')->findOrFail($id);
-        return view('estimate.salesperson.view_estimate', [
-            'estimate_info' => $estimate_info,
-            'grandTotal' => $grandTotal,
-            'discount' => $inputDiscount,
-            'construction_list' => $construction_list[$estimate_info->id] ?? []
-        ]);
-    }
 }

@@ -133,5 +133,23 @@ class EstimateCalculate extends Model
         return $this->save();
     }
 
+    public function calculateAndUpdate($estimateId, $constructionId, $breakdown)
+    {
+        $totalAmount = $breakdown->sum('amount') ?? 0;
+        $estimate_calculate = $this->getOrCreateByEstimateAndConstructionId($estimateId, $constructionId);
+        $discount = $estimate_calculate->special_discount ?? 0;
+        $subtotal = $totalAmount - $discount;
+        $tax = $subtotal * 0.1;
+        $grandTotal = $subtotal + $tax;
+
+        try {
+            $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
+        } catch (\Illuminate\Database\QueryException $e) {
+            session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
+        }
+
+        return compact('subtotal', 'discount', 'tax', 'grandTotal');
+    }
+
 
 }
