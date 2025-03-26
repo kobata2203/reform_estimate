@@ -82,7 +82,7 @@ class EstimateCalculate extends Model
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
     }
 
-    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId=null)
+    public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId = null)
     {
         return self::firstOrNew([
             'estimate_id' => $estimateId,
@@ -125,6 +125,30 @@ class EstimateCalculate extends Model
             ->where('construction_list_id', $constructionListId)
             ->first();
         return $estimateCalculate ? $estimateCalculate->special_discount : 0;
+    }
+
+    public function updateSpecialDiscount($discount)
+    {
+        $this->special_discount = $discount;
+        return $this->save();
+    }
+
+    public function calculateAndUpdate($estimateId, $constructionId, $breakdown)
+    {
+        $totalAmount = $breakdown->sum('amount') ?? 0;
+        $estimate_calculate = $this->getOrCreateByEstimateAndConstructionId($estimateId, $constructionId);
+        $discount = $estimate_calculate->special_discount ?? 0;
+        $subtotal = $totalAmount - $discount;
+        $tax = $subtotal * 0.1;
+        $grandTotal = $subtotal + $tax;
+
+        try {
+            $estimate_calculate->updateCalculations($subtotal, $tax, $grandTotal);
+        } catch (\Illuminate\Database\QueryException $e) {
+            session()->flash('error', 'Error saving estimate calculations: ' . $e->getMessage());
+        }
+
+        return compact('subtotal', 'discount', 'tax', 'grandTotal');
     }
 
 
