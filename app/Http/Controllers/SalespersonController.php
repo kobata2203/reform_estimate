@@ -70,9 +70,13 @@ class SalespersonController extends Controller
 
     public function store(SalespersonRequest $request)
     {
-        $create_user = $this->user->registUser($request);
+        $create_user = $this->user->createUser($request);
 
-        $message = $create_user ? config('message.regist_complete') : config('message.regist_fail');
+        if ($create_user == true) {
+            $message = config('message.regist_complete');
+        } else {
+            $message = config('message.regist_fail');
+        }
 
         return redirect()->route('salesperson.index')->with([
             'message' => $message,
@@ -81,7 +85,7 @@ class SalespersonController extends Controller
 
     public function edit($id)
     {
-        $user = $this->user->getUserById($id);
+        $user = $this->user->fetchUserById($id);
         $departments = $this->department->getAllDepartments();
 
         return view('salesperson.create', [
@@ -141,7 +145,7 @@ class SalespersonController extends Controller
     {
         $estimate_info = $this->estimate_info->getById($id);
         $construction_list = $this->construction_list->getByEstimateInfoId($id);
-        $construction_names = $this->construction_list->getConstructionNamesByEstimateInfoId($id);
+        $construction_names = $this->construction_list->getConstructionName($id);
         $selected_construction_id = $request->input('construction_name', $construction_names->first()->id ?? null);
 
         $breakdown = $selected_construction_id

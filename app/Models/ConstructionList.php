@@ -149,7 +149,7 @@ class ConstructionList extends Model
         return $this->hasMany(EstimateCalculate::class, 'construction_list_id', 'id');
     }
 
-    public function getConstructionNamesByEstimateInfoId($id)
+    public function getConstructionName($id)
     {
         return $this->select('construction_list.*')
             ->leftJoin('breakdown', 'construction_list.id', '=', 'breakdown.construction_list_id')
@@ -158,4 +158,5 @@ class ConstructionList extends Model
             ->groupBy('construction_list.id')
             ->get();
     }
+
 }
