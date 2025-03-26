@@ -11,28 +11,28 @@ use App\Models\EstimateCalculate;
 
 class PdfService
 {
-    protected $estimateInfo;
+    protected $estimate_info;
     protected $breakdown;
-    protected $estimateCalculate;
+    protected $estimate_calculate;
     protected $mpdf;
-    protected $constructionList;
+    protected $construction_list;
 
 
 
     public function __construct(
-        EstimateInfo $estimateInfo,
+        EstimateInfo $estimate_info,
         Breakdown $breakdown,
-        EstimateCalculate $estimateCalculate,
+        EstimateCalculate $estimate_calculate,
         Mpdf $mpdf,
-        ConstructionList $constructionList,
+        ConstructionList $construction_list,
 
 
     ) {
-        $this->estimateInfo = $estimateInfo;
+        $this->estimate_info = $estimate_info;
         $this->breakdown = $breakdown;
-        $this->estimateCalculate = $estimateCalculate;
+        $this->estimate_calculate = $estimate_calculate;
         $this->mpdf = $mpdf;
-        $this->constructionList = $constructionList;
+        $this->construction_list = $construction_list;
 
     }
     //breakdownテーブルのPDFの文字サイズ
@@ -51,11 +51,11 @@ class PdfService
         $font_size = $this->calculateFontSizeInController("メーカー名・シリーズ名（商品名）・品番");
 
         // 工事名をestimate_info_idで呼び出し
-        $construction_list = $this->constructionList->getByEstimateAndConstructionId($id, $construction_list_id);
-        $estimate_info = $this->estimateInfo->fetchEstimateInfoById($construction_list->estimate_info_id);
+        $construction_list = $this->construction_list->getByEstimateAndConstructionId($id, $construction_list_id);
+        $estimate_info = $this->estimate_info->fetchEstimateInfoById($construction_list->estimate_info_id);
         $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction_list_id);
 
-        $estimate_calculation = $this->estimateCalculate->fetchCalculationByEstimateIdAndConstructionId($id, $construction_list_id);
+        $estimate_calculation = $this->estimate_calculate->fetchCalculationByEstimateIdAndConstructionId($id, $construction_list_id);
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
         // Calculate totals
@@ -81,8 +81,8 @@ class PdfService
 
     public function generateCover($id)
     {
-        $estimate_info = $this->estimateInfo->fetchingEstimateInfoById($id);
-        $construction_list = $this->constructionList->getByEstimateInfoId($id);
+        $estimate_info = $this->estimate_info->fetchEstimateInfoById($id);
+        $construction_list = $this->construction_list->getByEstimateInfoId($id);
         $delivery_place = $estimate_info->delivery_place;
         $remarks = $estimate_info->remarks;
 
@@ -106,9 +106,9 @@ class PdfService
         $totalGrandTotal = 0;
 
         foreach ($construction_list as $construction) {
-            $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
+            $breakdown = $this->breakdown::where('construction_list_id', $construction->id)->get();
             $amount = $breakdown->sum('amount');
-            $discount = $this->estimateCalculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+            $discount = $this->estimate_calculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
             $subtotal = $amount - $discount;
             $tax = $subtotal * 0.1;
             $grandTotal = $subtotal + $tax;
