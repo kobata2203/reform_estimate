@@ -76,8 +76,8 @@ class EstimateController extends Controller
     {
         $departments = $this->department::all();
         $payments = $this->payment::all();
-        $construction_name = $this->construction_name->get_target_construction_name();
-
+        $construction_name = $this->construction_name->all();
+        
         return view('cover.index', compact('construction_name'))->with([
             'construction_count' => $this->estimate_init_count,
             'departments' => $departments,
@@ -123,7 +123,7 @@ class EstimateController extends Controller
 
         $departments = $this->department::all();
         $payments = $this->payment::all();
-        $construction_name = $this->construction_name->get_target_construction_name();
+        $construction_name = $this->construction_name->all();
 
         return view('cover.index')->with([
             'action' => route('estimate.update', ['id' => $id]),

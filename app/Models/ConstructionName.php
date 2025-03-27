@@ -31,13 +31,6 @@ class ConstructionName extends Model
         return $this->hasMany('App\Models\Breakdown');
     }
 
-    public function getTargetConstructionName()
-    {
-        $construction_name = $this->all();
-
-        return $construction_name;
-    }
-
     //breakdowncreate メソッド　EstimateController
     public static function getById($id)
     {
