@@ -20,43 +20,43 @@ class BreakdownController extends Controller
 {
     protected $estimate;
     protected $construction;
-    protected $constructionItem;
+    protected $construction_item;
     protected $breakdown;
     protected $department;
     protected $payment;
-    protected $constructionName;
-    protected $constructionList;
-    protected $estimateInfo;
-    protected $estimateCalculate;
+    protected $construction_name;
+    protected $construction_list;
+    protected $estimate_info;
+    protected $estimate_calculate;
 
     /**
      * 初期処理
      * 使用するクラスのインスタンス化
      */
     public function __construct(
-        EstimateInfo $estimateInfo,
-        ConstructionList $constructionList,
-        ConstructionName $constructionName,
-        ConstructionItem $constructionItem,
+        EstimateInfo $estimate_info,
+        ConstructionList $construction_list,
+        ConstructionName $construction_name,
+        ConstructionItem $construction_item,
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
-        EstimateCalculate $estimateCalculate
+        EstimateCalculate $estimate_calculate
     ) {
-        $this->estimateInfo = $estimateInfo;
-        $this->constructionList = $constructionList;
-        $this->constructionName = $constructionName;
-        $this->constructionItem = $constructionItem;
+        $this->estimate_info = $estimate_info;
+        $this->construction_list = $construction_list;
+        $this->construction_name = $construction_name;
+        $this->construction_item = $construction_item;
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
-        $this->estimateCalculate = $estimateCalculate;
+        $this->estimate_calculate = $estimate_calculate;
     }
 
     public function create($id, Request $request)
     {
-        $construction_list = $this->constructionList::find($request->cid);
-        $estimate_info = $this->estimateInfo::find($construction_list->estimate_info_id);
+        $construction_list = $this->construction_list::find($request->cid);
+        $estimate_info = $this->estimate_info::find($construction_list->estimate_info_id);
 
         $breakdown_store_routing = route('breakdown.store');
 
@@ -64,13 +64,13 @@ class BreakdownController extends Controller
          * SQLはモデルに記載する
          */
         $breakdown_items = $this->breakdown->getBreakdownList($request->cid);
-        $construction_id = $this->constructionName->getByCconstructionName($construction_list->name);
+        $construction_id = $this->construction_name->getByCconstructionName($construction_list->name);
 
         if (count($breakdown_items) == 0) {
             if (empty($construction_id)) {
                 $breakdown_items = $this->breakdown->setDummyData();
             } else {
-                $breakdown_items = $this->constructionItem->getItemsByConstractionId($construction_id);
+                $breakdown_items = $this->construction_item->getItemsByConstractionId($construction_id);
             }
         } elseif (!empty($request->old('estimate_id'))) { // セッションの存在確認
             $breakdown_items = $this->breakdown->setDummyData($request->old());

@@ -13,40 +13,41 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EstimateInfoRequest;
 
+
 class EstimateController extends Controller
 {
     protected $estimate;
     protected $construction;
-    protected $constructionItem;
+    protected $construction_item;
     protected $breakdown;
     protected $department;
     protected $payment;
-    protected $constructionName;
-    protected $constructionList;
-    protected $estimateInfo;
+    protected $construction_name;
+    protected $construction_list;
+    protected $estimate_info;
 
-    protected $estimateInitCount = 1; // 工事名の初期表示数
+    protected $estimate_init_count = 1; // 工事名の初期表示数
     /**
      * 初期処理
      * 使用するクラスのインスタンス化
      */
     public function __construct(
-        EstimateInfo $estimateInfo,
-        ConstructionList $constructionList,
-        ConstructionName $constructionName,
-        ConstructionItem $constructionItem,
+        EstimateInfo $estimate_info,
+        ConstructionList $construction_list,
+        ConstructionName $construction_name,
+        ConstructionItem $construction_item,
         Breakdown $breakdown,
         Department $department,
         Payment $payment,
     ) {
-        $this->estimateInfo = $estimateInfo;
-        $this->constructionList = $constructionList;
-        $this->constructionName = $constructionName;
-        $this->constructionItem = $constructionItem;
+        $this->estimate_info = $estimate_info;
+        $this->construction_list = $construction_list;
+        $this->construction_name = $construction_name;
+        $this->construction_item = $construction_item;
         $this->breakdown = $breakdown;
         $this->department = $department;
         $this->payment = $payment;
-        $this->estimateInfo = $estimateInfo;
+        $this->estimate_info = $estimate_info;
     }
 
 
@@ -54,12 +55,12 @@ class EstimateController extends Controller
     {
         // 見積書一覧の取得
         $keyword = $request->input('keyword');
-        $estimate_info = $this->estimateInfo->getEstimateInfo($keyword);
-        $construction_list = $this->constructionList->getConnectionLists($estimate_info);
+        $estimate_info = $this->estimate_info->getEstimateInfo($keyword);
+        $construction_list = $this->construction_list->getConnectionLists($estimate_info);
 
         $breakdown_create_routing = 'breakdown.create';
         $keys = array_keys($construction_list);
-        $pdf_show_flags = $this->constructionList->getPdfShowFlag($keys);
+        $pdf_show_flags = $this->construction_list->getPdfShowFlag($keys);
 
         return view('estimate.index')->with([
             'estimate_info' => $estimate_info,
@@ -75,14 +76,14 @@ class EstimateController extends Controller
     {
         $departments = $this->department::all();
         $payments = $this->payment::all();
-        $construction_name = $this->constructionName->get_target_construction_name();
-
+        $construction_name = $this->construction_name->all();
+        
         return view('cover.index', compact('construction_name'))->with([
-            'construction_count' => $this->estimateInitCount,
+            'construction_count' => $this->estimate_init_count,
             'departments' => $departments,
             'payments' => $payments,
-            'estimate_info' => $this->estimateInfo,
-            'construction_list' => $this->constructionList,
+            'estimate_info' => $this->estimate_info,
+            'construction_list' => $this->construction_list,
             'registered_construction_list' => array(),
             'action' => route('estimate.store'),
             'prev_url' => route('menu'),
@@ -96,7 +97,7 @@ class EstimateController extends Controller
      */
     public function store(EstimateInfoRequest $request)
     {
-        $regist_estimate_info = $this->estimateInfo->registEstimateInfo($request);
+        $regist_estimate_info = $this->estimate_info->registEstimateInfo($request);
 
         if ($regist_estimate_info === true) {
             $message = config('message.regist_complete');
@@ -117,17 +118,17 @@ class EstimateController extends Controller
     public function edit($id)
     {
         // 登録内容の取得
-        $estimate_info = $this->estimateInfo::find($id);
-        $construction_list = $this->constructionList->getEstimateInfoId($id);
+        $estimate_info = $this->estimate_info::find($id);
+        $construction_list = $this->construction_list->getEstimateInfoId($id);
 
         $departments = $this->department::all();
         $payments = $this->payment::all();
-        $construction_name = $this->constructionName->get_target_construction_name();
+        $construction_name = $this->construction_name->all();
 
         return view('cover.index')->with([
             'action' => route('estimate.update', ['id' => $id]),
             'construction_name' => $construction_name,
-            'construction_count' => $this->estimateInitCount,
+            'construction_count' => $this->estimate_init_count,
             'departments' => $departments,
             'payments' => $payments,
             'estimate_info' => $estimate_info,
@@ -145,7 +146,7 @@ class EstimateController extends Controller
     public function update(EstimateInfoRequest $request, $id)
     {
         // 更新処理
-        $update_estimate_info = $this->estimateInfo->update_estimate_info($request, $id);
+        $update_estimate_info = $this->estimate_info->update_estimate_info($request, $id);
 
         if ($update_estimate_info === true) {
             $message = config('message.update_complete');
@@ -166,7 +167,7 @@ class EstimateController extends Controller
     public function delete($id)
     {
         // 削除処理
-        $delete_estimate_info = $this->estimateInfo->deleteEstimate($id);
+        $delete_estimate_info = $this->estimate_info->deleteEstimate($id);
 
         if ($delete_estimate_info === true) {
             $message = config('message.delete_complete');

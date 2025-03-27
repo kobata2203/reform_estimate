@@ -21,46 +21,46 @@ use App\Http\Requests\UpdateAdminRequest;
 class ManagerController extends Controller
 {
     protected $manager;
-    protected $managerInfo;
-    protected $estimateInfo;
+    protected $manager_info;
+    protected $estimate_info;
     protected $user;
     protected $breakdown;
     protected $estimate;
-    protected $estimateCalculate;
+    protected $estimate_calculate;
     protected $construction;
-    protected $constructionItem;
+    protected $construction_item;
     protected $department;
     protected $payment;
-    protected $constructionInfo;
-    protected $constructionName;
-    protected $constructionList;
+    protected $construction_info;
+    protected $construction_name;
+    protected $construction_list;
     protected $estimateInitCount = 1;
 
 
     public function __construct(
         Manager $manager,
-        Managerinfo $managerInfo,
-        EstimateInfo $estimateInfo,
+        Managerinfo $manager_info,
+        EstimateInfo $estimate_info,
         User $user,
         Breakdown $breakdown,
         Estimate $estimate,
-        EstimateCalculate $estimateCalculate,
-        ConstructionList $constructionList,
-        ConstructionName $constructionName,
-        ConstructionItem $constructionItem,
+        EstimateCalculate $estimate_calculate,
+        ConstructionList $construction_list,
+        ConstructionName $construction_name,
+        ConstructionItem $construction_item,
         Department $department,
         Payment $payment,
     ) {
         $this->manager = $manager;
-        $this->managerInfo = $managerInfo;
-        $this->estimateInfo = $estimateInfo;
+        $this->manager_info = $manager_info;
+        $this->estimate_info = $estimate_info;
         $this->user = $user;
         $this->breakdown = $breakdown;
         $this->estimate = $estimate;
-        $this->estimateCalculate = $estimateCalculate;
-        $this->constructionList = $constructionList;
-        $this->constructionName = $constructionName;
-        $this->constructionItem = $constructionItem;
+        $this->estimate_calculate = $estimate_calculate;
+        $this->construction_list = $construction_list;
+        $this->construction_name = $construction_name;
+        $this->construction_item = $construction_item;
         $this->department = $department;
         $this->payment = $payment;
 

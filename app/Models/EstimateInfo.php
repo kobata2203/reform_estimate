@@ -124,9 +124,9 @@ class EstimateInfo extends Model
         $cl_table = 'construction_list';
         $d_table = 'departments';
         $ei_table = 'estimate_info';
-        $cl_table_join = $cl_table. '.';
-        $d_table_join = $d_table. '.';
-        $ei_table_join =$ei_table. '.';
+        $cl_table_join = $cl_table . '.';
+        $d_table_join = $d_table . '.';
+        $ei_table_join = $ei_table . '.';
 
         $columns = [
             $ei_table_join . 'id',
@@ -154,7 +154,7 @@ class EstimateInfo extends Model
             });
         }
 
-        $query->groupBy($columns , 'estimate_info.id')
+        $query->groupBy($columns, 'estimate_info.id')
             ->orderBy($ei_table_join . 'created_at', 'desc')
             ->take(20);
 
@@ -197,27 +197,6 @@ class EstimateInfo extends Model
         return $this->findOrFail($id);
     }
 
-    public function fetchingEstimateInfoById($id)
-    {
-        return $this->findOrFail($id);
-    }
-
-    //breakdown_create メソッド　EstimateController
-    public static function getById($id)
-    {
-        return self::find($id);
-    }
-
-    public static function idGet($id)
-    {
-        return self::find($id);
-    }
-
-    public static function getEstimateByIde($id)
-    {
-        return self::findOrFail($id);
-
-    }
     public function payment()
     {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
