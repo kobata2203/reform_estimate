@@ -114,22 +114,38 @@ class Breakdown extends Model
 
             $this->where($where)->delete();
 
-            $datas = [];
+            $items = array_values($request->item ?? []);
 
-            $loop_count = count($request->item);
+            // もしitemsが空または配列でない場合、何もせずに終了
+            if (empty($items) || !is_array($items)) {
+                return;
+            }
+            // それ以外のフィールドも同様に取得
+            $makers = array_values($request->maker ?? []);
+            $series_names = array_values($request->series_name ?? []);
+            $item_numbers = array_values($request->item_number ?? []);
+            $quantities = array_values($request->quantity ?? []);
+            $units = array_values($request->unit ?? []);
+            $unit_prices = array_values($request->unit_price ?? []);
+            $amounts = array_values($request->amount ?? []);
+            $remarks = array_values($request->remarks ?? []);
+
+            $loop_count = count($items);
+            $datas = [];
+            // ループの回数を取得
             for ($i = 0; $i < $loop_count; $i++) {
                 $data = [];
                 $data['estimate_id'] = $request->estimate_id;
                 $data['construction_list_id'] = $request->construction_list_id;
-                $data['item'] = $request->item[$i];
-                $data['maker'] = $request->maker[$i];
-                $data['series_name'] = $request->series_name[$i];
-                $data['item_number'] = $request->item_number[$i];
-                $data['quantity'] = $request->quantity[$i];
-                $data['unit'] = $request->unit[$i];
-                $data['unit_price'] = $request->unit_price[$i];
-                $data['amount'] = $request->amount[$i];
-                $data['remarks'] = $request->remarks[$i];
+                $data['item'] = $items[$i] ?? null;
+                $data['maker'] = $makers[$i] ?? null;
+                $data['series_name'] = $series_names[$i] ?? null;
+                $data['item_number'] = $item_numbers[$i] ?? null;
+                $data['quantity'] = $quantities[$i] ?? null;
+                $data['unit'] = $units[$i] ?? null;
+                $data['unit_price'] = $unit_prices[$i] ?? null;
+                $data['amount'] = $amounts[$i] ?? null;
+                $data['remarks'] = $remarks[$i] ?? null;
 
                 $datas[] = $data;
             }
