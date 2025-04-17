@@ -21,7 +21,7 @@ class CreateAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:20',
             'department_id' => 'required|exists:departments,id',
             'email' => [
                 'required',
