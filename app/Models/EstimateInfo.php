@@ -186,7 +186,7 @@ class EstimateInfo extends Model
     }
 
     //内訳明細書
-    public function getEstimateById($id)
+    public function getEstId($id)
     {
         return $this->find($id);
     }
