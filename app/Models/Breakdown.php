@@ -114,38 +114,22 @@ class Breakdown extends Model
 
             $this->where($where)->delete();
 
-            $items = array_values($request->item ?? []);
-
-            // もしitemsが空または配列でない場合、何もせずに終了
-            if (empty($items) || !is_array($items)) {
-                return;
-            }
-            // それ以外のフィールドも同様に取得
-            $makers = array_values($request->maker ?? []);
-            $series_names = array_values($request->series_name ?? []);
-            $item_numbers = array_values($request->item_number ?? []);
-            $quantities = array_values($request->quantity ?? []);
-            $units = array_values($request->unit ?? []);
-            $unit_prices = array_values($request->unit_price ?? []);
-            $amounts = array_values($request->amount ?? []);
-            $remarks = array_values($request->remarks ?? []);
-
-            $loop_count = count($items);
             $datas = [];
-            // ループの回数を取得
-            for ($i = 0; $i < $loop_count; $i++) {
+            $keys = array_keys($request->item);
+
+            foreach ($keys  as $value) {
                 $data = [];
                 $data['estimate_id'] = $request->estimate_id;
                 $data['construction_list_id'] = $request->construction_list_id;
-                $data['item'] = $items[$i] ?? null;
-                $data['maker'] = $makers[$i] ?? null;
-                $data['series_name'] = $series_names[$i] ?? null;
-                $data['item_number'] = $item_numbers[$i] ?? null;
-                $data['quantity'] = $quantities[$i] ?? null;
-                $data['unit'] = $units[$i] ?? null;
-                $data['unit_price'] = $unit_prices[$i] ?? null;
-                $data['amount'] = $amounts[$i] ?? null;
-                $data['remarks'] = $remarks[$i] ?? null;
+                $data['item'] = $request->item[$value];
+                $data['maker'] = $request->maker[$value];
+                $data['series_name'] = $request->series_name[$value];
+                $data['item_number'] = $request->item_number[$value];
+                $data['quantity'] = $request->quantity[$value];
+                $data['unit'] = $request->unit[$value];
+                $data['unit_price'] = $request->unit_price[$value];
+                $data['amount'] = $request->amount[$value];
+                $data['remarks'] = $request->remarks[$value];
 
                 $datas[] = $data;
             }
