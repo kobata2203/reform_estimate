@@ -143,7 +143,7 @@ class SalespersonController extends Controller
 
     public function itemView(Request $request, $id)
     {
-        $estimate_info = $this->estimate_info->getById($id);
+        $estimate_info = $this->estimate_info->getEstimateById($id);
         $construction_list = $this->construction_list->getByEstimateInfoId($id);
         $construction_names = $this->construction_list->getConstructionName($id);
         $selected_construction_id = $request->input('construction_name', $construction_names->first()->id ?? null);

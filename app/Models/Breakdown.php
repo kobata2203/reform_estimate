@@ -115,21 +115,21 @@ class Breakdown extends Model
             $this->where($where)->delete();
 
             $datas = [];
+            $keys = array_keys($request->item);
 
-            $loop_count = count($request->item);
-            for ($i = 0; $i < $loop_count; $i++) {
+            foreach ($keys  as $value) {
                 $data = [];
                 $data['estimate_id'] = $request->estimate_id;
                 $data['construction_list_id'] = $request->construction_list_id;
-                $data['item'] = $request->item[$i];
-                $data['maker'] = $request->maker[$i];
-                $data['series_name'] = $request->series_name[$i];
-                $data['item_number'] = $request->item_number[$i];
-                $data['quantity'] = $request->quantity[$i];
-                $data['unit'] = $request->unit[$i];
-                $data['unit_price'] = $request->unit_price[$i];
-                $data['amount'] = $request->amount[$i];
-                $data['remarks'] = $request->remarks[$i];
+                $data['item'] = $request->item[$value];
+                $data['maker'] = $request->maker[$value];
+                $data['series_name'] = $request->series_name[$value];
+                $data['item_number'] = $request->item_number[$value];
+                $data['quantity'] = $request->quantity[$value];
+                $data['unit'] = $request->unit[$value];
+                $data['unit_price'] = $request->unit_price[$value];
+                $data['amount'] = $request->amount[$value];
+                $data['remarks'] = $request->remarks[$value];
 
                 $datas[] = $data;
             }
