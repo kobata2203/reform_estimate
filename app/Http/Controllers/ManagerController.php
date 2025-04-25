@@ -17,6 +17,7 @@ use App\Models\ConstructionName;
 use App\Models\EstimateCalculate;
 use App\Http\Requests\CreateAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use Illuminate\Support\Facades\Hash;
 
 class ManagerController extends Controller
 {
@@ -101,7 +102,7 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
         $validated['role'] = User::ROLE_ADMIN;
-        $create_admin = $this->user->create($validated);
+        $create_admin = $this->user->createAdmin($validated);
 
         if ($create_admin) {
             return redirect()->route('manager.index')->with([
@@ -132,6 +133,9 @@ class ManagerController extends Controller
     {
         $validated = $request->validated();
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
+        if(!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
         $update_admin = $admin->update($validated);
 
         if ($update_admin) {
