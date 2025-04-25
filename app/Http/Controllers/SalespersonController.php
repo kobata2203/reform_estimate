@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
 use App\Http\Requests\UpdateEstimateRequest;
+use Illuminate\Support\Facades\Hash;
 
 class SalespersonController extends Controller
 {
@@ -98,6 +99,9 @@ class SalespersonController extends Controller
     public function update(SalespersonRequest $request, $id)
     {
         $validated = $request->validated();
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
         $update_user = $this->user->updateUser($id, $validated);
 
         $message = $update_user ? config('message.update_complete') : config('message.update_fail');
