@@ -179,11 +179,7 @@ class SalespersonController extends Controller
 
         $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $constructionId);
         $total_amount = $breakdown->sum('amount');
-        if ($validated['special_discount'] > $total_amount) {
-            return redirect()->back()->withErrors([
-                'special_discount' => config('column_names.special_discount')
-            ])->withInput();
-        }
+      
         $estimate_calculate = $this->estimate_calculate->createOrGetEstimateCalculate($id, $constructionId);
         $estimate_calculate->updateSpecialDiscount($validated['special_discount']);
         $subtotal = $total_amount - $estimate_calculate->special_discount;

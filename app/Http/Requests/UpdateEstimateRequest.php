@@ -27,7 +27,7 @@ class UpdateEstimateRequest extends FormRequest
     {
         return [
             'special_discount' => 'required|numeric|max:9999999|min:0',
-            'grand_total' => 'numeric|min:0',
+            'grand_total' => 'required|numeric|min:0',
         ];
     }
 

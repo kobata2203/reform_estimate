@@ -32,6 +32,12 @@
      </div>
     @endif
 
+    @if ($errors->has('grand_total'))
+     <div class="alert alert-danger">
+         {{ $errors->first("grand_total") }}
+     </div>
+    @endif
+
     <form method="GET" action="{{ route('salesperson.show', ['id' => $id]) }}">
 
 
@@ -119,11 +125,10 @@
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">合計（税込）</td>
-                    {{-- <td class="currency"><span> ¥　</span>{{ number_format($grandTotal) }}</td> --}}
                     <td class="currency">
-                        <span> ¥ </span>{{ number_format($grandTotal) }}
-                        <input type="hidden"  id="grand_total" name="grand_total" value="{{ $grandTotal }}">
+                        <span> ¥　</span>{{ number_format($grandTotal) }}
                     </td>
+                    <input type="hidden" id="grand_total" name="grand_total" value="{{ max(0, $grandTotal) }}">
                 </tr>
             </table>
             <div class="actions-2">
