@@ -32,6 +32,12 @@
      </div>
     @endif
 
+    @if ($errors->has('grand_total'))
+     <div class="alert alert-danger">
+         {{ $errors->first("grand_total") }}
+     </div>
+    @endif
+
     <form method="GET" action="{{ route('salesperson.show', ['id' => $id]) }}">
 
 
@@ -53,7 +59,6 @@
 
         <form action="{{ route('updateDiscount', ['id' => $id, 'construction_id' => $selectedConstructionId]) }}"
             method="POST">
-            @csrf
             @csrf
             <table class="table-large item-table estimate-item-table">
                 <tr class="iro">
@@ -96,7 +101,7 @@
                             <input type="number" id="special_discount" name="special_discount"
                                 value="{{ old('special_discount', $discount) }}" placeholder="お値引き金額を入力してください"
                                 style="text-align: center; width: 90%; padding: 5px; font-size: 15px;  width: 120px; "
-                                maxlength="10"　max="9999999" required>
+                                maxlength="10" max="9999999" required>
 
                         </div>
                     </td>
@@ -116,12 +121,14 @@
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">消費税（10%）</td>
-                    <td class="currency"><span> ¥　</span>{{ number_format($tax) }}
+                    <td class="currency"><span> ¥　</span>{{ number_format($tax) }}</td>
                 </tr>
                 <tr>
                     <td colspan="5" class="custom-width" style="text-align: right;">合計（税込）</td>
-                    <td class="currency"><span> ¥　</span>{{ number_format($grandTotal) }}</td>
-
+                    <td class="currency">
+                        <span> ¥　</span>{{ number_format($grandTotal) }}
+                    </td>
+                    <input type="hidden" id="grand_total" name="grand_total" value="{{ max(0, $grandTotal) }}">
                 </tr>
             </table>
             <div class="actions-2">

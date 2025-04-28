@@ -9,6 +9,7 @@ return [
     'breakdown_unit_price' => env('BREAKDOWN_UNIT_PRICE','単価'),
     'breakdown_amount' => env('BREAKDOWN_AMOUNT','金額'),
     'special_discount' => env('SPECIAL_DISCOUNT', '特別お値引き'),
+    'grand_total' => env('GRAND_TOTAL', '合計金額'),
 
     'customer_name' => env('CUSTOMER_NAME','お客様名'),
     'charger_name' => env('CHARGER_NAME','担当者名'),

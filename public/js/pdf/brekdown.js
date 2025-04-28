@@ -19,6 +19,7 @@ $(document).ready(function() {
         $('.currency').eq(0).text('¥ ' + subtotal.toFixed(0));
         $('.currency').eq(1).text('¥ ' + tax.toFixed(0));
         $('.currency').eq(2).text('¥ ' + grandTotal.toFixed(0));
+        $('#grand_total').val(grandTotal.toFixed(0));
     }
 
     $('#special_discount').on('input', function() {
@@ -64,5 +65,5 @@ $(document).ready(function() {
         adjustFontSize();
     });
 
- 
+
 });

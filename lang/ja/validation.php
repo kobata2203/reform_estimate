@@ -278,6 +278,7 @@ return [
         'remarks' => config('column_names.remarks'),
         'construction_name.*' => config('column_names.construction_name'),
         'special_discount' => config('column_names.special_discount'),
+        'grand_total' => config('column_names.grand_total'),
 
     ],
 
