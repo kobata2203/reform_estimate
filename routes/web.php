@@ -40,7 +40,6 @@ Route::middleware('auto-logout')->group(function () {
         Route::post('/breakdown/store', [App\Http\Controllers\BreakdownController::class, 'store'])->name('breakdown.store');
 
         Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('salesperson.show');
-        Route::get('/showestimate/{id}', [SalespersonController::class, 'showestimate'])->name('showestimate');
 
         Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
             return $request->user()->downloadInvoice($invoiceId);
