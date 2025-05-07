@@ -79,7 +79,12 @@ class EstimateCalculate extends Model
     public static function getDiscountByEstimateId($estimateId)
     {
         $estimateCalculate = self::where('estimate_id', $estimateId)->first();
-        return $estimateCalculate ? $estimateCalculate->special_discount : 0;
+
+        if ($estimateCalculate) {
+            return $estimateCalculate->special_discount;
+        } else {
+            return 0;
+        }
     }
 
     public static function getOrCreateByEstimateAndConstructionId($estimateId, $selectedConstructionId = null)
@@ -119,12 +124,18 @@ class EstimateCalculate extends Model
     {
         return self::where('construction_list_id', $construction_list_id)->get();
     }
+
     public static function getDiscountByEstimateIdAndConstructionId($estimateId, $constructionListId)
     {
         $estimateCalculate = self::where('estimate_id', $estimateId)
             ->where('construction_list_id', $constructionListId)
             ->first();
-        return $estimateCalculate ? $estimateCalculate->special_discount : 0;
+
+        if ($estimateCalculate !== null) {
+            return $estimateCalculate->special_discount;
+        } else {
+            return 0;
+        }
     }
 
     public function updateSpecialDiscount($discount)
@@ -135,9 +146,19 @@ class EstimateCalculate extends Model
 
     public function calculateAndUpdate($estimateId, $constructionId, $breakdown)
     {
-        $totalAmount = $breakdown->sum('amount') ?? 0;
+        $totalAmount = $breakdown->sum('amount');
+
+        if ($totalAmount === null) {
+        $totalAmount = 0;
+    }
+
         $estimate_calculate = $this->getOrCreateByEstimateAndConstructionId($estimateId, $constructionId);
-        $discount = $estimate_calculate->special_discount ?? 0;
+        $discount = $estimate_calculate->special_discount;
+
+        if ($discount === null) {
+        $discount = 0;
+    }
+    
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
         $grandTotal = $subtotal + $tax;
