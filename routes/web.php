@@ -41,10 +41,6 @@ Route::middleware('auto-logout')->group(function () {
 
         Route::get('/estimate/index/{id}', [SalespersonController::class, 'itemView'])->name('salesperson.show');
 
-        Route::get('/user/invoice/{invoice}', function (Request $request, string $invoiceId) {
-            return $request->user()->downloadInvoice($invoiceId);
-        });
-
         Route::get('/salesperson', [SalespersonController::class, 'index'])->name('salesperson.index');
         Route::get('/salesperson/edit/{id}', [SalespersonController::class, 'edit'])->name('salesperson.edit');
         Route::post('/salesperson/update/{id}', [SalespersonController::class, 'update'])->name('salesperson.update');
