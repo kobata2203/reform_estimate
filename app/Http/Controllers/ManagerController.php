@@ -156,7 +156,12 @@ class ManagerController extends Controller
     {
         $admin = $this->user->where('role', User::ROLE_ADMIN)->findOrFail($id);
         $delete_admin = $admin->delete();
-        $message = $delete_admin ? config('message.delete_complete') : config('message.delete_fail');
+
+        if($delete_admin) {
+            $message =  config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
 
         return redirect('/manager')->with([
             'message' => $message,

@@ -13,7 +13,6 @@ use App\Services\PdfService;
 use Illuminate\Http\Request;
 use App\Models\ConstructionList;
 use App\Models\EstimateCalculate;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SalespersonRequest;
 use App\Http\Requests\UpdateEstimateRequest;
@@ -104,7 +103,11 @@ class SalespersonController extends Controller
         }
         $update_user = $this->user->updateUser($id, $validated);
 
-        $message = $update_user ? config('message.update_complete') : config('message.update_fail');
+        if($update_user){
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
 
         return redirect()->route('salesperson.index')->with([
             'message' => $message,
@@ -132,7 +135,11 @@ class SalespersonController extends Controller
     {
         $delete_user = $this->user->deleteUser($id);
 
-        $message = $delete_user ? config('message.delete_complete') : config('message.delete_fail');
+        if($delete_user){
+            $message = config('message.delete_complete');
+        } else {
+            $message = config('message.delete_fail');
+        }
 
         return redirect('/salesperson')->with([
             'message' => $message,
@@ -150,11 +157,15 @@ class SalespersonController extends Controller
         $estimate_info = $this->estimate_info->getEstimateById($id);
         $construction_list = $this->construction_list->getByEstimateInfoId($id);
         $construction_names = $this->construction_list->getConstructionName($id);
-        $selected_construction_id = $request->input('construction_name', $construction_names->first()->id ?? null);
+        $selected_construction_id = $request->input('construction_name');
 
-        $breakdown = $selected_construction_id
-            ? $this->breakdown->byConstructionAndEstimate($selected_construction_id, $id)->get()
-            : collect([]);
+        if (!$selected_construction_id && $construction_names->first()) {
+        $selected_construction_id = $construction_names->first()->id;
+    }
+
+        $breakdown = collect();
+        $selected_construction_id && $breakdown = $this->breakdown
+        ->byConstructionAndEstimate($selected_construction_id, $id)->get();
 
         $calculations = $this->estimate_calculate->calculateAndUpdate($id, $selected_construction_id, $breakdown);
 
@@ -179,7 +190,7 @@ class SalespersonController extends Controller
 
         $breakdown = $this->breakdown->breakdownByEstimateIdAndConstructionId($id, $constructionId);
         $total_amount = $breakdown->sum('amount');
-      
+
         $estimate_calculate = $this->estimate_calculate->createOrGetEstimateCalculate($id, $constructionId);
         $estimate_calculate->updateSpecialDiscount($validated['special_discount']);
         $subtotal = $total_amount - $estimate_calculate->special_discount;
@@ -193,7 +204,11 @@ class SalespersonController extends Controller
             $grand_total
         );
 
-        $message = $update_estimate ? config('message.update_complete') : config('message.update_fail');
+        if ( $update_estimate ) {
+            $message = config('message.update_complete');
+        } else {
+            $message = config('message.update_fail');
+        }
 
         return redirect()->route('salesperson.show', ['id' => $id, 'construction_name' => $constructionId])->with([
             'message' => $message,
@@ -218,7 +233,12 @@ class SalespersonController extends Controller
         $totals = collect($construction_list)->map(function ($construction) use ($id) {
             $breakdown = $this->breakdown->getBreakdownsByConstructionId($construction->id);
             $amount = $breakdown->sum('amount');
-            $discount = $this->estimate_calculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id) ?? 0;
+            $discount = $this->estimate_calculate->getDiscountByEstimateIdAndConstructionId($id, $construction->id);
+
+            if ($discount === null) {
+            $discount = 0;
+            }
+
             $subtotal = $amount - $discount;
             $tax = $subtotal * 0.1;
             $grandTotal = $subtotal + $tax;
