@@ -4,7 +4,6 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Validator;
 
 
