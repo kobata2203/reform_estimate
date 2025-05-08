@@ -1,8 +1,8 @@
-/* Existing CSS rules */
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Add some space above the table */
+    margin-top: 20px;
 }
 
 .message {
@@ -32,20 +32,18 @@ td {
     margin: 10px;
 }
 
-/* New CSS rules for centering and stacking buttons */
-
 .form-inline {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Align items to the start (left) */
-    margin-bottom: 20px; /* Space below the form */
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
     margin-left: 20px;
 }
 
 .row-button {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px; /* Space between button rows */
+    margin-bottom: 10px;
 }
 
 .btn, .btn-primary, .btn-dark {
@@ -57,14 +55,13 @@ td {
     font-size: 16px;
 }
 
-/* Specific Color for '削除' Button */
 td .btn-danger {
-    background-color: #dc3545;   /* Red background */
+    background-color: #dc3545;
     border: none;
 }
 
 td .btn-danger:hover {
-    background-color: #c82333;   /* Darker red on hover */
+    background-color: #c82333;
 }
 
 .margin-left-300 {
@@ -72,7 +69,7 @@ td .btn-danger:hover {
 }
 
 .btn + .btn {
-    margin-left: 10px; /* Space between buttons */
+    margin-left: 10px;
 }
 
 form {
@@ -80,46 +77,42 @@ form {
 }
 
 .custom-border {
-    border: 1px solid black; /* Border style */
-    border-radius: 4px; /* Rounded corners */
-    padding: 6px 12px; /* Padding inside the button */
-    text-decoration: none; /* Remove underline from the link */
-    color: white; /* Text color */
-    background-color: #007bff; /* Button background color matching Bootstrap primary color */
-    display: inline-block; /* Ensure it behaves like a button */
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    display: inline-block;
 }
-
 
 .text-right {
     text-align: right;
 }
 
-/* Make sure that the form elements are displayed as block elements */
 .form-group {
     margin-bottom: 1rem;
 }
 
-/* Align labels and inputs to have the same width */
 .form-group label {
     display: block;
-    width: 20%; /* Set label width to 20% of the parent container */
-    float: left; /* Align labels to the left */
-    margin-right: 1rem; /* Add some space between label and input */
-    text-align: right; /* Align text to the right for better readability */
+    width: 20%;
+    float: left;
+    margin-right: 1rem;
+    text-align: right;
 }
 
 .form-group input {
-    width: 75%; /* Set input width to 75% to fit the remaining space */
+    width: 75%;
 }
 
-/* Ensure the button aligns properly */
 button {
     margin-top: 1rem;
 }
 
 .form-control {
     width: 300px !important;
-    border: 2px solid black; /* Fixed the typo '20x' to '2px' */
+    border: 2px solid black;
     border-radius: 4px;
     margin: 8px 0;
     outline: none;
@@ -129,6 +122,6 @@ button {
 }
 
 .form-control:focus {
-    border-color: dodgerblue; /* Fixed the typo 'dodgeBlue' to 'dodgerblue' */
-    box-shadow: 0 0 8px 0 dodgerblue; /* Fixed the typo 'dogerBlue' to 'dodgerblue' */
+    border-color: dodgerblue;
+    box-shadow: 0 0 8px 0 dodgerblue;
 }

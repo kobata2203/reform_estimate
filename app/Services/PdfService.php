@@ -58,7 +58,7 @@ class PdfService
         $estimate_calculation = $this->estimate_calculate->fetchCalculationByEstimateIdAndConstructionId($id, $construction_list_id);
         $discount = $estimate_calculation ? $estimate_calculation->special_discount : 0;
 
-        // Calculate totals
+        // 合計金額の計算
         $totalAmount = $breakdown->sum('amount');
         $subtotal = $totalAmount - $discount;
         $tax = $subtotal * 0.1;
@@ -130,7 +130,7 @@ class PdfService
             'font_size_construction' => $font_size_construction,
             'font_size_delivery' => $font_size_delivery,
             'font_size_remarks' => $font_size_remarks,
-            'font_size' => $font_size, // 件名の変数,
+            'font_size' => $font_size, // 件名の変数
         ])->render();
 
         return $this->pdfConfig($pdfView, 'Reform_Estimate_cover.pdf');

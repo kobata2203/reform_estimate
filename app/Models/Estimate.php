@@ -31,7 +31,7 @@ class Estimate extends Model
     ];
     public function breakdown()
     {
-        return $this->hasMany(Breakdown::class);  // Adjust based on your actual table/model
+        return $this->hasMany(Breakdown::class);
     }
 
     public function calculate()
@@ -39,13 +39,11 @@ class Estimate extends Model
         return $this->hasOne(EstimateCalculate::class, 'estimate_id');
     }
 
-    // for updateDiscount method on ManagerController
     public function getEstimateById($id)
     {
         return $this->find($id);
     }
 
-    //pdf method on the ManagerController
     public function fetchEstimateWithCalculations($id)
     {
         return $this->with('calculate')->findOrFail($id);

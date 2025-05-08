@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Htpp\Controllers\EstimateController;
-use Illuminate\Support\Facades\DB;
 
 class Breakdown extends Model
 {
@@ -35,29 +33,19 @@ class Breakdown extends Model
         return $this->belongsTo(EstimateInfo::class, 'estimate_id');
     }
 
-
     public function estimate_info()
     {
         return $this->belongsTo(EstimateInfo::class, 'estimate_info_id');
     }
 
-    //changing estimates table to breakdown
     public function estimateCalculate()
     {
         return $this->hasMany(EstimateCalculate::class, 'estimate_id', 'id');
-        // return $this->hasMany(EstimateCalculate::class, 'construction_list_id', 'id');
     }
-
 
     public function construction_name()
     {
         return $this->belongsTo('App\Models\ConstructionName');
-    }
-
-
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class, 'estimate_id', 'id');
     }
 
     public function estimate()

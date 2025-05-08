@@ -43,7 +43,7 @@ td {
 ul {
     padding: 0;
 }
-  
+
 li {
     list-style: none;
     margin-right: 1rem;
@@ -59,19 +59,19 @@ li {
 }
 
 .btn-primary:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9;
 }
 
 .btn:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9;
 }
 
 .js-delete-btn:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9;
 }
 
 .btn-add:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9; 
 }
 
 .js-delete-btn {

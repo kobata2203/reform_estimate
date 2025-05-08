@@ -17,9 +17,9 @@ label {
 #department {
     border: 2px solid #ccc;
     padding: 10px;
-    margin-bottom: 15px; /* Same spacing as input fields */
-    width: 100%; /* Make it take up the full width */
-    box-sizing: border-box; /* Ensure padding is included in the total width */
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 input[type="text"],
@@ -35,16 +35,16 @@ input[type="password"] {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    align-items: stretch; /* Make buttons take the full width */
+    align-items: stretch;
 
 }
 
 .button-container button {
     padding: 10px 20px;
-    margin: 10px auto; /* Centers the button horizontally */
-    width: 20%; /* Adjust width as needed */
+    margin: 10px auto;
+    width: 20%;
     cursor: pointer;
-    display: block; /* Ensure the button behaves like a block element for centering */
+    display: block; 
 }
 
 

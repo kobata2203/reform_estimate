@@ -7,7 +7,6 @@ body {
     padding-left: 40px;
 }
 
-/* table02 */
 #table02 th, #table02 td {
     text-align: center;
     width: 20%;
@@ -15,8 +14,7 @@ body {
     padding: 10px;
     height: 60px;
   }
-  
-/* tab */
+
 @media only screen and (max-width: 768px) {
     #table03 {
     display: block;
@@ -59,7 +57,7 @@ td {
 .row-button {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px; /* Space between rows of buttons */
+    margin-bottom: 10px;
 }
 
 .btn, .btn-primary, .btn-dark, .btn-danger,.js-delete-btn,.btn-add {
@@ -72,11 +70,11 @@ td {
 }
 
 .btn-primary:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9;
 }
 
 .btn:hover {
-    background-color: #0069d9;   /* Darker blue on hover */
+    background-color: #0069d9;
 }
 
 .delete_breakdown {
@@ -89,5 +87,5 @@ td {
 }
 
 .delete_breakdown:hover {
-    background-color: #c82333;   /* Darker red on hover */
+    background-color: #c82333;   
 }
